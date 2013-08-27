@@ -1,4 +1,4 @@
-package com.common.util.model.filter;
+package com.common.util.model.query.filter;
 
 /**
  * La clase que detalla un filtro complejo, como puede ser un filtro para expresiones booleanas o expresiones negadas.

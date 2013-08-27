@@ -1,4 +1,4 @@
-package com.common.util.model.filter;
+package com.common.util.model.query.filter;
 
 /**
  * La clase que vamos a utilizar para una operación compleja unaria sobre un filtro. Esta operación hasta este momento es la operación NOT sobre un

@@ -7,13 +7,13 @@ import java.util.List;
 import org.junit.AfterClass;
 import org.junit.Test;
 
-import com.common.util.model.filter.BetweenFilter;
-import com.common.util.model.filter.CompareFilter;
-import com.common.util.model.filter.Filter;
-import com.common.util.model.filter.InFilter;
-import com.common.util.model.filter.LikeFilter;
-import com.common.util.model.filter.NullFilter;
-import com.common.util.model.filter.LikeFilter.LikeType;
+import com.common.util.model.query.filter.BetweenFilter;
+import com.common.util.model.query.filter.CompareFilter;
+import com.common.util.model.query.filter.Filter;
+import com.common.util.model.query.filter.InFilter;
+import com.common.util.model.query.filter.LikeFilter;
+import com.common.util.model.query.filter.NullFilter;
+import com.common.util.model.query.filter.LikeFilter.LikeType;
 
 /**
  * La clase que permite probar la clase que representa los filtros de una consulta SQL.

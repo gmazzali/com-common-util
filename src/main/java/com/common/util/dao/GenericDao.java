@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.common.util.exception.CheckedException;
 import com.common.util.model.Persistence;
-import com.common.util.model.filter.Filter;
+import com.common.util.model.query.filter.Filter;
 
 /**
  * La interfaz que define todos los métodos comunes a todos los DAOs que vamos a generar dentro de un sistema.

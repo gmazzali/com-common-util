@@ -3,7 +3,9 @@ package com.common.util.exception;
 import com.common.util.holder.HolderMessage;
 
 /**
- * Las excepciones chequeadas que nos permite recorrer el el código el árbol de llamada mediante declaraciones explícitas de lanzamientos.
+ * Las excepciones chequeadas que nos permite realizar un seguimiento de los lanzamiento de la misma para un mejor control en tiempo de desarrollo.
+ * 
+ * @see MultipleCheckedException
  * 
  * @author Guillermo Mazzali
  * @version 1.0
@@ -13,7 +15,7 @@ public class CheckedException extends Exception {
 	private static final long serialVersionUID = -3282018311354032412L;
 
 	/**
-	 * El código del error obtenido.
+	 * El mensaje que detalla del error.
 	 */
 	private final String key;
 

@@ -1,4 +1,4 @@
-package com.common.util.model.order;
+package com.common.util.model.query.order;
 
 import java.util.HashMap;
 import java.util.Map;

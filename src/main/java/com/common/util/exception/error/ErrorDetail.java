@@ -6,16 +6,16 @@ package com.common.util.exception.error;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class ErrorDescriptor {
+public class ErrorDetail {
 
 	/**
 	 * El mensaje que describe el error.
 	 */
-	private String message;
+	protected final String message;
 	/**
 	 * El arreglo de elementos que complementan el detalle del error.
 	 */
-	private Object[] parameters;
+	protected final Object[] parameters;
 
 	/**
 	 * El constructor por copia de un detalle de un error.
@@ -25,7 +25,7 @@ public class ErrorDescriptor {
 	 * @param parameters
 	 *            El listado de los parámetros que detallan el error.
 	 */
-	public ErrorDescriptor(String message, Object[] parameters) {
+	public ErrorDetail(String message, Object[] parameters) {
 		super();
 		this.message = message;
 		this.parameters = parameters;
@@ -37,14 +37,14 @@ public class ErrorDescriptor {
 	 * @param message
 	 *            El mensaje que contiene una descripción del error.
 	 */
-	public ErrorDescriptor(String message) {
+	public ErrorDetail(String message) {
 		this(message, null);
 	}
 
 	/**
 	 * El constructor por omisión.
 	 */
-	public ErrorDescriptor() {
+	public ErrorDetail() {
 		this(null, null);
 	}
 
@@ -90,25 +90,5 @@ public class ErrorDescriptor {
 	 */
 	public Object[] getParameters() {
 		return this.parameters;
-	}
-
-	/**
-	 * La función encargada de cargar el mensaje de este detalle de un error.
-	 * 
-	 * @param message
-	 *            El mensaje que vamos a guardar dentro de este detalle de un error.
-	 */
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
-	/**
-	 * La función encargada de cargar el listado de los parámetros para complementar el detalle del error.
-	 * 
-	 * @param parameters
-	 *            El listado de los parámetros para complementar el detalle del error.
-	 */
-	public void setParameters(Object[] parameters) {
-		this.parameters = parameters;
 	}
 }
