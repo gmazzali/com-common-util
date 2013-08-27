@@ -25,10 +25,10 @@ public class IntervalUnitTest {
 	}
 
 	/**
-	 * Prueba en la validación de los rangos.
+	 * Prueba en la validación de los rangos por omisión <b>[min; max)</b>.
 	 */
 	@Test
-	public void pruebaDeValicadionDeRangos() {
+	public void pruebaDeValicadionDeRangosPorOmision() {
 		System.out.println("<<<<<<<<<<<<<<< PRUEBAS SOBRE LA VALIDACIÓN DE RANGO DE VALORES >>>>>>>>>>>>>>>");
 
 		Interval<Integer> range;

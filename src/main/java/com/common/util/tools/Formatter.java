@@ -25,7 +25,7 @@ public class Formatter {
 			return null;
 		}
 		// Si el tamaño es nulo lo cargamos en cero.
-		if (size == null) {
+		if (size == null || size < 0) {
 			size = 0;
 		}
 

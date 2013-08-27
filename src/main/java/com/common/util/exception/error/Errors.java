@@ -33,8 +33,17 @@ public class Errors {
 	 * @param parameters
 	 *            El listdo de los parámetros que vamos a utilizar para detallar el error.
 	 */
-	public void addMessage(String message, Object[] parameters) {
+	public void addError(String message, Object[] parameters) {
 		this.errorDetails.add(new ErrorDetail(message, parameters));
+	}
+
+	/**
+	 * La función encargada de verificar si hay algún error cargado dentro de este elemento.
+	 * 
+	 * @return TRUE en caso de que exista al menos un error dentro de este elemento, en caso contrario retorna FALSE.
+	 */
+	public Boolean hasErrors() {
+		return this.errorDetails.size() > 0;
 	}
 
 	/**
