@@ -8,28 +8,37 @@ import java.io.Serializable;
  * @author Guillermo Mazzali
  * @version 1.0
  * 
+ * @Deprecated
+ * 
  * @param <C1>
  *            Una de las clases que vamos a convertir en la clase <C2>.
  * @param <C2>
  *            La otra clase que vamos a poder convertir en una clase <C1>.
  */
+@Deprecated
 public interface Converter<C1 extends Serializable, C2 extends Serializable> {
 
 	/**
-	 * La función que mos permite convertir un objeto de una clase <C1> en un ojbeto de una clase <C2>.
+	 * La función que nos permite convertir un objeto de una clase <C1> en un convertir de una clase <C2>.
+	 * 
+	 * @Deprecated
 	 * 
 	 * @param entity
-	 *            objeto de la clase <C1> que vamos a covertir en un objeto de la clase <C2>.
+	 *            objeto de la clase <C1> que vamos a convertir en un objeto de la clase <C2>.
 	 * @return El objeto de la clase <C2> que convertimos a partir del objeto de la clase <C1>.
 	 */
+	@Deprecated
 	public C2 converter(C1 entity);
 
 	/**
-	 * La función que mos permite convertir un objeto de una clase <C2> en un ojbeto de una clase <C1>.
+	 * La función que nos permite convertir un objeto de una clase <C2> en un convertir de una clase <C1>.
+	 * 
+	 * @Deprecated
 	 * 
 	 * @param entity
-	 *            objeto de la clase <C2> que vamos a covertir en un objeto de la clase <C1>.
+	 *            objeto de la clase <C2> que vamos a convertir en un objeto de la clase <C1>.
 	 * @return El objeto de la clase <C1> que convertimos a partir del objeto de la clase <C2>.
 	 */
+	@Deprecated
 	public C1 reverter(C2 entity);
 }

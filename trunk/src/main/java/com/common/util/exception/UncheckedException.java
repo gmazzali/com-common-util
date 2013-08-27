@@ -3,7 +3,7 @@ package com.common.util.exception;
 import com.common.util.holder.HolderMessage;
 
 /**
- * Las excepciones no chequeadas que vamso a manejar dentro del sistema.
+ * Las excepciones no chequeadas que vamos a manejar dentro del sistema.
  * 
  * @author Guillermo Mazzali
  * @version 1.0
@@ -11,11 +11,11 @@ import com.common.util.holder.HolderMessage;
 public class UncheckedException extends RuntimeException {
 
 	private static final long serialVersionUID = 3912610403699752161L;
-	
+
 	/**
 	 * El código del error obtenido.
 	 */
-	private String key;
+	private final String key;
 
 	/**
 	 * El constructor de una excepción {@link UncheckedException} para ser lanzada en algún caso de error dentro del sistema.

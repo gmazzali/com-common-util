@@ -3,7 +3,7 @@ package com.common.util.exception;
 import com.common.util.holder.HolderMessage;
 
 /**
- * Las excepciones chequeadas que nos permite recorrer el el código el arbol de llamada.
+ * Las excepciones chequeadas que nos permite recorrer el el código el árbol de llamada mediante declaraciones explícitas de lanzamientos.
  * 
  * @author Guillermo Mazzali
  * @version 1.0
@@ -38,17 +38,6 @@ public class CheckedException extends Exception {
 		super(throwable);
 		this.key = throwable.getMessage();
 	}
-
-	/**
-	 * El constructor de una excepción {@link CheckedException} que va a recibir un conjunto de errores dentro de un elemento {@link Errors}.
-	 * 
-	 * @param errors
-	 *            El conjunto de errores que vamos a contener dentro de esta excepción.
-	 */
-	// TODO Falta hacer lo de la creación de la excepción con un conjunto de errores.
-	// public CheckedException(Errors errors) {
-	//
-	// }
 
 	/**
 	 * Función encargada de retornar el mensaje que detalla el error que produjo el lanzamiento de esta excepción para poder desplegarse dicho detalle

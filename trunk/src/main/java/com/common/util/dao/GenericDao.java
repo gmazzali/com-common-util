@@ -24,6 +24,15 @@ import com.common.util.model.filter.Filter;
 public abstract interface GenericDao<E extends Persistence<PK>, PK extends Serializable> {
 
 	/**
+	 * La función encargada de contar la cantidad de entidades.
+	 * 
+	 * @return El numero de registros.
+	 * @throws RuntimeException
+	 *             En caso de un problema durante la consulta de la cantidad de entidades.
+	 */
+	public Integer count() throws RuntimeException;
+
+	/**
 	 * La función encargada de contar la cantidad de entidades que corresponden a un filtro que se recibe.
 	 * 
 	 * @param filter
@@ -32,7 +41,7 @@ public abstract interface GenericDao<E extends Persistence<PK>, PK extends Seria
 	 * @throws RuntimeException
 	 *             En caso de un problema durante la consulta de la cantidad de entidades.
 	 */
-	public Integer count(Filter filter) throws RuntimeException;
+	public Integer countByFilter(Filter filter) throws RuntimeException;
 
 	/**
 	 * La función que nos permite recuperar todos las entidades del mismo tipo almacenados dentro de la base de datos.

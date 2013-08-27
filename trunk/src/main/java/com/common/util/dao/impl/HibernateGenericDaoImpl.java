@@ -36,6 +36,7 @@ import com.common.util.model.filter.UnaryComplexFilter;
  * @param <PK>
  *            La clase que corresponde al identificador de la entidad <T>.
  */
+@SuppressWarnings("unchecked")
 public abstract class HibernateGenericDaoImpl<E extends Persistence<PK>, PK extends Serializable> implements GenericDao<E, PK> {
 
 	/**
@@ -54,30 +55,29 @@ public abstract class HibernateGenericDaoImpl<E extends Persistence<PK>, PK exte
 	/**
 	 * El constructor de un elemento que nos permite manejar todos los DAOs que van a utilizar Hibernate como framework de acceso a la base de datos.
 	 */
-	@SuppressWarnings("unchecked")
 	public HibernateGenericDaoImpl() {
 		this.persistentClass = (Class<E>) ((java.lang.reflect.ParameterizedType) super.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	}
 
 	@Override
-	public Integer count(Filter filter) throws RuntimeException {
+	public Integer count() throws RuntimeException {
 		Session session = this.getSession();
 		Criteria criteria = session.createCriteria(this.persistentClass);
-		return (Integer) criteria.add(this.getCriterion(filter)).setProjection(Projections.rowCount()).uniqueResult();
+		return (Integer) criteria.setProjection(Projections.rowCount()).uniqueResult();
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public List<E> findByFilter(Filter filter) throws RuntimeException {
-		Session session = this.getSession();
-		Criteria criteria = session.createCriteria(this.persistentClass);
-		List<E> listado = criteria.add(this.getCriterion(filter)).list();
-		this.closeSession(session);
-		return listado;
+	public Integer countByFilter(Filter filter) throws RuntimeException {
+		if (filter != null) {
+			Session session = this.getSession();
+			Criteria criteria = session.createCriteria(this.persistentClass);
+			return (Integer) criteria.add(this.getCriterion(filter)).setProjection(Projections.rowCount()).uniqueResult();
+		} else {
+			return this.count();
+		}
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public List<E> findAll() throws RuntimeException {
 		Session session = this.getSession();
 		Criteria criteria = session.createCriteria(this.persistentClass);
@@ -87,12 +87,24 @@ public abstract class HibernateGenericDaoImpl<E extends Persistence<PK>, PK exte
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public E findById(PK id) throws RuntimeException {
 		Session session = this.getSession();
 		E entity = (E) session.get(this.persistentClass, id);
 		this.closeSession(session);
 		return entity;
+	}
+
+	@Override
+	public List<E> findByFilter(Filter filter) throws RuntimeException {
+		if (filter != null) {
+			Session session = this.getSession();
+			Criteria criteria = session.createCriteria(this.persistentClass);
+			List<E> listado = criteria.add(this.getCriterion(filter)).list();
+			this.closeSession(session);
+			return listado;
+		} else {
+			return this.findAll();
+		}
 	}
 
 	@Override
@@ -128,7 +140,6 @@ public abstract class HibernateGenericDaoImpl<E extends Persistence<PK>, PK exte
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public void deleteById(PK id) throws RuntimeException {
 		Session session = this.getSession();
 		E entity = (E) session.load(this.persistentClass, id);
@@ -163,7 +174,6 @@ public abstract class HibernateGenericDaoImpl<E extends Persistence<PK>, PK exte
 	 *            El filtro que vamos a utilizar para crear el Criterion.
 	 * @return El Criterion que corresponde al filtro de búsqueda.
 	 */
-	@SuppressWarnings("unchecked")
 	private Criterion getCriterion(Filter filter) {
 		// Si es un filtro atómico.
 		if (filter instanceof AtomicFilter) {
