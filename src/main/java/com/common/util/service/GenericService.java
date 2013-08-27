@@ -6,6 +6,7 @@ import java.util.List;
 import com.common.util.dao.GenericDao;
 import com.common.util.exception.CheckedException;
 import com.common.util.model.Persistence;
+import com.common.util.model.filter.Filter;
 
 /**
  * La interfaz que permite establecer un servicio para un elemento genérico junto al DAO correspondiente a este.
@@ -39,6 +40,15 @@ public interface GenericService<E extends Persistence<PK>, PK extends Serializab
 	public void validate(E entity) throws CheckedException;
 
 	/**
+	 * La función encargada de contar la cantidad de registros que tenemos dentro de la base de datos que corresponden a esta entidad.
+	 * 
+	 * @return El número de registros que tenemos almacenados dentro de la base de datos.
+	 * @throws CheckedException
+	 *             En caso de que ocurra un error a la hora de contar filas dentro de la base de datos.
+	 */
+	public Integer count() throws CheckedException;
+
+	/**
 	 * La función que nos permite recuperar todos las entidades del mismo tipo almacenados dentro de la base de datos.
 	 * 
 	 * @return El listado de los elementos almacenados.
@@ -46,6 +56,30 @@ public interface GenericService<E extends Persistence<PK>, PK extends Serializab
 	 *             En caso de un problema durante la recuperación de todos las entidades desde la base de datos.
 	 */
 	public List<E> findAll() throws CheckedException;
+
+	/**
+	 * La función encargada de contar la cantidad de registros que tenemos dentro de la base de datos que corresponden a esta entidad y que cumplen
+	 * con la condición dada en el filtro recibido.
+	 * 
+	 * @param filter
+	 *            El filtro para realizar la cuenta de registro dentro de la base de datos.
+	 * @return El número de registros que tenemos almacenados dentro de la base de datos y que corresponden con el filtro recibido.
+	 * @throws CheckedException
+	 *             En caso de que ocurra un error a la hora de contar filas dentro de la base de datos.
+	 */
+	public Integer countByFilter(Filter filter) throws CheckedException;
+
+	/**
+	 * La función que nos permite recuperar todos las entidades del mismo tipo almacenados dentro de la base de datos y que cumplen un filtro
+	 * recibido.
+	 * 
+	 * @param filter
+	 *            El filtro para realizar la consulta de registro dentro de la base de datos.
+	 * @return El listado de las entidades almacenados.
+	 * @throws CheckedException
+	 *             En caso de un problema durante la recuperación de todos las entidades desde la base de datos.
+	 */
+	public List<E> findByFilter(Filter filter) throws CheckedException;
 
 	/**
 	 * La función que utilizamos para recuperar una entidad dado su identificador.

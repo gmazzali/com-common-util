@@ -6,6 +6,7 @@ import java.util.List;
 import com.common.util.dao.GenericDao;
 import com.common.util.exception.CheckedException;
 import com.common.util.model.Persistence;
+import com.common.util.model.filter.Filter;
 import com.common.util.service.GenericService;
 
 /**
@@ -35,6 +36,16 @@ public abstract class GenericServiceImpl<E extends Persistence<PK>, PK extends S
 	}
 
 	@Override
+	public Integer count() throws CheckedException {
+		return this.dao.count();
+	}
+
+	@Override
+	public Integer countByFilter(Filter filter) throws CheckedException {
+		return this.dao.countByFilter(filter);
+	}
+
+	@Override
 	public List<E> findAll() throws CheckedException {
 		return this.dao.findAll();
 	}
@@ -42,6 +53,11 @@ public abstract class GenericServiceImpl<E extends Persistence<PK>, PK extends S
 	@Override
 	public E findById(PK id) throws CheckedException {
 		return this.dao.findById(id);
+	}
+
+	@Override
+	public List<E> findByFilter(Filter filter) throws CheckedException {
+		return this.dao.findByFilter(filter);
 	}
 
 	@Override

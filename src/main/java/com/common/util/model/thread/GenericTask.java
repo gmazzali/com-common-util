@@ -101,7 +101,7 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Integer
 	}
 
 	/**
-	 * La función encargada de arrancar la tarea en caso de que este en estado inicial, o de resumir la ejecuión en caso de que el proceso este
+	 * La función encargada de arrancar la tarea en caso de que este en estado inicial, o de resumir la ejecución en caso de que el proceso este
 	 * pausado.
 	 */
 	public void start() {
@@ -237,7 +237,7 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Integer
 	}
 
 	/**
-	 * La función encargada de setear al proceso que estamos ejecutando como de usuario (FALSE) o como un demonio (TRUE).
+	 * La función encargada de cargar al proceso que estamos ejecutando como de usuario (FALSE) o como un demonio (TRUE).
 	 * 
 	 * @param daemon
 	 *            El valor booleano que nos va a definir si el proceso va a ser de usuario (FALSE) o como un demonio (TRUE).
@@ -252,7 +252,7 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Integer
 	}
 
 	/**
-	 * La función encargada de setear el monitor que vamos a ocupar dentro de este método.
+	 * La función encargada de cargar el monitor que vamos a ocupar dentro de este método.
 	 * 
 	 * @param taskMonitor
 	 *            El monitor que vamos a ocupar dentro de este proceso.
@@ -292,7 +292,7 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Integer
 	protected abstract void afterExecute();
 
 	/**
-	 * La función encargada de setear el nombre del proceso.
+	 * La función encargada de cargar el nombre del proceso.
 	 * 
 	 * @param name
 	 *            El nombre del proceso.

@@ -22,7 +22,7 @@ public class HolderMessage {
 	private static Locale locale;
 
 	/**
-	 * La funcíon encargada de setear el recurso desde donde vamos a leer los mensajes.
+	 * La función encargada de cargar el recurso desde donde vamos a leer los mensajes.
 	 * 
 	 * @param resources
 	 *            Los recursos desde donde vamos a tomar los mensajes del sistema.
@@ -32,7 +32,7 @@ public class HolderMessage {
 	}
 
 	/**
-	 * La función encargada de setear la localidad sobre la que vamos a leer los mensajes del sistema.
+	 * La función encargada de cargar la localidad sobre la que vamos a leer los mensajes del sistema.
 	 * 
 	 * @param locale
 	 *            La localidad sobre la que vamos a leer los mensajes.
