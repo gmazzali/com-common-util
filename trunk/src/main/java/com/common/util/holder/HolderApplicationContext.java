@@ -35,4 +35,26 @@ public class HolderApplicationContext {
 	public static ApplicationContext getContext() {
 		return HolderApplicationContext.context;
 	}
+
+	/**
+	 * La función encargada de retornar el beans que corresponde con el nombre que recibimos.
+	 * 
+	 * @param beanName
+	 *            El nombre del bean que queremos recuperar desde el contexto.
+	 * @return El elemento que corresponde con el bean que recuperamos.
+	 */
+	public static Object getBean(String beanName) {
+		return HolderApplicationContext.context.getBean(beanName);
+	}
+
+	/**
+	 * La función encargada de retornar el beans que corresponde con el tipo que recibimos.
+	 * 
+	 * @param beanClass
+	 *            La clase que define el tipo del bean que queremos recuperar desde el contexto.
+	 * @return El elemento que corresponde con el bean que recuperamos.
+	 */
+	public static <E> E getBean(Class<E> beanClass) {
+		return beanClass.cast(HolderApplicationContext.context.getBean(beanClass));
+	}
 }
