@@ -1,4 +1,4 @@
-package com.common.util.model.filter;
+package com.common.util.model.query.filter;
 
 /**
  * La clase que representa un filtro complejo binario, donde posee 2 filtros unidos por una operación binaria.

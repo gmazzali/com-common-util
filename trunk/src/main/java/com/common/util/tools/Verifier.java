@@ -1,4 +1,4 @@
-package com.common.util.verifier;
+package com.common.util.tools;
 
 import java.io.IOException;
 import java.net.InetAddress;

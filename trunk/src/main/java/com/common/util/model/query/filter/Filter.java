@@ -1,11 +1,11 @@
-package com.common.util.model.filter;
+package com.common.util.model.query.filter;
 
 import java.io.Serializable;
 import java.util.List;
 
-import com.common.util.model.filter.BinaryComplexFilter.BynaryComplexFilterType;
-import com.common.util.model.filter.CompareFilter.CompareFilterType;
-import com.common.util.model.filter.LikeFilter.LikeType;
+import com.common.util.model.query.filter.BinaryComplexFilter.BynaryComplexFilterType;
+import com.common.util.model.query.filter.CompareFilter.CompareFilterType;
+import com.common.util.model.query.filter.LikeFilter.LikeType;
 
 /**
  * La clase que detalla un filtro dentro de una consulta dentro de la base de datos.

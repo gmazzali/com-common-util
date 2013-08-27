@@ -12,16 +12,16 @@ import org.hibernate.criterion.Restrictions;
 
 import com.common.util.dao.GenericDao;
 import com.common.util.model.Persistence;
-import com.common.util.model.filter.AtomicFilter;
-import com.common.util.model.filter.BetweenFilter;
-import com.common.util.model.filter.BinaryComplexFilter;
-import com.common.util.model.filter.CompareFilter;
-import com.common.util.model.filter.ComplexFilter;
-import com.common.util.model.filter.Filter;
-import com.common.util.model.filter.InFilter;
-import com.common.util.model.filter.LikeFilter;
-import com.common.util.model.filter.NullFilter;
-import com.common.util.model.filter.UnaryComplexFilter;
+import com.common.util.model.query.filter.AtomicFilter;
+import com.common.util.model.query.filter.BetweenFilter;
+import com.common.util.model.query.filter.BinaryComplexFilter;
+import com.common.util.model.query.filter.CompareFilter;
+import com.common.util.model.query.filter.ComplexFilter;
+import com.common.util.model.query.filter.Filter;
+import com.common.util.model.query.filter.InFilter;
+import com.common.util.model.query.filter.LikeFilter;
+import com.common.util.model.query.filter.NullFilter;
+import com.common.util.model.query.filter.UnaryComplexFilter;
 
 /**
  * La clase que implementa la interfaz {@link GenericDao} para acceder a una base de datos desde el framework Hibernate.

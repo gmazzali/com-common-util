@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * La clase que nos permite almacenar dentro de una misma excepción un conjunto de errores que tenemos en un proceso para luego largar los mismos
- * todos juntos en el momento adecuado.
+ * La clase que nos permite almacenar un listado de detalles de errores para manejarlos dentro del sistema.
+ * 
+ * @see ErrorDetail
  * 
  * @author Guillermo Mazzali
  * @version 1.0
@@ -13,33 +14,35 @@ import java.util.List;
 public class Errors {
 
 	/**
-	 * El listado de las claves de los errores.
+	 * El listado de los detalles de los errores.
 	 */
-	private final List<String> messagesKey;
+	protected final List<ErrorDetail> errorDetails;
 
 	/**
 	 * El constructor por omisión de un conjunto de errores.
 	 */
 	public Errors() {
-		this.messagesKey = new ArrayList<>();
+		this.errorDetails = new ArrayList<ErrorDetail>();
 	}
 
 	/**
-	 * La función encargada de agregar una nueva clave dentro del listado de claves de los errores que tenemos dentro de este conjunto.
+	 * La función encargada de agregar un nuevo detalle dentro de este conjunto.
 	 * 
-	 * @param key
-	 *            La nueva clave del error que acaba de producirse.
+	 * @param message
+	 *            La clave del error.
+	 * @param parameters
+	 *            El listdo de los parámetros que vamos a utilizar para detallar el error.
 	 */
-	public void addMessageKey(String key) {
-		this.messagesKey.add(key);
+	public void addMessage(String message, Object[] parameters) {
+		this.errorDetails.add(new ErrorDetail(message, parameters));
 	}
 
 	/**
-	 * La función encargada de retornar el listado de claves que tenemos de los errores que fuimos juntando durante la ejecución del sistema.
+	 * La función encargada de retornar el listado de detalles de errores.
 	 * 
-	 * @return El listado de las claves de los errores que juntamos en el sistema.
+	 * @return El listado de los detalles de los errores.
 	 */
-	public List<String> getMessagesKey() {
-		return this.messagesKey;
+	public List<ErrorDetail> getMessages() {
+		return this.errorDetails;
 	}
 }

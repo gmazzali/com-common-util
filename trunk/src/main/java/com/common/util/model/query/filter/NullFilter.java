@@ -1,4 +1,4 @@
-package com.common.util.model.filter;
+package com.common.util.model.query.filter;
 
 import java.io.Serializable;
 

@@ -33,7 +33,7 @@ public class IntervalUnitTest {
 
 		Interval<Integer> range;
 
-		range = new Interval<>(null, null);
+		range = new Interval<Integer>(null, null);
 		try {
 			range.validateInterval();
 			Assert.assertTrue(false);
@@ -41,7 +41,7 @@ public class IntervalUnitTest {
 			Assert.assertTrue(true);
 		}
 
-		range = new Interval<>(null, 0);
+		range = new Interval<Integer>(null, 0);
 		try {
 			range.validateInterval();
 			Assert.assertTrue(false);
@@ -49,7 +49,7 @@ public class IntervalUnitTest {
 			Assert.assertTrue(true);
 		}
 
-		range = new Interval<>(0, null);
+		range = new Interval<Integer>(0, null);
 		try {
 			range.validateInterval();
 			Assert.assertTrue(false);
@@ -57,7 +57,7 @@ public class IntervalUnitTest {
 			Assert.assertTrue(true);
 		}
 
-		range = new Interval<>(1, 0);
+		range = new Interval<Integer>(1, 0);
 		try {
 			range.validateInterval();
 			Assert.assertTrue(false);
@@ -65,7 +65,7 @@ public class IntervalUnitTest {
 			Assert.assertTrue(true);
 		}
 
-		range = new Interval<>(10, 9);
+		range = new Interval<Integer>(10, 9);
 		try {
 			range.validateInterval();
 			Assert.assertTrue(false);
@@ -73,7 +73,7 @@ public class IntervalUnitTest {
 			Assert.assertTrue(true);
 		}
 
-		range = new Interval<>(19, 10);
+		range = new Interval<Integer>(19, 10);
 		try {
 			range.validateInterval();
 			Assert.assertTrue(false);
@@ -81,7 +81,7 @@ public class IntervalUnitTest {
 			Assert.assertTrue(true);
 		}
 
-		range = new Interval<>(0, 0);
+		range = new Interval<Integer>(0, 0);
 		try {
 			range.validateInterval();
 			Assert.assertTrue(true);
@@ -89,7 +89,7 @@ public class IntervalUnitTest {
 			Assert.assertTrue(false);
 		}
 
-		range = new Interval<>(0, 1);
+		range = new Interval<Integer>(0, 1);
 		try {
 			range.validateInterval();
 			Assert.assertTrue(true);
@@ -97,7 +97,7 @@ public class IntervalUnitTest {
 			Assert.assertTrue(false);
 		}
 
-		range = new Interval<>(0, 10);
+		range = new Interval<Integer>(0, 10);
 		try {
 			range.validateInterval();
 			Assert.assertTrue(true);
@@ -105,7 +105,7 @@ public class IntervalUnitTest {
 			Assert.assertTrue(false);
 		}
 
-		range = new Interval<>(0, 20);
+		range = new Interval<Integer>(0, 20);
 		try {
 			range.validateInterval();
 			Assert.assertTrue(true);
@@ -113,7 +113,7 @@ public class IntervalUnitTest {
 			Assert.assertTrue(false);
 		}
 
-		range = new Interval<>(10, 20);
+		range = new Interval<Integer>(10, 20);
 		try {
 			range.validateInterval();
 			Assert.assertTrue(true);
@@ -121,7 +121,7 @@ public class IntervalUnitTest {
 			Assert.assertTrue(false);
 		}
 
-		range = new Interval<>(19, 20);
+		range = new Interval<Integer>(19, 20);
 		try {
 			range.validateInterval();
 			Assert.assertTrue(true);
@@ -129,7 +129,7 @@ public class IntervalUnitTest {
 			Assert.assertTrue(false);
 		}
 
-		range = new Interval<>(21, 22);
+		range = new Interval<Integer>(21, 22);
 		try {
 			range.validateInterval();
 			Assert.assertTrue(true);

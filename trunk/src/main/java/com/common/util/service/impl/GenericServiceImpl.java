@@ -6,7 +6,7 @@ import java.util.List;
 import com.common.util.dao.GenericDao;
 import com.common.util.exception.CheckedException;
 import com.common.util.model.Persistence;
-import com.common.util.model.filter.Filter;
+import com.common.util.model.query.filter.Filter;
 import com.common.util.service.GenericService;
 
 /**
