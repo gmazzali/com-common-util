@@ -15,7 +15,7 @@ import com.common.util.model.Entity;
  * @param <M>
  *            La clase que vamos a utilizar dentro del monitor de esta tarea.
  */
-public abstract class GenericTask<M extends Serializable> extends Entity<Integer> {
+public abstract class GenericTask<M extends Serializable> extends Entity<Long> {
 
 	private static final long serialVersionUID = 72323549692226354L;
 
@@ -37,7 +37,7 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Integer
 	/**
 	 * El nombre del proceso.
 	 */
-	protected String name;
+	protected final String name;
 	/**
 	 * El proceso que va a contener la tarea para su ejecución en segundo plano.
 	 */
@@ -73,7 +73,7 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Integer
 	 *            El nombre de la tarea que vamos a ejecutar.
 	 */
 	public GenericTask(String name) {
-		GenericTask.log.trace("GenericTask create");
+		GenericTask.log.trace("create a generic task");
 
 		this.name = name;
 		this.taskMonitor = new GenericMonitor<M>();
@@ -85,7 +85,7 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Integer
 	 * La función encargada de inicializar el proceso que va a contener la tarea que vamos a realizar y de inicializar el estado de la misma.
 	 */
 	private void initTask() {
-		GenericTask.log.trace("GenericTask initTask");
+		GenericTask.log.trace("initializing the generic task");
 
 		this.thread = new Thread() {
 			@Override
@@ -101,27 +101,33 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Integer
 	}
 
 	/**
+	 * La función encargada de ejecutar las acciones previas a la ejecución de la tarea propiamente dicha del proceso. Generalmente va a encargarse de inicializar un conjunto de elementos para poder ejecutar el proceso principal.
+	 */
+	protected abstract void beforeExecute();
+
+	/**
+	 * La función encargada de definir las acciones dentro de este proceso pero que todavia no va a ejecutarse hasta que se ejecute el metodo {@link GenericTask#start()}.
+	 */
+	protected abstract void execute();
+
+	/**
+	 * La función encargada de ejecutar las acciones para terminar la ejecución de la tarea, como ser, cierre de conexiones o archivos.
+	 */
+	protected abstract void afterExecute();
+
+	/**
 	 * La función encargada de arrancar la tarea en caso de que este en estado inicial, o de resumir la ejecución en caso de que el proceso este
 	 * pausado.
 	 */
 	public void start() {
 
 		synchronized (this.mutex) {
-			GenericTask.log.trace("GenericTask start");
+			GenericTask.log.trace("start generic task");
 
 			switch (this.taskState) {
 				case INIT:
 					this.taskState = TaskStatus.RUNNING;
 					this.thread.start();
-					break;
-
-				case RUNNING:
-					break;
-
-				case PAUSE:
-					break;
-
-				case STOP:
 					break;
 
 				default:
@@ -136,21 +142,12 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Integer
 	public void resume() {
 
 		synchronized (this.mutex) {
-			GenericTask.log.trace("GenericTask resume");
+			GenericTask.log.trace("resume generic task");
 
 			switch (this.taskState) {
-				case INIT:
-					break;
-
-				case RUNNING:
-					break;
-
 				case PAUSE:
 					this.taskState = TaskStatus.RUNNING;
 					this.mutex.notify();
-					break;
-
-				case STOP:
 					break;
 
 				default:
@@ -165,20 +162,11 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Integer
 	public void pause() {
 
 		synchronized (this.mutex) {
-			GenericTask.log.trace("GenericTask pause");
+			GenericTask.log.trace("pause generic task");
 
 			switch (this.taskState) {
-				case INIT:
-					break;
-
 				case RUNNING:
 					this.taskState = TaskStatus.PAUSE;
-					break;
-
-				case PAUSE:
-					break;
-
-				case STOP:
 					break;
 
 				default:
@@ -193,12 +181,9 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Integer
 	public void stop() {
 
 		synchronized (this.mutex) {
-			GenericTask.log.trace("GenericTask stop");
+			GenericTask.log.trace("stop generic task");
 
 			switch (this.taskState) {
-				case INIT:
-					break;
-
 				case RUNNING:
 					this.taskState = TaskStatus.STOP;
 					break;
@@ -206,9 +191,6 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Integer
 				case PAUSE:
 					this.taskState = TaskStatus.STOP;
 					this.mutex.notify();
-					break;
-
-				case STOP:
 					break;
 
 				default:
@@ -223,7 +205,7 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Integer
 	public synchronized void reboot() {
 
 		synchronized (this.mutex) {
-			GenericTask.log.trace("GenericTask reboot");
+			GenericTask.log.trace("reboot generic task");
 
 			try {
 				this.stop();
@@ -231,74 +213,21 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Integer
 				this.initTask();
 
 			} catch (InterruptedException e) {
-				GenericTask.log.error("reboot GenericTask failed", e);
+				GenericTask.log.error("reboot generic task failed", e);
 			}
 		}
 	}
 
 	/**
-	 * La función encargada de cargar al proceso que estamos ejecutando como de usuario (FALSE) o como un demonio (TRUE).
-	 * 
-	 * @param daemon
-	 *            El valor booleano que nos va a definir si el proceso va a ser de usuario (FALSE) o como un demonio (TRUE).
-	 */
-	public void setDemon(Boolean daemon) {
-		GenericTask.log.trace("GenericTask setDemon");
-
-		if (daemon != null) {
-			this.daemon = daemon;
-			this.thread.setDaemon(this.daemon);
-		}
-	}
-
-	/**
-	 * La función encargada de cargar el monitor que vamos a ocupar dentro de este método.
-	 * 
-	 * @param taskMonitor
-	 *            El monitor que vamos a ocupar dentro de este proceso.
-	 */
-	public void setMonitor(GenericMonitor<M> taskMonitor) {
-		if (taskMonitor != null) {
-			this.taskMonitor = taskMonitor;
-		}
-	}
-
-	/**
-	 * La función que nos permite esperar hasta que el proceso interno de la tarea finalize.
+	 * La función que nos permite esperar hasta que el proceso de la tarea finalice.
 	 * 
 	 * @throws InterruptedException
-	 *             La excepción que lanza en caso de que falle la ejecución del proceso durante la espera de su finalización.
+	 *             En caso de que falle la ejecución del proceso durante la espera de su finalización.
 	 */
 	public void join() throws InterruptedException {
-		GenericTask.log.trace("GenericTask join");
+		GenericTask.log.trace("join generic task");
 
 		this.thread.join();
-	}
-
-	/**
-	 * La función encargada de ejecutar las acciones necesarias para poder iniciar de manera normal la ejecución de la tarea. Permite inicializar las
-	 * variables necesarias para la tarea.
-	 */
-	protected abstract void beforeExecute();
-
-	/**
-	 * La función encargada de definir las acciones dentro de este proceso.
-	 */
-	protected abstract void execute();
-
-	/**
-	 * La función encargada de ejecutar las acciones para terminar la ejecución de la tarea, como ser, cierre de conexiones o archivos.
-	 */
-	protected abstract void afterExecute();
-
-	/**
-	 * La función encargada de cargar el nombre del proceso.
-	 * 
-	 * @param name
-	 *            El nombre del proceso.
-	 */
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	/**
@@ -326,5 +255,32 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Integer
 	 */
 	public GenericMonitor<M> getMonitor() {
 		return this.taskMonitor;
+	}
+
+	/**
+	 * La función encargada de cargar el monitor que vamos a ocupar dentro de este método.
+	 * 
+	 * @param taskMonitor
+	 *            El monitor que vamos a ocupar dentro de este proceso.
+	 */
+	public void setMonitor(GenericMonitor<M> taskMonitor) {
+		if (taskMonitor != null) {
+			this.taskMonitor = taskMonitor;
+		}
+	}
+
+	/**
+	 * La función encargada de cargar al proceso que estamos ejecutando como de usuario (FALSE) o como un demonio (TRUE).
+	 * 
+	 * @param daemon
+	 *            El valor booleano que nos va a definir si el proceso va a ser de usuario (FALSE) o como un demonio (TRUE).
+	 */
+	public void setDemon(Boolean daemon) {
+		GenericTask.log.trace("set daemon = " + daemon);
+
+		if (daemon != null) {
+			this.daemon = daemon;
+			this.thread.setDaemon(this.daemon);
+		}
 	}
 }
