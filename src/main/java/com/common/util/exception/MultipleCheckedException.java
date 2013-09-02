@@ -21,7 +21,7 @@ public class MultipleCheckedException extends Exception {
 	protected Errors errors;
 
 	/**
-	 * El contructor de una {@link MultipleCheckedException} que recibe como parámetro el conjunto de errores que vamos a contener.
+	 * El contructor de una {@link MultipleCheckedException} que recibe como parámetro el conjunto de {@link Errors} que vamos a contener.
 	 * 
 	 * @param errors
 	 *            El conjunto de errores que vamos a contener dentro de esta excepción.
