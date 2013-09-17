@@ -174,7 +174,7 @@ public abstract class HibernateGenericDaoImpl<E extends Persistence<PK>, PK exte
 	 *            El filtro que vamos a utilizar para crear el Criterion.
 	 * @return El Criterion que corresponde al filtro de búsqueda.
 	 */
-	private Criterion getCriterion(Filter filter) {
+	protected Criterion getCriterion(Filter filter) {
 		// Si es un filtro atómico.
 		if (filter instanceof AtomicFilter) {
 			AtomicFilter<Serializable> af = (AtomicFilter<Serializable>) filter;
@@ -253,7 +253,7 @@ public abstract class HibernateGenericDaoImpl<E extends Persistence<PK>, PK exte
 	 * 
 	 * @return La sesión que vamos a ocupar para acceder a la base de datos.
 	 */
-	private Session getSession() {
+	protected Session getSession() {
 		if (this.session == null) {
 			this.session = this.sessionFactory.openSession();
 		}
@@ -266,7 +266,7 @@ public abstract class HibernateGenericDaoImpl<E extends Persistence<PK>, PK exte
 	 * @param session
 	 *            La sesión abierta que queremos cerrar dentro del sistema.
 	 */
-	private void closeSession(Session session) {
+	protected void closeSession(Session session) {
 		// session.close();
 	}
 }

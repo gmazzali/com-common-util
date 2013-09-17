@@ -25,7 +25,7 @@ public class ErrorDetail {
 	 * @param parameters
 	 *            El listado de los parámetros que detallan el error.
 	 */
-	public ErrorDetail(String message, Object[] parameters) {
+	public ErrorDetail(String message, Object... parameters) {
 		super();
 		this.message = message;
 		this.parameters = parameters;
@@ -38,14 +38,14 @@ public class ErrorDetail {
 	 *            El mensaje que contiene una descripción del error.
 	 */
 	public ErrorDetail(String message) {
-		this(message, null);
+		this(message, (Object[]) null);
 	}
 
 	/**
 	 * El constructor por omisión.
 	 */
 	public ErrorDetail() {
-		this(null, null);
+		this(null, (Object[]) null);
 	}
 
 	/**

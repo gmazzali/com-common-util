@@ -1,5 +1,6 @@
 package com.common.util.exception;
 
+import com.common.util.exception.error.ErrorDetail;
 import com.common.util.exception.error.Errors;
 
 /**
@@ -21,7 +22,8 @@ public class MultipleCheckedException extends Exception {
 	protected Errors errors;
 
 	/**
-	 * El contructor de una {@link MultipleCheckedException} que recibe como parámetro el conjunto de {@link Errors} que vamos a contener.
+	 * El constructor de una instancia de {@link MultipleCheckedException} que recibe como parámetro el conjunto de {@link Errors} que vamos a
+	 * contener.
 	 * 
 	 * @param errors
 	 *            El conjunto de errores que vamos a contener dentro de esta excepción.
@@ -32,11 +34,26 @@ public class MultipleCheckedException extends Exception {
 	}
 
 	/**
+	 * El constructor de una instancia de {@link MultipleCheckedException} que recibe como parámetro un mensaje de {@link ErrorDetail} que vamos a
+	 * crear en el momento.
+	 * 
+	 * @param message
+	 *            El mensaje del error.
+	 * @param parameter
+	 *            Los parámetros que requerimos para el detalle del error.
+	 */
+	public MultipleCheckedException(String message, Object... parameter) {
+		super(message);
+		this.errors = new Errors();
+		this.errors.addError(message, parameter);
+	}
+
+	/**
 	 * La función encargada de retornar los errores que tenemos dentro de esta excepción.
 	 * 
 	 * @return El conjunto de errores que tenemos dentro de esta excepción.
 	 */
 	public Errors getErrors() {
-		return errors;
+		return this.errors;
 	}
 }
