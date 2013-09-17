@@ -31,9 +31,9 @@ public class Errors {
 	 * @param message
 	 *            La clave del error.
 	 * @param parameters
-	 *            El listdo de los parámetros que vamos a utilizar para detallar el error.
+	 *            El listado de los parámetros que vamos a utilizar para detallar el error.
 	 */
-	public void addError(String message, Object[] parameters) {
+	public void addError(String message, Object... parameters) {
 		this.errorDetails.add(new ErrorDetail(message, parameters));
 	}
 

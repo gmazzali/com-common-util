@@ -13,11 +13,11 @@ import org.springframework.context.MessageSource;
 public class HolderMessage {
 
 	/**
-	 * El conjunto de los mensaje que va a tener los mensajes de los errores que surjan dentro del sistema.
+	 * El conjunto de los mensaje que vamos a manejar dentro del sistema para los componentes.
 	 */
 	private static MessageSource resources;
 	/**
-	 * La localidad desde la que vamos a recuperar los mensajes.
+	 * La ubicación para la que vamos a manejar los mensajes.
 	 */
 	private static Locale locale;
 
@@ -62,10 +62,10 @@ public class HolderMessage {
 	 * @return El mensaje correspondiente a la clave recibida.
 	 */
 	public static String getMessage(String key, Object[] parameter) {
-		if (HolderMessage.resources != null) {
+		if (HolderMessage.resources != null && key != null) {
 			return HolderMessage.resources.getMessage(key, parameter, key, HolderMessage.locale);
 		} else {
-			return "## KEY NOT FOUND: " + key + " ##";
+			return key;
 		}
 	}
 }

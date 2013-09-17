@@ -28,7 +28,7 @@ public class HolderApplicationContext {
 	}
 
 	/**
-	 * La función encargada de retornar el contexto de la aplicación para que pueda usarse dentro del sistma.
+	 * La función encargada de retornar el contexto de la aplicación para que pueda usarse dentro del sistema.
 	 * 
 	 * @return El contexto de la aplicación actual.
 	 */
