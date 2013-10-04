@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 import com.common.util.model.Entity;
 
 /**
- * La clase que nos permite definir una tarea a ejecutarse en segundo plano para la ejecución concurrente de tareas.
+ * La clase que nos permite definir un proceso genérico para poder ejecutar tareas en segundo plano y poder controlar la misma de manera completa.
  * 
  * @author Guillermo Mazzali
  * @version 1.0
@@ -25,13 +25,33 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Long> {
 	private static final Logger log = Logger.getLogger(GenericTask.class);
 
 	/**
-	 * La enumeración que contiene los posibles estados en los que va a estar un proceso dentro de un sistema.
+	 * La enumeración que contiene los posibles estados de un proceso. Esta enumeración se va a usar internamente dentro del proceso para controlar la
+	 * ejecución del mismo.
 	 * 
 	 * @author Guillermo Mazzali
 	 * @version 1.0
 	 */
-	public enum TaskStatus {
-		INIT, RUNNING, PAUSE, STOP;
+	protected enum TaskStatus {
+		/**
+		 * El estado que indica que un proceso se inició con éxito.
+		 */
+		INIT,
+		/**
+		 * El estado que indica que un proceso se encuentra en ejecución.
+		 */
+		RUNNING,
+		/**
+		 * | El estado que indica que un proceso fue pausado de su ejecución.
+		 */
+		PAUSE,
+		/**
+		 * El estado que indica que un proceso fue detenido de manera imprevista.
+		 */
+		STOP,
+		/**
+		 * El estado que indica que un proceso finalizó con éxito.
+		 */
+		FINISH;
 	}
 
 	/**
@@ -63,7 +83,7 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Long> {
 	 * El constructor de una tarea para su ejecución en segundo plano.
 	 */
 	public GenericTask() {
-		this("DEFAULT TASK");
+		this("Generic Task");
 	}
 
 	/**
@@ -73,7 +93,7 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Long> {
 	 *            El nombre de la tarea que vamos a ejecutar.
 	 */
 	public GenericTask(String name) {
-		GenericTask.log.trace("create a generic task");
+		GenericTask.log.trace("create a generic task = " + name);
 
 		this.name = name;
 		this.taskMonitor = new GenericMonitor<M>();
@@ -87,12 +107,13 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Long> {
 	private void initTask() {
 		GenericTask.log.trace("initializing the generic task");
 
-		this.thread = new Thread() {
+		this.thread = new Thread(this.name) {
 			@Override
 			public void run() {
 				GenericTask.this.beforeExecute();
 				GenericTask.this.execute();
 				GenericTask.this.afterExecute();
+				GenericTask.this.taskState = TaskStatus.FINISH;
 			};
 		};
 		this.thread.setDaemon(this.daemon);
@@ -101,12 +122,14 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Long> {
 	}
 
 	/**
-	 * La función encargada de ejecutar las acciones previas a la ejecución de la tarea propiamente dicha del proceso. Generalmente va a encargarse de inicializar un conjunto de elementos para poder ejecutar el proceso principal.
+	 * La función encargada de ejecutar las acciones previas a la ejecución de la tarea propiamente dicha del proceso. Generalmente va a encargarse de
+	 * inicializar un conjunto de elementos para poder ejecutar el proceso principal.
 	 */
 	protected abstract void beforeExecute();
 
 	/**
-	 * La función encargada de definir las acciones dentro de este proceso pero que todavia no va a ejecutarse hasta que se ejecute el metodo {@link GenericTask#start()}.
+	 * La función encargada de definir las acciones dentro de este proceso pero que todavia no va a ejecutarse hasta que se ejecute el metodo
+	 * {@link GenericTask#start()}.
 	 */
 	protected abstract void execute();
 
@@ -120,18 +143,17 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Long> {
 	 * pausado.
 	 */
 	public void start() {
-
 		synchronized (this.mutex) {
 			GenericTask.log.trace("start generic task");
 
 			switch (this.taskState) {
-				case INIT:
-					this.taskState = TaskStatus.RUNNING;
-					this.thread.start();
-					break;
+			case INIT:
+				this.taskState = TaskStatus.RUNNING;
+				this.thread.start();
+				break;
 
-				default:
-					break;
+			default:
+				break;
 			}
 		}
 	}
@@ -140,18 +162,17 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Long> {
 	 * La función encargada de resumir la ejecución de un proceso en caso de que este se haya pausado.
 	 */
 	public void resume() {
-
 		synchronized (this.mutex) {
 			GenericTask.log.trace("resume generic task");
 
 			switch (this.taskState) {
-				case PAUSE:
-					this.taskState = TaskStatus.RUNNING;
-					this.mutex.notify();
-					break;
+			case PAUSE:
+				this.taskState = TaskStatus.RUNNING;
+				this.mutex.notify();
+				break;
 
-				default:
-					break;
+			default:
+				break;
 			}
 		}
 	}
@@ -160,17 +181,16 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Long> {
 	 * La función encargada de pausar de manera temporal la ejecución de la tarea para realizar otras acciones.
 	 */
 	public void pause() {
-
 		synchronized (this.mutex) {
 			GenericTask.log.trace("pause generic task");
 
 			switch (this.taskState) {
-				case RUNNING:
-					this.taskState = TaskStatus.PAUSE;
-					break;
+			case RUNNING:
+				this.taskState = TaskStatus.PAUSE;
+				break;
 
-				default:
-					break;
+			default:
+				break;
 			}
 		}
 	}
@@ -179,22 +199,21 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Long> {
 	 * Función encargada de detener de la ejecución de la tarea de manera definida.
 	 */
 	public void stop() {
-
 		synchronized (this.mutex) {
 			GenericTask.log.trace("stop generic task");
 
 			switch (this.taskState) {
-				case RUNNING:
-					this.taskState = TaskStatus.STOP;
-					break;
+			case RUNNING:
+				this.taskState = TaskStatus.STOP;
+				break;
 
-				case PAUSE:
-					this.taskState = TaskStatus.STOP;
-					this.mutex.notify();
-					break;
+			case PAUSE:
+				this.taskState = TaskStatus.STOP;
+				this.mutex.notify();
+				break;
 
-				default:
-					break;
+			default:
+				break;
 			}
 		}
 	}
@@ -203,10 +222,8 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Long> {
 	 * La función encargada de reiniciar el proceso que estamos utilizando dentro de esta tarea.
 	 */
 	public synchronized void reboot() {
-
 		synchronized (this.mutex) {
 			GenericTask.log.trace("reboot generic task");
-
 			try {
 				this.stop();
 				this.thread.join();
@@ -226,7 +243,6 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Long> {
 	 */
 	public void join() throws InterruptedException {
 		GenericTask.log.trace("join generic task");
-
 		this.thread.join();
 	}
 

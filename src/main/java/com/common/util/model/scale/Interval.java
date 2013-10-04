@@ -1,5 +1,6 @@
 package com.common.util.model.scale;
 
+import com.common.util.exception.UncheckedException;
 import com.common.util.exception.error.Errors;
 import com.common.util.model.Entity;
 
@@ -8,6 +9,8 @@ import com.common.util.model.Entity;
  * esto significa que se trata de dicho valor definido como un punto aislado de los demás, es decir, cuando minValue == maxValue => [minValue;
  * maxValue] y si dicho intervalo tiene un intervalo siguiente, este valor se repite dentro de ese intervalo de manera de no romper el esquema
  * original.
+ * 
+ * @see Scale
  * 
  * @author Guillermo Mazzali
  * @version 1.0
@@ -191,8 +194,8 @@ public class Interval<N extends Number> extends Entity<Long> implements Comparab
 			errors.addError("interval.extreme.invert", new Object[] { this.id });
 		}
 
-		if (errors.hasErrors()) {
-			// TODO gmazzali falta lo de lanzar la excepción con los errores.
+		if (errors.hasErrorsDetails()) {
+			throw new UncheckedException(errors);
 		}
 	}
 

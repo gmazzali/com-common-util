@@ -13,6 +13,8 @@ import com.common.util.model.Entity;
  * La clase que va a contener un listado de intervalos para mantener una escala numerada para corroborrar donde caen un valor dado. Los intervalos
  * dentro de esta escala corresponden al estilo [lowValue; highValue), cuyos limites superiores son abiertos y los inferiores cerrados.
  * 
+ * @see Interval
+ * 
  * @author Guillermo Mazzali
  * @version 1.0
  * 

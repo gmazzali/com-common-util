@@ -17,14 +17,16 @@ import com.common.util.model.query.filter.Filter;
  * @see Serializable
  * 
  * @param <E>
- *            La clase que corresponde a la entidad que vamos a persistir dentro de la base de datos.
+ *            La clase que corresponde a la entidad que vamos a manipular dentro de la base de datos.
  * @param <PK>
- *            La clase que corresponde al identificador de la entidad <T>.
+ *            La clase que corresponde al identificador de la entidad <b>E</b>.
  */
-public abstract interface GenericDao<E extends Persistence<PK>, PK extends Serializable> {
+public abstract interface GenericDao<E extends Persistence<PK>, PK extends Serializable> extends Serializable {
 
 	/**
 	 * La función encargada de contar la cantidad de entidades.
+	 * 
+	 * @see GenericDao#countByFilter(Filter)
 	 * 
 	 * @return El numero de registros.
 	 * @throws RuntimeException
@@ -34,6 +36,8 @@ public abstract interface GenericDao<E extends Persistence<PK>, PK extends Seria
 
 	/**
 	 * La función encargada de contar la cantidad de entidades que corresponden a un filtro que se recibe.
+	 * 
+	 * @see GenericDao#count()
 	 * 
 	 * @param filter
 	 *            El filtro con el que vamos a realizar la consulta de la cantidad de entidades que vamos a recuperar.
