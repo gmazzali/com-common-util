@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * La clase que nos permite almacenar un listado de detalles de errores para manejarlos dentro del sistema.
+ * El conjunto de los detalles de los errores para manejarlos dentro del sistema.
  * 
  * @see ErrorDetail
  * 
@@ -42,7 +42,7 @@ public class Errors {
 	 * 
 	 * @return TRUE en caso de que exista al menos un error dentro de este elemento, en caso contrario retorna FALSE.
 	 */
-	public Boolean hasErrors() {
+	public Boolean hasErrorsDetails() {
 		return this.errorDetails.size() > 0;
 	}
 
@@ -51,7 +51,7 @@ public class Errors {
 	 * 
 	 * @return El listado de los detalles de los errores.
 	 */
-	public List<ErrorDetail> getMessages() {
+	public List<ErrorDetail> getErrorDetails() {
 		return this.errorDetails;
 	}
 }

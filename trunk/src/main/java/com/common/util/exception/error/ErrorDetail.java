@@ -1,7 +1,7 @@
 package com.common.util.exception.error;
 
 /**
- * La clase que nos permite definir un error dado un mensaje que describe el mismo y los parámetros que complementan el mensaje.
+ * Los detalles de los errores dados mediante una frase dada y un conjuntos de parámetros que permiten complementar el mismo.
  * 
  * @author Guillermo Mazzali
  * @version 1.0
@@ -38,14 +38,14 @@ public class ErrorDetail {
 	 *            El mensaje que contiene una descripción del error.
 	 */
 	public ErrorDetail(String message) {
-		this(message, (Object[]) null);
+		this(message, new Object[0]);
 	}
 
 	/**
 	 * El constructor por omisión.
 	 */
 	public ErrorDetail() {
-		this(null, (Object[]) null);
+		this(null, new Object[0]);
 	}
 
 	/**

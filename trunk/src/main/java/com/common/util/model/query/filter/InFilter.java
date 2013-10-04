@@ -3,6 +3,8 @@ package com.common.util.model.query.filter;
 import java.io.Serializable;
 import java.util.List;
 
+import org.springframework.util.StringUtils;
+
 /**
  * La clase que permite crear un filtro para la verificar la inclusión de un atributo dentro de un listado.
  * 
@@ -45,16 +47,7 @@ public class InFilter<F extends Serializable> extends AtomicFilter<F> {
 	public String toString() {
 		String output = "";
 		output += this.getAttribute();
-		output += " IN (";
-		int index = 0;
-		for (Serializable s : this.list) {
-			output += s;
-			if (index < this.list.size() - 1) {
-				output += ", ";
-			}
-			index++;
-		}
-		output += ")";
+		output += " IN (" + StringUtils.collectionToDelimitedString(list, ", ") + ")";
 		return output;
 	}
 
