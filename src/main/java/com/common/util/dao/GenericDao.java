@@ -3,7 +3,6 @@ package com.common.util.dao;
 import java.io.Serializable;
 import java.util.List;
 
-import com.common.util.exception.CheckedException;
 import com.common.util.model.Persistence;
 import com.common.util.model.query.filter.Filter;
 
@@ -32,7 +31,7 @@ public abstract interface GenericDao<E extends Persistence<PK>, PK extends Seria
 	 * @throws RuntimeException
 	 *             En caso de un problema durante la consulta de la cantidad de entidades.
 	 */
-	public Integer count() throws RuntimeException;
+	public Long count() throws RuntimeException;
 
 	/**
 	 * La función encargada de contar la cantidad de entidades que corresponden a un filtro que se recibe.
@@ -45,7 +44,7 @@ public abstract interface GenericDao<E extends Persistence<PK>, PK extends Seria
 	 * @throws RuntimeException
 	 *             En caso de un problema durante la consulta de la cantidad de entidades.
 	 */
-	public Integer countByFilter(Filter filter) throws RuntimeException;
+	public Long countByFilter(Filter filter) throws RuntimeException;
 
 	/**
 	 * La función que nos permite recuperar todos las entidades del mismo tipo almacenados dentro de la base de datos.
@@ -67,7 +66,7 @@ public abstract interface GenericDao<E extends Persistence<PK>, PK extends Seria
 	 * 
 	 * @param id
 	 *            El identificador de la entidad que vamos a recuperar desde la base de datos.
-	 * @return La entidad que corresponde al identificador recibido. En caso de no encontrar nada, retorna NULL.
+	 * @return La entidad que corresponde al identificador recibido. En caso de no encontrar nada, retorna <i>NULL</i>.
 	 * @throws RuntimeException
 	 *             En caso de un problema durante la recuperación de la entidad desde la base de datos.
 	 */
@@ -92,8 +91,8 @@ public abstract interface GenericDao<E extends Persistence<PK>, PK extends Seria
 	 * 
 	 * @see GenericDao#saveOrUpdate(Persistence)
 	 * @see GenericDao#update(Persistence)
-	 * @see GenericDao#deleteById(Serializable)
 	 * @see GenericDao#delete(Persistence)
+	 * @see GenericDao#deleteById(Serializable)
 	 * 
 	 * @param entity
 	 *            La entidad que vamos a almacenar.
@@ -107,8 +106,8 @@ public abstract interface GenericDao<E extends Persistence<PK>, PK extends Seria
 	 * 
 	 * @see GenericDao#save(Persistence)
 	 * @see GenericDao#saveOrUpdate(Persistence)
-	 * @see GenericDao#deleteById(Serializable)
 	 * @see GenericDao#delete(Persistence)
+	 * @see GenericDao#deleteById(Serializable)
 	 * 
 	 * @param entity
 	 *            La entidad que vamos a actualizar.
@@ -122,15 +121,15 @@ public abstract interface GenericDao<E extends Persistence<PK>, PK extends Seria
 	 * 
 	 * @see GenericDao#save(Persistence)
 	 * @see GenericDao#update(Persistence)
-	 * @see GenericDao#deleteById(Serializable)
 	 * @see GenericDao#delete(Persistence)
+	 * @see GenericDao#deleteById(Serializable)
 	 * 
 	 * @param entity
 	 *            La entidad que vamos a insertar o actualizar.
-	 * @throws CheckedException
+	 * @throws RuntimeException
 	 *             En caso de un problema durante la inserción o actualización de la entidad dentro de la base de datos.
 	 */
-	public void saveOrUpdate(E entity) throws CheckedException;
+	public void saveOrUpdate(E entity) throws RuntimeException;
 
 	/**
 	 * La función para eliminar una entidad dentro de la base de datos.

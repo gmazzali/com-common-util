@@ -1,5 +1,6 @@
 package com.common.util.model.query.filter;
 
+
 /**
  * La clase que representa un filtro complejo binario, donde posee 2 filtros unidos por una operación binaria.
  * 
@@ -10,6 +11,14 @@ public class BinaryComplexFilter extends ComplexFilter {
 
 	/**
 	 * La enumeración que tiene los tipos de operaciones booleanas que podemos usar dentro del filtro binario complejo.
+	 * 
+	 * <ul>
+	 * <li>{@link BynaryComplexFilterType#AND}</li>
+	 * <li>{@link BynaryComplexFilterType#OR}</li>
+	 * </ul>
+	 * 
+	 * @author Guillermo Mazzali
+	 * @version 1.0
 	 */
 	public enum BynaryComplexFilterType {
 

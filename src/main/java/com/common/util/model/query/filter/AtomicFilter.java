@@ -15,6 +15,17 @@ public abstract class AtomicFilter<F extends Serializable> extends Filter {
 
 	/**
 	 * La enumeración que detalla los posibles tipos de filtros atómicos que pueden generarse.
+	 * 
+	 * <ul>
+	 * <li>{@link AtomicFilterType#COMPARE}</li>
+	 * <li>{@link AtomicFilterType#IN}</li>
+	 * <li>{@link AtomicFilterType#BETWEEN}</li>
+	 * <li>{@link AtomicFilterType#LIKE}</li>
+	 * <li>{@link AtomicFilterType#NULL}</li>
+	 * </ul>
+	 * 
+	 * @author Guillermo Mazzali
+	 * @version 1.0
 	 */
 	public enum AtomicFilterType {
 		COMPARE, IN, BETWEEN, LIKE, NULL;

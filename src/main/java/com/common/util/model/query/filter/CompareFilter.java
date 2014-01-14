@@ -14,6 +14,18 @@ public class CompareFilter<F extends Serializable> extends AtomicFilter<F> {
 
 	/**
 	 * La enumeración que detalla los tipos de comparaciones que podemos hacer dentro del filtro.
+	 * 
+	 * <ul>
+	 * <li>{@link CompareFilterType#EQUALS}</li>
+	 * <li>{@link CompareFilterType#NOT_EQUALS}</li>
+	 * <li>{@link CompareFilterType#GREATER}</li>
+	 * <li>{@link CompareFilterType#GREATER_OR_EQUALS}</li>
+	 * <li>{@link CompareFilterType#LESSER}</li>
+	 * <li>{@link CompareFilterType#LESSER_OR_EQUALS}</li>
+	 * </ul>
+	 * 
+	 * @author Guillermo Mazzali
+	 * @version 1.0
 	 */
 	public enum CompareFilterType {
 		/**

@@ -6,6 +6,8 @@ import java.util.Map;
 /**
  * La clase que permite definir el orden de los elementos que vamos a recuperar desde la base de datos.
  * 
+ * @see Order
+ * 
  * @author Guillermo Mazzali
  * @version 1.0
  */
@@ -13,6 +15,14 @@ public class OrderBy {
 
 	/**
 	 * La enumeración que determina los ordenes en los que vamos a poder ordenar los atributos de una consulta.
+	 * 
+	 * <ul>
+	 * <li>{@link Order#ASC}</li>
+	 * <li>{@link Order#DESC}</li>
+	 * </ul>
+	 * 
+	 * @author Guillermo Mazzali
+	 * @version 1.0
 	 */
 	public enum Order {
 		/**
@@ -36,7 +46,7 @@ public class OrderBy {
 	 * @param attribute
 	 *            El atributo que vamos a ordenar.
 	 * @param order
-	 *            El orden del atributo.
+	 *            El orden del atributo. Puede ser {@link Order#ASC} o {@link Order#DESC}.
 	 */
 	public OrderBy(String attribute, Order order) {
 		this.orders = new HashMap<String, Order>();
@@ -49,7 +59,7 @@ public class OrderBy {
 	 * @param attribute
 	 *            El atributo que vamos a ordenar.
 	 * @param order
-	 *            El orden en el que se va a recuperar.
+	 *            El orden en el que se va a recuperar. Este orden puede ser {@link Order#ASC} o {@link Order#DESC}.
 	 */
 	public OrderBy addOrder(String attribute, Order order) {
 		this.orders.put(attribute, order);

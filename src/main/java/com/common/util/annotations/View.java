@@ -19,6 +19,5 @@ import org.springframework.stereotype.Component;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface View {
-
 	public String value() default "";
 }
