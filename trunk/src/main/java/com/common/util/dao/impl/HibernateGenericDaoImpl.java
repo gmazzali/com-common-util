@@ -207,71 +207,71 @@ public abstract class HibernateGenericDaoImpl<E extends Persistence<PK>, PK exte
 	protected Criterion getCriterion(Filter filter) {
 		// Si es un filtro atómico.
 		if (filter instanceof AtomicFilter) {
-			AtomicFilter<Serializable> af = (AtomicFilter<Serializable>) filter;
+			AtomicFilter<Serializable> atomicFilter = (AtomicFilter<Serializable>) filter;
 
-			switch (af.getAtomicFilterType()) {
+			switch (atomicFilter.getAtomicFilterType()) {
 
 			case BETWEEN:
 				// Si el filtro es de una operación "between"
-				BetweenFilter<Serializable> br = (BetweenFilter<Serializable>) af;
-				return Restrictions.between(br.getAttribute(), br.getLowValue(), br.getHighValue());
+				BetweenFilter<Serializable> betweenFilter = (BetweenFilter<Serializable>) atomicFilter;
+				return Restrictions.between(betweenFilter.getAttribute(), betweenFilter.getLowValue(), betweenFilter.getHighValue());
 
 			case COMPARE:
 				// Si el filtro es de una operación "=" o "<>" o "<" o "<=" o ">" o ">="
-				CompareFilter<Serializable> cf = (CompareFilter<Serializable>) af;
-				switch (cf.getCompareFilterType()) {
+				CompareFilter<Serializable> compareFilter = (CompareFilter<Serializable>) atomicFilter;
+				switch (compareFilter.getCompareFilterType()) {
 				case EQUALS:
-					return Restrictions.eq(cf.getAttribute(), cf.getValue());
+					return Restrictions.eq(compareFilter.getAttribute(), compareFilter.getValue());
 				case NOT_EQUALS:
-					return Restrictions.ne(cf.getAttribute(), cf.getValue());
+					return Restrictions.ne(compareFilter.getAttribute(), compareFilter.getValue());
 				case GREATER:
-					return Restrictions.gt(cf.getAttribute(), cf.getValue());
+					return Restrictions.gt(compareFilter.getAttribute(), compareFilter.getValue());
 				case GREATER_OR_EQUALS:
-					return Restrictions.ge(cf.getAttribute(), cf.getValue());
+					return Restrictions.ge(compareFilter.getAttribute(), compareFilter.getValue());
 				case LESSER:
-					return Restrictions.lt(cf.getAttribute(), cf.getValue());
+					return Restrictions.lt(compareFilter.getAttribute(), compareFilter.getValue());
 				case LESSER_OR_EQUALS:
-					return Restrictions.le(cf.getAttribute(), cf.getValue());
+					return Restrictions.le(compareFilter.getAttribute(), compareFilter.getValue());
 				}
 
 			case IN:
 				// Si el filtro es de una operación "in"
-				InFilter<Serializable> inf = (InFilter<Serializable>) af;
-				return Restrictions.in(inf.getAttribute(), inf.getList());
+				InFilter<Serializable> inFilter = (InFilter<Serializable>) atomicFilter;
+				return Restrictions.in(inFilter.getAttribute(), inFilter.getList());
 
 			case LIKE:
 				// Si el filtro es de una operación "like"
-				LikeFilter lf = (LikeFilter) af;
-				return Restrictions.like(lf.getAttribute(), lf.getLike());
+				LikeFilter likeFilter = (LikeFilter) atomicFilter;
+				return Restrictions.like(likeFilter.getAttribute(), likeFilter.getLike());
 
 			case NULL:
 				// Si el filtro es de una operación "is Null"
-				NullFilter nf = (NullFilter) af;
-				return Restrictions.isNull(nf.getAttribute());
+				NullFilter nullFilter = (NullFilter) atomicFilter;
+				return Restrictions.isNull(nullFilter.getAttribute());
 			}
 		} else if (filter instanceof ComplexFilter) {
 
 			// Si el filtro es uno complejo, la procesamos.
-			ComplexFilter cf = (ComplexFilter) filter;
-			switch (cf.getComplexType()) {
+			ComplexFilter complexFilter = (ComplexFilter) filter;
+			switch (complexFilter.getComplexType()) {
 
 			case UNARY:
 				// Si el filtro, es un filtro unario del tipo "not"
-				UnaryComplexFilter ucr = (UnaryComplexFilter) cf;
-				return Restrictions.not(this.getCriterion(ucr.getFilter()));
+				UnaryComplexFilter unaryComplexFilter = (UnaryComplexFilter) complexFilter;
+				return Restrictions.not(this.getCriterion(unaryComplexFilter.getFilter()));
 
 			case BINARY:
 				// Si el filtro es un filtro binario.
-				BinaryComplexFilter bcr = (BinaryComplexFilter) cf;
-				switch (bcr.getBinaryType()) {
+				BinaryComplexFilter binaryComplexFilter = (BinaryComplexFilter) complexFilter;
+				switch (binaryComplexFilter.getBinaryType()) {
 
 				case AND:
 					// Si el filtro es del tipo "and"
-					return Restrictions.and(this.getCriterion(bcr.getFirstFilter()), this.getCriterion(bcr.getSecondFilter()));
+					return Restrictions.and(this.getCriterion(binaryComplexFilter.getFirstFilter()), this.getCriterion(binaryComplexFilter.getSecondFilter()));
 
 				case OR:
 					// Si el filtro es del tipo "or"
-					return Restrictions.or(this.getCriterion(bcr.getFirstFilter()), this.getCriterion(bcr.getSecondFilter()));
+					return Restrictions.or(this.getCriterion(binaryComplexFilter.getFirstFilter()), this.getCriterion(binaryComplexFilter.getSecondFilter()));
 				}
 			}
 		}
