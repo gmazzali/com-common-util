@@ -3,6 +3,7 @@ package com.common.util.holder;
 import java.util.Locale;
 
 import org.springframework.context.MessageSource;
+import org.springframework.util.StringUtils;
 
 /**
  * La clase que va a contener las propiedades que van a tener los mensajes propios de las excepciones que van a desplegarse dentro de la aplicación.
@@ -37,7 +38,7 @@ public class HolderMessage {
 	 * @param locale
 	 *            La localidad sobre la que vamos a leer los mensajes.
 	 */
-	public static void setLocale(Locale locale) {
+	public void setLocale(Locale locale) {
 		HolderMessage.locale = locale;
 	}
 
@@ -65,7 +66,7 @@ public class HolderMessage {
 		if (HolderMessage.resources != null && key != null) {
 			return HolderMessage.resources.getMessage(key, parameter, key, HolderMessage.locale);
 		} else {
-			return key;
+			return key + " {" + StringUtils.arrayToDelimitedString(parameter, ", ") + "}";
 		}
 	}
 }

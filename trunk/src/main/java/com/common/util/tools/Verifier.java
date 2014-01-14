@@ -1,7 +1,5 @@
 package com.common.util.tools;
 
-import java.io.IOException;
-import java.net.InetAddress;
 import java.util.regex.Pattern;
 
 /**
@@ -13,24 +11,36 @@ import java.util.regex.Pattern;
 public class Verifier {
 
 	/**
-	 * Función encargada de verificar que el nombre de una persona física sea válido dentro del sistema.
+	 * Se encarga de validar que una cadena de caracteres recibida coincida con un patrón de validación.
+	 * 
+	 * @param string
+	 *            La cadena que vamos a validar.
+	 * @param pattern
+	 *            El patrón con el que vamos a validar la cadena.
+	 * @return <i>true</i> en caso que la cadena recibida tcoincida con el patrón recibido, en caso contrario, retornamos <i>false</i>.
+	 */
+	public boolean matchString(String string, String pattern) {
+		return (string == null) ? false : Pattern.matches(pattern, string.toLowerCase().trim());
+	}
+
+	/**
+	 * Se encarga de verificar que el nombre de una persona física sea válido dentro del sistema.
 	 * 
 	 * <pre>
 	 * nombre |= [a-z]+(['|\s][a-z]+)*
 	 * </pre>
 	 * 
 	 * @param name
-	 *            La cadena que tiene el nombre de la persona que vamos a veriicar.
-	 * @return FALSE en caso de que el nombre recibido sea nulo, este vacio o contenga algún elemento no válido para un nombre, en caso contrario
-	 *         retorna TRUE.
+	 *            La cadena que tiene el nombre de la persona que vamos a verificar.
+	 * @return <i>true</i> en caso de que el nombre recibido coincida con el patrón de un nombre válido, en caso contrario retorna <i>false</i>.
 	 */
-	public static boolean isValidPersonName(String name) {
+	public boolean isValidPersonName(String name) {
 		String pattern = "[a-zñáéíóúü]+(['|\\s][a-zñáéíóúü]+)*";
-		return (name == null) ? false : Pattern.matches(pattern, name.toLowerCase().trim());
+		return this.matchString(name, pattern);
 	}
 
 	/**
-	 * Función encargada de verificar que el apellido de una persona física sea válido dentro del sistema.
+	 * Se encarga de verificar que el apellido de una persona física sea válido dentro del sistema.
 	 * 
 	 * <pre>
 	 * apellido |= [a-z]+(['|\s][a-z]+)*
@@ -38,16 +48,15 @@ public class Verifier {
 	 * 
 	 * @param lastname
 	 *            La cadena que contiene el apellido de la persona que vamos a verificar.
-	 * @return FALSE en caso de que el apellido recibido sea nulo, este vacio o contenga algún caracter no válido para un apellido, en caso contrario
-	 *         retorna TRUE.
+	 * @return <i>true</i> en caso de que el apellido recibido coincida con el patrón de un apellido válido, en caso contrario retorna <i>false</i>.
 	 */
-	public static boolean isValidPersonLastname(String lastname) {
+	public boolean isValidPersonLastname(String lastname) {
 		String pattern = "[a-zñáéíóúü]+(['|\\s][a-zñáéíóúü]+)*";
-		return (lastname == null) ? false : Pattern.matches(pattern, lastname.toLowerCase().trim());
+		return this.matchString(lastname, pattern);
 	}
 
 	/**
-	 * Función encargada de verificar que el número recibido dentro de la cadena sea válido para un número de CUIT de una persona física o jurídica.
+	 * Se encarga de verificar que el número recibido dentro de la cadena sea válido para un número de CUIT de una persona física o jurídica.
 	 * 
 	 * <pre>
 	 * cuit |= [0-9]{2}-[0-9]{6,8}-[0-9]{1}
@@ -55,15 +64,15 @@ public class Verifier {
 	 * 
 	 * @param cuit
 	 *            El cuit de la empresa que va a verificarse.
-	 * @return FALSE en caso de que la cadena recibida sea nula o contenga valores inválidos para un CUIT, en caso contrario retornará TRUE.
+	 * @return <i>true</i> en caso de que el CUIT recibido coincida con el patrón de un CUIT válido, en caso contrario retorna <i>false</i>.
 	 */
-	public static boolean isValidCuitNumber(String cuit) {
+	public boolean isValidCuit(String cuit) {
 		String pattern = "^\\d{2}\\-\\d{6,8}\\-\\d{1}$";
-		return (cuit == null) ? false : Pattern.matches(pattern, cuit.toLowerCase().trim());
+		return this.matchString(cuit, pattern);
 	}
 
 	/**
-	 * Función encargada de verificar que una cadena contenga un DNI válido dentro del sistema.
+	 * Se encarga de verificar que una cadena contenga un DNI válido dentro del sistema.
 	 * 
 	 * <pre>
 	 * DNI |= [0-9]{6,8}
@@ -71,15 +80,15 @@ public class Verifier {
 	 * 
 	 * @param dni
 	 *            La cadena que contiene el DNI a verificarse.
-	 * @return FALSE en caso de que la cadena recibida sea nula, este vacia o contenga caracteres invalidos, en caso contrario retorna TRUE.
+	 * @return <i>true</i> en caso de que el DNI recibido coincida con el patrón de un DNI válido, en caso contrario retorna <i>false</i>.
 	 */
-	public static boolean isValidDni(String dni) {
+	public boolean isValidDni(String dni) {
 		String pattern = "^\\d{6,8}";
-		return (dni == null) ? false : Pattern.matches(pattern, dni.toLowerCase().trim());
+		return this.matchString(dni, pattern);
 	}
 
 	/**
-	 * Función encargada de verificar que la oración recibida corresponda con un domicilio dado el nombre de la calle y la altura.
+	 * Se encarga de verificar que la oración recibida corresponda con un domicilio dado el nombre de la calle y la altura.
 	 * 
 	 * <pre>
 	 * cuit |= [0-9a-z]+[('| |.)0-9a-z]*
@@ -87,16 +96,15 @@ public class Verifier {
 	 * 
 	 * @param address
 	 *            La oración que tiene el domicilio que va a verificarse.
-	 * @return FALSE en caso de que el domicilio sea nulo, este vacio o contenga algún caracter no válido dentro de la oración, en caso contrario
-	 *         retorna TRUE.
+	 * @return <i>true</i> en caso de que el domicilio recibido coincida con el patrón de un domicilio válido, en caso contrario retorna <i>false</i>.
 	 */
-	public static boolean isValidPostalAddress(String address) {
+	public boolean isValidAddress(String address) {
 		String pattern = "[a-zñáéíóúü0-9]+[('|\\s\\.)a-zñáéíóúü0-9]*";
-		return (address == null) ? false : Pattern.matches(pattern, address.toLowerCase().trim());
+		return this.matchString(address, pattern);
 	}
 
 	/**
-	 * Función destinada a la verificación de una cadena de contener un número de teléfono de acuerdo el siguiente patrón de contenido:
+	 * Se encarga de verificar que la oración recibida corresponda a un número de teléfono de acuerdo el siguiente patrón de contenido:
 	 * 
 	 * <pre>
 	 * telephone |= [0-9]+
@@ -104,17 +112,16 @@ public class Verifier {
 	 * 
 	 * @param telephone
 	 *            La cadena que va a verificarse su correcto formato que corresponda con un número de teléfono.
-	 * @return true en caso de que la cadena recibida corresponda con el formato valido para un número de teléfono, en caso contrario esta función
-	 *         retornará false.
+	 * @return <i>true</i> en caso de que el teléfono recibido coincida con el patrón de un teléfono válido, en caso contrario retorna <i>false</i>.
 	 */
-	public static boolean isValidTelephoneNumber(String telephone) {
+	public boolean isValidTelephoneNumber(String telephone) {
 		String pattern = "[0-9]+";
-		return (telephone == null) ? false : Pattern.matches(pattern, telephone.toLowerCase().trim());
+		return this.matchString(telephone, pattern);
 	}
 
 	/**
-	 * Función destinada a la verificación de una cadena para ver si la misma posee un "E-Mail" válido dentro el sistema. Esta cadena debe estar de
-	 * acuerdo al siguiente patrón de contenido:
+	 * Se encarga de verificar que la oración recibida corresponda a un e-mail válido dentro el sistema. Esta cadena debe estar de acuerdo al
+	 * siguiente patrón de contenido:
 	 * 
 	 * <pre>
 	 * email |= [0-9a-zñüáéíóú.-_]+[@][[0-9a-zñüáéíóú-_]+[.[0-9a-zñüáéíóú-_]+]]+
@@ -122,14 +129,13 @@ public class Verifier {
 	 * 
 	 * @param email
 	 *            La cadena que va a verificarse su correcto formato que corresponda con un e-mail.
-	 * @return true en caso de que la cadena recibida corresponda con el formato valido para un E-mail, en caso contrario esta función retornará
-	 *         false.
+	 * @return <i>true</i> en caso de que el e-mail recibido coincida con el patrón de un e-mail válido, en caso contrario retorna <i>false</i>.
 	 */
-	public static boolean isValidEmail(String email) {
+	public boolean isValidEmail(String email) {
 		String userPattern = "([0-9a-zñüáéíóú][0-9a-zñüáéíóú\\.\\-\\_]+[0-9a-zñüáéíóú])";
 		String domainPattern = "([0-9a-zñüáéíóú][0-9a-zñüáéíóú\\-\\_\\.]+[0-9a-zñüáéíóú])+";
 		String pattern = userPattern + "@" + domainPattern;
-		return (email == null) ? false : Pattern.matches(pattern, email.toLowerCase().trim());
+		return this.matchString(email, pattern);
 	}
 
 	/**
@@ -142,12 +148,11 @@ public class Verifier {
 	 * 
 	 * @param number
 	 *            La cadena que vamos a verificar que su conteniddo sean solamente números.
-	 * @return true en caso de que la cadena recibida como parámetros tenga en su interior solo carácteres numéricos. En caso contrario, esta
-	 *         retornará false.
+	 * @return <i>true</i> en caso de que el número recibido coincida con el patrón de un número válido, en caso contrario retorna <i>false</i>.
 	 */
-	public static boolean isValidInteger(String number) {
+	public boolean isValidInteger(String number) {
 		String pattern = "(-)?[0-9]+";
-		return (number == null) ? false : Pattern.matches(pattern, number.toLowerCase().trim());
+		return this.matchString(number, pattern);
 	}
 
 	/**
@@ -160,12 +165,12 @@ public class Verifier {
 	 * 
 	 * @param number
 	 *            La cadena que vamos a verificar que su conteniddo sean solamente números flotantes.
-	 * @return true en caso de que la cadena recibida como parámetros tenga en su interior solo carácteres numéricos. En caso contrario, esta
-	 *         retornará false.
+	 * @return <i>true</i> en caso de que el número flotante recibido coincida con el patrón de un número flotante válido, en caso contrario retorna
+	 *         <i>false</i>.
 	 */
-	public static boolean isValidFloat(String number) {
+	public boolean isValidFloat(String number) {
 		String pattern = "(-)?[0-9]+\\.[0-9]+";
-		return (number == null) ? false : Pattern.matches(pattern, number.toLowerCase().trim());
+		return this.matchString(number, pattern);
 	}
 
 	/**
@@ -178,29 +183,12 @@ public class Verifier {
 	 * 
 	 * @param address
 	 *            La cadena de carácteres que vamos a verificar si cumple con el patrón de una dirección IPv4.
-	 * @return true en caso de que la cadena recibida corresponda con el patrón de una dirección IPv4 de la forma 255.255.255.255, en caso de que no
-	 *         cumpla con dicho patrón, esta función retornará false.
+	 * @return <i>true</i> en caso de que el dirección IPv4 recibido coincida con el patrón de un dirección IPv4 válido, en caso contrario retorna
+	 *         <i>false</i>.
 	 */
-	public static boolean isValidIPv4Address(String address) {
+	public boolean isValidIPv4Address(String address) {
 		String pattern = "^(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)(\\.(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)){3}$";
-		return (address == null) ? false : Pattern.matches(pattern, address.toLowerCase().trim());
-	}
-
-	/**
-	 * Función encargada de verificar que una dirección IP sea alcanzable desde esta maquina para verificar si se puede generar una conexión con dicho
-	 * dispositivo.
-	 * 
-	 * @param address
-	 *            La dirección IP sobre la que vamos a realizar las pruebas de alcanzabilidad.
-	 * @return true en caso de que la dirección IP recibida como parámetros sea alcanzable por este sistema, en caso que no se pueda establecer una
-	 *         conexión con dicha dirección, esta función retornará false.
-	 */
-	public static boolean isHostReachable(InetAddress address) {
-		try {
-			return address.isReachable(3000);
-		} catch (IOException ex) {
-			return false;
-		}
+		return this.matchString(address, pattern);
 	}
 
 	/**
@@ -208,11 +196,11 @@ public class Verifier {
 	 * 
 	 * @param portNumber
 	 *            La cadena de caracteres con el número de puerto que queremos probar su validez.
-	 * @return true en caso de que el número recibido caiga dentro del rango de valores válidos para los puertos del algún protocolo de capa de
-	 *         transporte, en caso de que no cumpla con eso, este retornará false.
+	 * @return <i>true</i> en caso de que el número de puerto recibido coincida con el patrón de un númer de puerto válido, en caso contrario retorna
+	 *         <i>false</i>.
 	 */
-	public static boolean isValidPortNumber(String portNumber) {
-		return Verifier.isValidInteger(portNumber) && Verifier.isValidPortNumber(Integer.parseInt(portNumber));
+	public boolean isValidPortNumber(String portNumber) {
+		return this.isValidInteger(portNumber) && this.isValidPortNumber(Integer.parseInt(portNumber));
 	}
 
 	/**
@@ -220,10 +208,10 @@ public class Verifier {
 	 * 
 	 * @param portNumber
 	 *            El número de puerto que queremos probar su validez.
-	 * @return true en caso de que el número recibido caiga dentro del rango de valores válidos para los puertos del algún protocolo de capa de
-	 *         transporte, en caso de que no cumpla con eso, este retornará false.
+	 * @return <i>true</i> en caso de que el número de puerto recibido coincida con el patrón de un númer de puerto válido, en caso contrario retorna
+	 *         <i>false</i>.
 	 */
-	public static boolean isValidPortNumber(Integer portNumber) {
+	public boolean isValidPortNumber(Integer portNumber) {
 		if (portNumber > 0 && portNumber < 65536) {
 			return true;
 		} else {

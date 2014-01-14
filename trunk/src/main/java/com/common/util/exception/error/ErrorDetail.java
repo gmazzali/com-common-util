@@ -3,6 +3,8 @@ package com.common.util.exception.error;
 /**
  * Los detalles de los errores dados mediante una frase dada y un conjuntos de parámetros que permiten complementar el mismo.
  * 
+ * @see Errors
+ * 
  * @author Guillermo Mazzali
  * @version 1.0
  */
