@@ -2,11 +2,14 @@ package com.common.util.exception;
 
 import com.common.util.exception.error.ErrorDetail;
 import com.common.util.exception.error.Errors;
+import com.common.util.holder.HolderMessage;
 
 /**
  * Las excepciones no chequeadas que vamos a manejar dentro del sistema.
  * 
  * @see CheckedException
+ * @see ErrorDetail
+ * @see Errors
  * 
  * @author Guillermo Mazzali
  * @version 1.0
@@ -21,8 +24,7 @@ public class UncheckedException extends RuntimeException {
 	protected Errors errors;
 
 	/**
-	 * El constructor de una instancia de {@link UncheckedException} que recibe como parámetro el conjunto de {@link Errors} que vamos a
-	 * contener.
+	 * El constructor de una instancia de {@link UncheckedException} que recibe como parámetro el conjunto de {@link Errors} que vamos a contener.
 	 * 
 	 * @param errors
 	 *            El conjunto de errores que vamos a contener dentro de esta excepción.
@@ -33,8 +35,8 @@ public class UncheckedException extends RuntimeException {
 	}
 
 	/**
-	 * El constructor de una instancia de {@link UncheckedException} que recibe como parámetro un mensaje de {@link ErrorDetail} que vamos a
-	 * crear en el momento.
+	 * El constructor de una instancia de {@link UncheckedException} que recibe como parámetro un mensaje de {@link ErrorDetail} que vamos a crear en
+	 * el momento.
 	 * 
 	 * @param message
 	 *            El mensaje del error.
@@ -54,5 +56,31 @@ public class UncheckedException extends RuntimeException {
 	 */
 	public Errors getErrors() {
 		return this.errors;
+	}
+
+	/**
+	 * Función encargada de retornar los mensajes de errores que tenemos en este elemento.
+	 * 
+	 * @return El mensaje de los errores que tenemos dentro de esta excepción.
+	 */
+	@Override
+	public String getMessage() {
+		StringBuffer stringBuffer = new StringBuffer();
+
+		for (ErrorDetail errorDetail : this.errors.getErrorDetails()) {
+			stringBuffer.append(HolderMessage.getMessage(errorDetail.getMessage(), errorDetail.getParameters()));
+			stringBuffer.append(this.getMessageSeparator());
+		}
+
+		return stringBuffer.toString();
+	}
+
+	/**
+	 * La función encargada de retornar el separador para convertir el listado de errores en una oración completa.
+	 * 
+	 * @return La cadena que vamos a utilizar para separar los mensajes dentro de la oración completa.
+	 */
+	protected String getMessageSeparator() {
+		return "\n";
 	}
 }

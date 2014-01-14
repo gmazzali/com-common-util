@@ -6,9 +6,11 @@ import com.common.util.holder.HolderMessage;
 
 /**
  * Las excepciones chequeadas que nos permite realizar un seguimiento de los lanzamiento de la misma para un mejor control en tiempo de desarrollo.
- *  
- *  @see UncheckedException
- *  
+ * 
+ * @see UncheckedException
+ * @see ErrorDetail
+ * @see Errors
+ * 
  * @author Guillermo Mazzali
  * @version 1.0
  */
@@ -22,8 +24,7 @@ public class CheckedException extends Exception {
 	protected Errors errors;
 
 	/**
-	 * El constructor de una instancia de {@link CheckedException} que recibe como parámetro el conjunto de {@link Errors} que vamos a
-	 * contener.
+	 * El constructor de una instancia de {@link CheckedException} que recibe como parámetro el conjunto de {@link Errors} que vamos a contener.
 	 * 
 	 * @param errors
 	 *            El conjunto de errores que vamos a contener dentro de esta excepción.
@@ -34,8 +35,8 @@ public class CheckedException extends Exception {
 	}
 
 	/**
-	 * El constructor de una instancia de {@link CheckedException} que recibe como parámetro un mensaje de {@link ErrorDetail} que vamos a
-	 * crear en el momento.
+	 * El constructor de una instancia de {@link CheckedException} que recibe como parámetro un mensaje de {@link ErrorDetail} que vamos a crear en el
+	 * momento.
 	 * 
 	 * @param message
 	 *            El mensaje del error.
@@ -58,44 +59,28 @@ public class CheckedException extends Exception {
 	}
 
 	/**
-	 * El mensaje que detalla del error.
-	 */
-	@Deprecated
-	private String key = "";
-
-	/**
-	 * El constructor de una excepción {@link CheckedException} para ser lanzada en algún caso de error dentro del sistema.
+	 * Función encargada de retornar los mensajes de errores que tenemos en este elemento.
 	 * 
-	 * @param key
-	 *            La clave que permite saber que mensaje va a desplegarse.
-	 */
-	@Deprecated
-	public CheckedException(String key) {
-		super(key);
-		this.key = key;
-	}
-
-	/**
-	 * El constructor de una excepción {@link CheckedException} que va a contener una excepción encapsulada dentro de esta.
-	 * 
-	 * @param throwable
-	 *            La excepción que vamos a encapsular dentro de esta.
-	 */
-	@Deprecated
-	public CheckedException(Throwable throwable) {
-		super(throwable);
-		this.key = throwable.getMessage();
-	}
-
-	/**
-	 * Función encargada de retornar el mensaje que detalla el error que produjo el lanzamiento de esta excepción para poder desplegarse dicho detalle
-	 * dentro de algún cuadro o almacenarse dentro de un archivo de LOG.
-	 * 
-	 * @return El mensaje de error que detalla el estado del sistema que la lanzo.
+	 * @return El mensaje de los errores que tenemos dentro de esta excepción.
 	 */
 	@Override
-	@Deprecated
 	public String getMessage() {
-		return HolderMessage.getMessage(this.key);
+		StringBuffer stringBuffer = new StringBuffer();
+
+		for (ErrorDetail errorDetail : this.errors.getErrorDetails()) {
+			stringBuffer.append(HolderMessage.getMessage(errorDetail.getMessage(), errorDetail.getParameters()));
+			stringBuffer.append(this.getMessageSeparator());
+		}
+
+		return stringBuffer.toString();
+	}
+
+	/**
+	 * La función encargada de retornar el separador para convertir el listado de errores en una oración completa.
+	 * 
+	 * @return La cadena que vamos a utilizar para separar los mensajes dentro de la oración completa.
+	 */
+	protected String getMessageSeparator() {
+		return "\n";
 	}
 }

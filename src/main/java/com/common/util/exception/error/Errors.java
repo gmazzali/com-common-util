@@ -3,9 +3,14 @@ package com.common.util.exception.error;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.common.util.exception.CheckedException;
+import com.common.util.exception.UncheckedException;
+
 /**
  * El conjunto de los detalles de los errores para manejarlos dentro del sistema.
  * 
+ * @see UncheckedException
+ * @see CheckedException
  * @see ErrorDetail
  * 
  * @author Guillermo Mazzali
