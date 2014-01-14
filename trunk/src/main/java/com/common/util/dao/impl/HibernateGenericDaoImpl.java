@@ -73,18 +73,18 @@ public abstract class HibernateGenericDaoImpl<E extends Persistence<PK>, PK exte
 	}
 
 	@Override
-	public Integer count() throws RuntimeException {
+	public Long count() throws RuntimeException {
 		Session session = this.getSession();
 		Criteria criteria = session.createCriteria(this.persistentClass);
-		return (Integer) criteria.setProjection(Projections.rowCount()).uniqueResult();
+		return (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
 	}
 
 	@Override
-	public Integer countByFilter(Filter filter) throws RuntimeException {
+	public Long countByFilter(Filter filter) throws RuntimeException {
 		if (filter != null) {
 			Session session = this.getSession();
 			Criteria criteria = session.createCriteria(this.persistentClass);
-			return (Integer) criteria.add(this.getCriterion(filter)).setProjection(Projections.rowCount()).uniqueResult();
+			return (Long) criteria.add(this.getCriterion(filter)).setProjection(Projections.rowCount()).uniqueResult();
 		} else {
 			return this.count();
 		}

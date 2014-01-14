@@ -12,6 +12,16 @@ public class LikeFilter extends AtomicFilter<Serializable> {
 
 	/**
 	 * La enumeración que contiene los tipos de comparaciones de String.
+	 * 
+	 * <ul>
+	 * <li>{@link LikeType#EQUAL}</li>
+	 * <li>{@link LikeType#START}</li>
+	 * <li>{@link LikeType#END}</li>
+	 * <li>{@link LikeType#ANY}</li>
+	 * </ul>
+	 * 
+	 * @author Guillermo Mazzali
+	 * @version 1.0
 	 */
 	public enum LikeType {
 

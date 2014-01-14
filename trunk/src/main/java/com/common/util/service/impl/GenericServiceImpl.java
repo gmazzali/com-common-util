@@ -36,12 +36,12 @@ public abstract class GenericServiceImpl<E extends Persistence<PK>, PK extends S
 	}
 
 	@Override
-	public Integer count() throws CheckedException {
+	public Long count() throws CheckedException {
 		return this.dao.count();
 	}
 
 	@Override
-	public Integer countByFilter(Filter filter) throws CheckedException {
+	public Long countByFilter(Filter filter) throws CheckedException {
 		return this.dao.countByFilter(filter);
 	}
 

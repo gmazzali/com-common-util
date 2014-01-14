@@ -25,113 +25,113 @@ public class IntervalUnitTest {
 	}
 
 	/**
-	 * Prueba en la validación de los rangos por omisión <b>[min; max)</b>.
+	 * Prueba en la validación de los rangos por omisión <i>[min; max)</i>.
 	 */
 	@Test
 	public void pruebaDeValicadionDeRangosPorOmision() {
 		System.out.println("<<<<<<<<<<<<<<< PRUEBAS SOBRE LA VALIDACIÓN DE RANGO DE VALORES >>>>>>>>>>>>>>>");
 
-		Interval<Integer> range;
+		Interval<Integer> interval;
 
-		range = new Interval<Integer>(null, null);
+		interval = new Interval<Integer>(null, null);
 		try {
-			range.validateInterval();
+			interval.validateInterval();
 			Assert.assertTrue(false);
 		} catch (UncheckedException e) {
 			Assert.assertTrue(true);
 		}
 
-		range = new Interval<Integer>(null, 0);
+		interval = new Interval<Integer>(null, 0);
 		try {
-			range.validateInterval();
+			interval.validateInterval();
 			Assert.assertTrue(false);
 		} catch (UncheckedException e) {
 			Assert.assertTrue(true);
 		}
 
-		range = new Interval<Integer>(0, null);
+		interval = new Interval<Integer>(0, null);
 		try {
-			range.validateInterval();
+			interval.validateInterval();
 			Assert.assertTrue(false);
 		} catch (UncheckedException e) {
 			Assert.assertTrue(true);
 		}
 
-		range = new Interval<Integer>(1, 0);
+		interval = new Interval<Integer>(1, 0);
 		try {
-			range.validateInterval();
+			interval.validateInterval();
 			Assert.assertTrue(false);
 		} catch (UncheckedException e) {
 			Assert.assertTrue(true);
 		}
 
-		range = new Interval<Integer>(10, 9);
+		interval = new Interval<Integer>(10, 9);
 		try {
-			range.validateInterval();
+			interval.validateInterval();
 			Assert.assertTrue(false);
 		} catch (UncheckedException e) {
 			Assert.assertTrue(true);
 		}
 
-		range = new Interval<Integer>(19, 10);
+		interval = new Interval<Integer>(19, 10);
 		try {
-			range.validateInterval();
+			interval.validateInterval();
 			Assert.assertTrue(false);
 		} catch (UncheckedException e) {
 			Assert.assertTrue(true);
 		}
 
-		range = new Interval<Integer>(0, 0);
+		interval = new Interval<Integer>(0, 0);
 		try {
-			range.validateInterval();
+			interval.validateInterval();
 			Assert.assertTrue(true);
 		} catch (UncheckedException e) {
 			Assert.assertTrue(false);
 		}
 
-		range = new Interval<Integer>(0, 1);
+		interval = new Interval<Integer>(0, 1);
 		try {
-			range.validateInterval();
+			interval.validateInterval();
 			Assert.assertTrue(true);
 		} catch (UncheckedException e) {
 			Assert.assertTrue(false);
 		}
 
-		range = new Interval<Integer>(0, 10);
+		interval = new Interval<Integer>(0, 10);
 		try {
-			range.validateInterval();
+			interval.validateInterval();
 			Assert.assertTrue(true);
 		} catch (UncheckedException e) {
 			Assert.assertTrue(false);
 		}
 
-		range = new Interval<Integer>(0, 20);
+		interval = new Interval<Integer>(0, 20);
 		try {
-			range.validateInterval();
+			interval.validateInterval();
 			Assert.assertTrue(true);
 		} catch (UncheckedException e) {
 			Assert.assertTrue(false);
 		}
 
-		range = new Interval<Integer>(10, 20);
+		interval = new Interval<Integer>(10, 20);
 		try {
-			range.validateInterval();
+			interval.validateInterval();
 			Assert.assertTrue(true);
 		} catch (UncheckedException e) {
 			Assert.assertTrue(false);
 		}
 
-		range = new Interval<Integer>(19, 20);
+		interval = new Interval<Integer>(19, 20);
 		try {
-			range.validateInterval();
+			interval.validateInterval();
 			Assert.assertTrue(true);
 		} catch (UncheckedException e) {
 			Assert.assertTrue(false);
 		}
 
-		range = new Interval<Integer>(21, 22);
+		interval = new Interval<Integer>(21, 22);
 		try {
-			range.validateInterval();
+			interval.validateInterval();
 			Assert.assertTrue(true);
 		} catch (UncheckedException e) {
 			Assert.assertTrue(false);
