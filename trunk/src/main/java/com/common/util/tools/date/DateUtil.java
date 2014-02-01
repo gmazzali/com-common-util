@@ -325,7 +325,7 @@ public class DateUtil {
 	 *             En caso de que la fecha recibida sea nula.
 	 */
 	public static boolean isWeekend(Date date) {
-		// Verificamos que el parámetro no sea nulo o negativo.
+		// Verificamos que el parámetro no sea nulo.
 		if (date == null) {
 			throw new UncheckedException("The date must don't be null.");
 		}
@@ -335,6 +335,142 @@ public class DateUtil {
 		int weekDay = calendar.get(Calendar.DAY_OF_WEEK);
 
 		return (weekDay == Calendar.SATURDAY || weekDay == Calendar.SUNDAY);
+	}
+
+	/**
+	 * Permite obtener el primer día del mes anterior a la fecha recibida.
+	 * 
+	 * @param date
+	 *            La fecha que nos permite calcular el mes anterior a la misma.
+	 * @return La fecha correspondiente al primer dia del mes anterior a la fecha recibida.
+	 * @throws UncheckedException
+	 *             En caso de que la fecha recibida sea nula.
+	 */
+	public static Date getPreviousMonth(Date date) {
+		// Verificamos que la fecha no sea nula.
+		if (date == null) {
+			throw new UncheckedException("The date must don't be null.");
+		}
+
+		// Hacemos los calculos.
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+
+		Integer year = calendar.get(Calendar.YEAR);
+		Integer month = calendar.get(Calendar.MONTH);
+
+		if (month == calendar.getMinimum(Calendar.MONTH)) {
+			year -= 1;
+			month = calendar.getMaximum(Calendar.MONTH);
+		} else {
+			month--;
+		}
+
+		calendar.set(Calendar.YEAR, year);
+		calendar.set(Calendar.MONTH, month);
+		calendar.set(Calendar.DAY_OF_MONTH, calendar.getMinimum(Calendar.DAY_OF_MONTH));
+		calendar.set(Calendar.HOUR_OF_DAY, calendar.getMinimum(Calendar.HOUR_OF_DAY));
+		calendar.set(Calendar.MINUTE, calendar.getMinimum(Calendar.MINUTE));
+		calendar.set(Calendar.SECOND, calendar.getMinimum(Calendar.SECOND));
+		calendar.set(Calendar.MILLISECOND, calendar.getMinimum(Calendar.MILLISECOND));
+
+		return calendar.getTime();
+	}
+
+	/**
+	 * Permite obtener el primer día del mes siguiente a la fecha recibida.
+	 * 
+	 * @param date
+	 *            La fecha que nos permite calcular el mes siguiente a la misma.
+	 * @return La fecha correspondiente al primer dia del mes siguiente a la fecha recibida.
+	 * @throws UncheckedException
+	 *             En caso de que la fecha recibida sea nula.
+	 */
+	public static Date getNextMonth(Date date) {
+		// Verificamos que la fecha no sea nula.
+		if (date == null) {
+			throw new UncheckedException("The date must don't be null.");
+		}
+
+		// Hacemos los calculos.
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+
+		Integer year = calendar.get(Calendar.YEAR);
+		Integer month = calendar.get(Calendar.MONTH);
+
+		if (month == calendar.getMaximum(Calendar.MONTH)) {
+			year += 1;
+			month = calendar.getMinimum(Calendar.MONTH);
+		} else {
+			month++;
+		}
+
+		calendar.set(Calendar.YEAR, year);
+		calendar.set(Calendar.MONTH, month);
+		calendar.set(Calendar.DAY_OF_MONTH, calendar.getMinimum(Calendar.DAY_OF_MONTH));
+		calendar.set(Calendar.HOUR_OF_DAY, calendar.getMinimum(Calendar.HOUR_OF_DAY));
+		calendar.set(Calendar.MINUTE, calendar.getMinimum(Calendar.MINUTE));
+		calendar.set(Calendar.SECOND, calendar.getMinimum(Calendar.SECOND));
+		calendar.set(Calendar.MILLISECOND, calendar.getMinimum(Calendar.MILLISECOND));
+
+		return calendar.getTime();
+	}
+
+	/**
+	 * Permite calcular el primer dia del mes de una fecha recibida.
+	 * 
+	 * @param date
+	 *            La fecha recibida a la que vamos a calcular el primer dia del mes.
+	 * @return El primer dia del mes que corresponde a la fecha recibida y que ademas contiene la hora <b>00:00:00.000</b>.
+	 * @throws UncheckedException
+	 *             En caso de que la fecha recibida sea nula.
+	 */
+	public static Date getFirstDayOfMonth(Date date) {
+		// Verificamos que la fecha no sea nula.
+		if (date == null) {
+			throw new UncheckedException("The date must don't be null.");
+		}
+
+		// Hacemos los calculos.
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+
+		calendar.set(Calendar.DAY_OF_MONTH, calendar.getMinimum(Calendar.DAY_OF_MONTH));
+		calendar.set(Calendar.HOUR_OF_DAY, calendar.getMinimum(Calendar.HOUR_OF_DAY));
+		calendar.set(Calendar.MINUTE, calendar.getMinimum(Calendar.MINUTE));
+		calendar.set(Calendar.SECOND, calendar.getMinimum(Calendar.SECOND));
+		calendar.set(Calendar.MILLISECOND, calendar.getMinimum(Calendar.MILLISECOND));
+
+		return calendar.getTime();
+	}
+
+	/**
+	 * Permite calcular el último dia del mes de una fecha recibida.
+	 * 
+	 * @param date
+	 *            La fecha recibida a la que vamos a calcular el último dia del mes.
+	 * @return El último dia del mes que corresponde a la fecha recibida y que ademas contiene la hora <b>23:59:59.999</b>.
+	 * @throws UncheckedException
+	 *             En caso de que la fecha recibida sea nula.
+	 */
+	public static Date getLastDayOfMonth(Date date) {
+		// Verificamos que la fecha no sea nula.
+		if (date == null) {
+			throw new UncheckedException("The date must don't be null.");
+		}
+
+		// Hacemos los calculos.
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+
+		calendar.set(Calendar.DAY_OF_MONTH, calendar.getMaximum(Calendar.DAY_OF_MONTH));
+		calendar.set(Calendar.HOUR_OF_DAY, calendar.getMaximum(Calendar.HOUR_OF_DAY));
+		calendar.set(Calendar.MINUTE, calendar.getMaximum(Calendar.MINUTE));
+		calendar.set(Calendar.SECOND, calendar.getMaximum(Calendar.SECOND));
+		calendar.set(Calendar.MILLISECOND, calendar.getMaximum(Calendar.MILLISECOND));
+
+		return calendar.getTime();
 	}
 
 	/**
