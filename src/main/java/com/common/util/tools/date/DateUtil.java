@@ -247,31 +247,31 @@ public class DateUtil {
 		calendar.setTime(date);
 
 		if (datePrecision.getLevel() < DatePrecision.MILLISECOND.getLevel()) {
-			calendar.set(Calendar.MILLISECOND, 0);
+			calendar.set(Calendar.MILLISECOND, calendar.getActualMinimum(Calendar.MILLISECOND));
 		}
 
 		if (datePrecision.getLevel() < DatePrecision.SECOND.getLevel()) {
-			calendar.set(Calendar.SECOND, 0);
+			calendar.set(Calendar.SECOND, calendar.getActualMinimum(Calendar.SECOND));
 		}
 
 		if (datePrecision.getLevel() < DatePrecision.MINUTE.getLevel()) {
-			calendar.set(Calendar.MINUTE, 0);
+			calendar.set(Calendar.MINUTE, calendar.getActualMinimum(Calendar.MINUTE));
 		}
 
 		if (datePrecision.getLevel() < DatePrecision.HOUR.getLevel()) {
-			calendar.set(Calendar.HOUR_OF_DAY, 0);
+			calendar.set(Calendar.HOUR_OF_DAY, calendar.getActualMinimum(Calendar.HOUR_OF_DAY));
 		}
 
 		if (datePrecision.getLevel() < DatePrecision.DAY.getLevel()) {
-			calendar.set(Calendar.DAY_OF_MONTH, 1);
+			calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
 		}
 
 		if (datePrecision.getLevel() < DatePrecision.MONTH.getLevel()) {
-			calendar.set(Calendar.MONTH, 1);
+			calendar.set(Calendar.MONTH, calendar.getActualMinimum(Calendar.MONTH));
 		}
 
 		if (datePrecision.getLevel() < DatePrecision.YEAR.getLevel()) {
-			calendar.set(Calendar.YEAR, 1900);
+			calendar.set(Calendar.YEAR, calendar.getActualMinimum(Calendar.YEAR));
 		}
 
 		return calendar.getTime();
@@ -359,20 +359,20 @@ public class DateUtil {
 		Integer year = calendar.get(Calendar.YEAR);
 		Integer month = calendar.get(Calendar.MONTH);
 
-		if (month == calendar.getMinimum(Calendar.MONTH)) {
+		if (month == calendar.getActualMinimum(Calendar.MONTH)) {
 			year -= 1;
-			month = calendar.getMaximum(Calendar.MONTH);
+			month = calendar.getActualMaximum(Calendar.MONTH);
 		} else {
 			month--;
 		}
 
 		calendar.set(Calendar.YEAR, year);
 		calendar.set(Calendar.MONTH, month);
-		calendar.set(Calendar.DAY_OF_MONTH, calendar.getMinimum(Calendar.DAY_OF_MONTH));
-		calendar.set(Calendar.HOUR_OF_DAY, calendar.getMinimum(Calendar.HOUR_OF_DAY));
-		calendar.set(Calendar.MINUTE, calendar.getMinimum(Calendar.MINUTE));
-		calendar.set(Calendar.SECOND, calendar.getMinimum(Calendar.SECOND));
-		calendar.set(Calendar.MILLISECOND, calendar.getMinimum(Calendar.MILLISECOND));
+		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+		calendar.set(Calendar.HOUR_OF_DAY, calendar.getActualMinimum(Calendar.HOUR_OF_DAY));
+		calendar.set(Calendar.MINUTE, calendar.getActualMinimum(Calendar.MINUTE));
+		calendar.set(Calendar.SECOND, calendar.getActualMinimum(Calendar.SECOND));
+		calendar.set(Calendar.MILLISECOND, calendar.getActualMinimum(Calendar.MILLISECOND));
 
 		return calendar.getTime();
 	}
@@ -399,20 +399,20 @@ public class DateUtil {
 		Integer year = calendar.get(Calendar.YEAR);
 		Integer month = calendar.get(Calendar.MONTH);
 
-		if (month == calendar.getMaximum(Calendar.MONTH)) {
+		if (month == calendar.getActualMaximum(Calendar.MONTH)) {
 			year += 1;
-			month = calendar.getMinimum(Calendar.MONTH);
+			month = calendar.getActualMinimum(Calendar.MONTH);
 		} else {
 			month++;
 		}
 
 		calendar.set(Calendar.YEAR, year);
 		calendar.set(Calendar.MONTH, month);
-		calendar.set(Calendar.DAY_OF_MONTH, calendar.getMinimum(Calendar.DAY_OF_MONTH));
-		calendar.set(Calendar.HOUR_OF_DAY, calendar.getMinimum(Calendar.HOUR_OF_DAY));
-		calendar.set(Calendar.MINUTE, calendar.getMinimum(Calendar.MINUTE));
-		calendar.set(Calendar.SECOND, calendar.getMinimum(Calendar.SECOND));
-		calendar.set(Calendar.MILLISECOND, calendar.getMinimum(Calendar.MILLISECOND));
+		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+		calendar.set(Calendar.HOUR_OF_DAY, calendar.getActualMinimum(Calendar.HOUR_OF_DAY));
+		calendar.set(Calendar.MINUTE, calendar.getActualMinimum(Calendar.MINUTE));
+		calendar.set(Calendar.SECOND, calendar.getActualMinimum(Calendar.SECOND));
+		calendar.set(Calendar.MILLISECOND, calendar.getActualMinimum(Calendar.MILLISECOND));
 
 		return calendar.getTime();
 	}
@@ -436,11 +436,11 @@ public class DateUtil {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 
-		calendar.set(Calendar.DAY_OF_MONTH, calendar.getMinimum(Calendar.DAY_OF_MONTH));
-		calendar.set(Calendar.HOUR_OF_DAY, calendar.getMinimum(Calendar.HOUR_OF_DAY));
-		calendar.set(Calendar.MINUTE, calendar.getMinimum(Calendar.MINUTE));
-		calendar.set(Calendar.SECOND, calendar.getMinimum(Calendar.SECOND));
-		calendar.set(Calendar.MILLISECOND, calendar.getMinimum(Calendar.MILLISECOND));
+		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+		calendar.set(Calendar.HOUR_OF_DAY, calendar.getActualMinimum(Calendar.HOUR_OF_DAY));
+		calendar.set(Calendar.MINUTE, calendar.getActualMinimum(Calendar.MINUTE));
+		calendar.set(Calendar.SECOND, calendar.getActualMinimum(Calendar.SECOND));
+		calendar.set(Calendar.MILLISECOND, calendar.getActualMinimum(Calendar.MILLISECOND));
 
 		return calendar.getTime();
 	}
@@ -464,61 +464,12 @@ public class DateUtil {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 
-		calendar.set(Calendar.DAY_OF_MONTH, calendar.getMaximum(Calendar.DAY_OF_MONTH));
-		calendar.set(Calendar.HOUR_OF_DAY, calendar.getMaximum(Calendar.HOUR_OF_DAY));
-		calendar.set(Calendar.MINUTE, calendar.getMaximum(Calendar.MINUTE));
-		calendar.set(Calendar.SECOND, calendar.getMaximum(Calendar.SECOND));
-		calendar.set(Calendar.MILLISECOND, calendar.getMaximum(Calendar.MILLISECOND));
+		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+		calendar.set(Calendar.HOUR_OF_DAY, calendar.getActualMaximum(Calendar.HOUR_OF_DAY));
+		calendar.set(Calendar.MINUTE, calendar.getActualMaximum(Calendar.MINUTE));
+		calendar.set(Calendar.SECOND, calendar.getActualMaximum(Calendar.SECOND));
+		calendar.set(Calendar.MILLISECOND, calendar.getActualMaximum(Calendar.MILLISECOND));
 
 		return calendar.getTime();
-	}
-
-	/**
-	 * Convierte la cantidad de horas recibidas a días, redondeando hacia el entero superior más próximo sobre el resultado de la operación
-	 * <i>"hours / HOURS_PER_DAY"</i>.
-	 * 
-	 * <ul>
-	 * <li>10 horas => 1 día</li>
-	 * <li>24 horas => 1 día</li>
-	 * <li>25 horas => 1 día</li>
-	 * <li>36 horas => 2 días</li>
-	 * <li>48 horas => 2 días</li>
-	 * <li>49 horas => 3 días</li>
-	 * </ul>
-	 * 
-	 * @param hours
-	 *            La cantidad de horas que vamos a convertir a días.
-	 * @return La cantidad de días que obtenemos de la operación.
-	 * @throws UncheckedException
-	 *             En caso de que las horas recibidas sean nulas o negativas.
-	 */
-	@Deprecated
-	public static Integer converterHoursToDays(Integer hours) {
-		// Verificamos que el parámetro no sea nulo o negativo.
-		if (hours == null) {
-			throw new UncheckedException("The hours must don't be null.");
-		}
-
-		if (hours < 0) {
-			throw new UncheckedException("The hours must don't be negative.");
-		}
-
-		return (int) Math.ceil(hours / (double) DateUtil.HOURS_PER_DAY);
-	}
-
-	/**
-	 * Obtiene los días de diferencia entre dos fechas dadas. Si startDate es anterior o igual a endDate el valor es positivo, sino es negativo
-	 * 
-	 * Date s = new Date("01/01/2010"); Date e = new Date("02/01/2010"); 1 == DateUtils.getDaysBetweenDates(s, e);
-	 * 
-	 * @param startDate
-	 * @param endDate
-	 * @return
-	 */
-	@Deprecated
-	public static long getDaysBetweenDates(Date startDate, Date endDate) {
-		long diferencia = endDate.getTime() - startDate.getTime();
-		long dias = diferencia / DateUtil.MILLISECONDS_PER_DAY;
-		return dias;
 	}
 }
