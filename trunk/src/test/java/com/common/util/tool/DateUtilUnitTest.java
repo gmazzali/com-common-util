@@ -1840,8 +1840,6 @@ public class DateUtilUnitTest {
 		try {
 			Date date = null;
 
-			date = DateUtilUnitTest.FORMAT.parse("2000/01/01 00:00:00 000");
-
 			try {
 				Assert.assertTrue(DateUtil.isWeekend(null));
 				Assert.fail();
@@ -1884,8 +1882,6 @@ public class DateUtilUnitTest {
 		try {
 			Date originalDate = null;
 			Date expectedDate = null;
-
-			originalDate = DateUtilUnitTest.FORMAT.parse("2000/01/01 00:00:00 000");
 
 			try {
 				DateUtil.getPreviousMonth(null);
@@ -1988,6 +1984,93 @@ public class DateUtilUnitTest {
 			originalDate = DateUtilUnitTest.FORMAT.parse("2000/01/02 01:01:01 001");
 			expectedDate = DateUtilUnitTest.FORMAT.parse("2000/02/01 00:00:00 000");
 			Assert.assertEquals(expectedDate, DateUtil.getNextMonth(originalDate));
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/** La pruebas sobre el método <i><b>getFirstDayOfMonth</b></i> de {@link DateUtil}
+	 * 
+	 * @see DateUtil#getFirstDayOfMonth(Date)
+	 */
+	@Test
+	public void testGetFirstDayMonth() {
+		try {
+			Date originalDate = null;
+			Date expectedDate = null;
+
+			try {
+				DateUtil.getFirstDayOfMonth(null);
+				Assert.fail();
+			} catch (Exception e) {
+			}
+
+			originalDate = DateUtilUnitTest.FORMAT.parse("2013/01/01 00:00:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT.parse("2013/01/01 00:00:00 000");
+			Assert.assertEquals(expectedDate, DateUtil.getFirstDayOfMonth(originalDate));
+
+			originalDate = DateUtilUnitTest.FORMAT.parse("2013/12/20 00:00:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT.parse("2013/12/01 00:00:00 000");
+			Assert.assertEquals(expectedDate, DateUtil.getFirstDayOfMonth(originalDate));
+
+			originalDate = DateUtilUnitTest.FORMAT.parse("2013/01/01 01:00:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT.parse("2013/01/01 00:00:00 000");
+			Assert.assertEquals(expectedDate, DateUtil.getFirstDayOfMonth(originalDate));
+
+			originalDate = DateUtilUnitTest.FORMAT.parse("2013/01/01 01:01:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT.parse("2013/01/01 00:00:00 000");
+			Assert.assertEquals(expectedDate, DateUtil.getFirstDayOfMonth(originalDate));
+
+			originalDate = DateUtilUnitTest.FORMAT.parse("2013/01/01 01:01:01 000");
+			expectedDate = DateUtilUnitTest.FORMAT.parse("2013/01/01 00:00:00 000");
+			Assert.assertEquals(expectedDate, DateUtil.getFirstDayOfMonth(originalDate));
+
+			originalDate = DateUtilUnitTest.FORMAT.parse("2013/01/01 01:01:01 001");
+			expectedDate = DateUtilUnitTest.FORMAT.parse("2013/01/01 00:00:00 000");
+			Assert.assertEquals(expectedDate, DateUtil.getFirstDayOfMonth(originalDate));
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * La pruebas sobre el método <i><b>getLastDayOfMonth</b></i> de {@link DateUtil}
+	 * 
+	 * @see DateUtil#getLastDayOfMonth(Date)
+	 */
+	@Test
+	public void testGetLastDayOfMonth() {
+		try {
+			Date originalDate = null;
+			Date expectedDate = null;
+
+			try {
+				DateUtil.getLastDayOfMonth(null);
+				Assert.fail();
+			} catch (Exception e) {
+			}
+
+			originalDate = DateUtilUnitTest.FORMAT.parse("2013/01/31 23:59:59 999");
+			expectedDate = DateUtilUnitTest.FORMAT.parse("2013/01/31 23:59:59 999");
+			Assert.assertEquals(expectedDate, DateUtil.getLastDayOfMonth(originalDate));
+			
+			originalDate = DateUtilUnitTest.FORMAT.parse("2013/01/01 00:00:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT.parse("2013/01/31 23:59:59 999");
+			Assert.assertEquals(expectedDate, DateUtil.getLastDayOfMonth(originalDate));
+
+			originalDate = DateUtilUnitTest.FORMAT.parse("2012/02/01 00:00:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT.parse("2012/02/29 23:59:59 999");
+			Assert.assertEquals(expectedDate, DateUtil.getLastDayOfMonth(originalDate));
+
+			originalDate = DateUtilUnitTest.FORMAT.parse("2013/02/01 00:00:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT.parse("2013/02/28 23:59:59 999");
+			Assert.assertEquals(expectedDate, DateUtil.getLastDayOfMonth(originalDate));
+
+			originalDate = DateUtilUnitTest.FORMAT.parse("2013/04/01 00:00:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT.parse("2013/04/30 23:59:59 999");
+			Assert.assertEquals(expectedDate, DateUtil.getLastDayOfMonth(originalDate));
 
 		} catch (ParseException e) {
 			e.printStackTrace();

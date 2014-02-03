@@ -24,9 +24,8 @@ import com.common.util.model.Entity;
  *            La clase de números que vamos a almacenar dentro de los intervalos de esta escala.
  */
 public class Scale<I extends Interval<N>, N extends Number> extends Entity<Long> {
+	private static final long serialVersionUID = 1L;
 
-	private static final long serialVersionUID = -888922840573092976L;
-	
 	/**
 	 * El Logger que vamos a ocupar dentro de la clase.
 	 */
@@ -36,9 +35,9 @@ public class Scale<I extends Interval<N>, N extends Number> extends Entity<Long>
 	 * @see Entity.Attributes
 	 */
 	public interface Attributes extends Entity.Attributes {
-		final String INTERVALS = "intervals";
 		final String LOWER_VALUE = "lowerValue";
 		final String HIGHER_VALUE = "higherValue";
+		final String INTERVALS = "intervals";
 	}
 
 	/**
@@ -55,10 +54,10 @@ public class Scale<I extends Interval<N>, N extends Number> extends Entity<Long>
 	protected List<I> intervals;
 
 	/**
-	 * El cosntructor por omision de una escala.
+	 * El constructor por omision de una escala.
 	 */
 	public Scale() {
-		Scale.log.trace("Scale create");
+		Scale.log.trace("create");
 
 		this.intervals = new ArrayList<I>();
 	}
@@ -66,8 +65,8 @@ public class Scale<I extends Interval<N>, N extends Number> extends Entity<Long>
 	/**
 	 * La función encargada de validar una escala de valores, con sus intervalos.
 	 */
-	public void validateintervals() {
-		Scale.log.trace("Scale validateScale");
+	public void validateScale() {
+		Scale.log.trace("validate scale");
 
 		// Si no hay un rango dentro de la escala, retornamos false.
 		if (this.intervals.isEmpty()) {
@@ -91,10 +90,10 @@ public class Scale<I extends Interval<N>, N extends Number> extends Entity<Long>
 	}
 
 	/**
-	 * Función encargada de cargar el primero y el último valor de la escala.
+	 * Función encargada de actualizar el primero y el último valor de la escala.
 	 */
-	private void setLimitValues() {
-		Scale.log.trace("Scale setLimitValues");
+	protected void updateLimitValues() {
+		Scale.log.trace("set limit values");
 
 		this.lowerValue = this.intervals.get(0).getMinValue();
 		this.higherValue = this.intervals.get(this.intervals.size() - 1).getMaxValue();
@@ -108,7 +107,7 @@ public class Scale<I extends Interval<N>, N extends Number> extends Entity<Long>
 	 * @return TRUE en caso de que el valor se encuentre entre los valores límites que tenemos dentro de la escala.
 	 */
 	public Boolean isIncludeValue(N value) {
-		Scale.log.trace("Scale isIncludeValue");
+		Scale.log.trace("is include value");
 
 		return value != null && value.doubleValue() >= this.lowerValue.doubleValue() && value.doubleValue() < this.higherValue.doubleValue();
 	}
@@ -120,12 +119,12 @@ public class Scale<I extends Interval<N>, N extends Number> extends Entity<Long>
 	 *            El nuevo intervalo que vamos a agregar.
 	 */
 	public void addInterval(I interval) {
-		Scale.log.trace("Scale addInterval");
+		Scale.log.trace("add interval");
 
 		if (interval != null) {
 			this.intervals.add(interval);
 			Collections.sort(this.intervals);
-			this.setLimitValues();
+			this.updateLimitValues();
 		}
 	}
 
@@ -136,8 +135,8 @@ public class Scale<I extends Interval<N>, N extends Number> extends Entity<Long>
 	 *            El valor que queremos buscar.
 	 * @return El intervalo donde esta dicho valor, en caso de no encontrarse se retorna un valor NULL.
 	 */
-	public I getInterval(N value) {
-		Scale.log.trace("Scale getInterval");
+	public I getIntervalForValue(N value) {
+		Scale.log.trace("get interval");
 
 		// Si el valor recibido no es nulo.
 		if (value != null) {

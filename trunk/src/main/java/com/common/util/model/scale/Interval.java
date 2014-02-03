@@ -11,6 +11,7 @@ import com.common.util.model.Entity;
  * original.
  * 
  * @see Scale
+ * @see Extreme
  * 
  * @author Guillermo Mazzali
  * @version 1.0
@@ -19,23 +20,7 @@ import com.common.util.model.Entity;
  *            La clase de los valores númericos que vamos a manejar dentro de este intervalo.
  */
 public class Interval<N extends Number> extends Entity<Long> implements Comparable<Interval<N>> {
-
-	private static final long serialVersionUID = 6260101442754076705L;
-
-	/**
-	 * La enumeración que define el estado en el que vamos a tener los extremos de dicho intervalo para ver si estos son abiertos o cerrados.
-	 * 
-	 * <ul>
-	 * <li>{@link Extreme#OPEN}</li>
-	 * <li>{@link Extreme#CLOSE}</li>
-	 * </ul>
-	 * 
-	 * @author Guillermo Mazzali
-	 * @version 1.0
-	 */
-	public enum Extreme {
-		OPEN, CLOSE;
-	}
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see Entity.Attributes

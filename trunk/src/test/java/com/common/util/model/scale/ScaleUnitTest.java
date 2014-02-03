@@ -36,7 +36,7 @@ public class ScaleUnitTest {
 
 		scale = new Scale<Interval<Double>, Double>();
 		try {
-			scale.validateintervals();
+			scale.validateScale();
 			Assert.assertTrue(false);
 		} catch (UncheckedException e) {
 			Assert.assertTrue(true);
@@ -45,7 +45,7 @@ public class ScaleUnitTest {
 		scale = new Scale<Interval<Double>, Double>();
 		scale.addInterval(new Interval<Double>(0.0, 0.0));
 		try {
-			scale.validateintervals();
+			scale.validateScale();
 			Assert.assertTrue(true);
 		} catch (UncheckedException e) {
 			Assert.assertTrue(false);
@@ -54,7 +54,7 @@ public class ScaleUnitTest {
 		scale = new Scale<Interval<Double>, Double>();
 		scale.addInterval(new Interval<Double>(2.0, 0.0));
 		try {
-			scale.validateintervals();
+			scale.validateScale();
 			Assert.assertTrue(false);
 		} catch (UncheckedException e) {
 			Assert.assertTrue(true);
@@ -65,7 +65,7 @@ public class ScaleUnitTest {
 		scale.addInterval(new Interval<Double>(1.0, 2.0));
 		scale.addInterval(new Interval<Double>(1.0, 3.0));
 		try {
-			scale.validateintervals();
+			scale.validateScale();
 			Assert.assertTrue(false);
 		} catch (UncheckedException e) {
 			Assert.assertTrue(true);
@@ -76,7 +76,7 @@ public class ScaleUnitTest {
 		scale.addInterval(new Interval<Double>(1.0, 2.0));
 		scale.addInterval(new Interval<Double>(3.0, 5.0));
 		try {
-			scale.validateintervals();
+			scale.validateScale();
 			Assert.assertTrue(false);
 		} catch (UncheckedException e) {
 			Assert.assertTrue(true);
@@ -88,7 +88,7 @@ public class ScaleUnitTest {
 		scale.addInterval(new Interval<Double>(2.0, 3.0));
 		scale.addInterval(new Interval<Double>(3.0, 4.0));
 		try {
-			scale.validateintervals();
+			scale.validateScale();
 			Assert.assertTrue(true);
 		} catch (UncheckedException e) {
 			Assert.assertTrue(false);
@@ -100,7 +100,7 @@ public class ScaleUnitTest {
 		scale.addInterval(new Interval<Double>(20.0, 30.0));
 		scale.addInterval(new Interval<Double>(30.0, 40.0));
 		try {
-			scale.validateintervals();
+			scale.validateScale();
 			Assert.assertTrue(true);
 		} catch (UncheckedException e) {
 			Assert.assertTrue(false);
@@ -112,7 +112,7 @@ public class ScaleUnitTest {
 		scale.addInterval(new Interval<Double>(0.0, 10.0));
 		scale.addInterval(new Interval<Double>(10.0, 20.0));
 		try {
-			scale.validateintervals();
+			scale.validateScale();
 			Assert.assertTrue(true);
 		} catch (UncheckedException e) {
 			Assert.assertTrue(false);
@@ -134,20 +134,20 @@ public class ScaleUnitTest {
 		scale.addInterval(new Interval<Integer>(20, 30));
 		scale.addInterval(new Interval<Integer>(30, 40));
 
-		Assert.assertEquals(new Interval<Integer>(0, 10), scale.getInterval(0));
-		Assert.assertEquals(new Interval<Integer>(0, 10), scale.getInterval(1));
-		Assert.assertEquals(new Interval<Integer>(0, 10), scale.getInterval(9));
-		Assert.assertEquals(new Interval<Integer>(10, 20), scale.getInterval(10));
-		Assert.assertEquals(new Interval<Integer>(10, 20), scale.getInterval(11));
-		Assert.assertEquals(new Interval<Integer>(10, 20), scale.getInterval(19));
-		Assert.assertEquals(new Interval<Integer>(20, 30), scale.getInterval(20));
-		Assert.assertEquals(new Interval<Integer>(20, 30), scale.getInterval(21));
-		Assert.assertEquals(new Interval<Integer>(20, 30), scale.getInterval(29));
-		Assert.assertEquals(new Interval<Integer>(30, 40), scale.getInterval(30));
-		Assert.assertEquals(new Interval<Integer>(30, 40), scale.getInterval(31));
-		Assert.assertEquals(new Interval<Integer>(30, 40), scale.getInterval(39));
-		Assert.assertEquals(null, scale.getInterval(40));
-		Assert.assertEquals(null, scale.getInterval(41));
+		Assert.assertEquals(new Interval<Integer>(0, 10), scale.getIntervalForValue(0));
+		Assert.assertEquals(new Interval<Integer>(0, 10), scale.getIntervalForValue(1));
+		Assert.assertEquals(new Interval<Integer>(0, 10), scale.getIntervalForValue(9));
+		Assert.assertEquals(new Interval<Integer>(10, 20), scale.getIntervalForValue(10));
+		Assert.assertEquals(new Interval<Integer>(10, 20), scale.getIntervalForValue(11));
+		Assert.assertEquals(new Interval<Integer>(10, 20), scale.getIntervalForValue(19));
+		Assert.assertEquals(new Interval<Integer>(20, 30), scale.getIntervalForValue(20));
+		Assert.assertEquals(new Interval<Integer>(20, 30), scale.getIntervalForValue(21));
+		Assert.assertEquals(new Interval<Integer>(20, 30), scale.getIntervalForValue(29));
+		Assert.assertEquals(new Interval<Integer>(30, 40), scale.getIntervalForValue(30));
+		Assert.assertEquals(new Interval<Integer>(30, 40), scale.getIntervalForValue(31));
+		Assert.assertEquals(new Interval<Integer>(30, 40), scale.getIntervalForValue(39));
+		Assert.assertEquals(null, scale.getIntervalForValue(40));
+		Assert.assertEquals(null, scale.getIntervalForValue(41));
 	}
 
 	/**
