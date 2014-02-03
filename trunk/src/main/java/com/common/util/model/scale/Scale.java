@@ -41,6 +41,10 @@ public class Scale<I extends Interval<N>, N extends Number> extends Entity<Long>
 	}
 
 	/**
+	 * El extremo inferior.
+	 */
+	protected Extreme minExtreme;
+	/**
 	 * El limite inferior de la escala.
 	 */
 	protected N lowerValue;
@@ -48,6 +52,10 @@ public class Scale<I extends Interval<N>, N extends Number> extends Entity<Long>
 	 * El limite superior de la escala.
 	 */
 	protected N higherValue;
+	/**
+	 * El estado del extremo superior.
+	 */
+	protected Extreme maxExtreme;
 	/**
 	 * El listado de los intervalos de esta escala.
 	 */
@@ -58,6 +66,11 @@ public class Scale<I extends Interval<N>, N extends Number> extends Entity<Long>
 	 */
 	public Scale() {
 		Scale.log.trace("create");
+		
+		this.minExtreme = Extreme.CLOSE;
+		this.lowerValue = null;
+		this.higherValue = null;
+		this.maxExtreme = Extreme.CLOSE;
 
 		this.intervals = new ArrayList<I>();
 	}
@@ -95,8 +108,15 @@ public class Scale<I extends Interval<N>, N extends Number> extends Entity<Long>
 	protected void updateLimitValues() {
 		Scale.log.trace("set limit values");
 
-		this.lowerValue = this.intervals.get(0).getMinValue();
-		this.higherValue = this.intervals.get(this.intervals.size() - 1).getMaxValue();
+		if (!this.intervals.isEmpty()) {
+			Interval<N> firstInterval = this.intervals.get(0);
+			Interval<N> lastInterval = this.intervals.get(this.intervals.size() - 1);
+
+			this.minExtreme = firstInterval.getMinExtreme();
+			this.lowerValue = firstInterval.getMinValue();
+			this.higherValue = lastInterval.getMaxValue();
+			this.maxExtreme = lastInterval.getMaxExtreme();
+		}
 	}
 
 	/**
@@ -108,8 +128,34 @@ public class Scale<I extends Interval<N>, N extends Number> extends Entity<Long>
 	 */
 	public Boolean isIncludeValue(N value) {
 		Scale.log.trace("is include value");
+		
+		boolean include = true;
 
-		return value != null && value.doubleValue() >= this.lowerValue.doubleValue() && value.doubleValue() < this.higherValue.doubleValue();
+		if(value == null) {
+			return false;
+		} 
+		
+		switch (this.minExtreme) {
+		case CLOSE:
+			include &= value.doubleValue() >= this.lowerValue.doubleValue();
+			break;
+
+		case OPEN:
+			include &= value.doubleValue() > this.lowerValue.doubleValue();
+			break;
+		}
+
+		switch (this.maxExtreme) {
+		case CLOSE:	
+			include &= value.doubleValue() <= this.higherValue.doubleValue();		
+			break;
+
+		case OPEN:
+			include &= value.doubleValue() < this.higherValue.doubleValue();
+			break;
+		}
+		
+		return include;
 	}
 
 	/**
@@ -145,13 +191,22 @@ public class Scale<I extends Interval<N>, N extends Number> extends Entity<Long>
 			if (this.isIncludeValue(value)) {
 
 				for (I i : this.intervals) {
-					if (value.doubleValue() >= i.getMinValue().doubleValue() && value.doubleValue() < i.getMaxValue().doubleValue()) {
+					if (i.hasInclude(value)) {
 						return i;
 					}
 				}
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * La función encargada de retornar el estado del extremo inferior de la escala.
+	 * 
+	 * @return El estado del extremo inferior de la escala.
+	 */
+	public Extreme getMinExtreme() {
+		return minExtreme;
 	}
 
 	/**
@@ -170,6 +225,15 @@ public class Scale<I extends Interval<N>, N extends Number> extends Entity<Long>
 	 */
 	public N getHigherValue() {
 		return this.higherValue;
+	}
+
+	/**
+	 * La función encargada de retornar el estado del extremo superior de la escala.
+	 * 
+	 * @return El estado del extremo superior de la escala.
+	 */
+	public Extreme getMaxExtreme() {
+		return maxExtreme;
 	}
 
 	/**
