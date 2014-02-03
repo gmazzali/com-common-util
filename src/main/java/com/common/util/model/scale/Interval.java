@@ -1,5 +1,7 @@
 package com.common.util.model.scale;
 
+import org.apache.log4j.Logger;
+
 import com.common.util.exception.UncheckedException;
 import com.common.util.exception.error.Errors;
 import com.common.util.model.Entity;
@@ -23,6 +25,11 @@ public class Interval<N extends Number> extends Entity<Long> implements Comparab
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * El Logger que vamos a ocupar dentro de la clase.
+	 */
+	private static final Logger log = Logger.getLogger(Interval.class);
+
+	/**
 	 * @see Entity.Attributes
 	 */
 	public interface Attributes extends Entity.Attributes {
@@ -33,7 +40,7 @@ public class Interval<N extends Number> extends Entity<Long> implements Comparab
 	}
 
 	/**
-	 * El estado del extremo inferior.
+	 * El extremo inferior.
 	 */
 	protected final Extreme minExtreme;
 	/**
@@ -45,9 +52,19 @@ public class Interval<N extends Number> extends Entity<Long> implements Comparab
 	 */
 	protected final N maxValue;
 	/**
-	 * El estado del extremo superior.
+	 * El extremo superior.
 	 */
 	protected final Extreme maxExtreme;
+
+	/**
+	 * El constructor por copia del intervalo que recibimos.
+	 * 
+	 * @param interval
+	 *            El intervalo que recibimos para hacer una copia.
+	 */
+	public Interval(Interval<N> interval) {
+		this(interval.minExtreme, interval.minValue, interval.maxValue, interval.maxExtreme);
+	}
 
 	/**
 	 * El constructor de un intervalo del tipo [minValue; maxValue)
@@ -75,12 +92,30 @@ public class Interval<N extends Number> extends Entity<Long> implements Comparab
 	 */
 	public Interval(Extreme minExtreme, N minValue, N maxValue, Extreme maxExtreme) {
 		super();
+
+		Interval.log.trace("create");
+
 		this.minExtreme = minExtreme;
 		this.minValue = minValue;
 		this.maxValue = maxValue;
 		this.maxExtreme = maxExtreme;
 	}
 
+	/**
+	 * Permite crear un nuevo intervalo a partir de los datos de este intervalo.
+	 * 
+	 * @return El intervalo clonado de este.
+	 */
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return new Interval<N>(this);
+	}
+
+	/**
+	 * Retorna una cadena de texto conteniendo las propiedades de este intervalo.
+	 * 
+	 * @return La cadena de texto que contiene las propiedades de este intervalo.
+	 */
 	@Override
 	public String toString() {
 		String interval = "";
@@ -134,12 +169,12 @@ public class Interval<N extends Number> extends Entity<Long> implements Comparab
 	}
 
 	/**
-	 * La función encargada de comparar este intervalo con otro para poder ordenarlos dentro de la escala.
+	 * Se encarga de comparar este intervalo con otro para poder ordenarlos dentro de una escala.
 	 * 
 	 * @param otherInterval
 	 *            El otro intervalo para comparar.
 	 * @return <b>1</b> si el valor medio de este intervalo es mayor al valor medio del segundo intervalo, <b>-1</b> si el valor medio de este
-	 *         intervalo es menor que el valor medio del segundo intervalo o <b>0</b> en caso de que los 2 intervalos tengan el mismo valor medio.
+	 *         intervalo es menor que el valor medio del segundo intervalo o <b>0</b> en caso de que los dos intervalos tengan el mismo valor medio.
 	 */
 	@Override
 	public int compareTo(Interval<N> otherInterval) {
@@ -156,9 +191,11 @@ public class Interval<N extends Number> extends Entity<Long> implements Comparab
 	}
 
 	/**
-	 * La función encargada de validar el contenido del intervalo.
+	 * Se encarga de validar el contenido del intervalo.
 	 */
 	public void validateInterval() {
+		Interval.log.trace("validate");
+
 		Errors errors = new Errors();
 
 		// Validamos el extremos y el valor inferior.
@@ -187,6 +224,46 @@ public class Interval<N extends Number> extends Entity<Long> implements Comparab
 		if (errors.hasErrorsDetails()) {
 			throw new UncheckedException(errors);
 		}
+	}
+
+	/**
+	 * Permite verificar que un valor dado se encuentre dentro de este intervalo dado.
+	 * 
+	 * @param value
+	 *            El valor que vamos a verificar si se encuentra dentro de este intervalo.
+	 * @return <i>true</i> en caso de que el valor recibido se encuentre dentro de este intervalo, en caso de que no se encuentre o el mismo sea nulo,
+	 *         se retorna <i>false</i>.
+	 */
+	public boolean hasInclude(N value) {
+		Interval.log.trace("has include");
+
+		boolean include = true;
+
+		if (value == null) {
+			return false;
+		}
+
+		switch (this.minExtreme) {
+		case CLOSE:
+			include &= value.doubleValue() >= this.minValue.doubleValue();
+			break;
+
+		case OPEN:
+			include &= value.doubleValue() > this.minValue.doubleValue();
+			break;
+		}
+
+		switch (this.maxExtreme) {
+		case CLOSE:
+			include &= value.doubleValue() <= this.maxValue.doubleValue();
+			break;
+
+		case OPEN:
+			include &= value.doubleValue() < this.maxValue.doubleValue();
+			break;
+		}
+
+		return include;
 	}
 
 	/**
