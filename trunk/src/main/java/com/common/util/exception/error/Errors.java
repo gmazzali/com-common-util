@@ -9,9 +9,9 @@ import com.common.util.exception.UncheckedException;
 /**
  * El conjunto de los detalles de los errores para manejarlos dentro del sistema.
  * 
- * @see UncheckedException
- * @see CheckedException
  * @see ErrorDetail
+ * @see CheckedException
+ * @see UncheckedException
  * 
  * @author Guillermo Mazzali
  * @version 1.0

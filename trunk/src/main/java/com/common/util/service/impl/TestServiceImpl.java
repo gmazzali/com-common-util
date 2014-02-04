@@ -1,14 +1,17 @@
 package com.common.util.service.impl;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
 import com.common.util.dao.GenericDao;
 import com.common.util.exception.CheckedException;
 import com.common.util.model.Entity;
+import com.common.util.model.query.filter.Filter;
+import com.common.util.model.query.order.OrderBy;
 import com.common.util.service.GenericService;
 
 /**
@@ -31,11 +34,11 @@ public abstract class TestServiceImpl<E extends Entity<PK>, PK extends Serializa
 	private static final Logger log = Logger.getLogger(TestServiceImpl.class);
 
 	/**
-	 * El listado de las entidades.
+	 * El mapa de las entidades.
 	 */
-	protected List<E> entities = new ArrayList<E>();
+	protected Map<PK, E> entities = new HashMap<PK, E>();
 	/**
-	 * El id.
+	 * El identificador de las entidades.
 	 */
 	protected PK id;
 
@@ -55,100 +58,90 @@ public abstract class TestServiceImpl<E extends Entity<PK>, PK extends Serializa
 	 */
 	protected abstract void incrementId();
 
-	/**
-	 * @see com.common.util.service.GenericService#setDao(com.common.util.dao.GenericDao)
-	 */
 	@Override
 	public void setDao(GenericDao<E, PK> dao) {
-		TestServiceImpl.log.trace("DefaultServiceImpl SetDAO");
+		TestServiceImpl.log.trace("set dao");
 	}
 
-	/**
-	 * @see com.common.util.service.GenericService#validate(com.common.util.model.Persistence)
-	 */
 	@Override
 	public void validate(E entity) throws CheckedException {
-		TestServiceImpl.log.trace("DefaultServiceImpl validate");
+		TestServiceImpl.log.trace("validate");
 	}
 
-	/**
-	 * @see com.common.util.service.GenericService#findById(java.io.Serializable)
-	 */
+	@Override
+	public Long count() throws CheckedException {
+		TestServiceImpl.log.trace("count");
+		
+		return (long) this.entities.size();
+	}
+
+	@Override
+	public Long countByFilter(Filter filter) throws CheckedException {
+		return null;
+	}
+
 	@Override
 	public E findById(PK id) throws CheckedException {
-		TestServiceImpl.log.trace("DefaultServiceImpl FindById: " + id);
+		TestServiceImpl.log.trace("find by id: " + id);
+		
 		this.incrementId();
-		return this.get(id);
+		return this.entities.get(id);
 	}
 
-	/**
-	 * @see com.common.util.service.GenericService#findAll()
-	 */
 	@Override
-	public List<E> findAll() throws CheckedException {
-		TestServiceImpl.log.trace("DefaultServiceImpl FindAll");
-		return this.entities;
+	public List<E> findAll(OrderBy orders) throws CheckedException {
+		TestServiceImpl.log.trace("find all");
+		
+		return (List<E>) this.entities.values();
 	}
 
-	/**
-	 * @see com.common.util.service.GenericService#save(com.common.util.model.Persistence)
-	 */
+	@Override
+	public List<E> findByFilter(Filter filter, OrderBy orders) throws CheckedException {
+		return null;
+	}
+
 	@Override
 	public void save(E entity) throws CheckedException {
-		TestServiceImpl.log.trace("DefaultServiceImpl Save: " + entity);
+		TestServiceImpl.log.trace("save: " + entity);
+		
 		entity.setId(this.id);
-		this.entities.add(entity);
+		this.entities.put(this.id, entity);
 	}
 
-	/**
-	 * @see com.common.util.service.GenericService#saveOrUpdate(com.common.util.model.Persistence)
-	 */
 	@Override
 	public void saveOrUpdate(E entity) throws CheckedException {
-		E delete = this.get(entity.getId());
-		if (delete == null) {
+		TestServiceImpl.log.trace("save or update: " + entity);
+		
+		E update = this.entities.get(entity.getId());
+		if (update == null) {
 			this.save(entity);
 		} else {
 			this.update(entity);
 		}
 	}
 
-	/**
-	 * @see com.common.util.service.GenericService#update(com.common.util.model.Persistence)
-	 */
 	@Override
 	public void update(E entity) throws CheckedException {
-		TestServiceImpl.log.trace("DefaultServiceImpl Update: " + entity);
-		E update = this.get(entity.getId());
-		this.entities.remove(update);
-		this.entities.add(entity);
+		TestServiceImpl.log.trace("update: " + entity);
+		
+		this.entities.remove(entity.getId());
+		this.entities.put(entity.getId(), entity);
 	}
 
-	/**
-	 * @see com.common.util.service.GenericService#delete(com.common.util.model.Persistence)
-	 */
 	@Override
 	public void delete(E entity) throws CheckedException {
-		TestServiceImpl.log.trace("DefaultServiceImpl Delete: " + entity);
-		E delete = this.get(entity.getId());
+		TestServiceImpl.log.trace("delete: " + entity);
+		
+		E delete = this.entities.get(entity.getId());
 		if (delete != null) {
-			this.entities.remove(delete);
+			this.entities.remove(entity.getId());
 		}
 	}
 
-	/**
-	 * La función encargada de buscar el Eo dentro del listado.
-	 * 
-	 * @param id
-	 *            El identificador del Eo.
-	 * @return La entidad que corresponde a ese id.
-	 */
-	private E get(PK id) {
-		for (E e : this.entities) {
-			if (id.equals(e.getId())) {
-				return e;
-			}
-		}
-		return null;
+	@Override
+	public void deleteById(PK id) throws CheckedException {
+		TestServiceImpl.log.trace("delete by id: " + id);
+		
+		this.entities.remove(id);
 	}
 }

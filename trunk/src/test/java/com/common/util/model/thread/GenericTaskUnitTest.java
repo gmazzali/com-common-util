@@ -76,8 +76,13 @@ public class GenericTaskUnitTest {
 		this.task = new GenericTask<Integer>() {
 
 			@Override
+			protected void beforeExecute() {
+				System.out.println("PRE PROCESO");
+			}
+			
+			@Override
 			protected void execute() {
-				for (int i = 0; this.bol(i); i++) {
+				for (int i = 0; this.stop(i); i++) {
 					System.out.println("SALIDA: " + i);
 					try {
 						Thread.sleep(500);
@@ -92,13 +97,8 @@ public class GenericTaskUnitTest {
 				}
 			}
 
-			private synchronized boolean bol(int i) {
+			private synchronized boolean stop(int i) {
 				return this.taskState != TaskStatus.STOP && i < 10;
-			}
-
-			@Override
-			protected void beforeExecute() {
-				System.out.println("PRE PROCESO");
 			}
 
 			@Override
@@ -156,6 +156,11 @@ public class GenericTaskUnitTest {
 		this.task = new GenericTask<Integer>() {
 
 			@Override
+			protected void beforeExecute() {
+				System.out.println("PRE PROCESO");
+			}
+			
+			@Override
 			protected void execute() {
 				for (int i = 0; this.taskState != TaskStatus.STOP && i < 5; i++) {
 					System.out.println("SALIDA: " + i);
@@ -170,11 +175,6 @@ public class GenericTaskUnitTest {
 						e.printStackTrace();
 					}
 				}
-			}
-
-			@Override
-			protected void beforeExecute() {
-				System.out.println("PRE PROCESO");
 			}
 
 			@Override
@@ -217,6 +217,11 @@ public class GenericTaskUnitTest {
 		this.task = new GenericTask<Integer>() {
 
 			@Override
+			protected void beforeExecute() {
+				System.out.println("PRE PROCESO");
+			}
+			
+			@Override
 			protected void execute() {
 				for (int i = 0; this.taskState != TaskStatus.STOP && i < 5; i++) {
 					System.out.println("SALIDA: " + i);
@@ -231,11 +236,6 @@ public class GenericTaskUnitTest {
 						e.printStackTrace();
 					}
 				}
-			}
-
-			@Override
-			protected void beforeExecute() {
-				System.out.println("PRE PROCESO");
 			}
 
 			@Override

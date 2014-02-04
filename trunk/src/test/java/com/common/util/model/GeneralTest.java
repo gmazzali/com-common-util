@@ -20,5 +20,4 @@ public class GeneralTest {
 
 		System.out.println("VALOR: " + parse);
 	}
-
 }

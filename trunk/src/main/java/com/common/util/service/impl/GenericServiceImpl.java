@@ -7,16 +7,19 @@ import com.common.util.dao.GenericDao;
 import com.common.util.exception.CheckedException;
 import com.common.util.model.Persistence;
 import com.common.util.model.query.filter.Filter;
+import com.common.util.model.query.order.OrderBy;
 import com.common.util.service.GenericService;
 
 /**
  * La clase que permite establecer un servicio para un elemento genérico junto al DAO correspondiente a este y que implementa la interfaz
  * {@link GenericService}.
  * 
+ * @see Filter
+ * @see OrderBy
+ * @see GenericService
+ * 
  * @author Guillermo Mazzali
  * @version 1.0
- * 
- * @see GenericService
  * 
  * @param <E>
  *            La clase del modelo que vamos a persistir dentro de la base de datos.
@@ -46,18 +49,18 @@ public abstract class GenericServiceImpl<E extends Persistence<PK>, PK extends S
 	}
 
 	@Override
-	public List<E> findAll() throws CheckedException {
-		return this.dao.findAll();
-	}
-
-	@Override
 	public E findById(PK id) throws CheckedException {
 		return this.dao.findById(id);
 	}
 
 	@Override
-	public List<E> findByFilter(Filter filter) throws CheckedException {
-		return this.dao.findByFilter(filter);
+	public List<E> findAll(OrderBy orders) throws CheckedException {
+		return this.dao.findAll(orders);
+	}
+
+	@Override
+	public List<E> findByFilter(Filter filter, OrderBy orders) throws CheckedException {
+		return this.dao.findByFilter(filter, orders);
 	}
 
 	@Override

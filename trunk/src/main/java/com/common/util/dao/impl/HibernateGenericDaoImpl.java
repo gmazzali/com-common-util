@@ -2,6 +2,7 @@ package com.common.util.dao.impl;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -23,6 +24,8 @@ import com.common.util.model.query.filter.InFilter;
 import com.common.util.model.query.filter.LikeFilter;
 import com.common.util.model.query.filter.NullFilter;
 import com.common.util.model.query.filter.UnaryComplexFilter;
+import com.common.util.model.query.order.Order;
+import com.common.util.model.query.order.OrderBy;
 
 /**
  * La clase que implementa la interfaz {@link GenericDao} para acceder a una base de datos desde el framework Hibernate.
@@ -76,27 +79,27 @@ public abstract class HibernateGenericDaoImpl<E extends Persistence<PK>, PK exte
 	public Long count() throws RuntimeException {
 		Session session = this.getSession();
 		Criteria criteria = session.createCriteria(this.persistentClass);
-		return (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
+		Long value = (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
+		this.closeSession(session);
+		return value;
 	}
 
 	@Override
 	public Long countByFilter(Filter filter) throws RuntimeException {
+		Long value = null;
 		if (filter != null) {
 			Session session = this.getSession();
 			Criteria criteria = session.createCriteria(this.persistentClass);
-			return (Long) criteria.add(this.getCriterion(filter)).setProjection(Projections.rowCount()).uniqueResult();
-		} else {
-			return this.count();
-		}
-	}
 
-	@Override
-	public List<E> findAll() throws RuntimeException {
-		Session session = this.getSession();
-		Criteria criteria = session.createCriteria(this.persistentClass);
-		List<E> listado = criteria.list();
-		this.closeSession(session);
-		return listado;
+			// Cargamos el filtro.
+			this.loadFilterToCriteria(criteria, filter);
+
+			value = (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
+			this.closeSession(session);
+		} else {
+			value = this.count();
+		}
+		return value;
 	}
 
 	@Override
@@ -108,25 +111,52 @@ public abstract class HibernateGenericDaoImpl<E extends Persistence<PK>, PK exte
 	}
 
 	@Override
-	public List<E> findByFilter(Filter filter) throws RuntimeException {
+	public List<E> findAll(OrderBy orders) throws RuntimeException {
+		Session session = this.getSession();
+		Criteria criteria = session.createCriteria(this.persistentClass);
+
+		// Cargamos los ordenes.
+		if (orders != null && !orders.getOrders().isEmpty()) {
+			this.loadOrderToCriteria(criteria, orders);
+		}
+
+		List<E> listado = criteria.list();
+		this.closeSession(session);
+		return listado;
+	}
+
+	@Override
+	public List<E> findByFilter(Filter filter, OrderBy orders) throws RuntimeException {
+		List<E> entities = null;
+
 		if (filter != null) {
 			Session session = this.getSession();
 			Criteria criteria = session.createCriteria(this.persistentClass);
-			List<E> listado = criteria.add(this.getCriterion(filter)).list();
+
+			// Cargamos el filtro.
+			this.loadFilterToCriteria(criteria, filter);
+
+			// Cargamos los ordenes.
+			if (orders != null && !orders.getOrders().isEmpty()) {
+				this.loadOrderToCriteria(criteria, orders);
+			}
+
+			entities = criteria.list();
 			this.closeSession(session);
-			return listado;
 		} else {
-			return this.findAll();
+			entities = this.findAll(orders);
 		}
+
+		return entities;
 	}
 
 	@Override
 	public void save(E entity) throws RuntimeException {
 		Session session = this.getSession();
 		Transaction transaction = this.beginTransaction(session);
-		
+
 		session.save(entity);
-		
+
 		this.endTransaction(transaction, TransactionAction.COMMIT);
 		this.closeSession(session);
 	}
@@ -135,9 +165,9 @@ public abstract class HibernateGenericDaoImpl<E extends Persistence<PK>, PK exte
 	public void update(E entity) throws RuntimeException {
 		Session session = this.getSession();
 		Transaction transaction = this.beginTransaction(session);
-		
+
 		session.update(entity);
-		
+
 		this.endTransaction(transaction, TransactionAction.COMMIT);
 		this.closeSession(session);
 	}
@@ -146,9 +176,9 @@ public abstract class HibernateGenericDaoImpl<E extends Persistence<PK>, PK exte
 	public void saveOrUpdate(E entity) throws RuntimeException {
 		Session session = this.getSession();
 		Transaction transaction = this.beginTransaction(session);
-		
+
 		session.saveOrUpdate(entity);
-		
+
 		this.endTransaction(transaction, TransactionAction.COMMIT);
 		this.closeSession(session);
 	}
@@ -157,9 +187,9 @@ public abstract class HibernateGenericDaoImpl<E extends Persistence<PK>, PK exte
 	public void delete(E entity) throws RuntimeException {
 		Session session = this.getSession();
 		Transaction transaction = this.beginTransaction(session);
-		
+
 		session.delete(entity);
-		
+
 		this.endTransaction(transaction, TransactionAction.COMMIT);
 		this.closeSession(session);
 	}
@@ -168,114 +198,12 @@ public abstract class HibernateGenericDaoImpl<E extends Persistence<PK>, PK exte
 	public void deleteById(PK id) throws RuntimeException {
 		Session session = this.getSession();
 		Transaction transaction = this.beginTransaction(session);
-		
+
 		E entity = (E) session.load(this.persistentClass, id);
 		session.delete(entity);
-		
+
 		this.endTransaction(transaction, TransactionAction.COMMIT);
 		this.closeSession(session);
-	}
-
-	/**
-	 * La función que permite retornar la clase a la que estamos haciendo persistencia.
-	 * 
-	 * @return La clase a la que hacemos persistencia.
-	 */
-	public Class<E> getPersistentClass() {
-		return this.persistentClass;
-	}
-
-	/**
-	 * Función encargada de cargar la session factory del dao genérico.
-	 * 
-	 * @param sessionFactory
-	 *            La session factory conectada a la base de datos.
-	 */
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
-
-	/**
-	 * La función encargada de crear un objeto Criterion dado un criterio de búsqueda.
-	 * 
-	 * @see Filter
-	 * 
-	 * @param filter
-	 *            El filtro que vamos a utilizar para crear el Criterion.
-	 * @return El Criterion que corresponde al filtro de búsqueda.
-	 */
-	protected Criterion getCriterion(Filter filter) {
-		// Si es un filtro atómico.
-		if (filter instanceof AtomicFilter) {
-			AtomicFilter<Serializable> atomicFilter = (AtomicFilter<Serializable>) filter;
-
-			switch (atomicFilter.getAtomicFilterType()) {
-
-			case BETWEEN:
-				// Si el filtro es de una operación "between"
-				BetweenFilter<Serializable> betweenFilter = (BetweenFilter<Serializable>) atomicFilter;
-				return Restrictions.between(betweenFilter.getAttribute(), betweenFilter.getLowValue(), betweenFilter.getHighValue());
-
-			case COMPARE:
-				// Si el filtro es de una operación "=" o "<>" o "<" o "<=" o ">" o ">="
-				CompareFilter<Serializable> compareFilter = (CompareFilter<Serializable>) atomicFilter;
-				switch (compareFilter.getCompareFilterType()) {
-				case EQUALS:
-					return Restrictions.eq(compareFilter.getAttribute(), compareFilter.getValue());
-				case NOT_EQUALS:
-					return Restrictions.ne(compareFilter.getAttribute(), compareFilter.getValue());
-				case GREATER:
-					return Restrictions.gt(compareFilter.getAttribute(), compareFilter.getValue());
-				case GREATER_OR_EQUALS:
-					return Restrictions.ge(compareFilter.getAttribute(), compareFilter.getValue());
-				case LESSER:
-					return Restrictions.lt(compareFilter.getAttribute(), compareFilter.getValue());
-				case LESSER_OR_EQUALS:
-					return Restrictions.le(compareFilter.getAttribute(), compareFilter.getValue());
-				}
-
-			case IN:
-				// Si el filtro es de una operación "in"
-				InFilter<Serializable> inFilter = (InFilter<Serializable>) atomicFilter;
-				return Restrictions.in(inFilter.getAttribute(), inFilter.getList());
-
-			case LIKE:
-				// Si el filtro es de una operación "like"
-				LikeFilter likeFilter = (LikeFilter) atomicFilter;
-				return Restrictions.like(likeFilter.getAttribute(), likeFilter.getLike());
-
-			case NULL:
-				// Si el filtro es de una operación "is Null"
-				NullFilter nullFilter = (NullFilter) atomicFilter;
-				return Restrictions.isNull(nullFilter.getAttribute());
-			}
-		} else if (filter instanceof ComplexFilter) {
-
-			// Si el filtro es uno complejo, la procesamos.
-			ComplexFilter complexFilter = (ComplexFilter) filter;
-			switch (complexFilter.getComplexType()) {
-
-			case UNARY:
-				// Si el filtro, es un filtro unario del tipo "not"
-				UnaryComplexFilter unaryComplexFilter = (UnaryComplexFilter) complexFilter;
-				return Restrictions.not(this.getCriterion(unaryComplexFilter.getFilter()));
-
-			case BINARY:
-				// Si el filtro es un filtro binario.
-				BinaryComplexFilter binaryComplexFilter = (BinaryComplexFilter) complexFilter;
-				switch (binaryComplexFilter.getBinaryType()) {
-
-				case AND:
-					// Si el filtro es del tipo "and"
-					return Restrictions.and(this.getCriterion(binaryComplexFilter.getFirstFilter()), this.getCriterion(binaryComplexFilter.getSecondFilter()));
-
-				case OR:
-					// Si el filtro es del tipo "or"
-					return Restrictions.or(this.getCriterion(binaryComplexFilter.getFirstFilter()), this.getCriterion(binaryComplexFilter.getSecondFilter()));
-				}
-			}
-		}
-		return null;
 	}
 
 	/**
@@ -332,9 +260,150 @@ public abstract class HibernateGenericDaoImpl<E extends Persistence<PK>, PK exte
 		case COMMIT:
 			transaction.commit();
 			break;
+			
 		case ROLLBACK:
 			transaction.rollback();
 			break;
 		}
+	}
+
+	/**
+	 * La función que permite retornar la clase a la que estamos haciendo persistencia.
+	 * 
+	 * @return La clase a la que hacemos persistencia.
+	 */
+	public Class<E> getPersistentClass() {
+		return this.persistentClass;
+	}
+
+	/**
+	 * Función encargada de cargar la session factory del dao genérico.
+	 * 
+	 * @param sessionFactory
+	 *            La session factory conectada a la base de datos.
+	 */
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
+	/**
+	 * La función encargada de crear un objeto Criterion dado un criterio de búsqueda.
+	 * 
+	 * @see Filter
+	 * 
+	 * @param filter
+	 *            El filtro que vamos a utilizar para crear el Criterion.
+	 * @return El Criterion que corresponde al filtro de búsqueda.
+	 */
+	protected void loadFilterToCriteria(Criteria criteria, Filter filter) {
+		criteria.add(this.getCriterion(filter));
+	}
+
+	/**
+	 * Se encarga de cargar los ordenes en las que queremos recuperar las entidades.
+	 * 
+	 * @param criteria
+	 *            La criteria a la que le vamos a cargar los ordenes que recibimos.
+	 * @param orders
+	 *            Los orcenes de las propiedades de las entidades que queremos ordenar.
+	 */
+	protected void loadOrderToCriteria(Criteria criteria, OrderBy orders) {
+		for (Entry<String, Order> entry : orders.getOrders().entrySet()) {
+			if (Order.ASC.equals(entry.getValue())) {
+				criteria.addOrder(org.hibernate.criterion.Order.asc(entry.getKey()));
+			} else {
+				criteria.addOrder(org.hibernate.criterion.Order.desc(entry.getKey()));
+			}
+		}
+	}
+
+	/**
+	 * La función encargada de crear un objeto Criterion dado un criterio de búsqueda.
+	 * 
+	 * @see Filter
+	 * 
+	 * @param filter
+	 *            El filtro que vamos a utilizar para crear el Criterion.
+	 * @return El Criterion que corresponde al filtro de búsqueda.
+	 */
+	protected Criterion getCriterion(Filter filter) {
+		// Si es un filtro atómico.
+		if (filter instanceof AtomicFilter) {
+			AtomicFilter<Serializable> atomicFilter = (AtomicFilter<Serializable>) filter;
+
+			switch (atomicFilter.getAtomicFilterType()) {
+
+			case BETWEEN:
+				// Si el filtro es de una operación "between"
+				BetweenFilter<Serializable> betweenFilter = (BetweenFilter<Serializable>) atomicFilter;
+				return Restrictions.between(betweenFilter.getAttribute(), betweenFilter.getLowValue(), betweenFilter.getHighValue());
+
+			case COMPARE:
+				// Si el filtro es de una operación "=" o "<>" o "<" o "<=" o ">" o ">="
+				CompareFilter<Serializable> compareFilter = (CompareFilter<Serializable>) atomicFilter;
+				switch (compareFilter.getCompareFilterType()) {
+				case EQUALS:
+					return Restrictions.eq(compareFilter.getAttribute(), compareFilter.getValue());
+					
+				case NOT_EQUALS:
+					return Restrictions.ne(compareFilter.getAttribute(), compareFilter.getValue());
+					
+				case GREATER:
+					return Restrictions.gt(compareFilter.getAttribute(), compareFilter.getValue());
+					
+				case GREATER_OR_EQUALS:
+					return Restrictions.ge(compareFilter.getAttribute(), compareFilter.getValue());
+					
+				case LESSER:
+					return Restrictions.lt(compareFilter.getAttribute(), compareFilter.getValue());
+					
+				case LESSER_OR_EQUALS:
+					return Restrictions.le(compareFilter.getAttribute(), compareFilter.getValue());
+				}
+
+			case IN:
+				// Si el filtro es de una operación "in"
+				InFilter<Serializable> inFilter = (InFilter<Serializable>) atomicFilter;
+				return Restrictions.in(inFilter.getAttribute(), inFilter.getList());
+
+			case LIKE:
+				// Si el filtro es de una operación "like"
+				LikeFilter likeFilter = (LikeFilter) atomicFilter;
+				return Restrictions.like(likeFilter.getAttribute(), likeFilter.getLike());
+
+			case NULL:
+				// Si el filtro es de una operación "is Null"
+				NullFilter nullFilter = (NullFilter) atomicFilter;
+				return Restrictions.isNull(nullFilter.getAttribute());
+			}
+		} else if (filter instanceof ComplexFilter) {
+
+			// Si el filtro es uno complejo, la procesamos.
+			ComplexFilter complexFilter = (ComplexFilter) filter;
+			switch (complexFilter.getComplexType()) {
+
+			case UNARY:
+				// Si el filtro, es un filtro unario del tipo "not"
+				UnaryComplexFilter unaryComplexFilter = (UnaryComplexFilter) complexFilter;
+				return Restrictions.not(this.getCriterion(unaryComplexFilter.getFilter()));
+
+			case BINARY:
+				// Si el filtro es un filtro binario.
+				BinaryComplexFilter binaryComplexFilter = (BinaryComplexFilter) complexFilter;
+				switch (binaryComplexFilter.getBinaryType()) {
+
+				case AND:
+					// Si el filtro es del tipo "and"
+					return Restrictions.and(this.getCriterion(binaryComplexFilter.getFirstFilter()),
+							this.getCriterion(binaryComplexFilter.getSecondFilter()));
+
+				case OR:
+					// Si el filtro es del tipo "or"
+					return Restrictions.or(this.getCriterion(binaryComplexFilter.getFirstFilter()),
+							this.getCriterion(binaryComplexFilter.getSecondFilter()));
+				}
+			}
+		}
+		return null;
 	}
 }
