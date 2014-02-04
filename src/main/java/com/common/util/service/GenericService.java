@@ -8,11 +8,14 @@ import com.common.util.exception.CheckedException;
 import com.common.util.model.Entity;
 import com.common.util.model.Persistence;
 import com.common.util.model.query.filter.Filter;
+import com.common.util.model.query.order.OrderBy;
 
 /**
  * La interfaz que permite establecer un servicio para un elemento genérico junto al DAO correspondiente a este.
  * 
+ * @see Filter
  * @see Entity
+ * @see OrderBy
  * @see Persistence
  * @see Serializable
  * 
@@ -61,6 +64,7 @@ public interface GenericService<E extends Persistence<PK>, PK extends Serializab
 	 * La función encargada de contar la cantidad de registros que tenemos dentro de la base de datos que corresponden a esta entidad y que cumplen
 	 * con la condición dada en el filtro recibido.
 	 * 
+	 * @see Filter
 	 * @see GenericService#count()
 	 * 
 	 * @param filter
@@ -70,18 +74,6 @@ public interface GenericService<E extends Persistence<PK>, PK extends Serializab
 	 *             En caso de que ocurra un error a la hora de contar filas dentro de la base de datos.
 	 */
 	public Long countByFilter(Filter filter) throws CheckedException;
-
-	/**
-	 * La función que nos permite recuperar todos las entidades del mismo tipo almacenados dentro de la base de datos.
-	 * 
-	 * @see GenericService#findById(Serializable)
-	 * @see GenericService#findByFilter(Filter)
-	 * 
-	 * @return El listado de los elementos almacenados.
-	 * @throws CheckedException
-	 *             En caso de un problema durante la recuperación de todos las entidades desde la base de datos.
-	 */
-	public List<E> findAll() throws CheckedException;
 
 	/**
 	 * La función que utilizamos para recuperar una entidad dado su identificador.
@@ -98,23 +90,43 @@ public interface GenericService<E extends Persistence<PK>, PK extends Serializab
 	public E findById(PK id) throws CheckedException;
 
 	/**
+	 * La función que nos permite recuperar todos las entidades del mismo tipo almacenados dentro de la base de datos.
+	 * 
+	 * @see OrderBy
+	 * @see GenericService#findById(Serializable)
+	 * @see GenericService#findByFilter(Filter)
+	 * 
+	 * @param orders
+	 *            Los ordenes en los que queremos recuperar las entidades. Si el mismo es mulo, se recuperan si un orden en particular.
+	 * @return El listado de los elementos almacenados.
+	 * @throws CheckedException
+	 *             En caso de un problema durante la recuperación de todos las entidades desde la base de datos.
+	 */
+	public List<E> findAll(OrderBy orders) throws CheckedException;
+
+	/**
 	 * La función que nos permite recuperar todos las entidades del mismo tipo almacenados dentro de la base de datos y que cumplen un filtro
 	 * recibido.
 	 * 
+	 * @see Filter
+	 * @see OrderBy
 	 * @see GenericService#findAll()
 	 * @see GenericService#findById(Serializable)
 	 * 
 	 * @param filter
 	 *            El filtro para realizar la consulta de registro dentro de la base de datos.
+	 * @param orders
+	 *            Los ordenes en los que queremos recuperar las entidades. Si el mismo es mulo, se recuperan si un orden en particular.
 	 * @return El listado de las entidades almacenados.
 	 * @throws CheckedException
 	 *             En caso de un problema durante la recuperación de todos las entidades desde la base de datos.
 	 */
-	public List<E> findByFilter(Filter filter) throws CheckedException;
+	public List<E> findByFilter(Filter filter, OrderBy orders) throws CheckedException;
 
 	/**
 	 * La función para guardar la entidad dentro de la base de datos.
 	 * 
+	 * @see Entity
 	 * @see GenericService#update(Persistence)
 	 * @see GenericService#saveOrUpdate(Persistence)
 	 * @see GenericService#delete(Persistence)
@@ -130,6 +142,7 @@ public interface GenericService<E extends Persistence<PK>, PK extends Serializab
 	/**
 	 * La función para actualizar la entidad dentro de la base de datos.
 	 * 
+	 * @see Entity
 	 * @see GenericService#save(Persistence)
 	 * @see GenericService#saveOrUpdate(Persistence)
 	 * @see GenericService#delete(Persistence)
@@ -145,6 +158,7 @@ public interface GenericService<E extends Persistence<PK>, PK extends Serializab
 	/**
 	 * La función para insertar una nueva entidad o actualizar una que ya se encuentre dentro de la base de datos.
 	 * 
+	 * @see Entity
 	 * @see GenericService#save(Persistence)
 	 * @see GenericService#update(Persistence)
 	 * @see GenericService#delete(Persistence)
@@ -160,6 +174,7 @@ public interface GenericService<E extends Persistence<PK>, PK extends Serializab
 	/**
 	 * La función para eliminar la entidad dentro de la base de datos.
 	 * 
+	 * @see Entity
 	 * @see GenericService#save(Persistence)
 	 * @see GenericService#update(Persistence)
 	 * @see GenericService#saveOrUpdate(Persistence)

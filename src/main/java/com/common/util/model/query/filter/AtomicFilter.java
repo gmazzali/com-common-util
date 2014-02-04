@@ -36,6 +36,12 @@ public abstract class AtomicFilter<F extends Serializable> extends Filter {
 	 */
 	private String attribute;
 
+	/**
+	 * El constructor de un filtro atómico.
+	 * 
+	 * @param attribute
+	 *            El atributo que vamos a filtrar.
+	 */
 	public AtomicFilter(String attribute) {
 		this.attribute = attribute;
 	}

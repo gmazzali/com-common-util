@@ -7,16 +7,15 @@ import com.common.util.holder.HolderMessage;
 /**
  * Las excepciones chequeadas que nos permite realizar un seguimiento de los lanzamiento de la misma para un mejor control en tiempo de desarrollo.
  * 
- * @see UncheckedException
- * @see ErrorDetail
  * @see Errors
+ * @see ErrorDetail
+ * @see UncheckedException
  * 
  * @author Guillermo Mazzali
  * @version 1.0
  */
 public class CheckedException extends Exception {
-
-	private static final long serialVersionUID = -3282018311354032412L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * El listado de los errores.

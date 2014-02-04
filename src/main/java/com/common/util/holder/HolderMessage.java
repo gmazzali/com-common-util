@@ -66,7 +66,11 @@ public class HolderMessage {
 		if (HolderMessage.resources != null && key != null) {
 			return HolderMessage.resources.getMessage(key, parameter, key, HolderMessage.locale);
 		} else {
-			return key + " {" + StringUtils.arrayToDelimitedString(parameter, ", ") + "}";
+			if (parameter == null || parameter.length == 0) {
+				return key;
+			} else {
+				return key + " {" + StringUtils.arrayToDelimitedString(parameter, ", ") + "}";
+			}
 		}
 	}
 }
