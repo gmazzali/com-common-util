@@ -1,5 +1,6 @@
 package com.common.util.holder;
 
+import java.io.Serializable;
 import java.util.Locale;
 
 import org.springframework.context.MessageSource;
@@ -11,8 +12,9 @@ import org.springframework.util.StringUtils;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class HolderMessage {
-
+public class HolderMessage implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * El conjunto de los mensaje que vamos a manejar dentro del sistema para los componentes.
 	 */

@@ -9,6 +9,7 @@ import java.io.Serializable;
  * @version 1.0
  */
 public class NullFilter extends AtomicFilter<Serializable> {
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * El constructor de un filtro NULL.

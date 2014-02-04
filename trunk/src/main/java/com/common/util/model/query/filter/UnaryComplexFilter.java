@@ -8,6 +8,7 @@ package com.common.util.model.query.filter;
  * @version 1.0
  */
 public class UnaryComplexFilter extends ComplexFilter {
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * El filtro que vamos a negar.

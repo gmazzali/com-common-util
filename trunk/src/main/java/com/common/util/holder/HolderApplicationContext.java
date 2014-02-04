@@ -1,5 +1,7 @@
 package com.common.util.holder;
 
+import java.io.Serializable;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -9,8 +11,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class HolderApplicationContext {
-
+public class HolderApplicationContext implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * El contexto de la aplicación para manejar Spring.
 	 */

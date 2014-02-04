@@ -1,5 +1,6 @@
 package com.common.util.model.query.order;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,8 +12,9 @@ import java.util.Map;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class OrderBy {
-
+public class OrderBy implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * El mapa de los atributos y sus ordenes.
 	 */

@@ -1,5 +1,7 @@
 package com.common.util.exception.error;
 
+import java.io.Serializable;
+
 /**
  * Los detalles de los errores dados mediante una frase dada y un conjuntos de parámetros que permiten complementar el mismo.
  * 
@@ -8,8 +10,9 @@ package com.common.util.exception.error;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class ErrorDetail {
-
+public class ErrorDetail implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * El mensaje que describe el error.
 	 */
