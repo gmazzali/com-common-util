@@ -42,8 +42,7 @@ import com.common.util.model.query.order.OrderBy;
  */
 @SuppressWarnings("unchecked")
 public abstract class HibernateGenericDaoImpl<E extends Persistence<PK>, PK extends Serializable> implements GenericDao<E, PK> {
-
-	private static final long serialVersionUID = -6936826506078949114L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * La enumeración de los posibles cierres para una transacción.
@@ -260,7 +259,7 @@ public abstract class HibernateGenericDaoImpl<E extends Persistence<PK>, PK exte
 		case COMMIT:
 			transaction.commit();
 			break;
-			
+
 		case ROLLBACK:
 			transaction.rollback();
 			break;
@@ -344,19 +343,19 @@ public abstract class HibernateGenericDaoImpl<E extends Persistence<PK>, PK exte
 				switch (compareFilter.getCompareFilterType()) {
 				case EQUALS:
 					return Restrictions.eq(compareFilter.getAttribute(), compareFilter.getValue());
-					
+
 				case NOT_EQUALS:
 					return Restrictions.ne(compareFilter.getAttribute(), compareFilter.getValue());
-					
+
 				case GREATER:
 					return Restrictions.gt(compareFilter.getAttribute(), compareFilter.getValue());
-					
+
 				case GREATER_OR_EQUALS:
 					return Restrictions.ge(compareFilter.getAttribute(), compareFilter.getValue());
-					
+
 				case LESSER:
 					return Restrictions.lt(compareFilter.getAttribute(), compareFilter.getValue());
-					
+
 				case LESSER_OR_EQUALS:
 					return Restrictions.le(compareFilter.getAttribute(), compareFilter.getValue());
 				}
