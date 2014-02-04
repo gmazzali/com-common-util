@@ -27,7 +27,8 @@ import com.common.util.service.GenericService;
  *            La clase que va a representar la clave primaria de la clase <E>.
  */
 public abstract class GenericServiceImpl<E extends Persistence<PK>, PK extends Serializable> implements GenericService<E, PK> {
-
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * El DAO que permite manejar los elementos dentro de la base de datos.
 	 */

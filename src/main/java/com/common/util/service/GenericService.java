@@ -27,7 +27,7 @@ import com.common.util.model.query.order.OrderBy;
  * @param <PK>
  *            La clase que va a representar la clave primaria de la clase <E>.
  */
-public interface GenericService<E extends Persistence<PK>, PK extends Serializable> {
+public interface GenericService<E extends Persistence<PK>, PK extends Serializable> extends Serializable {
 
 	/**
 	 * La función encargada de cargar el DAO al servicio del elemento al que vamos a prestar los servicios de este elemento.

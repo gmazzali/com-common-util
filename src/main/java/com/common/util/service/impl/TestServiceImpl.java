@@ -27,7 +27,8 @@ import com.common.util.service.GenericService;
  *            La clase que hace de clave primaria para los Eos que vamos a almacenar con este servicio.
  */
 public abstract class TestServiceImpl<E extends Entity<PK>, PK extends Serializable> implements GenericService<E, PK> {
-
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * El logger de la ventana.
 	 */

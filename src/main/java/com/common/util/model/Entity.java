@@ -5,15 +5,16 @@ import java.io.Serializable;
 /**
  * La clase que representa una entidad que va a almacenarse en la base de datos y que tiene un objeto que lo identifica.
  * 
+ * @see Persistence
+ * 
  * @author Guillermo Mazzali
  * @version 1.0
- * 
- * @see Persistence
  * 
  * @param <PK>
  *            La clase que va a corresponder a la clave primaria de la entidad que vamos a representar.
  */
 public abstract class Entity<PK extends Serializable> implements Persistence<PK> {
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * La interfaz que contiene el nombre de los atributos de esta entidad.
@@ -24,8 +25,6 @@ public abstract class Entity<PK extends Serializable> implements Persistence<PK>
 	public interface Attributes {
 		static final String ID = "id";
 	}
-
-	private static final long serialVersionUID = -6518344943991373527L;
 
 	/**
 	 * El identificador de la entidad.
