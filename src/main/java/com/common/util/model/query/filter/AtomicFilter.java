@@ -12,6 +12,7 @@ import java.io.Serializable;
  *            La clase que va a utilizarse como valor de comparación entre los atributos.
  */
 public abstract class AtomicFilter<F extends Serializable> extends Filter {
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * La enumeración que detalla los posibles tipos de filtros atómicos que pueden generarse.

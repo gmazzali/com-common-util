@@ -15,8 +15,7 @@ import com.common.util.holder.HolderMessage;
  * @version 1.0
  */
 public class UncheckedException extends RuntimeException {
-
-	private static final long serialVersionUID = 3912610403699752161L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * El listado de los errores.

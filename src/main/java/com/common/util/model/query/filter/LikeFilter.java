@@ -9,6 +9,7 @@ import java.io.Serializable;
  * @version 1.0
  */
 public class LikeFilter extends AtomicFilter<Serializable> {
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * La enumeración que contiene los tipos de comparaciones de String.
@@ -39,20 +40,20 @@ public class LikeFilter extends AtomicFilter<Serializable> {
 
 			switch (this) {
 
-				case EQUAL:
-					return like;
+			case EQUAL:
+				return like;
 
-				case START:
-					return like + "%";
+			case START:
+				return like + "%";
 
-				case END:
-					return "%" + like;
+			case END:
+				return "%" + like;
 
-				case ANY:
-					return "%" + like + "%";
+			case ANY:
+				return "%" + like + "%";
 
-				default:
-					return null;
+			default:
+				return null;
 			}
 		}
 	}

@@ -1,6 +1,5 @@
 package com.common.util.model.query.filter;
 
-
 /**
  * La clase que detalla un filtro complejo, como puede ser un filtro para expresiones booleanas o expresiones negadas.
  * 
@@ -8,6 +7,7 @@ package com.common.util.model.query.filter;
  * @version 1.0
  */
 public abstract class ComplexFilter extends Filter {
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * La enumeración que detalla los 2 tipos de fitros complejos que podemos crear, un filtro unario o un filtro binario.

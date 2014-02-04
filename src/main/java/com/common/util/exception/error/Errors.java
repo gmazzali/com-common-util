@@ -1,5 +1,6 @@
 package com.common.util.exception.error;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +17,9 @@ import com.common.util.exception.UncheckedException;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class Errors {
-
+public class Errors implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * El listado de los detalles de los errores.
 	 */

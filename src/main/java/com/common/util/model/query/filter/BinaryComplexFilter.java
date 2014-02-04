@@ -8,6 +8,7 @@ package com.common.util.model.query.filter;
  * @version 1.0
  */
 public class BinaryComplexFilter extends ComplexFilter {
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * La enumeración que tiene los tipos de operaciones booleanas que podemos usar dentro del filtro binario complejo.

@@ -12,6 +12,7 @@ import java.io.Serializable;
  *            La clase que representa los valores que van a almacenarse dentro del rango.
  */
 public class BetweenFilter<F extends Serializable> extends AtomicFilter<F> {
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * El valor bajo del rango.

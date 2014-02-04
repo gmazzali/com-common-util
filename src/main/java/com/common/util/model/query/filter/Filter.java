@@ -13,7 +13,8 @@ import com.common.util.model.query.filter.LikeFilter.LikeType;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class Filter {
+public class Filter implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * La función encargada de retornar un filtro que detalla la igualdad entre un atributo y un valor dado.

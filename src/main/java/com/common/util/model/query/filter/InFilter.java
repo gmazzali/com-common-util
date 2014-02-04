@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
  *            La clase que va a representar los valores que va representar el contenido del listado de valores a comparar.
  */
 public class InFilter<F extends Serializable> extends AtomicFilter<F> {
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * El listado de valores con el que va a compararse el atributo.

@@ -7,10 +7,12 @@ import java.io.Serializable;
  * 
  * @author Guillermo Mazzali
  * @version 1.0
+ * 
  * @param <F>
  *            La clase que vamos a utilizar para representar el valor que vamos a comparar con el atributo.
  */
 public class CompareFilter<F extends Serializable> extends AtomicFilter<F> {
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * La enumeración que detalla los tipos de comparaciones que podemos hacer dentro del filtro.
