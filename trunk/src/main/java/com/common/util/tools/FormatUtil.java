@@ -15,6 +15,7 @@ import com.common.util.exception.UncheckedException;
 /**
  * La clase que nos permite definir funciones de formateo.
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */

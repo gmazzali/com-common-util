@@ -18,6 +18,7 @@ import com.common.util.service.GenericService;
  * La clase que vamos a utilizar para probar las diferentes partes del sistema manteniendo un servicio para las entidades de manera desconectada de
  * los DAOs.
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  * 
@@ -28,7 +29,7 @@ import com.common.util.service.GenericService;
  */
 public abstract class TestServiceImpl<E extends Entity<PK>, PK extends Serializable> implements GenericService<E, PK> {
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * El logger de la ventana.
 	 */
@@ -72,7 +73,7 @@ public abstract class TestServiceImpl<E extends Entity<PK>, PK extends Serializa
 	@Override
 	public Long count() throws CheckedException {
 		TestServiceImpl.log.trace("count");
-		
+
 		return (long) this.entities.size();
 	}
 
@@ -84,7 +85,7 @@ public abstract class TestServiceImpl<E extends Entity<PK>, PK extends Serializa
 	@Override
 	public E findById(PK id) throws CheckedException {
 		TestServiceImpl.log.trace("find by id: " + id);
-		
+
 		this.incrementId();
 		return this.entities.get(id);
 	}
@@ -92,7 +93,7 @@ public abstract class TestServiceImpl<E extends Entity<PK>, PK extends Serializa
 	@Override
 	public List<E> findAll(OrderBy orders) throws CheckedException {
 		TestServiceImpl.log.trace("find all");
-		
+
 		return (List<E>) this.entities.values();
 	}
 
@@ -104,7 +105,7 @@ public abstract class TestServiceImpl<E extends Entity<PK>, PK extends Serializa
 	@Override
 	public void save(E entity) throws CheckedException {
 		TestServiceImpl.log.trace("save: " + entity);
-		
+
 		entity.setId(this.id);
 		this.entities.put(this.id, entity);
 	}
@@ -112,7 +113,7 @@ public abstract class TestServiceImpl<E extends Entity<PK>, PK extends Serializa
 	@Override
 	public void saveOrUpdate(E entity) throws CheckedException {
 		TestServiceImpl.log.trace("save or update: " + entity);
-		
+
 		E update = this.entities.get(entity.getId());
 		if (update == null) {
 			this.save(entity);
@@ -124,7 +125,7 @@ public abstract class TestServiceImpl<E extends Entity<PK>, PK extends Serializa
 	@Override
 	public void update(E entity) throws CheckedException {
 		TestServiceImpl.log.trace("update: " + entity);
-		
+
 		this.entities.remove(entity.getId());
 		this.entities.put(entity.getId(), entity);
 	}
@@ -132,7 +133,7 @@ public abstract class TestServiceImpl<E extends Entity<PK>, PK extends Serializa
 	@Override
 	public void delete(E entity) throws CheckedException {
 		TestServiceImpl.log.trace("delete: " + entity);
-		
+
 		E delete = this.entities.get(entity.getId());
 		if (delete != null) {
 			this.entities.remove(entity.getId());
@@ -142,7 +143,7 @@ public abstract class TestServiceImpl<E extends Entity<PK>, PK extends Serializa
 	@Override
 	public void deleteById(PK id) throws CheckedException {
 		TestServiceImpl.log.trace("delete by id: " + id);
-		
+
 		this.entities.remove(id);
 	}
 }

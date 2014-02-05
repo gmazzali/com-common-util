@@ -5,6 +5,7 @@ import org.springframework.core.convert.converter.Converter;
 /**
  * La interfaz que vamos a utilizar para definir los conversores entre entidades.
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  * 

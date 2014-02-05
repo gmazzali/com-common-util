@@ -5,6 +5,7 @@ import java.io.Serializable;
 /**
  * La clase que representa un filtro que verifica que un atributo este dentro de un rango de valores.
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  * 

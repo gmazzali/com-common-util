@@ -1,9 +1,9 @@
 package com.common.util.model.query.filter;
 
-
 /**
  * La clase que representa un filtro complejo binario, donde posee 2 filtros unidos por una operación binaria.
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */

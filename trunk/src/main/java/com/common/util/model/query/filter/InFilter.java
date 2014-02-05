@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 /**
  * La clase que permite crear un filtro para la verificar la inclusión de un atributo dentro de un listado.
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  * 

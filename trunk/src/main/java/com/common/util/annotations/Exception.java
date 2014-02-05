@@ -9,11 +9,12 @@ import java.lang.annotation.Target;
 /**
  * La anotación que nos define los elementos que tenemos como excepciones dentro de la aplicación.
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */
 @Documented
-@Target(ElementType.TYPE)
+@Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Exception {
 }

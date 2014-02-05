@@ -11,12 +11,13 @@ import com.common.util.model.query.order.OrderBy;
 /**
  * La interfaz que define todos los métodos comunes a todos los DAOs que vamos a generar dentro de un sistema.
  * 
- * @author Guillermo Mazzali
- * @version 1.0
- * 
  * @see Entity
  * @see Persistence
  * @see Serializable
+ * 
+ * @since 05/02/2014
+ * @author Guillermo Mazzali
+ * @version 1.0
  * 
  * @param <E>
  *            La clase que corresponde a la entidad que vamos a manipular dentro de la base de datos.

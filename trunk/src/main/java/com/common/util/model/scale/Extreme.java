@@ -8,6 +8,7 @@ package com.common.util.model.scale;
  * <li>{@link Extreme#CLOSE}</li>
  * </ul>
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */

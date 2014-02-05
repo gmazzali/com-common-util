@@ -10,6 +10,7 @@ import com.common.util.exception.CheckedException;
  * La clase que nos permite crear una tarea que va a ejecutarse de manera repetitiva para poder controlarla de acuerdo al estado en el que se
  * establece esta tarea.
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  * 

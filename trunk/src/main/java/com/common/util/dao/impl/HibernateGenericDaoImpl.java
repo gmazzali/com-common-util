@@ -30,10 +30,11 @@ import com.common.util.model.query.order.OrderBy;
 /**
  * La clase que implementa la interfaz {@link GenericDao} para acceder a una base de datos desde el framework Hibernate.
  * 
+ * @see GenericDao
+ * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
- * 
- * @see GenericDao
  * 
  * @param <E>
  *            La clase que corresponde a la entidad que vamos a persistir dentro de la base de datos.

@@ -5,6 +5,7 @@ import java.io.Serializable;
 /**
  * La clase que detalla un filtro atomico para comparar atributos con un conjunto de valores que van a compararse.
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  * 

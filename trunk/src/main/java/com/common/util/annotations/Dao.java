@@ -11,12 +11,13 @@ import org.springframework.stereotype.Repository;
 /**
  * La anotación que nos permite definir los elementos de la capa de acceso a los datos de una aplicación.
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */
 @Repository
 @Documented
-@Target(ElementType.TYPE)
+@Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Dao {
 	public String value() default "";

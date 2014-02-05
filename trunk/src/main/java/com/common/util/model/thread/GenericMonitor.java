@@ -6,6 +6,7 @@ import java.io.Serializable;
  * La clase que va a representar un monitor de un proceso o una tarea para ser escuchado desde otro lado del sistema y asi poder monitorear dicho
  * proceso o tarea.
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  * 

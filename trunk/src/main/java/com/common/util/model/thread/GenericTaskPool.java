@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
  * La clase que nos permite crear un pool de tareas para poder controlarlos a todos de manera conjunta dentro de un sistema en ejecución y que permite
  * reiniciarlos una vez que estos fueron finalizados.
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  * 
@@ -262,20 +263,20 @@ public class GenericTaskPool<T extends GenericTask<?>> {
 
 						switch (GenericTaskPool.this.poolStatus) {
 
-							case INIT:
-								break;
+						case INIT:
+							break;
 
-							case RUNNING:
-								task.start();
-								break;
+						case RUNNING:
+							task.start();
+							break;
 
-							case PAUSE:
-								task.pause();
-								break;
+						case PAUSE:
+							task.pause();
+							break;
 
-							case STOP:
-								task.stop();
-								break;
+						case STOP:
+							task.stop();
+							break;
 						}
 						GenericTaskPool.this.poolMonitor.setValue(1.0);
 					}

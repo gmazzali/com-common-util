@@ -3,6 +3,7 @@ package com.common.util.model.query.filter;
 /**
  * La clase que detalla un filtro complejo, como puede ser un filtro para expresiones booleanas o expresiones negadas.
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */

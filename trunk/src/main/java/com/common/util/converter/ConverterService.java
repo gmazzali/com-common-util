@@ -6,6 +6,7 @@ import java.util.List;
 /**
  * La interfaz que define el comportamiento básico de un convertidor de un objeto a otro dentro del sistema.
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */

@@ -5,6 +5,7 @@ import java.io.Serializable;
 /**
  * La clase que corresponde a un filtro que compara un atributo con un valor dado.
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  * 
