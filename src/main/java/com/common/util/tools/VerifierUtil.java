@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 /**
  * La clase encargada de verificar que los campos de entrada de una aplicación tenga los valores correctos y que no sean cualquier cosa.
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */

@@ -11,12 +11,13 @@ import org.springframework.stereotype.Component;
 /**
  * La anotación que nos permite definir los elementos de la capa de presentación de una aplicación.
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */
 @Component
 @Documented
-@Target(ElementType.TYPE)
+@Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface View {
 	public String value() default "";

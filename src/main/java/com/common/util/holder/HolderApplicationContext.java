@@ -8,6 +8,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 /**
  * La clase encargada de mantener el contexto de la aplicación al alcance de toda la aplicación.
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */

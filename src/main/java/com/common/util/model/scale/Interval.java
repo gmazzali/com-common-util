@@ -15,6 +15,7 @@ import com.common.util.model.Entity;
  * @see Scale
  * @see Extreme
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  * 

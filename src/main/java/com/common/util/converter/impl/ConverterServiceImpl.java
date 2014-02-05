@@ -14,6 +14,7 @@ import com.common.util.converter.GenericConverter;
 /**
  * La clase que nos permite manipular los conversores que nos ofrece SPRING para convertir entidades entre ellas.
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */
@@ -23,7 +24,7 @@ public class ConverterServiceImpl extends DefaultConversionService implements Co
 	public <S, T> boolean canConvertTo(Class<S> sourceClass, Class<T> targetClass) {
 		return this.canConvert(sourceClass, targetClass);
 	}
-	
+
 	@Override
 	public <S, T> T convertTo(S source, Class<T> targetClass) {
 		return this.convert(source, targetClass);

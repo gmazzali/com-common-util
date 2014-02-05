@@ -18,6 +18,7 @@ import com.common.util.service.GenericService;
  * @see OrderBy
  * @see GenericService
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  * 
@@ -28,7 +29,7 @@ import com.common.util.service.GenericService;
  */
 public abstract class GenericServiceImpl<E extends Persistence<PK>, PK extends Serializable> implements GenericService<E, PK> {
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * El DAO que permite manejar los elementos dentro de la base de datos.
 	 */

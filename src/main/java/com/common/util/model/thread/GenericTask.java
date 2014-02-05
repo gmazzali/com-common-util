@@ -9,6 +9,7 @@ import com.common.util.model.Entity;
 /**
  * La clase que nos permite definir un proceso genérico para poder ejecutar tareas en segundo plano y poder controlar la misma de manera completa.
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  * 

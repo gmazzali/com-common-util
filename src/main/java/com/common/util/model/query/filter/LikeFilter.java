@@ -5,6 +5,7 @@ import java.io.Serializable;
 /**
  * La clase que define un filtro que permite crear una consulta LIKE sobre un elemento de String.
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */

@@ -15,6 +15,7 @@ import com.common.util.model.Entity;
  * 
  * @see Interval
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  * 
@@ -66,7 +67,7 @@ public class Scale<I extends Interval<N>, N extends Number> extends Entity<Long>
 	 */
 	public Scale() {
 		Scale.log.trace("create");
-		
+
 		this.minExtreme = Extreme.CLOSE;
 		this.lowerValue = null;
 		this.higherValue = null;
@@ -128,13 +129,13 @@ public class Scale<I extends Interval<N>, N extends Number> extends Entity<Long>
 	 */
 	public Boolean isIncludeValue(N value) {
 		Scale.log.trace("is include value");
-		
+
 		boolean include = true;
 
-		if(value == null) {
+		if (value == null) {
 			return false;
-		} 
-		
+		}
+
 		switch (this.minExtreme) {
 		case CLOSE:
 			include &= value.doubleValue() >= this.lowerValue.doubleValue();
@@ -146,15 +147,15 @@ public class Scale<I extends Interval<N>, N extends Number> extends Entity<Long>
 		}
 
 		switch (this.maxExtreme) {
-		case CLOSE:	
-			include &= value.doubleValue() <= this.higherValue.doubleValue();		
+		case CLOSE:
+			include &= value.doubleValue() <= this.higherValue.doubleValue();
 			break;
 
 		case OPEN:
 			include &= value.doubleValue() < this.higherValue.doubleValue();
 			break;
 		}
-		
+
 		return include;
 	}
 

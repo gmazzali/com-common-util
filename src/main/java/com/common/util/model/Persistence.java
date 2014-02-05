@@ -5,6 +5,7 @@ import java.io.Serializable;
 /**
  * La interfaz que define los elementos que van a almacenarse dentro de la base de datos.
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  * 

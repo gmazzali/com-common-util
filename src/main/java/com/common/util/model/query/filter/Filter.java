@@ -10,6 +10,7 @@ import com.common.util.model.query.filter.LikeFilter.LikeType;
 /**
  * La clase que detalla un filtro dentro de una consulta dentro de la base de datos.
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */

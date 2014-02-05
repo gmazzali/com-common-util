@@ -14,12 +14,13 @@ import com.common.util.exception.UncheckedException;
  * @see CheckedException
  * @see UncheckedException
  * 
+ * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */
 public class Errors implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * El listado de los detalles de los errores.
 	 */
