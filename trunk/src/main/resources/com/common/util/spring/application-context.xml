@@ -10,47 +10,51 @@
                 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
                 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
-	<!-- Cargamos las propiedades de los parámetros para el sistema -->
+	<!-- ========================================================================================== -->
+	<!-- ==================== CARGAMOS LOS ARCHIVOS DE PROPIEDADES DEL SISTEMA ==================== -->
+	<!-- ========================================================================================== -->
 
 	<bean id="properties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				<!-- El listado de todos los archivos de configuración que tengamos dentro del sistema -->
+				<!-- EL LISTADO DE LAS UBICACIONES DE LOS ARCHIVOS DE CONFIGURACIÓN -->
 				<value>file:///${proyecto.configuration.dir}/jdbc.properties</value>
-				<value>file:///${proyecto.configuration.dir}/configuration.properties
-				</value>
+				<value>file:///${proyecto.configuration.dir}/configuration.properties</value>
 			</list>
 		</property>
 	</bean>
 
-	<!-- Cargamos las propiedades que tienen los mensaje del sistema -->
-
-	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-		<property name="cacheSeconds" value="600" />
-		<property name="basenames">
-			<list>
-				<!-- La ubicación donde tenemos los archivos de mensajes del sistema -->
-				<value>file:///${proyecto.configuration.dir}/messages/messages
-				</value>
-			</list>
-		</property>
-	</bean>
-
-	<!-- Creamos la localidad a partir de lo que tenemos dentro del archivo de configuración -->
+	<!-- ========================================================================================= -->
+	<!-- =============== CREAMOS LA LOCALIDAD DONDE VAMOS A EJECUTAR LA APLICACIÓN =============== -->
+	<!-- ========================================================================================= -->
 
 	<bean id="messageLocale" class="java.util.Locale" lazy-init="false" depends-on="properties">
 		<constructor-arg index="0" value="${message.locale.languaje}" />
 		<constructor-arg index="1" value="${message.locale.country}" />
 	</bean>
 
-	<!-- Cargamos los mensajes a partir de los archivos de mensajes y la localidad -->
+	<!-- =========================================================================================== -->
+	<!-- ================ CARGAMOS LOS MENSAJES QUE VAMOS A USAR DENTRO DEL SISTEMA ================ -->
+	<!-- =========================================================================================== -->
+
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="cacheSeconds" value="600" />
+		<property name="basenames">
+			<list>
+				<!-- LA UBICACIÓN DONDE TENEMOS LOS ARCHIVOS DE LOS MENSAJES -->
+				<value>file:///${proyecto.configuration.dir}/messages/messages</value>
+			</list>
+		</property>
+	</bean>
 
 	<bean id="holderMessage" class="com.common.util.holder.HolderMessage" lazy-init="false" depends-on="messageSource, messageLocale">
 		<property name="resources" ref="messageSource" />
 		<property name="locale" ref="messageLocale" />
 	</bean>
 
-	<!-- Cargamos la configuración del formateador del sistema -->
+	<!-- ======================================================================================= -->
+	<!-- ==================== CARGAMOS LA CONFIGURACIÓN PARA EL FORMATEADOR ==================== -->
+	<!-- ======================================================================================= -->
 
 	<bean id="formatterLocale" class="java.util.Locale" lazy-init="false" depends-on="properties">
 		<constructor-arg index="0" value="${formatter.locale.languaje}" />
@@ -58,26 +62,52 @@
 	</bean>
 
 	<bean id="formatter" class="com.common.util.tools.FormatUtil" lazy-init="false" depends-on="properties, formatterLocale">
-		<property name="formatLocale" ref="formatterLocale" />
+		<property name="locale" ref="formatterLocale" />
 		<property name="dateFormat" ref="${formatter.pattern.date}" />
-		<property name="currencySimbol" ref="${formatter.currency.simbol}" />
 	</bean>
 
-	<!-- Cargamos la configuración del LOG4J -->
+	<!-- ======================================================================================= -->
+	<!-- ================ CARGAMOS LA CONFIGURACIÓN PARA EL CONVERSOR DE MONEDA ================ -->
+	<!-- ======================================================================================= -->
+
+	<bean id="currencyUtil" class="com.common.util.tools.CurrencyUtil" lazy-init="false" depends-on="properties, formatterLocale">
+		<property name="currencySimbol" ref="${currency.simbol}" />
+		<property name="decimals" ref="${currency.decimals}" />
+		<property name="groupSeparator" ref="${currency.separator.group}" />
+		<property name="decimalSeparator" ref="${currency.separator.decimal}" />
+	</bean>
+
+	<!-- ====================================================================================== -->
+	<!-- =================== CARGAMOS LA CONFIGURACIÓN PARA EL LOG DE LOG4J =================== -->
+	<!-- ====================================================================================== -->
 
 	<bean name="log4j" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
 		<property name="targetClass" value="org.springframework.util.Log4jConfigurer" />
 		<property name="targetMethod" value="initLogging" />
 		<property name="arguments">
 			<list>
-				<!-- La ubicación donde tenemos el archivo de configuración de LOG4J -->
-				<value>file:///${proyecto.configuration.dir}/log4j.properties
-				</value>
+				<!-- LA UBICACIÓN DE DONDE TENEMOS EL ARCHIVO DE CONFIGURACIÓN PARA EL LOG DE LOG4J -->
+				<value>file:///${proyecto.configuration.dir}/log4j.properties</value>
 			</list>
 		</property>
 	</bean>
 
-	<!-- Creamos la conexión, la sessionFactory y el controlador de transacciones a la base de datos -->
+	<!-- ======================================================================================== -->
+	<!-- ===================== CARGAMOS LA CONFIGURACIÓN DE LOS CONVERSORES ===================== -->
+	<!-- ======================================================================================== -->
+
+	<bean id="conversionService" class="com.common.util.converter.impl.ConverterServiceImpl">
+		<property name="converters">
+			<list>
+				<!-- EL LISTADO DE LAS CLASES QUE IMPLEMENTAN LA INTERFAZ GENERICCONVERTER -->
+				<bean class="nombre.de.la.clase.que.es.una.implementación.de.la.interfaz.GenericCoverter" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- ======================================================================================= -->
+	<!-- =================== CARGAMOS LA CONFIGURACIÓN PARA LA BASE DE DATOS =================== -->
+	<!-- ======================================================================================= -->
 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" depends-on="properties">
 		<property name="driverClassName" value="${jdbc.driverClassName}" />
@@ -102,11 +132,13 @@
 		</property>
 	</bean>
 
+	<!-- ===================================================================================== -->
+	<!-- ============ CREAMOS EL PROXY PARA LAS TRANSACCIONES A NIVEL DE SERVICIO ============ -->
+	<!-- ===================================================================================== -->
+
 	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-
-	<!-- El proxy de transacciones que vamos a usar dentro del sistema -->
 
 	<aop:aspectj-autoproxy />
 	<tx:annotation-driven transaction-manager="transactionManager" />

@@ -1,4 +1,4 @@
-package com.common.util.tools.date;
+package com.common.util.tool.date;
 
 /**
  * La enumeración que vamos a ocupar para definir la precisión con la que se va a manipular las fechas.
