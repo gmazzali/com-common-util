@@ -46,13 +46,3 @@ public interface ConverterService {
 	 */
 	public <S, T> List<T> convertListTo(Collection<S> collection, Class<T> returnClass);
 }
-
-// <bean id="conversionService" class="com.common.util.converter.impl.ConverterServiceImpl">
-// <property name="converters">
-// <list>
-// <bean class="nombre.de.la.clase.que.es.una.implementación.de.la.interfaz.GenericCoverter" />
-// <bean class="com.topgroup.wga.converter.AccessRowBeanConverter" />
-// <bean class="com.topgroup.wga.converter.UserBeanConverter" />
-// </list>
-// </property>
-// </bean>

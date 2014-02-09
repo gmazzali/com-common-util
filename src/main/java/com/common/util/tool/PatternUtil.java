@@ -1,4 +1,4 @@
-package com.common.util.tools;
+package com.common.util.tool;
 
 /**
  * Contiene los patrones de cadenas de texto (Expresiones Regulares) de los casos más comunes.

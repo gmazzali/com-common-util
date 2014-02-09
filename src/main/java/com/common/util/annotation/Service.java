@@ -1,4 +1,4 @@
-package com.common.util.annotations;
+package com.common.util.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -7,15 +7,16 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * La anotación que nos permite definir los conversores de entidades dentro de una aplicación.
+ * La anotación que nos permite definir los elementos de la capa de servicio de una aplicación.
  * 
  * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */
+@org.springframework.stereotype.Service
 @Documented
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Converter {
+public @interface Service {
 	public String value() default "";
 }

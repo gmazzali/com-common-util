@@ -1,4 +1,4 @@
-package com.common.util.tools;
+package com.common.util.tool;
 
 import java.math.BigInteger;
 import java.text.DecimalFormat;
@@ -24,7 +24,7 @@ public class FormatUtil {
 	/**
 	 * La localidad que vamos a tomar como base para los formatos.
 	 */
-	protected static Locale formatLocale = Locale.GERMANY;
+	protected static Locale locale = Locale.GERMANY;
 
 	/**
 	 * La constante para el formato de despliegue de una fecha. Por omisión tiene el valor:
@@ -36,23 +36,14 @@ public class FormatUtil {
 	protected static String dateFormat = "dd/MM/yyyy";
 
 	/**
-	 * El simbolo que vamos a ocupar para referenciar las monedas de uso comercial. Por omisión tiene el valor:
-	 * 
-	 * <pre>
-	 * currencySimbol = &quot;$&quot;
-	 * </pre>
-	 */
-	protected static String currencySimbol = "$";
-
-	/**
 	 * Se encarga de cargar la localidad del contexto donde se ejecuta el formateador. Por omisión, la localidad que vamos a utilizar es el cargado a
 	 * partir de {@link Locale#GERMANY}.
 	 * 
-	 * @param formatLocale
+	 * @param locale
 	 *            La localidad donde se van a formatear los elementos.
 	 */
-	public void setFormatLocale(Locale formatLocale) {
-		FormatUtil.formatLocale = formatLocale;
+	public void setLocale(Locale locale) {
+		FormatUtil.locale = locale;
 	}
 
 	/**
@@ -64,17 +55,6 @@ public class FormatUtil {
 	 */
 	public void setDateFormat(String dateFormat) {
 		FormatUtil.dateFormat = dateFormat;
-	}
-
-	/**
-	 * Se encarga de cargar el simbolo del dinero que vamos a utilizar. Por omisión, el simbolo que vamos a utilizar que vamos a utilizar es el
-	 * cargado en {@link FormatUtil#currencySimbol}.
-	 * 
-	 * @param currencySimbol
-	 *            El simbolo para referenciar las monedas de uso comercial.
-	 */
-	public void setCurrencySimbol(String currencySimbol) {
-		FormatUtil.currencySimbol = currencySimbol;
 	}
 
 	/**
@@ -124,7 +104,7 @@ public class FormatUtil {
 	 * @return El formateador por omisión para Alemania.
 	 */
 	private static DecimalFormat getNumberFormat() {
-		return (DecimalFormat) NumberFormat.getNumberInstance(FormatUtil.formatLocale);
+		return (DecimalFormat) NumberFormat.getNumberInstance(FormatUtil.locale);
 	}
 
 	/**
@@ -267,24 +247,20 @@ public class FormatUtil {
 			// Seteamos la cantidad de digitos a mostrar.
 			if (minimumDecimalSize != null && minimumDecimalSize > 0) {
 				formatter.setMinimumFractionDigits(minimumDecimalSize);
-
-				// Mostramos el caracter separador solo si tenemos como mínimo un valor decimal.
-				if (minimumDecimalSize > 0) {
-					formatter.setDecimalSeparatorAlwaysShown(true);
-				}
-
-				// Cargamos el caracter separador solo si lo recibimos.
-				if (decimalSeparator != null) {
-					symbols.setDecimalSeparator(decimalSeparator);
-				}
 			} else {
 				formatter.setMinimumFractionDigits(0);
 			}
 
 			if (maximumDecimalSize != null && maximumDecimalSize > 0) {
+				formatter.setDecimalSeparatorAlwaysShown(true);
 				formatter.setMaximumFractionDigits(maximumDecimalSize);
 			} else {
 				formatter.setMaximumFractionDigits(Integer.MAX_VALUE);
+			}
+
+			// Cargamos el caracter separador solo si lo recibimos.
+			if (decimalSeparator != null) {
+				symbols.setDecimalSeparator(decimalSeparator);
 			}
 		}
 
@@ -295,32 +271,33 @@ public class FormatUtil {
 	}
 
 	/**
-	 * La función que convierte un valor entero a una cadena de texto plano.
+	 * La función que agrega una cantidad dada de ceros para que la salida tenga una longitud mínima recibida.
+	 * 
+	 * <ul>
+	 * <li><code>value</code>: <i>1234567890</i></li>
+	 * <li><code>minimumSize</code>: <i>15</i></li>
+	 * </ul>
 	 * 
 	 * <pre>
-	 * 123.456.789 => 123456789
+	 * <b>OUTPUT: "000001234567890"</b>
+	 * </pre>
+	 * 
+	 * <ul>
+	 * <li><code>value</code>: <i>-1234567890</i></li>
+	 * <li><code>minimumSize</code>: <i>15</i></li>
+	 * </ul>
+	 * 
+	 * <pre>
+	 * <b>OUTPUT: "-000001234567890"</b>
 	 * </pre>
 	 * 
 	 * @param value
-	 *            El valor entero que vamos a convertir.
-	 * @return La cadena con el valor recibido formateado.
+	 *            El valor entero que vamos a completar con cero para llegar a una longitud dada.
+	 * @param minimumSize
+	 *            La cantidad minima de digitos que queremos que tenga el número formateado.
+	 * @return La cadena con el valor recibido formateado con la longitud mínima recibida.
 	 */
-	public static String formatInteger(Integer value) {
-		return value != null ? FormatUtil.formatNumber(value, 0, null, null, null, null, null, null) : "";
-	}
-
-	/**
-	 * La función que convierte un valor entero largo a una cadena de texto plano.
-	 * 
-	 * <pre>
-	 * 123.456.789 => 123456789
-	 * </pre>
-	 * 
-	 * @param value
-	 *            El valor entero largo que vamos a convertir.
-	 * @return La cadena con el valor recibido como texto plano.
-	 */
-	public static String formatLong(Long value) {
-		return value != null ? FormatUtil.formatNumber(value, 0, null, null, null, null, null, null) : "";
+	public static String zeroFill(Number value, Integer minimumSize) {
+		return value != null ? FormatUtil.formatNumber(value, minimumSize, null, null, null, null, null, null) : "";
 	}
 }

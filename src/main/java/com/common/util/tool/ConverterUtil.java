@@ -1,4 +1,4 @@
-package com.common.util.tools;
+package com.common.util.tool;
 
 import com.common.util.exception.UncheckedException;
 

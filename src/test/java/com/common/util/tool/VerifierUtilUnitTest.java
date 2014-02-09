@@ -4,7 +4,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import com.common.util.tools.VerifierUtil;
+import com.common.util.tool.VerifierUtil;
 
 /**
  * La clase que permite probar los métodos de verificación base de la libreria.

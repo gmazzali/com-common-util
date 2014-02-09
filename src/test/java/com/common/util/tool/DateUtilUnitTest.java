@@ -8,8 +8,8 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import com.common.util.tools.date.DatePrecision;
-import com.common.util.tools.date.DateUtil;
+import com.common.util.tool.date.DatePrecision;
+import com.common.util.tool.date.DateUtil;
 
 /**
  * La clase de prueba para las utilerías de fechas.
