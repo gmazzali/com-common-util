@@ -5,8 +5,6 @@ import junit.framework.Assert;
 import org.junit.AfterClass;
 import org.junit.Test;
 
-import com.common.util.tool.FormatUtil;
-
 /**
  * La clase de pruebas de la clase base que permite formatear elementos.
  * 
@@ -51,6 +49,11 @@ public class FormatUtilUnitTest {
 		output = FormatUtil.formatNumber(number, null, null, null, null, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
+		number = 0;
+		expectedOutput = "0";
+		output = FormatUtil.formatNumber(number, null, null, null, null, null, null, null);
+		Assert.assertEquals(expectedOutput, output);
+
 		number = -12345;
 		expectedOutput = "-12345";
 		output = FormatUtil.formatNumber(number, null, null, null, null, null, null, null);
@@ -86,6 +89,37 @@ public class FormatUtilUnitTest {
 
 		number = 12345;
 		expectedOutput = "0000012345";
+		output = FormatUtil.formatNumber(number, 10, null, null, null, null, null, null);
+		Assert.assertEquals(expectedOutput, output);
+
+		// CERO.
+		number = 0;
+		expectedOutput = "0";
+		output = FormatUtil.formatNumber(number, -1, null, null, null, null, null, null);
+		Assert.assertEquals(expectedOutput, output);
+
+		number = 0;
+		expectedOutput = "0";
+		output = FormatUtil.formatNumber(number, 0, null, null, null, null, null, null);
+		Assert.assertEquals(expectedOutput, output);
+
+		number = 0;
+		expectedOutput = "0";
+		output = FormatUtil.formatNumber(number, 1, null, null, null, null, null, null);
+		Assert.assertEquals(expectedOutput, output);
+
+		number = 0;
+		expectedOutput = "00000";
+		output = FormatUtil.formatNumber(number, 5, null, null, null, null, null, null);
+		Assert.assertEquals(expectedOutput, output);
+
+		number = 0;
+		expectedOutput = "000000";
+		output = FormatUtil.formatNumber(number, 6, null, null, null, null, null, null);
+		Assert.assertEquals(expectedOutput, output);
+
+		number = 0;
+		expectedOutput = "0000000000";
 		output = FormatUtil.formatNumber(number, 10, null, null, null, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
@@ -154,6 +188,42 @@ public class FormatUtilUnitTest {
 
 		number = 12345;
 		expectedOutput = "12345";
+		output = FormatUtil.formatNumber(number, null, 10, null, null, null, null, null);
+		Assert.assertEquals(expectedOutput, output);
+
+		// CERO.
+		number = 0;
+		expectedOutput = "0";
+		output = FormatUtil.formatNumber(number, null, -1, null, null, null, null, null);
+		Assert.assertEquals(expectedOutput, output);
+
+		number = 0;
+		expectedOutput = "0";
+		output = FormatUtil.formatNumber(number, null, 0, null, null, null, null, null);
+		Assert.assertEquals(expectedOutput, output);
+
+		number = 0;
+		expectedOutput = "0";
+		output = FormatUtil.formatNumber(number, null, 1, null, null, null, null, null);
+		Assert.assertEquals(expectedOutput, output);
+
+		number = 0;
+		expectedOutput = "0";
+		output = FormatUtil.formatNumber(number, null, 4, null, null, null, null, null);
+		Assert.assertEquals(expectedOutput, output);
+
+		number = 0;
+		expectedOutput = "0";
+		output = FormatUtil.formatNumber(number, null, 5, null, null, null, null, null);
+		Assert.assertEquals(expectedOutput, output);
+
+		number = 0;
+		expectedOutput = "0";
+		output = FormatUtil.formatNumber(number, null, 6, null, null, null, null, null);
+		Assert.assertEquals(expectedOutput, output);
+
+		number = 0;
+		expectedOutput = "0";
 		output = FormatUtil.formatNumber(number, null, 10, null, null, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
@@ -255,6 +325,37 @@ public class FormatUtilUnitTest {
 		number = 12345;
 		expectedOutput = "12345";
 		output = FormatUtil.formatNumber(number, null, null, null, null, null, 10, '_');
+		Assert.assertEquals(expectedOutput, output);
+
+		// CERO.
+		number = 0;
+		expectedOutput = "0";
+		output = FormatUtil.formatNumber(number, null, null, null, null, null, -1, null);
+		Assert.assertEquals(expectedOutput, output);
+
+		number = 0;
+		expectedOutput = "0";
+		output = FormatUtil.formatNumber(number, null, null, null, null, null, 0, null);
+		Assert.assertEquals(expectedOutput, output);
+
+		number = 0;
+		expectedOutput = "0";
+		output = FormatUtil.formatNumber(number, null, null, null, null, null, 1, null);
+		Assert.assertEquals(expectedOutput, output);
+
+		number = 0;
+		expectedOutput = "0";
+		output = FormatUtil.formatNumber(number, null, null, null, null, null, -1, '_');
+		Assert.assertEquals(expectedOutput, output);
+
+		number = 0;
+		expectedOutput = "0";
+		output = FormatUtil.formatNumber(number, null, null, null, null, null, 0, '_');
+		Assert.assertEquals(expectedOutput, output);
+
+		number = 0;
+		expectedOutput = "0";
+		output = FormatUtil.formatNumber(number, null, null, null, null, null, 1, '_');
 		Assert.assertEquals(expectedOutput, output);
 
 		// NEGATIVOS.
@@ -382,6 +483,37 @@ public class FormatUtilUnitTest {
 		number = 12345.12345;
 		expectedOutput = "12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "1234500000";
 		output = FormatUtil.formatNumber(number, null, null, 10, null, null, null, null);
+		Assert.assertEquals(expectedOutput, output);
+
+		// CERO
+		number = 0.0;
+		expectedOutput = "0";
+		output = FormatUtil.formatNumber(number, 1, null, -1, null, null, null, null);
+		Assert.assertEquals(expectedOutput, output);
+
+		number = 0.0;
+		expectedOutput = "0";
+		output = FormatUtil.formatNumber(number, 1, null, 0, null, null, null, null);
+		Assert.assertEquals(expectedOutput, output);
+
+		number = 0.0;
+		expectedOutput = "0" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "0";
+		output = FormatUtil.formatNumber(number, 1, null, 1, null, null, null, null);
+		Assert.assertEquals(expectedOutput, output);
+
+		number = 0.0;
+		expectedOutput = "0" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "00000";
+		output = FormatUtil.formatNumber(number, 1, null, 5, null, null, null, null);
+		Assert.assertEquals(expectedOutput, output);
+
+		number = 0.0;
+		expectedOutput = "0" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "000000";
+		output = FormatUtil.formatNumber(number, 1, null, 6, null, null, null, null);
+		Assert.assertEquals(expectedOutput, output);
+
+		number = 0.0;
+		expectedOutput = "0" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "0000000000";
+		output = FormatUtil.formatNumber(number, 1, null, 10, null, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		// NEGATIVOS

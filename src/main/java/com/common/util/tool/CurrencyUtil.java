@@ -96,10 +96,10 @@ public class CurrencyUtil {
 			return "";
 		}
 
-		String formatedValue = FormatUtil.formatNumber(currency, null, null, CurrencyUtil.decimals, CurrencyUtil.decimals,
+		String formatedValue = FormatUtil.formatNumber(currency, 1, null, CurrencyUtil.decimals, CurrencyUtil.decimals,
 				CurrencyUtil.decimalSeparator, 3, CurrencyUtil.groupSeparator);
 
 		// Retornamos el valor formateado.
-		return CurrencyUtil.currencySimbol + formatedValue;
+		return CurrencyUtil.currencySimbol + " " + formatedValue;
 	}
 }
