@@ -44,11 +44,146 @@ public class PhisicConverterUtilTestUnit {
 		} catch (Exception e) {
 		}
 
+		// DESDE CELSIUS
 		inputTemperature = 0.0;
 		expectedTemperature = 0.0;
 		sourceUnit = TemperatureUnit.CELSIUS;
 		targetUnit = TemperatureUnit.CELSIUS;
 		outputTemperature = PhisicConverterUtil.convertTemperature(inputTemperature, sourceUnit, targetUnit);
-		Assert.assertEquals(expectedTemperature, outputTemperature, 0);
+		Assert.assertEquals(expectedTemperature, outputTemperature, 0.00000001);
+
+		inputTemperature = 100.0;
+		expectedTemperature = 100.0;
+		sourceUnit = TemperatureUnit.CELSIUS;
+		targetUnit = TemperatureUnit.CELSIUS;
+		outputTemperature = PhisicConverterUtil.convertTemperature(inputTemperature, sourceUnit, targetUnit);
+		Assert.assertEquals(expectedTemperature, outputTemperature, 0.00000001);
+
+		inputTemperature = 0.0;
+		expectedTemperature = 32.0;
+		sourceUnit = TemperatureUnit.CELSIUS;
+		targetUnit = TemperatureUnit.FARENHEIT;
+		outputTemperature = PhisicConverterUtil.convertTemperature(inputTemperature, sourceUnit, targetUnit);
+		Assert.assertEquals(expectedTemperature, outputTemperature, 0.00000001);
+
+		inputTemperature = 100.0;
+		expectedTemperature = 212.0;
+		sourceUnit = TemperatureUnit.CELSIUS;
+		targetUnit = TemperatureUnit.FARENHEIT;
+		outputTemperature = PhisicConverterUtil.convertTemperature(inputTemperature, sourceUnit, targetUnit);
+		Assert.assertEquals(expectedTemperature, outputTemperature, 0.00000001);
+
+		inputTemperature = 0.0;
+		expectedTemperature = 273.15;
+		sourceUnit = TemperatureUnit.CELSIUS;
+		targetUnit = TemperatureUnit.KELVIN;
+		outputTemperature = PhisicConverterUtil.convertTemperature(inputTemperature, sourceUnit, targetUnit);
+		Assert.assertEquals(expectedTemperature, outputTemperature, 0.00000001);
+
+		inputTemperature = 100.0;
+		expectedTemperature = 373.15;
+		sourceUnit = TemperatureUnit.CELSIUS;
+		targetUnit = TemperatureUnit.KELVIN;
+		outputTemperature = PhisicConverterUtil.convertTemperature(inputTemperature, sourceUnit, targetUnit);
+		Assert.assertEquals(expectedTemperature, outputTemperature, 0.00000001);
+
+		inputTemperature = 0.0;
+		expectedTemperature = 491.67;
+		sourceUnit = TemperatureUnit.CELSIUS;
+		targetUnit = TemperatureUnit.RANKINE;
+		outputTemperature = PhisicConverterUtil.convertTemperature(inputTemperature, sourceUnit, targetUnit);
+		Assert.assertEquals(expectedTemperature, outputTemperature, 0.00000001);
+
+		inputTemperature = 100.0;
+		expectedTemperature = 671.67;
+		sourceUnit = TemperatureUnit.CELSIUS;
+		targetUnit = TemperatureUnit.RANKINE;
+		outputTemperature = PhisicConverterUtil.convertTemperature(inputTemperature, sourceUnit, targetUnit);
+		Assert.assertEquals(expectedTemperature, outputTemperature, 0.00000001);
+
+		inputTemperature = 0.0;
+		expectedTemperature = 0.0;
+		sourceUnit = TemperatureUnit.CELSIUS;
+		targetUnit = TemperatureUnit.REAUMUR;
+		outputTemperature = PhisicConverterUtil.convertTemperature(inputTemperature, sourceUnit, targetUnit);
+		Assert.assertEquals(expectedTemperature, outputTemperature, 0.00000001);
+
+		inputTemperature = 100.0;
+		expectedTemperature = 80.0;
+		sourceUnit = TemperatureUnit.CELSIUS;
+		targetUnit = TemperatureUnit.REAUMUR;
+		outputTemperature = PhisicConverterUtil.convertTemperature(inputTemperature, sourceUnit, targetUnit);
+		Assert.assertEquals(expectedTemperature, outputTemperature, 0.00000001);
+		
+		// DESDE FARENHEIT
+		inputTemperature = 0.0;
+		expectedTemperature = -17.77777778;
+		sourceUnit = TemperatureUnit.FARENHEIT;
+		targetUnit = TemperatureUnit.CELSIUS;
+		outputTemperature = PhisicConverterUtil.convertTemperature(inputTemperature, sourceUnit, targetUnit);
+		Assert.assertEquals(expectedTemperature, outputTemperature, 0.00000001);
+
+		inputTemperature = 100.0;
+		expectedTemperature = 37.77777778;
+		sourceUnit = TemperatureUnit.FARENHEIT;
+		targetUnit = TemperatureUnit.CELSIUS;
+		outputTemperature = PhisicConverterUtil.convertTemperature(inputTemperature, sourceUnit, targetUnit);
+		Assert.assertEquals(expectedTemperature, outputTemperature, 0.00000001);
+
+		inputTemperature = 0.0;
+		expectedTemperature = 0.0;
+		sourceUnit = TemperatureUnit.FARENHEIT;
+		targetUnit = TemperatureUnit.FARENHEIT;
+		outputTemperature = PhisicConverterUtil.convertTemperature(inputTemperature, sourceUnit, targetUnit);
+		Assert.assertEquals(expectedTemperature, outputTemperature, 0.00000001);
+
+		inputTemperature = 100.0;
+		expectedTemperature = 100.0;
+		sourceUnit = TemperatureUnit.FARENHEIT;
+		targetUnit = TemperatureUnit.FARENHEIT;
+		outputTemperature = PhisicConverterUtil.convertTemperature(inputTemperature, sourceUnit, targetUnit);
+		Assert.assertEquals(expectedTemperature, outputTemperature, 0.00000001);
+
+		inputTemperature = 0.0;
+		expectedTemperature = 255.37222222;
+		sourceUnit = TemperatureUnit.FARENHEIT;
+		targetUnit = TemperatureUnit.KELVIN;
+		outputTemperature = PhisicConverterUtil.convertTemperature(inputTemperature, sourceUnit, targetUnit);
+		Assert.assertEquals(expectedTemperature, outputTemperature, 0.00000001);
+
+		inputTemperature = 100.0;
+		expectedTemperature = 310.92777778;
+		sourceUnit = TemperatureUnit.FARENHEIT;
+		targetUnit = TemperatureUnit.KELVIN;
+		outputTemperature = PhisicConverterUtil.convertTemperature(inputTemperature, sourceUnit, targetUnit);
+		Assert.assertEquals(expectedTemperature, outputTemperature, 0.00000001);
+
+		inputTemperature = 0.0;
+		expectedTemperature = 459.67;
+		sourceUnit = TemperatureUnit.FARENHEIT;
+		targetUnit = TemperatureUnit.RANKINE;
+		outputTemperature = PhisicConverterUtil.convertTemperature(inputTemperature, sourceUnit, targetUnit);
+		Assert.assertEquals(expectedTemperature, outputTemperature, 0.00000001);
+
+		inputTemperature = 100.0;
+		expectedTemperature = 559.67;
+		sourceUnit = TemperatureUnit.FARENHEIT;
+		targetUnit = TemperatureUnit.RANKINE;
+		outputTemperature = PhisicConverterUtil.convertTemperature(inputTemperature, sourceUnit, targetUnit);
+		Assert.assertEquals(expectedTemperature, outputTemperature, 0.00000001);
+
+		inputTemperature = 0.0;
+		expectedTemperature = -14.22222222;
+		sourceUnit = TemperatureUnit.FARENHEIT;
+		targetUnit = TemperatureUnit.REAUMUR;
+		outputTemperature = PhisicConverterUtil.convertTemperature(inputTemperature, sourceUnit, targetUnit);
+		Assert.assertEquals(expectedTemperature, outputTemperature, 0.00000001);
+
+		inputTemperature = 100.0;
+		expectedTemperature = 30.22222222;
+		sourceUnit = TemperatureUnit.FARENHEIT;
+		targetUnit = TemperatureUnit.REAUMUR;
+		outputTemperature = PhisicConverterUtil.convertTemperature(inputTemperature, sourceUnit, targetUnit);
+		Assert.assertEquals(expectedTemperature, outputTemperature, 0.00000001);
 	}
 }
