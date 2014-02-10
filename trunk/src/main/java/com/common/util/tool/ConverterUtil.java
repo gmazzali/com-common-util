@@ -5,35 +5,51 @@ import com.common.util.exception.UncheckedException;
 public class ConverterUtil {
 
 	/**
-	 * El conjunto de los nombres de los grupos de unidades.
+	 * El conjunto de los nombres de los grupos de unidades desde el cero al 29.
 	 * 
 	 * <ul>
-	 * <li>0: cero</li>
-	 * <li>1: uno</li>
-	 * <li>2: dos</li>
-	 * <li>3: tres</li>
-	 * <li>4: cuatro</li>
-	 * <li>5: cinco</li>
-	 * <li>6: seis</li>
-	 * <li>7: siete</li>
-	 * <li>8: ocho</li>
-	 * <li>9: nueve</li>
+	 * <li>00: cero</li>
+	 * <li>01: uno</li>
+	 * <li>02: dos</li>
+	 * <li>03: tres</li>
+	 * <li>04: cuatro</li>
+	 * <li>05: cinco</li>
+	 * <li>06: seis</li>
+	 * <li>07: siete</li>
+	 * <li>08: ocho</li>
+	 * <li>09: nueve</li>
+	 * <li>10: diez</li>
+	 * <li>11: once</li>
+	 * <li>12: doce</li>
+	 * <li>13: trece</li>
+	 * <li>14: catorce</li>
+	 * <li>15: quince</li>
+	 * <li>16: dieciseis</li>
+	 * <li>17: diecisiete</li>
+	 * <li>18: dieciocho</li>
+	 * <li>19: diecinueve</li>
+	 * <li>20: veinte</li>
+	 * <li>21: veintiun</li>
+	 * <li>22: veintidos</li>
+	 * <li>23: veintitres</li>
+	 * <li>24: veinticuatro</li>
+	 * <li>25: veinticinco</li>
+	 * <li>26: veintiseis</li>
+	 * <li>27: veintisiete</li>
+	 * <li>28: veintiocho</li>
+	 * <li>29: veintinueve</li>
 	 * </ul>
 	 */
 	private static String[] unitsGroup =
-		{ "cero", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve" };
-
-	private static String[] PRIMER_DECENA =
-		{ null, "once", "doce", "trece", "catorce", "quince", "dieciseis", "diecisiete", "dieciocho", "diecinueve" };
-
-	private static String[] SEGUNDA_DECENA =
-		{ null, "ventiuno", "ventidos", "ventitres", "venticuatro", "venticinco", "ventiseis", "ventisiete", "ventiocho", "ventinueve" };
+		{ "cero", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve", "diez", "once", "doce", "trece", "catorce", "quince",
+				"dieciseis", "diecisiete", "dieciocho", "diecinueve", "veinte", "veintiun", "veintidos", "veintitres", "veinticuatro", "veinticinco",
+				"veintiseis", "veintisiete", "veintiocho", "veintinueve" };
 
 	/**
 	 * El conjunto de los nombres de los grupos de decenas.
 	 * 
 	 * <ul>
-	 * <li>0: y</li>
+	 * <li>0: cero</li>
 	 * <li>1: diez</li>
 	 * <li>2: veinte</li>
 	 * <li>3: treinta</li>
@@ -46,14 +62,19 @@ public class ConverterUtil {
 	 * </ul>
 	 */
 	private static String[] tensGroup =
-		{ "y", "diez", "veinte", "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa" };
+		{ "cero", "diez", "veinte", "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa" };
+
+	/**
+	 * La frase que vamos a usar para conectar la parte de la decena con la parte de la unidad.
+	 */
+	private static String tenConnector = "y";
 
 	/**
 	 * El conjunto de los nombres de los grupos de centenas.
 	 * 
 	 * <ul>
-	 * <li>0: cientos</li>
-	 * <li>1: cien</li>
+	 * <li>0: cien</li>
+	 * <li>1: cientos</li>
 	 * <li>2: doscientos</li>
 	 * <li>3: trescientos</li>
 	 * <li>4: cuatrocientos</li>
@@ -65,7 +86,7 @@ public class ConverterUtil {
 	 * </ul>
 	 */
 	private static String[] hundredsGroup =
-		{ "ciento", "cien", "doscientos", "trescientos", "cuatrocientos", "quinientos", "seiscientos", "setecientos", "ochocientos", "novecientos" };
+		{ "cien", "ciento", "doscientos", "trescientos", "cuatrocientos", "quinientos", "seiscientos", "setecientos", "ochocientos", "novecientos" };
 
 	/**
 	 * El conjunto de los nombres de los grupos de miles en singular.
@@ -76,10 +97,11 @@ public class ConverterUtil {
 	 * <li>2: billón</li>
 	 * <li>3: trillón</li>
 	 * <li>4: cuatrillón</li>
+	 * <li>5: quintillón</li>
 	 * </ul>
 	 */
 	private static String[] millonsGroup =
-		{ "mil", "millón", "billón", "trillón" };
+		{ "mil", "millón", "billón", "trillón", "cuatrillón", "quintillón" };
 
 	/**
 	 * El conjunto de los nombres de los grupos de miles en plural.
@@ -90,10 +112,21 @@ public class ConverterUtil {
 	 * <li>2: billones</li>
 	 * <li>3: trillones</li>
 	 * <li>4: cuatrillones</li>
+	 * <li>5: quintillones</li>
 	 * </ul>
 	 */
 	private static String[] pluralMillonsGroup =
-		{ "miles", "millones", "billones", "trillones" };
+		{ "miles", "millones", "billones", "trillones", "cuatrillones", "quintillones" };
+
+	/**
+	 * Permite cargar el listado de los nombre de los grupos de las unidades desde el 0 al 29.
+	 * 
+	 * @param unitsGroup
+	 *            El arreglo con los nombres de los grupos de las unidades desde el 0 al 29.
+	 */
+	public void setUnitsGroup(String[] unitsGroup) {
+		ConverterUtil.unitsGroup = unitsGroup;
+	}
 
 	/**
 	 * Permite cargar el listado de los nombre de los grupos de decenas.
@@ -101,8 +134,18 @@ public class ConverterUtil {
 	 * @param tensGroup
 	 *            El arreglo con los nombres de los grupos de decenas.
 	 */
-	public static void setTensGroup(String[] tensGroup) {
+	public void setTensGroup(String[] tensGroup) {
 		ConverterUtil.tensGroup = tensGroup;
+	}
+
+	/**
+	 * Permite cargar el conector que vamos a usar para conectar la parte de la decena con la parte de la unidad.
+	 * 
+	 * @param tenConnector
+	 *            El conector que vamos a usar para conectar la parte de la decena con la parte de la unidad.
+	 */
+	public static void setTenConnector(String tenConnector) {
+		ConverterUtil.tenConnector = tenConnector;
 	}
 
 	/**
@@ -111,7 +154,7 @@ public class ConverterUtil {
 	 * @param hundredsGroup
 	 *            El arreglo con los nombres de los grupos de cientos.
 	 */
-	public static void setHundredsGroup(String[] hundredsGroup) {
+	public void setHundredsGroup(String[] hundredsGroup) {
 		ConverterUtil.hundredsGroup = hundredsGroup;
 	}
 
@@ -121,7 +164,7 @@ public class ConverterUtil {
 	 * @param millonsGroup
 	 *            El arreglo con los nombres de los grupos de millones (en singular).
 	 */
-	public static void setMillonsGroup(String[] millonsGroup) {
+	public void setMillonsGroup(String[] millonsGroup) {
 		ConverterUtil.millonsGroup = millonsGroup;
 	}
 
@@ -131,8 +174,81 @@ public class ConverterUtil {
 	 * @param pluralMillonsGroup
 	 *            El arreglo con los nombres de los grupos de millones (en plural).
 	 */
-	public static void setPluralMillonsGroup(String[] pluralMillonsGroup) {
+	public void setPluralMillonsGroup(String[] pluralMillonsGroup) {
 		ConverterUtil.pluralMillonsGroup = pluralMillonsGroup;
+	}
+
+	/**
+	 * Convierte un valor entre [0-999] en una cadena de texto que lo represente.
+	 * 
+	 * <ul>
+	 * <li><b>INPUT:</b> <i>null</i> -> <b>OUTPUT:</b> ""</li>
+	 * <li><b>INPUT:</b> 0 -> <b>OUTPUT:</b> ""</li>
+	 * <li><b>INPUT:</b> 1 -> <b>OUTPUT:</b> "uno"</li>
+	 * <li><b>INPUT:</b> 12 -> <b>OUTPUT:</b> "doce"</li>
+	 * <li><b>INPUT:</b> 100 -> <b>OUTPUT:</b> "cien"</li>
+	 * <li><b>INPUT:</b> 123 -> <b>OUTPUT:</b> "ciento veintitres"</li>
+	 * <li><b>INPUT:</b> 500 -> <b>OUTPUT:</b> "quinientos"</li>
+	 * <li><b>INPUT:</b> 999 -> <b>OUTPUT:</b> "novecientos noventa y nueve"</li>
+	 * <li><b>INPUT:</b> 1000 -> <b>OUTPUT:</b> ""</li>
+	 * <li><b>INPUT:</b> 1234 -> <b>OUTPUT:</b> ""</li>
+	 * </ul>
+	 * 
+	 * @param value
+	 *            El valor que vamos a convertir a la cadena, el cual no puede exceder los 1000.
+	 * @return La cadena de texto que contiene la descripción del numero recibido.
+	 */
+	public static String convertShortToString(Short value) {
+		String output = "";
+
+		// Si el valor es nulo, es menor que cero o mayor que 1000, retornamos una cadena vacia.
+		if (value == null || value <= 0 || value >= 1000) {
+			return output;
+		} else {
+			// Obtenemos la centena, la decena y la unidad del número.
+			int unidad = value % 10;
+			int decena = (value % 100) / 10;
+			int centena = (value / 100) % 10;
+			output = "";
+
+			if (centena > 0) {
+				output = ConverterUtil.hundredsGroup[centena];
+
+				// Si solo hay valores de la centena.
+				if (decena == 0 && unidad == 0) {
+
+					// Si el valor es 100.
+					if (centena == 1) {
+						return ConverterUtil.hundredsGroup[0];
+					} else {
+						return ConverterUtil.hundredsGroup[centena];
+					}
+				}
+			}
+
+			switch (decena) {
+				case 0:
+				case 1:
+				case 2:
+					if (unidad == 0) {
+						output += " " + ConverterUtil.tensGroup[decena];
+					} else {
+						output += " " + ConverterUtil.unitsGroup[10 * decena + unidad];
+					}
+					break;
+
+				default:
+					if (unidad == 0) {
+						output += " " + ConverterUtil.tensGroup[decena];
+					} else {
+						output += " " + ConverterUtil.tensGroup[decena] + " " + ConverterUtil.tenConnector
+								+ (VerifierUtil.isEmpty(ConverterUtil.tenConnector) ? "" : " ") + ConverterUtil.unitsGroup[unidad];
+					}
+					break;
+			}
+		}
+
+		return output.trim();
 	}
 
 	/**
@@ -192,23 +308,23 @@ public class ConverterUtil {
 			}
 
 			if (segundoMillar != 0 || primerMillar != 0) {
-				switch (segundoMillar) {
-					case 0:
-						// Si tenemos un fragmento < 1000.
-						output = ConverterUtil.convertThousandToWord(primerMillar) + nombreGrupo + output;
-						break;
-
-					case 1:
-						// Si tenemos un fragmento entre [1000-1999].
-						output = ConverterUtil.millonsGroup[0] + " " + ConverterUtil.convertThousandToWord(primerMillar) + nombreGrupo + output;
-						break;
-
-					default:
-						// Si tenemos un fragmento > 1000.
-						output = ConverterUtil.convertThousandToWord(segundoMillar) + ConverterUtil.millonsGroup[0] + " "
-								+ ConverterUtil.convertThousandToWord(primerMillar) + nombreGrupo + output;
-						break;
-				}
+				// switch (segundoMillar) {
+				// case 0:
+				// // Si tenemos un fragmento < 1000.
+				// output = ConverterUtil.convertThousandToWord(primerMillar) + nombreGrupo + output;
+				// break;
+				//
+				// case 1:
+				// // Si tenemos un fragmento entre [1000-1999].
+				// output = ConverterUtil.millonsGroup[0] + " " + ConverterUtil.convertThousandToWord(primerMillar) + nombreGrupo + output;
+				// break;
+				//
+				// default:
+				// // Si tenemos un fragmento > 1000.
+				// output = ConverterUtil.convertThousandToWord(segundoMillar) + ConverterUtil.millonsGroup[0] + " "
+				// + ConverterUtil.convertThousandToWord(primerMillar) + nombreGrupo + output;
+				// break;
+				// }
 			}
 
 			// Tomamos el proximo grupo de valores.
@@ -217,93 +333,5 @@ public class ConverterUtil {
 		}
 
 		return output;
-	}
-
-	/**
-	 * Convierte un valor entre [0-999] en su cadena de texto equivalente.
-	 * 
-	 * @param value
-	 *            El valor que vamos a convertir a la cadena.
-	 * @return La cadena de texto que contiene el detalle del numero recibido.
-	 */
-	private static String convertThousandToWord(Integer value) {
-		String salida = "";
-
-		// Si el valor es cero, retornamos una cadena vacia.
-		if (value == 0) {
-			return salida;
-		} else {
-			// Obtenemos la centena, la decena y la unidad del número.
-			int centena = value / 100;
-			int decena = (value % 100) / 10;
-			int unidad = value % 10;
-
-			// Si la unidad es cero, comenzamos con las decenas.
-			if (unidad == 0) {
-				if (decena > 0) {
-					salida = ConverterUtil.tensGroup[decena];
-				}
-			} else {
-				// Si la unidad no es cero, comenzamos con la unidad y la decena.
-				switch (decena) {
-					case 0:
-						// Si el valor esta entre [1-9].
-						salida = ConverterUtil.unitsGroup[unidad];
-						break;
-
-					case 1:
-						// Si el valor esta entre [10-19].
-						salida = ConverterUtil.PRIMER_DECENA[unidad];
-						break;
-
-					case 2:
-						// Si el valor esta entre [20-29].
-						salida = ConverterUtil.SEGUNDA_DECENA[unidad];
-						break;
-
-					default:
-						// Si el valor es > 29.
-						salida = ConverterUtil.tensGroup[decena] + " " + ConverterUtil.tensGroup[0]
-								+ (ConverterUtil.tensGroup[0].isEmpty() ? "" : " ") + ConverterUtil.unitsGroup[unidad];
-						break;
-				}
-			}
-
-			switch (centena) {
-				case 0:
-					// Si tenemos un valor entre [1-99].
-					break;
-
-				case 1:
-					// Si tenemos un valor entre [100-199].
-					if (VerifierUtil.isEmpty(salida)) {
-						// Si el valor es 100.
-						salida = ConverterUtil.hundredsGroup[1];
-					} else {
-						// Si el valor esta entre [101-199]
-						salida = ConverterUtil.hundredsGroup[0] + " " + salida;
-					}
-
-				default:
-					// Si tenemos un valor entre [200-999].
-					salida = ConverterUtil.hundredsGroup[centena] + " " + salida;
-			}
-		}
-		return salida + " ";
-	}
-
-	public static String formatDecimal(double n) {
-		// Tomamos solo 2 valores.
-		int decimal = (int) ((n * 100) % 100);
-
-		if (decimal > 0) {
-			if (decimal < 10) {
-				return " con 0" + decimal + "/100";
-			} else {
-				return " con " + decimal + "/100";
-			}
-		} else {
-			return "";
-		}
 	}
 }
