@@ -218,7 +218,7 @@ public class Interval<N extends Number> extends Entity<Long> implements Comparab
 		}
 
 		// Validamos que los extremos no esten invertidos.
-		if (this.minValue.doubleValue() > this.maxValue.doubleValue()) {
+		if (this.minValue != null && this.maxValue != null && this.minValue.doubleValue() > this.maxValue.doubleValue()) {
 			errors.addError("interval.extreme.invert", new Object[] { this.id });
 		}
 
