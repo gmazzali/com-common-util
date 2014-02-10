@@ -3,11 +3,21 @@ package com.common.util.tool.engineering;
 /**
  * La enumeración que contiene las unidades de temperaturas.
  * 
+ * <ul>
+ * <li>{@link TemperatureUnit#CELSIUS}</li>
+ * <li>{@link TemperatureUnit#KELVIN}</li>
+ * <li>{@link TemperatureUnit#FARENHEIT}</li>
+ * <li>{@link TemperatureUnit#RANKINE}</li>
+ * <li>{@link TemperatureUnit#REAUMUR}</li>
+ * </ul>
+ * 
  * @author Guillermo Mazzali
  * @version 1.0
  */
 public enum TemperatureUnit {
+
 	CELSIUS("°C"), KELVIN("°K"), FARENHEIT("°F"), RANKINE("°Ra"), REAUMUR("°Re");
+	
 	/**
 	 * La unidad de medida.
 	 */
