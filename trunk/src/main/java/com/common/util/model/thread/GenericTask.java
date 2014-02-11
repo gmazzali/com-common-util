@@ -17,43 +17,12 @@ import com.common.util.model.Entity;
  *            La clase que vamos a utilizar dentro del monitor de esta tarea.
  */
 public abstract class GenericTask<M extends Serializable> extends Entity<Long> {
-
-	private static final long serialVersionUID = 72323549692226354L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * El Logger que vamos a ocupar dentro de la clase.
 	 */
 	private static final Logger log = Logger.getLogger(GenericTask.class);
-
-	/**
-	 * La enumeración que contiene los posibles estados de un proceso. Esta enumeración se va a usar internamente dentro del proceso para controlar la
-	 * ejecución del mismo.
-	 * 
-	 * @author Guillermo Mazzali
-	 * @version 1.0
-	 */
-	protected enum TaskStatus {
-		/**
-		 * El estado que indica que un proceso se inició con éxito.
-		 */
-		INIT,
-		/**
-		 * El estado que indica que un proceso se encuentra en ejecución.
-		 */
-		RUNNING,
-		/**
-		 * | El estado que indica que un proceso fue pausado de su ejecución.
-		 */
-		PAUSE,
-		/**
-		 * El estado que indica que un proceso fue detenido de manera imprevista.
-		 */
-		STOP,
-		/**
-		 * El estado que indica que un proceso finalizó con éxito.
-		 */
-		FINISH;
-	}
 
 	/**
 	 * El nombre del proceso.
@@ -72,19 +41,19 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Long> {
 	 */
 	protected TaskStatus taskState;
 	/**
-	 * El elemento que nos permite bloquear el valor de lectura/escritura dentro del monitor.
-	 */
-	protected Object mutex = new Object();
-	/**
 	 * El valor booleano que nos dice si el proceso va a ser de usuario o un demonio.
 	 */
 	protected Boolean daemon = false;
+	/**
+	 * El elemento que nos permite bloquear el valor de lectura/escritura dentro del monitor.
+	 */
+	protected Object mutex = new Object();
 
 	/**
 	 * El constructor de una tarea para su ejecución en segundo plano.
 	 */
 	public GenericTask() {
-		this("Generic Task");
+		this("generic task");
 	}
 
 	/**
@@ -95,10 +64,10 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Long> {
 	 */
 	public GenericTask(String name) {
 		GenericTask.log.trace("create a generic task = " + name);
-
+		
 		this.name = name;
 		this.taskMonitor = new GenericMonitor<M>();
-
+		
 		this.initTask();
 	}
 
@@ -111,10 +80,14 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Long> {
 		this.thread = new Thread(this.name) {
 			@Override
 			public void run() {
+				try {
 				GenericTask.this.beforeExecute();
 				GenericTask.this.execute();
 				GenericTask.this.afterExecute();
 				GenericTask.this.taskState = TaskStatus.FINISH;
+				} catch(Exception ex) {
+					// TODO
+				}
 			};
 		};
 		this.thread.setDaemon(this.daemon);
@@ -272,18 +245,6 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Long> {
 	 */
 	public GenericMonitor<M> getMonitor() {
 		return this.taskMonitor;
-	}
-
-	/**
-	 * La función encargada de cargar el monitor que vamos a ocupar dentro de este método.
-	 * 
-	 * @param taskMonitor
-	 *            El monitor que vamos a ocupar dentro de este proceso.
-	 */
-	public void setMonitor(GenericMonitor<M> taskMonitor) {
-		if (taskMonitor != null) {
-			this.taskMonitor = taskMonitor;
-		}
 	}
 
 	/**

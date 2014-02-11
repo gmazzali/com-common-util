@@ -14,8 +14,7 @@ import java.io.Serializable;
  *            La clase que vamos a utilizar como valores para monitorizar un proceso.
  */
 public class GenericMonitor<V extends Serializable> implements Serializable {
-
-	private static final long serialVersionUID = -6246401889822665171L;
+	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * El valor que estamos monitoreando.
