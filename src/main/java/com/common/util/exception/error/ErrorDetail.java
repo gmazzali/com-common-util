@@ -1,13 +1,14 @@
 package com.common.util.exception.error;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * Los detalles de los errores dados mediante una frase dada y un conjuntos de parámetros que permiten complementar el mismo.
  * 
  * @see Errors
  * 
- * @since 05/02/2014
+ * @since 11/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */
@@ -52,6 +53,45 @@ public class ErrorDetail implements Serializable {
 	 */
 	public ErrorDetail() {
 		this(null, new Object[0]);
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((this.message == null) ? 0 : this.message.hashCode());
+		result = prime * result + Arrays.hashCode(this.parameters);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (obj == null) {
+			return false;
+		}
+
+		if (this.getClass() != obj.getClass()) {
+			return false;
+		}
+
+		ErrorDetail other = (ErrorDetail) obj;
+		if (this.message == null) {
+			if (other.message != null) {
+				return false;
+			}
+		} else if (!this.message.equals(other.message)) {
+			return false;
+		}
+
+		if (!Arrays.equals(this.parameters, other.parameters)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
