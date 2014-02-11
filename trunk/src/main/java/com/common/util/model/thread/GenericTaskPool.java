@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.common.util.model.thread.monitor.GenericMonitor;
+
 /**
  * La clase que nos permite crear un pool de tareas para poder controlarlos a todos de manera conjunta dentro de un sistema en ejecución y que permite
  * reiniciarlos una vez que estos fueron finalizados.

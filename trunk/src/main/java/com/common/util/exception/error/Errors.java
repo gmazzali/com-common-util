@@ -1,8 +1,8 @@
 package com.common.util.exception.error;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.common.util.exception.CheckedException;
 import com.common.util.exception.UncheckedException;
@@ -24,17 +24,17 @@ public class Errors implements Serializable {
 	/**
 	 * El listado de los detalles de los errores.
 	 */
-	protected final List<ErrorDetail> errorDetails;
+	protected final Set<ErrorDetail> errorDetails;
 
 	/**
 	 * El constructor por omisión de un conjunto de errores.
 	 */
 	public Errors() {
-		this.errorDetails = new ArrayList<ErrorDetail>();
+		this.errorDetails = new HashSet<ErrorDetail>();
 	}
 
 	/**
-	 * La función encargada de agregar un nuevo detalle dentro de este conjunto.
+	 * Se encarga de agregar un nuevo detalle dentro de este conjunto.
 	 * 
 	 * @param message
 	 *            La clave del error.
@@ -46,7 +46,19 @@ public class Errors implements Serializable {
 	}
 
 	/**
-	 * La función encargada de verificar si hay algún error cargado dentro de este elemento.
+	 * Permite juntar a un conjunto de errores dentro de este.
+	 * 
+	 * @param errors
+	 *            El conjunto de errores que vamos a unir.
+	 */
+	public void merge(Errors errors) {
+		if (errors != null && errors.getErrorDetails() != null) {
+			this.errorDetails.addAll(errors.getErrorDetails());
+		}
+	}
+
+	/**
+	 * Se encarga de verificar si hay algún error cargado dentro de este elemento.
 	 * 
 	 * @return TRUE en caso de que exista al menos un error dentro de este elemento, en caso contrario retorna FALSE.
 	 */
@@ -55,11 +67,11 @@ public class Errors implements Serializable {
 	}
 
 	/**
-	 * La función encargada de retornar el listado de detalles de errores.
+	 * Se encarga de retornar el listado de detalles de errores.
 	 * 
 	 * @return El listado de los detalles de los errores.
 	 */
-	public List<ErrorDetail> getErrorDetails() {
+	public Set<ErrorDetail> getErrorDetails() {
 		return this.errorDetails;
 	}
 }

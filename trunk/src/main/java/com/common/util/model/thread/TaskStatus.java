@@ -4,6 +4,11 @@ package com.common.util.model.thread;
  * La enumeración que contiene los posibles estados de un proceso. Esta enumeración se va a usar internamente dentro del proceso para controlar la
  * ejecución del mismo.
  * 
+ * @see GenericTask
+ * @see GenericRepetitiveTask
+ * @see GenericTaskPool
+ * 
+ * @since 11/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */

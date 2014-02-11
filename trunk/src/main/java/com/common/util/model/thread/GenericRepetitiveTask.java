@@ -10,6 +10,8 @@ import com.common.util.exception.CheckedException;
  * La clase que nos permite crear una tarea que va a ejecutarse de manera repetitiva para poder controlarla de acuerdo al estado en el que se
  * establece esta tarea.
  * 
+ * @see GenericTask
+ * 
  * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
@@ -18,20 +20,12 @@ import com.common.util.exception.CheckedException;
  *            La clase que vamos a utilizar dentro del monitor de esta tarea.
  */
 public abstract class GenericRepetitiveTask<M extends Serializable> extends GenericTask<M> {
-
-	private static final long serialVersionUID = 382679944625887313L;
-
-	/**
-	 * El Logger que vamos a ocupar dentro de la clase.
-	 */
+	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(GenericRepetitiveTask.class);
 
-	/**
-	 * @see com.common.util.model.thread.GenericTask#execute()
-	 */
 	@Override
 	protected void execute() {
-		GenericRepetitiveTask.log.trace("execute GenericRepetitiveTask");
+		GenericRepetitiveTask.log.trace("execute repetitive task");
 
 		// Mientras el proceso no este detenido, lo ejecutamos.
 		while (this.taskState != TaskStatus.STOP && this.dontStopCondition()) {
@@ -40,7 +34,7 @@ public abstract class GenericRepetitiveTask<M extends Serializable> extends Gene
 				// Realizamos una ejecución simple dentro del proceso.
 				this.singleExecution();
 			} catch (CheckedException e) {
-				GenericRepetitiveTask.log.error("singleExecution GenericRepetitiveTask failed", e);
+				GenericRepetitiveTask.log.error("single execution failed", e);
 			}
 
 			try {
@@ -55,7 +49,7 @@ public abstract class GenericRepetitiveTask<M extends Serializable> extends Gene
 				}
 
 			} catch (InterruptedException e) {
-				GenericRepetitiveTask.log.error("sleep or wait GenericRepetitiveTask failed", e);
+				GenericRepetitiveTask.log.error("sleep or wait failed", e);
 			}
 		}
 	}
