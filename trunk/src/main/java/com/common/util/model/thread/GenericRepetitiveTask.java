@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.apache.log4j.Logger;
 
-import com.common.util.exception.CheckedException;
+import com.common.util.exception.UncheckedException;
 
 /**
  * La clase que nos permite crear una tarea que va a ejecutarse de manera repetitiva para poder controlarla de acuerdo al estado en el que se
@@ -12,7 +12,7 @@ import com.common.util.exception.CheckedException;
  * 
  * @see GenericTask
  * 
- * @since 05/02/2014
+ * @since 12/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  * 
@@ -29,27 +29,26 @@ public abstract class GenericRepetitiveTask<M extends Serializable> extends Gene
 
 		// Mientras el proceso no este detenido, lo ejecutamos.
 		while (this.taskState != TaskStatus.STOP && this.dontStopCondition()) {
-
 			try {
-				// Realizamos una ejecución simple dentro del proceso.
-				this.singleExecution();
-			} catch (CheckedException e) {
-				GenericRepetitiveTask.log.error("single execution failed", e);
-			}
-
-			try {
-				// Esperamos un tiempo antes de volver a correr la ejecución.
-				Thread.sleep(this.getDelayExecution());
-
+				
 				// Si se pausa el proceso, lo bloqueamos.
-				synchronized (this.mutex) {
+				synchronized (this.stateMutex) {
 					if (this.taskState == TaskStatus.PAUSE) {
-						this.mutex.wait();
+						this.stateMutex.wait();
 					}
 				}
 
-			} catch (InterruptedException e) {
-				GenericRepetitiveTask.log.error("sleep or wait failed", e);
+				// Realizamos una ejecución simple dentro del proceso.
+				this.singleExecution();
+
+				// Esperamos un tiempo antes de volver a correr la ejecución.
+				Thread.sleep(this.getDelayExecution());
+			} catch (Exception e) {
+				GenericRepetitiveTask.log.error("single execution failed", e);
+				
+				if (e instanceof UncheckedException) {
+					this.monitor.addError(((UncheckedException) e).getErrors());
+				}
 			}
 		}
 	}
@@ -57,17 +56,18 @@ public abstract class GenericRepetitiveTask<M extends Serializable> extends Gene
 	/**
 	 * La condición que nos dice si va a terminarse la ejecución de la tarea repetitiva o va a continuarse.
 	 * 
-	 * @return TRUE en caso de que se quiera continuar con la ejecución de la tarea, en caso de que quiera finalizarse el proceso se retorna FALSE.
+	 * @return <i>true</i> en caso de que se quiera continuar con la ejecución de la tarea, en caso de que quiera finalizarse el proceso se retorna
+	 *         <i>false</i>.
 	 */
 	protected abstract Boolean dontStopCondition();
 
 	/**
-	 * La función encargada de realizar una única pasada de la ejecución que va a ejecutarse de manera ininterrumpida.
+	 * La función encargada de realizar una ejecución simple de una tarea que va a ejecutarse de manera ininterrumpida.
 	 * 
-	 * @throws CheckedException
+	 * @throws UncheckedException
 	 *             En caso de que ocurra algún problema y que deba cortarse la ejecución en esta pasada.
 	 */
-	protected abstract void singleExecution() throws CheckedException;
+	protected abstract void singleExecution() throws UncheckedException;
 
 	/**
 	 * La función encargada de retornar el tiempo que va a esperarse entre 2 ejecuciones consecutivas de la tarea, para no sobrecargar los recursos

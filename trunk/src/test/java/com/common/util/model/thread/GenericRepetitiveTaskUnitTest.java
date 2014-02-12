@@ -2,14 +2,13 @@ package com.common.util.model.thread;
 
 import junit.framework.Assert;
 
-import org.junit.AfterClass;
+import org.junit.After;
 import org.junit.Test;
 
-import com.common.util.exception.CheckedException;
-
 /**
- * La clase que nos permite probar el manejo de un proceso repetitivo.
+ * La clase que nos permite probar la clase {@link GenericRepetitiveTask}.
  * 
+ * @since 12/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */
@@ -19,24 +18,19 @@ public class GenericRepetitiveTaskUnitTest {
 	/**
 	 * Cuando se termina de ejecutar la prueba, dejamos un espacio en blanco.
 	 */
-	@AfterClass
-	public static void afterClass() {
+	@After
+	public void after() {
 		System.out.println();
 	}
-
-	/**
-	 * La tarea repetitiva que vamos a realizar.
-	 */
-	private GenericRepetitiveTask<Integer> task;
 
 	/**
 	 * Prueba sobre el arranque de una tarea repetitiva.
 	 */
 	@Test
-	public void pruebaDeArranque() {
+	public void testStart() {
 		System.out.println("<<<<<<<<<<<<<< PRUEBAS SOBRE EL ARRANQUE DE UNA TAREA REPETITIVA >>>>>>>>>>>>>>");
 
-		this.task = new GenericRepetitiveTask<Integer>() {
+		GenericRepetitiveTask<Integer> task = new GenericRepetitiveTask<Integer>() {
 
 			private int counter = 0;
 
@@ -52,13 +46,13 @@ public class GenericRepetitiveTaskUnitTest {
 			}
 
 			@Override
-			protected void singleExecution() throws CheckedException {
+			protected void singleExecution() {
 				System.out.println("SALIDA: " + this.counter);
 			}
 
 			@Override
 			protected Long getDelayExecution() {
-				return 100l;
+				return 50l;
 			}
 
 			@Override
@@ -70,14 +64,15 @@ public class GenericRepetitiveTaskUnitTest {
 		try {
 			System.out.println("------------------");
 			System.out.println("---- ARRANQUE ----");
-			this.task.start();
-			this.task.join();
+
+			task.start();
+			task.join();
+
 			System.out.println("-- FINALIZACIÓN --");
 			System.out.println("------------------");
-			Assert.assertTrue(true);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			Assert.assertTrue(false);
+
+		} catch (Exception e) {
+			Assert.fail();
 		}
 	}
 
@@ -85,10 +80,10 @@ public class GenericRepetitiveTaskUnitTest {
 	 * Prueba sobre el pausado de una tarea repetitiva.
 	 */
 	@Test
-	public void pruebaDePausado() {
+	public void testPause() {
 		System.out.println("<<<<<<<<<<<<<<< PRUEBA SOBRE EL PAUSADO DE UNA TAREA REPETITIVA >>>>>>>>>>>>>>>");
 
-		this.task = new GenericRepetitiveTask<Integer>() {
+		GenericRepetitiveTask<Integer> task = new GenericRepetitiveTask<Integer>() {
 
 			private int counter = 0;
 
@@ -104,7 +99,7 @@ public class GenericRepetitiveTaskUnitTest {
 			}
 
 			@Override
-			protected void singleExecution() throws CheckedException {
+			protected void singleExecution() {
 				System.out.println("SALIDA: " + this.counter);
 			}
 
@@ -122,40 +117,46 @@ public class GenericRepetitiveTaskUnitTest {
 		try {
 			System.out.println("------------------");
 			System.out.println("---- ARRANQUE ----");
-			this.task.start();
 
+			task.start();
 			Thread.sleep(1050);
-			this.task.pause();
+			task.pause();
 			Thread.sleep(5);
+
 			System.out.println("---- SUSPENDE ----");
 
 			Thread.sleep(1000);
-			System.out.println("----- RESUME -----");
-			this.task.resume();
 
+			System.out.println("----- RESUME -----");
+
+			task.resume();
 			Thread.sleep(1050);
-			this.task.pause();
+			task.pause();
+
 			System.out.println("---- SUSPENDE ----");
 
 			Thread.sleep(1000);
-			System.out.println("----- RESUME -----");
-			this.task.resume();
 
+			System.out.println("----- RESUME -----");
+
+			task.resume();
 			Thread.sleep(1050);
-			this.task.pause();
+			task.pause();
+
 			System.out.println("---- SUSPENDE ----");
 
 			Thread.sleep(1000);
-			System.out.println("----- RESUME -----");
-			this.task.resume();
 
-			this.task.join();
+			System.out.println("----- RESUME -----");
+
+			task.resume();
+			task.join();
+
 			System.out.println("-- FINALIZACIÓN --");
 			System.out.println("------------------");
-			Assert.assertTrue(true);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			Assert.assertTrue(false);
+
+		} catch (Exception e) {
+			Assert.fail();
 		}
 	}
 
@@ -163,10 +164,10 @@ public class GenericRepetitiveTaskUnitTest {
 	 * La función de prueba de parada de una tarea repetitiva.
 	 */
 	@Test
-	public void pruebaDeParada() {
+	public void testStop() {
 		System.out.println("<<<<<<<<<<<<<<< PRUEBAS SOBRE LA PARADA DE UNA TAREA REPETITIVA >>>>>>>>>>>>>>>");
 
-		this.task = new GenericRepetitiveTask<Integer>() {
+		GenericRepetitiveTask<Integer> task = new GenericRepetitiveTask<Integer>() {
 
 			private int counter = 0;
 
@@ -182,7 +183,7 @@ public class GenericRepetitiveTaskUnitTest {
 			}
 
 			@Override
-			protected void singleExecution() throws CheckedException {
+			protected void singleExecution() {
 				System.out.println("SALIDA: " + this.counter);
 			}
 
@@ -200,24 +201,27 @@ public class GenericRepetitiveTaskUnitTest {
 		try {
 			System.out.println("------------------");
 			System.out.println("---- ARRANQUE ----");
-			this.task.start();
 
+			task.start();
 			Thread.sleep(1050);
-			this.task.stop();
+			task.stop();
+
 			System.out.println("----- PARADA -----");
 
-			this.task.join();
+			task.join();
+
 			System.out.println("-- FINALIZACIÓN --");
 			System.out.println("------------------");
 			System.out.println("--- REARRANQUE ---");
-			this.task.start();
-			this.task.join();
+
+			task.start();
+			task.join();
+
 			System.out.println("-- FINALIZACIÓN --");
 			System.out.println("------------------");
-			Assert.assertTrue(true);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			Assert.assertTrue(false);
+
+		} catch (Exception e) {
+			Assert.fail();
 		}
 	}
 
@@ -225,10 +229,10 @@ public class GenericRepetitiveTaskUnitTest {
 	 * La función de prueba de reinicio de una tarea repetitiva.
 	 */
 	@Test
-	public void pruebaDeReinicio() {
+	public void testReboot() {
 		System.out.println("<<<<<<<<<<<<<< PRUEBAS SOBRE EL REINICIO DE UNA TAREA REPETITIVA >>>>>>>>>>>>>>");
 
-		this.task = new GenericRepetitiveTask<Integer>() {
+		GenericRepetitiveTask<Integer> task = new GenericRepetitiveTask<Integer>() {
 
 			private int counter = 0;
 
@@ -244,7 +248,7 @@ public class GenericRepetitiveTaskUnitTest {
 			}
 
 			@Override
-			protected void singleExecution() throws CheckedException {
+			protected void singleExecution() {
 				System.out.println("SALIDA: " + this.counter);
 			}
 
@@ -262,31 +266,38 @@ public class GenericRepetitiveTaskUnitTest {
 		try {
 			System.out.println("------------------");
 			System.out.println("---- ARRANQUE ----");
-			this.task.start();
 
+			task.start();
 			Thread.sleep(1050);
-			this.task.stop();
+			task.stop();
+
 			System.out.println("----- PARADA -----");
 
-			this.task.join();
+			task.join();
+
 			System.out.println("-- FINALIZACIÓN --");
 			System.out.println("------------------");
 			System.out.println("--- REARRANQUE ---");
-			this.task.start();
-			this.task.join();
+
+			task.start();
+			task.join();
+
 			System.out.println("-- FINALIZACIÓN --");
 			System.out.println("------------------");
 			System.out.println("---- REINICIO ----");
-			this.task.reboot();
+
+			task.reboot();
+
 			System.out.println("--- REARRANQUE ---");
-			this.task.start();
-			this.task.join();
+
+			task.start();
+			task.join();
+
 			System.out.println("-- FINALIZACIÓN --");
 			System.out.println("------------------");
-			Assert.assertTrue(true);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			Assert.assertTrue(false);
+
+		} catch (Exception e) {
+			Assert.fail();
 		}
 	}
 
@@ -294,10 +305,10 @@ public class GenericRepetitiveTaskUnitTest {
 	 * La función de prueba de reinicio de una tarea repetitiva.
 	 */
 	@Test
-	public void pruebaDePausadoReinicio() {
+	public void testRebootPause() {
 		System.out.println("<<<<<<<<< PRUEBAS SOBRE EL PAUSADO Y REINICIO DE UNA TAREA REPETITIVA >>>>>>>>>");
 
-		this.task = new GenericRepetitiveTask<Integer>() {
+		GenericRepetitiveTask<Integer> task = new GenericRepetitiveTask<Integer>() {
 
 			private int counter = 0;
 
@@ -313,7 +324,7 @@ public class GenericRepetitiveTaskUnitTest {
 			}
 
 			@Override
-			protected void singleExecution() throws CheckedException {
+			protected void singleExecution() {
 				System.out.println("SALIDA: " + this.counter);
 			}
 
@@ -331,30 +342,36 @@ public class GenericRepetitiveTaskUnitTest {
 		try {
 			System.out.println("------------------");
 			System.out.println("---- ARRANQUE ----");
-			this.task.start();
 
+			task.start();
 			Thread.sleep(1050);
-			this.task.pause();
+			task.pause();
+
 			System.out.println("---- SUSPENDE ----");
 
 			Thread.sleep(1000);
-			this.task.stop();
+			task.stop();
+
 			System.out.println("----- PARADA -----");
 
-			this.task.join();
+			task.join();
+
 			System.out.println("-- FINALIZACIÓN --");
 			System.out.println("------------------");
 			System.out.println("---- REINICIO ----");
-			this.task.reboot();
+
+			task.reboot();
+
 			System.out.println("--- REARRANQUE ---");
-			this.task.start();
-			this.task.join();
+
+			task.start();
+			task.join();
+
 			System.out.println("-- FINALIZACIÓN --");
 			System.out.println("------------------");
-			Assert.assertTrue(true);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			Assert.assertTrue(false);
+
+		} catch (Exception e) {
+			Assert.fail();
 		}
 	}
 }

@@ -28,7 +28,7 @@ public class GenericErrorMonitor<V extends Serializable> extends GenericMonitor<
 	/**
 	 * El semaforo para el listado de errores de este monitor.
 	 */
-	private Object errorMutex = new Object();
+	private Object errorMutex;
 
 	/**
 	 * El constructor por omisión de este monitor.
@@ -36,6 +36,7 @@ public class GenericErrorMonitor<V extends Serializable> extends GenericMonitor<
 	public GenericErrorMonitor() {
 		super();
 		this.errors = new Errors();
+		this.errorMutex = new Object();
 	}
 
 	/**
