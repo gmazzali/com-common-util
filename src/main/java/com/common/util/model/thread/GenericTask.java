@@ -46,9 +46,9 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Long> {
 	protected Boolean daemon = false;
 
 	/**
-	 * El elemento que nos permite bloquear el valor de lectura/escritura dentro del monitor.
+	 * El elemento que nos permite bloquear el proceso para el cambio de estado.
 	 */
-	protected Object mutex = new Object();
+	protected Object stateMutex;
 
 	/**
 	 * El constructor de una tarea para su ejecución en segundo plano.
@@ -67,6 +67,7 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Long> {
 		GenericTask.log.trace("create a generic task = " + name);
 
 		this.name = name;
+		this.stateMutex = new Object();
 		this.monitor = new GenericErrorMonitor<M>();
 
 		this.initTask();
@@ -82,20 +83,16 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Long> {
 			@Override
 			public void run() {
 				try {
-					// Si el proceso esta corriendo, ejecutamos la pre-tarea.
-					if (TaskStatus.RUNNING.equals(GenericTask.this.taskState)) {
-						GenericTask.this.beforeExecute();
-					}
+					// Ejecutamos la pre-tarea, sin importar si se detuvo el proceso o no.
+					GenericTask.this.beforeExecute();
 
 					// Si el proceso esta corriendo, ejecutamos la tarea.
 					if (TaskStatus.RUNNING.equals(GenericTask.this.taskState)) {
 						GenericTask.this.execute();
 					}
 
-					// Si el proceso esta corriendo, ejecutamos la post-tarea.
-					if (TaskStatus.RUNNING.equals(GenericTask.this.taskState)) {
-						GenericTask.this.afterExecute();
-					}
+					// Ejecutamos la post-tarea, sin importar si se detuvo el proceso o no.
+					GenericTask.this.afterExecute();
 
 					// Marcamos el proceso como finalizado.
 					GenericTask.this.taskState = TaskStatus.FINISH;
@@ -119,7 +116,7 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Long> {
 	public void start() {
 		GenericTask.log.trace("start generic task");
 
-		synchronized (this.mutex) {
+		synchronized (this.stateMutex) {
 			switch (this.taskState) {
 				case INIT:
 					this.taskState = TaskStatus.RUNNING;
@@ -138,11 +135,11 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Long> {
 	public void resume() {
 		GenericTask.log.trace("resume generic task");
 
-		synchronized (this.mutex) {
+		synchronized (this.stateMutex) {
 			switch (this.taskState) {
 				case PAUSE:
 					this.taskState = TaskStatus.RUNNING;
-					this.mutex.notify();
+					this.stateMutex.notify();
 					break;
 
 				default:
@@ -157,7 +154,7 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Long> {
 	public void pause() {
 		GenericTask.log.trace("pause generic task");
 
-		synchronized (this.mutex) {
+		synchronized (this.stateMutex) {
 			switch (this.taskState) {
 				case RUNNING:
 					this.taskState = TaskStatus.PAUSE;
@@ -175,7 +172,7 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Long> {
 	public void stop() {
 		GenericTask.log.trace("stop generic task");
 
-		synchronized (this.mutex) {
+		synchronized (this.stateMutex) {
 			switch (this.taskState) {
 				case RUNNING:
 					this.taskState = TaskStatus.STOP;
@@ -183,7 +180,7 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Long> {
 
 				case PAUSE:
 					this.taskState = TaskStatus.STOP;
-					this.mutex.notify();
+					this.stateMutex.notify();
 					break;
 
 				default:
@@ -198,7 +195,7 @@ public abstract class GenericTask<M extends Serializable> extends Entity<Long> {
 	public synchronized void reboot() {
 		GenericTask.log.trace("reboot generic task");
 
-		synchronized (this.mutex) {
+		synchronized (this.stateMutex) {
 			try {
 				this.stop();
 				this.thread.join();

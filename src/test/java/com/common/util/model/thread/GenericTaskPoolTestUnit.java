@@ -141,9 +141,9 @@ public class GenericTaskPoolTestUnit {
 					System.out.println("1 - SALIDA: " + i);
 					try {
 						Thread.sleep(500);
-						synchronized (this.mutex) {
+						synchronized (this.stateMutex) {
 							if (this.taskState == TaskStatus.PAUSE) {
-								this.mutex.wait();
+								this.stateMutex.wait();
 							}
 						}
 					} catch (InterruptedException e) {
@@ -175,9 +175,9 @@ public class GenericTaskPoolTestUnit {
 					System.out.println("2 - SALIDA: " + i);
 					try {
 						Thread.sleep(500);
-						synchronized (this.mutex) {
+						synchronized (this.stateMutex) {
 							if (this.taskState == TaskStatus.PAUSE) {
-								this.mutex.wait();
+								this.stateMutex.wait();
 							}
 						}
 					} catch (InterruptedException e) {
@@ -259,9 +259,9 @@ public class GenericTaskPoolTestUnit {
 					System.out.println("1 - SALIDA: " + i);
 					try {
 						Thread.sleep(500);
-						synchronized (this.mutex) {
+						synchronized (this.stateMutex) {
 							if (this.taskState == TaskStatus.PAUSE) {
-								this.mutex.wait();
+								this.stateMutex.wait();
 							}
 						}
 					} catch (InterruptedException e) {
@@ -293,9 +293,9 @@ public class GenericTaskPoolTestUnit {
 					System.out.println("2 - SALIDA: " + i);
 					try {
 						Thread.sleep(500);
-						synchronized (this.mutex) {
+						synchronized (this.stateMutex) {
 							if (this.taskState == TaskStatus.PAUSE) {
-								this.mutex.wait();
+								this.stateMutex.wait();
 							}
 						}
 					} catch (InterruptedException e) {
@@ -364,9 +364,9 @@ public class GenericTaskPoolTestUnit {
 					System.out.println("1 - SALIDA: " + i);
 					try {
 						Thread.sleep(500);
-						synchronized (this.mutex) {
+						synchronized (this.stateMutex) {
 							if (this.taskState == TaskStatus.PAUSE) {
-								this.mutex.wait();
+								this.stateMutex.wait();
 							}
 						}
 					} catch (InterruptedException e) {
@@ -398,9 +398,9 @@ public class GenericTaskPoolTestUnit {
 					System.out.println("2 - SALIDA: " + i);
 					try {
 						Thread.sleep(500);
-						synchronized (this.mutex) {
+						synchronized (this.stateMutex) {
 							if (this.taskState == TaskStatus.PAUSE) {
-								this.mutex.wait();
+								this.stateMutex.wait();
 							}
 						}
 					} catch (InterruptedException e) {

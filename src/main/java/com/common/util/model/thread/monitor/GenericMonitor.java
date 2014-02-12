@@ -24,17 +24,18 @@ public class GenericMonitor<V extends Serializable> implements Serializable {
 	/**
 	 * El semáforo para el valor de este monitor.
 	 */
-	private Object valueMutex = new Object();
+	private Object valueMutex;
 
 	/**
 	 * El contructor por omisión.
 	 */
 	public GenericMonitor() {
 		this.value = null;
+		this.valueMutex = new Object();
 	}
 
 	/**
-	 * La función encargada de recuperar el valor que almacenamos dentro del monitor.
+	 * Se encarga de recuperar el valor que almacenamos dentro del monitor.
 	 * 
 	 * @return El valor almacenado dentro del monitor.
 	 */
