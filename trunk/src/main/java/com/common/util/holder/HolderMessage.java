@@ -31,7 +31,7 @@ public class HolderMessage implements Serializable {
 	 * @param resources
 	 *            Los recursos desde donde vamos a tomar los mensajes del sistema.
 	 */
-	public void setResources(MessageSource resources) {
+	public static void setResources(MessageSource resources) {
 		HolderMessage.resources = resources;
 	}
 
@@ -41,7 +41,7 @@ public class HolderMessage implements Serializable {
 	 * @param locale
 	 *            La localidad sobre la que vamos a leer los mensajes.
 	 */
-	public void setLocale(Locale locale) {
+	public static void setLocale(Locale locale) {
 		HolderMessage.locale = locale;
 	}
 

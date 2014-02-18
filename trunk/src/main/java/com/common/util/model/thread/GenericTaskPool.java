@@ -295,11 +295,9 @@ public class GenericTaskPool<T extends GenericTask<?>> {
 	 * @param taskMonitor
 	 *            El monitor de las acciones sobre las tareas.
 	 */
-	public void setTaskMonitor(final GenericMonitor<Double> taskMonitor) {
+	public synchronized void setTaskMonitor(final GenericMonitor<Double> taskMonitor) {
 		if (taskMonitor != null) {
-			synchronized (this.poolMonitor) {
-				this.poolMonitor = taskMonitor;
-			}
+			this.poolMonitor = taskMonitor;
 		}
 	}
 
@@ -340,7 +338,7 @@ public class GenericTaskPool<T extends GenericTask<?>> {
 	 * 
 	 * @return El monitor de las acciones de las tareas del pool.
 	 */
-	public GenericMonitor<Double> getTaskMonitor() {
+	public synchronized GenericMonitor<Double> getTaskMonitor() {
 		return this.poolMonitor;
 	}
 
