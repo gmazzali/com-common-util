@@ -55,6 +55,33 @@ public class ErrorDetail implements Serializable {
 		this(null, new Object[0]);
 	}
 
+	/**
+	 * La función que despliega el detalle de error de la forma:
+	 * 
+	 * <pre>
+	 * message [parameter1, parameter2, etc...]
+	 * </pre>
+	 * 
+	 * @return El mensaje que contiene el detalle formateado.
+	 */
+	@Override
+	public String toString() {
+		StringBuffer buffer = new StringBuffer(this.message);
+		
+		if (this.parameters != null) {
+			buffer.append(" [");
+			for (int index = 0; index < this.parameters.length; index++) {
+				buffer.append(this.parameters[index]);
+
+				if (index < this.parameters.length - 1) {
+					buffer.append(", ");
+				}
+			}
+			buffer.append(" ]");
+		}
+		return buffer.toString();
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -92,32 +119,6 @@ public class ErrorDetail implements Serializable {
 		}
 
 		return true;
-	}
-
-	/**
-	 * La función que despliega el detalle de error de la forma:
-	 * 
-	 * <pre>
-	 * message [parameter1, parameter2, etc...]
-	 * </pre>
-	 * 
-	 * @return El mensaje que contiene el detalle formateado.
-	 */
-	@Override
-	public String toString() {
-		String parameter = "";
-		if (this.parameters != null) {
-			parameter = " [";
-			for (int index = 0; index < this.parameters.length; index++) {
-				parameter += this.parameters[index];
-
-				if (index < this.parameters.length - 1) {
-					parameter += ", ";
-				}
-			}
-			parameter = " ]";
-		}
-		return this.message + " " + parameter;
 	}
 
 	/**

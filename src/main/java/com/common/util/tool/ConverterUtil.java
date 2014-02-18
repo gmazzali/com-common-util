@@ -163,7 +163,7 @@ public class ConverterUtil {
 	 * @param unitsGroup
 	 *            El arreglo con los nombres de los grupos de las unidades desde el 0 al 29.
 	 */
-	public void setUnitsGroup(String[] unitsGroup) {
+	public static void setUnitsGroup(String[] unitsGroup) {
 		ConverterUtil.unitsGroup = unitsGroup;
 	}
 
@@ -186,7 +186,7 @@ public class ConverterUtil {
 	 * @param tensGroup
 	 *            El arreglo con los nombres de los grupos de decenas.
 	 */
-	public void setTensGroup(String[] tensGroup) {
+	public static void setTensGroup(String[] tensGroup) {
 		ConverterUtil.tensGroup = tensGroup;
 	}
 
@@ -196,7 +196,7 @@ public class ConverterUtil {
 	 * @param tenConnector
 	 *            El conector que vamos a usar para conectar la parte de la decena con la parte de la unidad.
 	 */
-	public void setTenConnector(String tenConnector) {
+	public static void setTenConnector(String tenConnector) {
 		ConverterUtil.tenConnector = tenConnector;
 	}
 
@@ -219,7 +219,7 @@ public class ConverterUtil {
 	 * @param hundredsGroup
 	 *            El arreglo con los nombres de los grupos de cientos.
 	 */
-	public void setHundredsGroup(String[] hundredsGroup) {
+	public static void setHundredsGroup(String[] hundredsGroup) {
 		ConverterUtil.hundredsGroup = hundredsGroup;
 	}
 
@@ -258,7 +258,7 @@ public class ConverterUtil {
 	 * @param millonsGroup
 	 *            El arreglo con los nombres de los grupos de millones.
 	 */
-	public void setMillonsGroup(String[][] millonsGroup) {
+	public static void setMillonsGroup(String[][] millonsGroup) {
 		ConverterUtil.millonsGroup = millonsGroup;
 	}
 

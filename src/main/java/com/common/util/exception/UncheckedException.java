@@ -50,6 +50,16 @@ public class UncheckedException extends RuntimeException {
 	}
 
 	/**
+	 * Retorna los errores que tenemos dentro de esta escepción.
+	 * 
+	 * @return El listado de los errores de esta excepción.
+	 */
+	@Override
+	public String toString() {
+		return this.errors.toString();
+	}
+
+	/**
 	 * La función encargada de retornar los errores que tenemos dentro de esta excepción.
 	 * 
 	 * @return El conjunto de errores que tenemos dentro de esta excepción.

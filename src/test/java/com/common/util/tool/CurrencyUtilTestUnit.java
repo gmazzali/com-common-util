@@ -18,11 +18,10 @@ public class CurrencyUtilTestUnit {
 	 */
 	@Before
 	public void initCurrencyUtil() {
-		CurrencyUtil currencyUtil = new CurrencyUtil();
-		currencyUtil.setCurrencySimbol("$");
-		currencyUtil.setDecimals(2);
-		currencyUtil.setDecimalSeparator(',');
-		currencyUtil.setGroupSeparator('.');
+		CurrencyUtil.setCurrencySimbol("$");
+		CurrencyUtil.setDecimals(2);
+		CurrencyUtil.setDecimalSeparator(',');
+		CurrencyUtil.setGroupSeparator('.');
 	}
 
 	/**

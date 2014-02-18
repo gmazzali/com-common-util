@@ -43,7 +43,7 @@ public class CurrencyUtil {
 	 * @param currencySimbol
 	 *            El simbolo para referenciar las monedas de uso comercial.
 	 */
-	public void setCurrencySimbol(String currencySimbol) {
+	public static void setCurrencySimbol(String currencySimbol) {
 		CurrencyUtil.currencySimbol = currencySimbol;
 	}
 
@@ -55,7 +55,7 @@ public class CurrencyUtil {
 	 * @param decimals
 	 *            La cantidad de dígitos decinales que vamos a usar para formatear el dinero.
 	 */
-	public void setDecimals(Integer decimals) {
+	public static void setDecimals(Integer decimals) {
 		CurrencyUtil.decimals = decimals;
 	}
 
@@ -67,7 +67,7 @@ public class CurrencyUtil {
 	 * @param groupSeparator
 	 *            El caracter para separar los grupos de la parte entera del dinero.
 	 */
-	public void setGroupSeparator(Character groupSeparator) {
+	public static void setGroupSeparator(Character groupSeparator) {
 		CurrencyUtil.groupSeparator = groupSeparator;
 	}
 
@@ -79,7 +79,7 @@ public class CurrencyUtil {
 	 * @param decimalSeparator
 	 *            El caracter para separar la parte decimal del dinero.
 	 */
-	public void setDecimalSeparator(Character decimalSeparator) {
+	public static void setDecimalSeparator(Character decimalSeparator) {
 		CurrencyUtil.decimalSeparator = decimalSeparator;
 	}
 

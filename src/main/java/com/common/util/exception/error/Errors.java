@@ -34,6 +34,23 @@ public class Errors implements Serializable {
 	}
 
 	/**
+	 * Permite retornar el listado de los errores que tenemos dentro de este contenedor.
+	 * 
+	 * @return El listado de los errores y sus parámetros.
+	 */
+	@Override
+	public String toString() {
+		StringBuffer buffer = new StringBuffer();
+
+		for (ErrorDetail error : this.errorDetails) {
+			buffer.append(error.toString());
+			buffer.append("\n");
+		}
+
+		return buffer.toString();
+	}
+
+	/**
 	 * Se encarga de agregar un nuevo detalle dentro de este conjunto.
 	 * 
 	 * @param message
