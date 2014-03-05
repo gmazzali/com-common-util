@@ -65,18 +65,18 @@ public class FormatUtil {
 	 * @param pattern
 	 *            El patrón con el que vamos a formatear la fecha.
 	 * @return La fecha formateada.
-	 * @throws RuntimeException
+	 * @throws UncheckedException
 	 *             En caso de que alguno de los parámetros sea nulo.
 	 */
 	public static String formatDate(Date date, String pattern) {
 		// Verificamos que la fecha recibida no sea nula.
 		if (date == null) {
-			throw new UncheckedException("The date don't must be null.");
+			throw new UncheckedException("The date cannot be null.");
 		}
 
 		// Verificamos que el patrón recibido no sea nulo.
 		if (pattern == null) {
-			throw new UncheckedException("The pattern don't must be null.");
+			throw new UncheckedException("The pattern cannot be null.");
 		}
 
 		// Retornamos la fecha formateada.
@@ -202,12 +202,14 @@ public class FormatUtil {
 	 *            El caracter que se va a utilizar para separar los grupos de dígitos en caso de que se quiera agrupar. En caso de que este valor sea
 	 *            nulo o un espacio, se deja el valor por omisión dentro del sistema.
 	 * @return El entero formateado de acuerdo a los parámetros recibidos.
+	 * @throws UncheckedException
+	 *             En caso de que alguno de los parámetros sea nulo.
 	 */
 	public static String formatNumber(Number value, Integer minimumIntegerSize, Integer maximumIntegerSize, Integer minimumDecimalSize,
 			Integer maximumDecimalSize, Character decimalSeparator, Integer groupSize, Character groupSeparator) {
 		// Verificamos que el número a formatear no sea nulo.
 		if (value == null) {
-			throw new UncheckedException("The value don't must be null.");
+			throw new UncheckedException("The value cannot be null.");
 		}
 
 		DecimalFormat formatter = FormatUtil.getNumberFormat();

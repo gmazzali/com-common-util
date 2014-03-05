@@ -68,19 +68,19 @@ public class VerifierUtilUnitTest {
 		// Valores nulos.
 		Assert.assertEquals(true, VerifierUtil.<String>equals(null, null));
 		
-		// Cadenas
+		// Cadenas.
 		Assert.assertEquals(false, VerifierUtil.<String>equals(null, "bob"));
 		Assert.assertEquals(false, VerifierUtil.<String>equals("bob", null));
 		Assert.assertEquals(true, VerifierUtil.<String>equals("bob_1", "bob_1"));
 		Assert.assertEquals(false, VerifierUtil.<String>equals("bob_1", "bob_2"));
 		
-		// Enteros
+		// Enteros.
 		Assert.assertEquals(false, VerifierUtil.<Integer>equals(null, 10));
 		Assert.assertEquals(false, VerifierUtil.<Integer>equals(10, null));
 		Assert.assertEquals(true, VerifierUtil.<Integer>equals(10, 10));
 		Assert.assertEquals(false, VerifierUtil.<Integer>equals(10, 11));
 		
-		// Dobles
+		// Dobles.
 		Assert.assertEquals(false, VerifierUtil.<Double>equals(null, 10.0));
 		Assert.assertEquals(false, VerifierUtil.<Double>equals(10.0, null));
 		Assert.assertEquals(true, VerifierUtil.<Double>equals(10.0, 10.0));
