@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import com.common.util.exception.UncheckedException;
+import com.common.util.tool.VerifierUtil;
 
 /**
  * Contiene las funciones básicas de manejo de colecciones dentro de un sistema.
@@ -24,6 +25,28 @@ import com.common.util.exception.UncheckedException;
 public class CollectionUtil {
 
 	/**
+	 * Función Null-safe que verifica si una colección es vacia.
+	 * 
+	 * @param items
+	 *            La colección que vamos a verificar, puede ser nula.
+	 * @return <i>true</i> si la colección recibida es nula o esta vacía, en caso contrario retorna <i>false</i>.
+	 */
+	public static boolean isEmpty(Collection<? extends Object> items) {
+		return (items == null || items.isEmpty());
+	}
+
+	/**
+	 * Función Null-safe que verifica si una colección no es vacia.
+	 * 
+	 * @param items
+	 *            La colección que vamos a verificar, puede ser nula.
+	 * @return <i>true</i> si la colección recibida no es nula y no esta vacía, en caso contrario retorna <i>false</i>.
+	 */
+	public static boolean isNotEmpty(Collection<? extends Object> items) {
+		return !CollectionUtil.isEmpty(items);
+	}
+
+	/**
 	 * Retorna un mapa conteniendo cada elemento unico con el valor que representa la cantidad de ocurrencias del elemento en la colección recibida.
 	 * 
 	 * @param items
@@ -32,7 +55,7 @@ public class CollectionUtil {
 	 * @throws UncheckedException
 	 *             En caso de que el parámetro sea nulo.
 	 */
-	public static <I extends Serializable> Map<I, Integer> getCardinalities(Collection<I> items) {
+	public static <I extends Serializable> Map<I, Integer> cardinalities(Collection<I> items) {
 		// Verificamos que la colección recibida no sea nula.
 		if (items == null) {
 			throw new UncheckedException("The collection cannot be null.");
@@ -52,6 +75,40 @@ public class CollectionUtil {
 			}
 		}
 		return cardinalities;
+	}
+
+	/**
+	 * Calcula la cantidad de ocurrencias del elemento recibido dentro de la colección.
+	 * 
+	 * @param items
+	 *            La colección que vamos a recorrer.
+	 * @param obj
+	 *            El elemento que vamos a contar.
+	 * @return El numero de ocurrencias que tenemos del elemento dentro de la colección.
+	 * @throws UncheckedException
+	 *             En caso de que alguno de los parámetros sea nulo.
+	 */
+	public static <I extends Serializable> int cardinality(Collection<I> items, I item) {
+		// Verificamos que la colección recibida no sea nula.
+		if (items == null) {
+			throw new UncheckedException("The collection cannot be null.");
+		}
+
+		// Verificamos que el item recibido no sea nulo.
+		if (item == null) {
+			throw new UncheckedException("The item cannot be null.");
+		}
+
+		int count = 0;
+		Iterator<I> it = items.iterator();
+
+		while (it.hasNext()) {
+			I collectionItem = it.next();
+			if (VerifierUtil.<I>equals(collectionItem, item)) {
+				count++;
+			}
+		}
+		return count;
 	}
 
 	/**
@@ -294,5 +351,19 @@ public class CollectionUtil {
 			answer.add(transformer.transform(item));
 		}
 		return answer;
+	}
+
+	/**
+	 * Permite recuperar la frecuencia que tenemos dentro de un mapa de un elemento dado.
+	 * 
+	 * @param item
+	 *            El elemento del que vamos a recuperar la frecuencia.
+	 * @param frequencyMap
+	 *            El mapa donde tenemos almacenado la frecuencia.
+	 * @return La frecuencia que corresponde con el elemento recibido.
+	 */
+	@SuppressWarnings("unused")
+	private static <I extends Serializable> int getFrequency(I item, Map<I, Integer> frequencyMap) {
+		return frequencyMap.get(item) != null ? frequencyMap.get(item) : 0;
 	}
 }
