@@ -1,5 +1,6 @@
 package com.common.util.tool;
 
+import java.io.Serializable;
 import java.util.regex.Pattern;
 
 /**
@@ -60,9 +61,39 @@ public class VerifierUtil {
 	 *            La cadena que vamos a validar.
 	 * @param pattern
 	 *            El patrón con el que vamos a validar la cadena.
-	 * @return <i>true</i> en caso que la cadena recibida tcoincida con el patrón recibido, en caso contrario, retornamos <i>false</i>.
+	 * @return <i>true</i> en caso que la cadena recibida coincida con el patrón recibido, en caso contrario, retornamos <i>false</i>.
 	 */
-	public boolean matchString(String string, String pattern) {
+	public static boolean matchString(String string, String pattern) {
 		return (string == null) ? false : Pattern.matches(pattern, string.toLowerCase().trim());
+	}
+
+	/**
+	 * Se encarga de validar que los 2 elementos recibidos sean iguales. Permite recibir los 2 elementos nulos, lo que retorna que los elementos sean
+	 * iguales.
+	 * 
+	 * <ul>
+	 * <li>VerifierUtil.<String>isEqual(null, null) = true</li>
+	 * <li>VerifierUtil.<String>isEqual("bob", "bob") = true</li>
+	 * <li>VerifierUtil.<String>isEqual("bob", null) = false</li>
+	 * <li>VerifierUtil.<String>isEqual(null, "bob") = false</li>
+	 * <li>VerifierUtil.<String>isEqual("bob1", "bob2") = false</li>
+	 * </ul>
+	 * 
+	 * @see Object#equals(Object)
+	 * 
+	 * @param firstEntity
+	 *            El primer elemento que vamos a comparar, puede ser nulo.
+	 * @param secondEntity
+	 *            El segundo elemento que vamos a comparar, puede ser nulo.
+	 * @return <i>true</i> en caso que la primer entidad sea igual a la segunda, en caso contrario, retornamos <i>false</i>.
+	 */
+	public static <S extends Serializable> boolean equals(S firstEntity, S secondEntity) {
+		if (firstEntity == null && secondEntity == null) {
+			return true;
+		} else if (firstEntity != null) {
+			return firstEntity.equals(secondEntity);
+		} else {
+			return secondEntity.equals(firstEntity);
+		}
 	}
 }
