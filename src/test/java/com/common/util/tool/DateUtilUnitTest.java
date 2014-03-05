@@ -14,6 +14,7 @@ import com.common.util.tool.date.DateUtil;
 /**
  * La clase de prueba para las utilerías de fechas.
  * 
+ * @since 05/03/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */

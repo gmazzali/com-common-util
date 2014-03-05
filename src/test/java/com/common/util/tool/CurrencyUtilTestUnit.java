@@ -8,6 +8,7 @@ import org.junit.Test;
 /**
  * La clase de pruebas de la clase base que permite manejar el dinero.
  * 
+ * @since 05/03/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */

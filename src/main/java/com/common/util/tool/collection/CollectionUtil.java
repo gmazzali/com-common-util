@@ -3,7 +3,9 @@ package com.common.util.tool.collection;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import com.common.util.exception.UncheckedException;
 
@@ -20,6 +22,37 @@ import com.common.util.exception.UncheckedException;
  * @version 1.0
  */
 public class CollectionUtil {
+
+	/**
+	 * Retorna un mapa conteniendo cada elemento unico con el valor que representa la cantidad de ocurrencias del elemento en la colección recibida.
+	 * 
+	 * @param items
+	 *            La colección que vamos a recorrer para obtener la cardinalidad de cada uno de los items que tenemos en esta.
+	 * @return El mapa que contiene cada elemento único de la colección con la cantidad de ocurrencias del mismo.
+	 * @throws UncheckedException
+	 *             En caso de que el parámetro sea nulo.
+	 */
+	public static <I extends Serializable> Map<I, Integer> getCardinalities(Collection<I> items) {
+		// Verificamos que la colección recibida no sea nula.
+		if (items == null) {
+			throw new UncheckedException("The collection cannot be null.");
+		}
+
+		Map<I, Integer> cardinalities = new HashMap<I, Integer>();
+		Iterator<I> iterator = items.iterator();
+
+		while (iterator.hasNext()) {
+			I key = iterator.next();
+			Integer value = cardinalities.get(key);
+
+			if (value == null) {
+				cardinalities.put(key, 1);
+			} else {
+				cardinalities.put(key, value++);
+			}
+		}
+		return cardinalities;
+	}
 
 	/**
 	 * Cuenta la cantidad de elementos de la colección que cumplen la condición del predicado.

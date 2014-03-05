@@ -9,6 +9,7 @@ import org.junit.Test;
 /**
  * La clase que permite probar los métodos de verificación base de la libreria.
  * 
+ * @since 05/03/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */

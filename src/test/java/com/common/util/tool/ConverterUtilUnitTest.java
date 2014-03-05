@@ -7,6 +7,7 @@ import org.junit.Test;
 /**
  * La clase de pruebas de la clase que permite convertir un numero en una cadena de caracteres con su descripción.
  * 
+ * @since 05/03/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */
