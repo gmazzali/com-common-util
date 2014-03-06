@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import com.common.util.exception.UncheckedException;
 import com.common.util.tool.VerifierUtil;
@@ -47,6 +49,19 @@ public class CollectionUtil {
 	}
 
 	/**
+	 * Función Null-safe que verifica si una colección contiene un elemento.
+	 * 
+	 * @param items
+	 *            La colección que vamos a verificar, puede ser nula.
+	 * @param item
+	 *            El item que vamos a verificar si existe dentro de la colección.
+	 * @return <i>true</i> si la colección recibida no es nula y contiene el elemento recibido, en caso contrario retorna <i>false</i>.
+	 */
+	public static <I extends Serializable> boolean isInclude(Collection<I> items, I item) {
+		return items != null ? items.contains(item) : false;
+	}
+
+	/**
 	 * Retorna un mapa conteniendo cada elemento unico con el valor que representa la cantidad de ocurrencias del elemento en la colección recibida.
 	 * 
 	 * @param items
@@ -71,7 +86,7 @@ public class CollectionUtil {
 			if (value == null) {
 				cardinalities.put(key, 1);
 			} else {
-				cardinalities.put(key, value++);
+				cardinalities.put(key, ++value);
 			}
 		}
 		return cardinalities;
@@ -82,8 +97,8 @@ public class CollectionUtil {
 	 * 
 	 * @param items
 	 *            La colección que vamos a recorrer.
-	 * @param obj
-	 *            El elemento que vamos a contar.
+	 * @param item
+	 *            El elemento que vamos a contar. Puede ser nulo.
 	 * @return El numero de ocurrencias que tenemos del elemento dentro de la colección.
 	 * @throws UncheckedException
 	 *             En caso de que alguno de los parámetros sea nulo.
@@ -94,17 +109,12 @@ public class CollectionUtil {
 			throw new UncheckedException("The collection cannot be null.");
 		}
 
-		// Verificamos que el item recibido no sea nulo.
-		if (item == null) {
-			throw new UncheckedException("The item cannot be null.");
-		}
-
 		int count = 0;
 		Iterator<I> it = items.iterator();
 
 		while (it.hasNext()) {
 			I collectionItem = it.next();
-			if (VerifierUtil.<I>equals(collectionItem, item)) {
+			if (VerifierUtil.<I> equals(collectionItem, item)) {
 				count++;
 			}
 		}
@@ -277,16 +287,16 @@ public class CollectionUtil {
 			throw new UncheckedException("The predicate cannot be null.");
 		}
 
-		ArrayList<I> answer = new ArrayList<I>(items.size());
+		ArrayList<I> outputCollection = new ArrayList<I>(items.size());
 		Iterator<I> iterator = items.iterator();
 
 		while (iterator.hasNext()) {
 			I item = iterator.next();
 			if (predicate.evaluate(item)) {
-				answer.add(item);
+				outputCollection.add(item);
 			}
 		}
-		return answer;
+		return outputCollection;
 	}
 
 	/**
@@ -343,14 +353,183 @@ public class CollectionUtil {
 			throw new UncheckedException("The transformer cannot be null.");
 		}
 
-		ArrayList<O> answer = new ArrayList<O>(items.size());
+		ArrayList<O> outputCollection = new ArrayList<O>(items.size());
 		Iterator<I> iterator = items.iterator();
 
 		while (iterator.hasNext()) {
 			I item = iterator.next();
-			answer.add(transformer.transform(item));
+			outputCollection.add(transformer.transform(item));
 		}
-		return answer;
+		return outputCollection;
+	}
+
+	/**
+	 * Crea una nueva colección que contiene la unión de las 2 colecciones recibidas.
+	 * 
+	 * @see Collection#addAll
+	 * 
+	 * @param firstCollection
+	 *            La primer colección para unir.
+	 * @param secondCollection
+	 *            La segunda colección para unir.
+	 * @return Una nueva colección con la unión de las 2 listas.
+	 * @throws UncheckedException
+	 *             En caso de que alguno de los parámetros sea nulo.
+	 */
+	public static <I extends Serializable> Collection<I> union(Collection<I> firstCollection, Collection<I> secondCollection) {
+		// Verificamos que la primer colección recibida no sea nula.
+		if (firstCollection == null) {
+			throw new UncheckedException("The first collection cannot be null.");
+		}
+
+		// Verificamos que la segunda colección recibida no sea nula.
+		if (secondCollection == null) {
+			throw new UncheckedException("The second collection cannot be null.");
+		}
+
+		ArrayList<I> outputCollection = new ArrayList<I>();
+
+		Map<I, Integer> firstCardinalityMap = CollectionUtil.<I> cardinalities(firstCollection);
+		Map<I, Integer> secondCardinalityMap = CollectionUtil.<I> cardinalities(secondCollection);
+
+		Set<I> itemSet = new HashSet<I>(firstCollection);
+		itemSet.addAll(secondCollection);
+
+		Iterator<I> iterator = itemSet.iterator();
+		while (iterator.hasNext()) {
+			I item = iterator.next();
+			int maxCardinality = Math.max(CollectionUtil.<I> getFrequency(item, firstCardinalityMap),
+					CollectionUtil.<I> getFrequency(item, secondCardinalityMap));
+			for (int i = 0; i < maxCardinality; i++) {
+				outputCollection.add(item);
+			}
+		}
+		return outputCollection;
+	}
+
+	/**
+	 * Crea una nueva colección que contiene la intersección de las 2 colecciónes recibidas.
+	 * 
+	 * @see Collection#retainAll
+	 * 
+	 * @param firstCollection
+	 *            La primer colección para intersectar.
+	 * @param secondCollection
+	 *            La segunda colección para intersectar.
+	 * @return Una nueva colección con la intersección de las 2 listas.
+	 * @throws UncheckedException
+	 *             En caso de que alguno de los parámetros sea nulo.
+	 */
+	public static <I extends Serializable> Collection<I> intersection(Collection<I> firstCollection, Collection<I> secondCollection) {
+		// Verificamos que la primer colección recibida no sea nula.
+		if (firstCollection == null) {
+			throw new UncheckedException("The first collection cannot be null.");
+		}
+
+		// Verificamos que la segunda colección recibida no sea nula.
+		if (secondCollection == null) {
+			throw new UncheckedException("The second collection cannot be null.");
+		}
+
+		ArrayList<I> outputCollection = new ArrayList<I>();
+
+		Map<I, Integer> firstCardinalityMap = CollectionUtil.<I> cardinalities(firstCollection);
+		Map<I, Integer> secondCardinalityMap = CollectionUtil.<I> cardinalities(secondCollection);
+
+		Set<I> itemSet = new HashSet<I>(firstCollection);
+		itemSet.addAll(secondCollection);
+
+		Iterator<I> iterator = itemSet.iterator();
+		while (iterator.hasNext()) {
+			I item = iterator.next();
+			int maxCardinality = Math.min(CollectionUtil.<I> getFrequency(item, firstCardinalityMap),
+					CollectionUtil.<I> getFrequency(item, secondCardinalityMap));
+			for (int i = 0; i < maxCardinality; i++) {
+				outputCollection.add(item);
+			}
+		}
+		return outputCollection;
+	}
+
+	/**
+	 * Crea una nueva colección que contiene los elementos de las 2 colecciones, menos los elementos que tienen en común.
+	 * 
+	 * @see Collection#addAll
+	 * 
+	 * @param firstCollection
+	 *            La primer colección.
+	 * @param secondCollection
+	 *            La segunda colección.
+	 * @return Una nueva colección que contiene los elementos de las 2 colecciones, menos los elementos que tienen en común.
+	 * @throws UncheckedException
+	 *             En caso de que alguno de los parámetros sea nulo.
+	 */
+	public static <I extends Serializable> Collection<I> disjunction(Collection<I> firstCollection, Collection<I> secondCollection) {
+		// Verificamos que la primer colección recibida no sea nula.
+		if (firstCollection == null) {
+			throw new UncheckedException("The first collection cannot be null.");
+		}
+
+		// Verificamos que la segunda colección recibida no sea nula.
+		if (secondCollection == null) {
+			throw new UncheckedException("The second collection cannot be null.");
+		}
+
+		ArrayList<I> outputCollection = new ArrayList<I>();
+
+		Map<I, Integer> firstCardinalityMap = CollectionUtil.<I> cardinalities(firstCollection);
+		Map<I, Integer> secondCardinalityMap = CollectionUtil.<I> cardinalities(secondCollection);
+
+		Set<I> itemSet = new HashSet<I>(firstCollection);
+		itemSet.addAll(secondCollection);
+
+		Iterator<I> iterator = itemSet.iterator();
+
+		while (iterator.hasNext()) {
+			I item = iterator.next();
+			int maxCardinality = Math.max(CollectionUtil.<I> getFrequency(item, firstCardinalityMap),
+					CollectionUtil.<I> getFrequency(item, secondCardinalityMap))
+					- Math.min(CollectionUtil.<I> getFrequency(item, firstCardinalityMap),
+							CollectionUtil.<I> getFrequency(item, secondCardinalityMap));
+			for (int i = 0; i < maxCardinality; i++) {
+				outputCollection.add(item);
+			}
+		}
+		return outputCollection;
+	}
+
+	/**
+	 * Crea una nueva colección que contiene los elementos que estan en la primer colección, menos los que estan dentro de la segunda.
+	 * 
+	 * @see Collection#removeAll
+	 * 
+	 * @param firstCollection
+	 *            La primer colección.
+	 * @param secondCollection
+	 *            La segunda colección.
+	 * @return Una nueva colección con los elementos de la primer colección menos los elementos de la segunda.
+	 * @throws UncheckedException
+	 *             En caso de que alguno de los parámetros sea nulo.
+	 */
+	public static <I extends Serializable> Collection<I> subtract(Collection<I> firstCollection, Collection<I> secondCollection) {
+		// Verificamos que la primer colección recibida no sea nula.
+		if (firstCollection == null) {
+			throw new UncheckedException("The first collection cannot be null.");
+		}
+
+		// Verificamos que la segunda colección recibida no sea nula.
+		if (secondCollection == null) {
+			throw new UncheckedException("The second collection cannot be null.");
+		}
+
+		ArrayList<I> outputCollection = new ArrayList<I>(firstCollection);
+		Iterator<I> iterator = secondCollection.iterator();
+
+		while (iterator.hasNext()) {
+			I item = iterator.next();
+			outputCollection.remove(item);
+		}
+		return outputCollection;
 	}
 
 	/**
@@ -362,7 +541,6 @@ public class CollectionUtil {
 	 *            El mapa donde tenemos almacenado la frecuencia.
 	 * @return La frecuencia que corresponde con el elemento recibido.
 	 */
-	@SuppressWarnings("unused")
 	private static <I extends Serializable> int getFrequency(I item, Map<I, Integer> frequencyMap) {
 		return frequencyMap.get(item) != null ? frequencyMap.get(item) : 0;
 	}
