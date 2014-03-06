@@ -40,11 +40,11 @@ public class DateUtil {
 	public static Date createDate(String date, String pattern) {
 		// Verificamos que los parámetros no sean nulos.
 		if (date == null) {
-			throw new UncheckedException("The date must don't be null.");
+			throw new UncheckedException("The date cannot be null.");
 		}
 
 		if (pattern == null) {
-			throw new UncheckedException("The pattern must don't be null.");
+			throw new UncheckedException("The pattern cannot be null.");
 		}
 
 		try {
@@ -72,11 +72,11 @@ public class DateUtil {
 	public static int compare(Date date, Date otherDate, DatePrecision datePrecision) {
 		// Verificamos que los parámetros no sean nulos.
 		if (date == null || otherDate == null) {
-			throw new UncheckedException("The dates must don't be null.");
+			throw new UncheckedException("The dates cannot be null.");
 		}
 
 		if (datePrecision == null) {
-			throw new UncheckedException("The precision must don't be null.");
+			throw new UncheckedException("The precision cannot be null.");
 		}
 
 		// Creamos los calendarios para comparar.
@@ -236,11 +236,11 @@ public class DateUtil {
 	public static Date truncate(Date date, DatePrecision datePrecision) {
 		// Verificamos que los parámetros no sean nulos.
 		if (date == null) {
-			throw new UncheckedException("The date must don't be null.");
+			throw new UncheckedException("The date cannot be null.");
 		}
 
 		if (datePrecision == null) {
-			throw new UncheckedException("The precision must don't be null.");
+			throw new UncheckedException("The precision cannot be null.");
 		}
 
 		// Seteamos la instancia del calendario.
@@ -328,7 +328,7 @@ public class DateUtil {
 	public static boolean isWeekend(Date date) {
 		// Verificamos que el parámetro no sea nulo.
 		if (date == null) {
-			throw new UncheckedException("The date must don't be null.");
+			throw new UncheckedException("The date cannot be null.");
 		}
 
 		Calendar calendar = Calendar.getInstance();
@@ -350,7 +350,7 @@ public class DateUtil {
 	public static Date getPreviousMonth(Date date) {
 		// Verificamos que la fecha no sea nula.
 		if (date == null) {
-			throw new UncheckedException("The date must don't be null.");
+			throw new UncheckedException("The date cannot be null.");
 		}
 
 		// Hacemos los calculos.
@@ -390,7 +390,7 @@ public class DateUtil {
 	public static Date getNextMonth(Date date) {
 		// Verificamos que la fecha no sea nula.
 		if (date == null) {
-			throw new UncheckedException("The date must don't be null.");
+			throw new UncheckedException("The date cannot be null.");
 		}
 
 		// Hacemos los calculos.
@@ -430,7 +430,7 @@ public class DateUtil {
 	public static Date getFirstDayOfMonth(Date date) {
 		// Verificamos que la fecha no sea nula.
 		if (date == null) {
-			throw new UncheckedException("The date must don't be null.");
+			throw new UncheckedException("The date cannot be null.");
 		}
 
 		// Hacemos los calculos.
@@ -458,7 +458,7 @@ public class DateUtil {
 	public static Date getLastDayOfMonth(Date date) {
 		// Verificamos que la fecha no sea nula.
 		if (date == null) {
-			throw new UncheckedException("The date must don't be null.");
+			throw new UncheckedException("The date cannot be null.");
 		}
 
 		// Hacemos los calculos.

@@ -8,7 +8,6 @@ import com.common.util.exception.UncheckedException;
  * 
  * @author Guillermo Mazzali
  * @version 1.0
- * 
  */
 public class ConverterUtil {
 
@@ -326,7 +325,7 @@ public class ConverterUtil {
 					output += " " + ConverterUtil.tensGroup[decena];
 				} else {
 					output += " " + ConverterUtil.tensGroup[decena] + " " + ConverterUtil.tenConnector
-							+ (VerifierUtil.isBlank(ConverterUtil.tenConnector) ? "" : " ") + ConverterUtil.unitsGroup[unidad];
+							+ (StringUtil.isBlank(ConverterUtil.tenConnector) ? "" : " ") + ConverterUtil.unitsGroup[unidad];
 				}
 				break;
 			}
