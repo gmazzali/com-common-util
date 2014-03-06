@@ -14,7 +14,7 @@ import org.junit.Test;
 public class StringUtilUnitTest {
 
 	/**
-	 * La pruebas sobre el método <i><b>isEmpty</b></i> de {@link StringUtil}
+	 * La pruebas sobre el método <i><b>isEmpty</b></i> de {@link StringUtil}.
 	 * 
 	 * @see StringUtil#isEmpty(String)
 	 */
@@ -36,7 +36,7 @@ public class StringUtilUnitTest {
 	}
 
 	/**
-	 * La pruebas sobre el método <i><b>isBlank</b></i> de {@link StringUtil}
+	 * La pruebas sobre el método <i><b>isBlank</b></i> de {@link StringUtil}.
 	 * 
 	 * @see StringUtil#isBlank(String)
 	 */
@@ -58,7 +58,49 @@ public class StringUtilUnitTest {
 	}
 
 	/**
-	 * La pruebas sobre el método <i><b>match</b></i> de {@link StringUtil}
+	 * La pruebas sobre los métodos <i><b>trim</b></i>, <i><b>trimToEmpty</b></i> y <i><b>trimToNull</b></i> de {@link StringUtil}.
+	 * 
+	 * @see StringUtil#trim(String)
+	 * @see StringUtil#trimToEmpty(String)
+	 * @see StringUtil#trimToNull(String)
+	 */
+	@Test
+	public void testTrim() {
+		 
+		// Valor nulo.
+		Assert.assertEquals(null, StringUtil.trim(null));
+		Assert.assertEquals("", StringUtil.trimToEmpty(null));
+		Assert.assertEquals(null, StringUtil.trimToNull(null));
+
+		// Cadenas vacias o con espacios.
+		Assert.assertEquals("", StringUtil.trim(""));
+		Assert.assertEquals("", StringUtil.trim(" "));
+		Assert.assertEquals("", StringUtil.trim("  "));
+		
+		Assert.assertEquals("", StringUtil.trimToEmpty(""));
+		Assert.assertEquals("", StringUtil.trimToEmpty(" "));
+		Assert.assertEquals("", StringUtil.trimToEmpty("  "));
+		
+		Assert.assertEquals(null, StringUtil.trimToNull(""));
+		Assert.assertEquals(null, StringUtil.trimToNull(" "));
+		Assert.assertEquals(null, StringUtil.trimToNull("  "));
+
+		// Cadenas con datos.
+		Assert.assertEquals("bob", StringUtil.trim("bob"));
+		Assert.assertEquals("bob", StringUtil.trim(" bob "));
+		Assert.assertEquals("b o b", StringUtil.trim("  b o b  "));
+		
+		Assert.assertEquals("bob", StringUtil.trimToEmpty("bob"));
+		Assert.assertEquals("bob", StringUtil.trimToEmpty(" bob "));
+		Assert.assertEquals("b o b", StringUtil.trimToEmpty("  b o b  "));
+		
+		Assert.assertEquals("bob", StringUtil.trimToNull("bob"));
+		Assert.assertEquals("bob", StringUtil.trimToNull(" bob "));
+		Assert.assertEquals("b o b", StringUtil.trimToNull("  b o b  "));
+	}
+
+	/**
+	 * La pruebas sobre el método <i><b>match</b></i> de {@link StringUtil}.
 	 * 
 	 * @see StringUtil#match(String, String)
 	 * @see PatternUtil

@@ -17,10 +17,18 @@ public class VerifierUtil {
 	 * 
 	 * <ul>
 	 * <li>VerifierUtil.<String>isEqual(null, null) = true</li>
-	 * <li>VerifierUtil.<String>isEqual("bob", "bob") = true</li>
 	 * <li>VerifierUtil.<String>isEqual("bob", null) = false</li>
 	 * <li>VerifierUtil.<String>isEqual(null, "bob") = false</li>
+	 * <li>VerifierUtil.<String>isEqual("bob", "bob") = true</li>
 	 * <li>VerifierUtil.<String>isEqual("bob1", "bob2") = false</li>
+	 * </ul>
+	 * 
+	 * <ul>
+	 * <li>VerifierUtil.<Integer>isEqual(null, null) = true</li>
+	 * <li>VerifierUtil.<Integer>isEqual(10, null) = false</li>
+	 * <li>VerifierUtil.<Integer>isEqual(null, 10) = false</li>
+	 * <li>VerifierUtil.<Integer>isEqual(10, 10) = true</li>
+	 * <li>VerifierUtil.<Integer>isEqual(10, 11) = false</li>
 	 * </ul>
 	 * 
 	 * @see Object#equals(Object)

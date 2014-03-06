@@ -20,11 +20,11 @@ public class StringUtil implements Serializable {
 	 * Se encarga de verificar que una cadena de caracteres este vacia. Retorna <i>true</i> en caso de que la cadena recibida sea nula.
 	 * 
 	 * <ul>
-	 * <li>VerifierUtil.isEmpty(null) = true</li>
-	 * <li>VerifierUtil.isEmpty("") = true</li>
-	 * <li>VerifierUtil.isEmpty(" ") = false</li>
-	 * <li>VerifierUtil.isEmpty("bob") = false</li>
-	 * <li>VerifierUtil.isEmpty(" bob ") = false</li>
+	 * <li>StringUtil.isEmpty(null) = true</li>
+	 * <li>StringUtil.isEmpty("") = true</li>
+	 * <li>StringUtil.isEmpty(" ") = false</li>
+	 * <li>StringUtil.isEmpty("bob") = false</li>
+	 * <li>StringUtil.isEmpty(" bob ") = false</li>
 	 * </ul>
 	 * 
 	 * @param string
@@ -40,11 +40,11 @@ public class StringUtil implements Serializable {
 	 * recibida sea nula.
 	 * 
 	 * <ul>
-	 * <li>VerifierUtil.isBlank(null) = true</li>
-	 * <li>VerifierUtil.isBlank("") = true</li>
-	 * <li>VerifierUtil.isBlank(" ") = true</li>
-	 * <li>VerifierUtil.isBlank("bob") = false</li>
-	 * <li>VerifierUtil.isBlank(" bob ") = false</li>
+	 * <li>StringUtil.isBlank(null) = true</li>
+	 * <li>StringUtil.isBlank("") = true</li>
+	 * <li>StringUtil.isBlank(" ") = true</li>
+	 * <li>StringUtil.isBlank("bob") = false</li>
+	 * <li>StringUtil.isBlank(" bob ") = false</li>
 	 * </ul>
 	 * 
 	 * @param string
@@ -54,6 +54,80 @@ public class StringUtil implements Serializable {
 	 */
 	public static boolean isBlank(String string) {
 		return string != null ? string.trim().isEmpty() : true;
+	}
+
+	/**
+	 * Quita los caracteres de control (char &lt;= 32) de ambos lados del String recibido, retornando <code>null</code> cuando recibimos un String
+	 * <code>null</code>.
+	 * 
+	 * <ul>
+	 * <li>StringUtil.trim(null) = null</li>
+	 * <li>StringUtil.trim("") = ""</li>
+	 * <li>StringUtil.trim(" ") = ""</li>
+	 * <li>StringUtil.trim("abc") = "abc"</li>
+	 * <li>StringUtil.trim(" abc ") = "abc"</li>
+	 * <li>StringUtil.trim(" a b c ") = "a b c"</li>
+	 * </ul>
+	 * 
+	 * @see String#trim()
+	 * @see StringUtil#trimToEmpty(String)
+	 * @see StringUtil#trimToNull(String)
+	 * 
+	 * @param string
+	 *            La cadena que vamos a cortar, puede ser nula.
+	 * @return La cadena sin espacios laterales o <code>null</code> en caso de que la cadena recibida sea nula.
+	 */
+	public static String trim(String string) {
+		return string != null ? string.trim() : null;
+	}
+
+	/**
+	 * Quita los caracteres de control (char &lt;= 32) de ambos lados del String recibido, retornando <code>""</code> cuando recibimos un String
+	 * <code>null</code>.
+	 * 
+	 * <ul>
+	 * <li>StringUtil.trim(null) = ""</li>
+	 * <li>StringUtil.trim("") = ""</li>
+	 * <li>StringUtil.trim(" ") = ""</li>
+	 * <li>StringUtil.trim("abc") = "abc"</li>
+	 * <li>StringUtil.trim(" abc ") = "abc"</li>
+	 * <li>StringUtil.trim(" a b c ") = "a b c"</li>
+	 * </ul>
+	 * 
+	 * @see StringUtil#trim(String)
+	 * @see StringUtil#trimToNull(String)
+	 * 
+	 * @param string
+	 *            La cadena que vamos a cortar, puede ser nula.
+	 * @return La cadena sin espacios laterales o <code>""</code> en caso de que la cadena recibida sea nula o vacía.
+	 */
+	public static String trimToEmpty(String string) {
+		return string != null ? string.trim() : "";
+	}
+
+	/**
+	 * Quita los caracteres de control (char &lt;= 32) de ambos lados del String recibido, retornando <code>null</code> cuando recibimos un String
+	 * <code>null</code> o cuando el String recibido es vacío.
+	 * 
+	 * <ul>
+	 * <li>StringUtil.trim(null) = null</li>
+	 * <li>StringUtil.trim("") = null</li>
+	 * <li>StringUtil.trim(" ") = null</li>
+	 * <li>StringUtil.trim("abc") = "abc"</li>
+	 * <li>StringUtil.trim(" abc ") = "abc"</li>
+	 * <li>StringUtil.trim(" a b c ") = "a b c"</li>
+	 * </ul>
+	 * 
+	 * @see StringUtil#trim(String)
+	 * @see StringUtil#trimToEmpty(String)
+	 * 
+	 * @param string
+	 *            La cadena que vamos a cortar, puede ser nula.
+	 * @return La cadena sin espacios laterales o <code>null</code> en caso de que la cadena recibida sea nula o vacía.
+	 */
+	public static String trimToNull(String string) {
+		String temp = trim(string);
+		return StringUtil.isEmpty(temp) ? null : temp;
 	}
 
 	/**
