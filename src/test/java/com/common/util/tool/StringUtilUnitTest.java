@@ -1,5 +1,7 @@
 package com.common.util.tool;
 
+import java.util.Arrays;
+
 import junit.framework.Assert;
 
 import org.junit.Test;
@@ -58,6 +60,51 @@ public class StringUtilUnitTest {
 	}
 
 	/**
+	 * La pruebas sobre el método <i><b>arrayToString</b></i> de {@link StringUtil}.
+	 * 
+	 * @see StringUtil#arrayToString(Character...)
+	 */
+	@Test
+	public void testArrayToString() {
+
+		// Valor nulo.
+		Assert.assertEquals("", StringUtil.arrayToString());
+		Assert.assertEquals("", StringUtil.arrayToString((Character) null));
+
+		// Cadenas vacias o con espacios.
+		Assert.assertEquals(" ", StringUtil.arrayToString(' '));
+		Assert.assertEquals("  ", StringUtil.arrayToString(' ', ' '));
+
+		// Cadenas con datos.
+		Assert.assertEquals("a", StringUtil.arrayToString('a'));
+		Assert.assertEquals("ab", StringUtil.arrayToString('a', 'b'));
+		Assert.assertEquals("abc", StringUtil.arrayToString('a', 'b', 'c'));
+		Assert.assertEquals("abcd", StringUtil.arrayToString('a', 'b', 'c', 'd'));
+		Assert.assertEquals("abcd", StringUtil.arrayToString('a', null, 'b', null, 'c', null, 'd'));
+	}
+
+	/**
+	 * La pruebas sobre el método <i><b>stringToArray</b></i> de {@link StringUtil}.
+	 * 
+	 * @see StringUtil#stringToArray(String)
+	 */
+	@Test
+	public void testStringToArray() {
+
+		// Valor nulo.
+		Assert.assertTrue(Arrays.deepEquals(new Character[] {}, StringUtil.stringToArray(null)));
+
+		// Cadenas vacias o con espacios.
+		Assert.assertTrue(Arrays.deepEquals(new Character[] {}, StringUtil.stringToArray("")));
+		Assert.assertTrue(Arrays.deepEquals(new Character[] { ' ' }, StringUtil.stringToArray(" ")));
+		Assert.assertTrue(Arrays.deepEquals(new Character[] { ' ', ' ' }, StringUtil.stringToArray("  ")));
+
+		// Cadenas con datos.
+		Assert.assertTrue(Arrays.deepEquals(new Character[] { 'a', 'b', 'c' }, StringUtil.stringToArray("abc")));
+		Assert.assertTrue(Arrays.deepEquals(new Character[] { ' ', 'a', 'b', 'c', ' ' }, StringUtil.stringToArray(" abc ")));
+	}
+
+	/**
 	 * La pruebas sobre los métodos <i><b>trim</b></i>, <i><b>trimToEmpty</b></i> y <i><b>trimToNull</b></i> de {@link StringUtil}.
 	 * 
 	 * @see StringUtil#trim(String)
@@ -66,7 +113,7 @@ public class StringUtilUnitTest {
 	 */
 	@Test
 	public void testTrim() {
-		 
+
 		// Valor nulo.
 		Assert.assertEquals(null, StringUtil.trim(null));
 		Assert.assertEquals("", StringUtil.trimToEmpty(null));
@@ -76,11 +123,11 @@ public class StringUtilUnitTest {
 		Assert.assertEquals("", StringUtil.trim(""));
 		Assert.assertEquals("", StringUtil.trim(" "));
 		Assert.assertEquals("", StringUtil.trim("  "));
-		
+
 		Assert.assertEquals("", StringUtil.trimToEmpty(""));
 		Assert.assertEquals("", StringUtil.trimToEmpty(" "));
 		Assert.assertEquals("", StringUtil.trimToEmpty("  "));
-		
+
 		Assert.assertEquals(null, StringUtil.trimToNull(""));
 		Assert.assertEquals(null, StringUtil.trimToNull(" "));
 		Assert.assertEquals(null, StringUtil.trimToNull("  "));
@@ -89,14 +136,133 @@ public class StringUtilUnitTest {
 		Assert.assertEquals("bob", StringUtil.trim("bob"));
 		Assert.assertEquals("bob", StringUtil.trim(" bob "));
 		Assert.assertEquals("b o b", StringUtil.trim("  b o b  "));
-		
+
 		Assert.assertEquals("bob", StringUtil.trimToEmpty("bob"));
 		Assert.assertEquals("bob", StringUtil.trimToEmpty(" bob "));
 		Assert.assertEquals("b o b", StringUtil.trimToEmpty("  b o b  "));
-		
+
 		Assert.assertEquals("bob", StringUtil.trimToNull("bob"));
 		Assert.assertEquals("bob", StringUtil.trimToNull(" bob "));
 		Assert.assertEquals("b o b", StringUtil.trimToNull("  b o b  "));
+	}
+
+	/**
+	 * La pruebas sobre los métodos <i><b>strip</b></i>, <i><b>stripEnd</b></i>, <i><b>stripStart</b></i>, <i><b>stripToEmpty</b></i> y
+	 * <i><b>stripToNull</b></i> de {@link StringUtil}.
+	 * 
+	 * @see StringUtil#strip(String, Character...)
+	 * @see StringUtil#stripEnd(String, Character...)
+	 * @see StringUtil#stripStart(String, Character...)
+	 * @see StringUtil#stripToEmpty(String, Character...)
+	 * @see StringUtil#stripToNull(String, Character...)
+	 */
+	@Test
+	public void testStrip() {
+
+		// Valor nulo.
+		Assert.assertEquals(null, StringUtil.strip(null));
+		Assert.assertEquals(null, StringUtil.stripEnd(null));
+		Assert.assertEquals(null, StringUtil.stripStart(null));
+		Assert.assertEquals("", StringUtil.stripToEmpty(null));
+		Assert.assertEquals(null, StringUtil.stripToNull(null));
+
+		Assert.assertEquals(null, StringUtil.strip(null, (Character) null));
+		Assert.assertEquals(null, StringUtil.stripEnd(null, (Character) null));
+		Assert.assertEquals(null, StringUtil.stripStart(null, (Character) null));
+		Assert.assertEquals("", StringUtil.stripToEmpty(null, (Character) null));
+		Assert.assertEquals(null, StringUtil.stripToNull(null, (Character) null));
+
+		// Cadenas vacias o con espacios.
+		Assert.assertEquals("", StringUtil.strip(""));
+		Assert.assertEquals("", StringUtil.stripEnd(""));
+		Assert.assertEquals("", StringUtil.stripStart(""));
+		Assert.assertEquals("", StringUtil.stripToEmpty(""));
+		Assert.assertEquals(null, StringUtil.stripToNull(""));
+
+		Assert.assertEquals("", StringUtil.strip(" "));
+		Assert.assertEquals("", StringUtil.stripEnd(" "));
+		Assert.assertEquals("", StringUtil.stripStart(" "));
+		Assert.assertEquals("", StringUtil.stripToEmpty(" "));
+		Assert.assertEquals(null, StringUtil.stripToNull(" "));
+
+		Assert.assertEquals("", StringUtil.strip("", (Character) null));
+		Assert.assertEquals("", StringUtil.stripEnd("", (Character) null));
+		Assert.assertEquals("", StringUtil.stripStart("", (Character) null));
+		Assert.assertEquals("", StringUtil.stripToEmpty("", (Character) null));
+		Assert.assertEquals(null, StringUtil.stripToNull("", (Character) null));
+
+		Assert.assertEquals("", StringUtil.strip(" ", (Character) null));
+		Assert.assertEquals("", StringUtil.stripEnd(" ", (Character) null));
+		Assert.assertEquals("", StringUtil.stripStart(" ", (Character) null));
+		Assert.assertEquals("", StringUtil.stripToEmpty(" ", (Character) null));
+		Assert.assertEquals(null, StringUtil.stripToNull(" ", (Character) null));
+
+		Assert.assertEquals("", StringUtil.strip("", ' '));
+		Assert.assertEquals("", StringUtil.stripEnd("", ' '));
+		Assert.assertEquals("", StringUtil.stripStart("", ' '));
+		Assert.assertEquals("", StringUtil.stripToEmpty("", ' '));
+		Assert.assertEquals(null, StringUtil.stripToNull("", ' '));
+
+		Assert.assertEquals("", StringUtil.strip(" ", ' '));
+		Assert.assertEquals("", StringUtil.stripEnd(" ", ' '));
+		Assert.assertEquals("", StringUtil.stripStart(" ", ' '));
+		Assert.assertEquals("", StringUtil.stripToEmpty(" ", ' '));
+		Assert.assertEquals(null, StringUtil.stripToNull(" ", ' '));
+
+		Assert.assertEquals("", StringUtil.strip("", 'a'));
+		Assert.assertEquals("", StringUtil.stripEnd("", 'a'));
+		Assert.assertEquals("", StringUtil.stripStart("", 'a'));
+		Assert.assertEquals("", StringUtil.stripToEmpty("", 'a'));
+		Assert.assertEquals(null, StringUtil.stripToNull("", 'a'));
+
+		Assert.assertEquals(" ", StringUtil.strip(" ", 'a'));
+		Assert.assertEquals(" ", StringUtil.stripEnd(" ", 'a'));
+		Assert.assertEquals(" ", StringUtil.stripStart(" ", 'a'));
+		Assert.assertEquals(" ", StringUtil.stripToEmpty(" ", 'a'));
+		Assert.assertEquals(" ", StringUtil.stripToNull(" ", 'a'));
+
+		// Cadenas con datos.
+		Assert.assertEquals("abc", StringUtil.strip("abc"));
+		Assert.assertEquals("abc", StringUtil.strip("abc "));
+		Assert.assertEquals("abc", StringUtil.strip(" abc"));
+		Assert.assertEquals("abc", StringUtil.strip(" abc "));
+		Assert.assertEquals("a b c", StringUtil.strip(" a b c "));
+		Assert.assertEquals("abc", StringUtil.strip("xyabcyx", 'x', 'y', 'z'));
+		Assert.assertEquals("", StringUtil.strip("xyzyx", 'x', 'y', 'z'));
+
+		Assert.assertEquals("abc", StringUtil.stripEnd("abc"));
+		Assert.assertEquals("abc", StringUtil.stripEnd("abc "));
+		Assert.assertEquals(" abc", StringUtil.stripEnd(" abc"));
+		Assert.assertEquals(" abc", StringUtil.stripEnd(" abc "));
+		Assert.assertEquals(" a b c", StringUtil.stripEnd(" a b c "));
+		Assert.assertEquals("xyabc", StringUtil.stripEnd("xyabcyx", 'x', 'y', 'z'));
+		Assert.assertEquals("xyz", StringUtil.stripEnd("xyzyx", 'x', 'y'));
+		Assert.assertEquals("", StringUtil.stripEnd("xyzyx", 'x', 'y', 'z'));
+
+		Assert.assertEquals("abc", StringUtil.stripStart("abc"));
+		Assert.assertEquals("abc ", StringUtil.stripStart("abc "));
+		Assert.assertEquals("abc", StringUtil.stripStart(" abc"));
+		Assert.assertEquals("abc ", StringUtil.stripStart(" abc "));
+		Assert.assertEquals("a b c ", StringUtil.stripStart(" a b c "));
+		Assert.assertEquals("abcyx", StringUtil.stripStart("xyabcyx", 'x', 'y', 'z'));
+		Assert.assertEquals("zyx", StringUtil.stripStart("xyzyx", 'x', 'y'));
+		Assert.assertEquals("", StringUtil.stripStart("xyzyx", 'x', 'y', 'z'));
+
+		Assert.assertEquals("abc", StringUtil.stripToEmpty("abc"));
+		Assert.assertEquals("abc", StringUtil.stripToEmpty("abc "));
+		Assert.assertEquals("abc", StringUtil.stripToEmpty(" abc"));
+		Assert.assertEquals("abc", StringUtil.stripToEmpty(" abc "));
+		Assert.assertEquals("a b c", StringUtil.stripToEmpty(" a b c "));
+		Assert.assertEquals("abc", StringUtil.stripToEmpty("xyabcyx", 'x', 'y', 'z'));
+		Assert.assertEquals("", StringUtil.stripToEmpty("xyzyx", 'x', 'y', 'z'));
+
+		Assert.assertEquals("abc", StringUtil.stripToNull("abc"));
+		Assert.assertEquals("abc", StringUtil.stripToNull("abc "));
+		Assert.assertEquals("abc", StringUtil.stripToNull(" abc"));
+		Assert.assertEquals("abc", StringUtil.stripToNull(" abc "));
+		Assert.assertEquals("a b c", StringUtil.stripToNull(" a b c "));
+		Assert.assertEquals("abc", StringUtil.stripToNull("xyabcyx", 'x', 'y', 'z'));
+		Assert.assertEquals(null, StringUtil.stripToNull("xyzyx", 'x', 'y', 'z'));
 	}
 
 	/**
@@ -129,7 +295,7 @@ public class StringUtilUnitTest {
 		Assert.assertEquals(true, StringUtil.match("  asd  ", "[a-z\\s]*"));
 		Assert.assertEquals(false, StringUtil.match("asd", "[A-Z]*"));
 		Assert.assertEquals(true, StringUtil.match("ASD", "[A-Z]*"));
-		
+
 		// Pruebas de los patrones que tenemos.
 		// CUIT.
 		Assert.assertEquals(false, StringUtil.match(null, PatternUtil.CUIT_PATTERN));
@@ -145,7 +311,7 @@ public class StringUtilUnitTest {
 		Assert.assertEquals(false, StringUtil.match("20 12345678 9", PatternUtil.CUIT_PATTERN));
 		Assert.assertEquals(false, StringUtil.match("20/1234567/8", PatternUtil.CUIT_PATTERN));
 		Assert.assertEquals(false, StringUtil.match("20/12345678/9", PatternUtil.CUIT_PATTERN));
-		
+
 		Assert.assertEquals(true, StringUtil.match("20-1234567-8", PatternUtil.CUIT_PATTERN));
 		Assert.assertEquals(true, StringUtil.match("99-9999999-9", PatternUtil.CUIT_PATTERN));
 		Assert.assertEquals(true, StringUtil.match("20-12345678-9", PatternUtil.CUIT_PATTERN));
