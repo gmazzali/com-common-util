@@ -19,10 +19,10 @@ public class CurrencyUtilTestUnit {
 	 */
 	@Before
 	public void initCurrencyUtil() {
-		CurrencyUtil.setCurrencySimbol("$");
-		CurrencyUtil.setDecimals(2);
-		CurrencyUtil.setDecimalSeparator(',');
-		CurrencyUtil.setGroupSeparator('.');
+		new CurrencyUtil().setCurrencySimbol("$");
+		new CurrencyUtil().setDecimals(2);
+		new CurrencyUtil().setDecimalSeparator(',');
+		new CurrencyUtil().setGroupSeparator('.');
 	}
 
 	/**
