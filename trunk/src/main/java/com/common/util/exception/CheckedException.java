@@ -24,6 +24,26 @@ public class CheckedException extends Exception {
 	protected Errors errors;
 
 	/**
+	 * El constructor de una instancia de {@link CheckedException} que no recibe parámetros.
+	 */
+	public CheckedException() {
+		super();
+		this.errors = new Errors();
+	}
+
+	/**
+	 * El constructor de una instancia de {@link CheckedException} que recibe como parámetro un elemento {@link Throwable} para mantener el problema
+	 * que produjo el lanzamiento de esta {@link CheckedException}.
+	 * 
+	 * @param cause
+	 *            La causa de un problema que vamos a contener dentro de esta excepción.
+	 */
+	public CheckedException(Throwable cause) {
+		super(cause);
+		this.errors = new Errors();
+	}
+
+	/**
 	 * El constructor de una instancia de {@link CheckedException} que recibe como parámetro el conjunto de {@link Errors} que vamos a contener.
 	 * 
 	 * @param errors
@@ -35,8 +55,28 @@ public class CheckedException extends Exception {
 	}
 
 	/**
-	 * El constructor de una instancia de {@link CheckedException} que recibe como parámetro un mensaje de {@link ErrorDetail} que vamos a crear en el
-	 * momento.
+	 * El constructor de una instancia de {@link CheckedException} que recibe como parámetro el {@link Throwable} para mantener el
+	 * problema que produjo el lanzamiento de esta {@link CheckedException} y un un mensaje de {@link ErrorDetail} que vamos a crear en el momento.
+	 * 
+	 * @param cause
+	 *            La causa de un problema que vamos a contener dentro de esta excepción.
+	 * @param message
+	 *            El mensaje del error.
+	 * @param parameter
+	 *            Los parámetros que requerimos para el detalle del error.
+	 */
+	public CheckedException(Throwable cause, String message, Object... parameter) {
+		super(message, cause);
+		this.errors = new Errors();
+		
+		if (message != null) {
+			this.errors.addError(message);
+		}
+	}
+
+	/**
+	 * El constructor de una instancia de {@link CheckedException} que recibe como parámetro un mensaje de {@link ErrorDetail} que vamos a crear en
+	 * el momento.
 	 * 
 	 * @param message
 	 *            El mensaje del error.
@@ -46,7 +86,10 @@ public class CheckedException extends Exception {
 	public CheckedException(String message, Object... parameter) {
 		super(message);
 		this.errors = new Errors();
-		this.errors.addError(message, parameter);
+		
+		if (message != null) {
+			this.errors.addError(message, parameter);
+		}
 	}
 
 	/**

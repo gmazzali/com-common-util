@@ -24,6 +24,26 @@ public class UncheckedException extends RuntimeException {
 	protected Errors errors;
 
 	/**
+	 * El constructor de una instancia de {@link UncheckedException} que no recibe parámetros.
+	 */
+	public UncheckedException() {
+		super();
+		this.errors = new Errors();
+	}
+
+	/**
+	 * El constructor de una instancia de {@link UncheckedException} que recibe como parámetro un elemento {@link Throwable} para mantener el problema
+	 * que produjo el lanzamiento de esta {@link UncheckedException}.
+	 * 
+	 * @param cause
+	 *            La causa de un problema que vamos a contener dentro de esta excepción.
+	 */
+	public UncheckedException(Throwable cause) {
+		super(cause);
+		this.errors = new Errors();
+	}
+
+	/**
 	 * El constructor de una instancia de {@link UncheckedException} que recibe como parámetro el conjunto de {@link Errors} que vamos a contener.
 	 * 
 	 * @param errors
@@ -32,6 +52,26 @@ public class UncheckedException extends RuntimeException {
 	public UncheckedException(Errors errors) {
 		super();
 		this.errors = errors;
+	}
+
+	/**
+	 * El constructor de una instancia de {@link UncheckedException} que recibe como parámetro el {@link Throwable} para mantener el
+	 * problema que produjo el lanzamiento de esta {@link UncheckedException} y un un mensaje de {@link ErrorDetail} que vamos a crear en el momento.
+	 * 
+	 * @param cause
+	 *            La causa de un problema que vamos a contener dentro de esta excepción.
+	 * @param message
+	 *            El mensaje del error.
+	 * @param parameter
+	 *            Los parámetros que requerimos para el detalle del error.
+	 */
+	public UncheckedException(Throwable cause, String message, Object... parameter) {
+		super(message, cause);
+		this.errors = new Errors();
+		
+		if (message != null) {
+			this.errors.addError(message);
+		}
 	}
 
 	/**
@@ -46,7 +86,10 @@ public class UncheckedException extends RuntimeException {
 	public UncheckedException(String message, Object... parameter) {
 		super(message);
 		this.errors = new Errors();
-		this.errors.addError(message, parameter);
+		
+		if (message != null) {
+			this.errors.addError(message, parameter);
+		}
 	}
 
 	/**
