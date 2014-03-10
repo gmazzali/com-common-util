@@ -17,7 +17,18 @@ public class StringUtil implements Serializable {
 	private static final Logger log = Logger.getLogger(StringUtil.class);
 
 	/**
-	 * Se encarga de verificar que una cadena de caracteres este vacia. Retorna <i>true</i> en caso de que la cadena recibida sea nula.
+	 * Se encarga de hacer una llamada al método {@link Object#toString()} del modo Null-Safe.
+	 * 
+	 * @param entity
+	 *            La entidad que vamos a convertir en un string. Puede ser <code>null</code>.
+	 * @return La cadena que corresponde con el elemento recibido convertido a un string, o un valor nulo si la entidad es <code>null</code>.
+	 */
+	public static String toString(Object entity) {
+		return entity != null ? entity.toString() : null;
+	}
+
+	/**
+	 * Se encarga de verificar que una cadena de caracteres este vacia. Retorna <i>true</i> en caso de que la cadena recibida sea <code>null</code>.
 	 * 
 	 * <pre>
 	 * StringUtil.isEmpty(null)    = true
@@ -29,7 +40,7 @@ public class StringUtil implements Serializable {
 	 * 
 	 * @param string
 	 *            La cadena que vamos a verificar.
-	 * @return <i>true</i> en caso de que la cadena recibida sea nula o este vacia completamente, en caso contrario retorna <i>false</i>.
+	 * @return <i>true</i> en caso de que la cadena recibida sea <code>null</code> o este vacia completamente, en caso contrario retorna <i>false</i>.
 	 */
 	public static boolean isEmpty(String string) {
 		return string != null ? string.isEmpty() : true;
