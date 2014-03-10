@@ -42,7 +42,7 @@ public class FormatUtil {
 	 * @param locale
 	 *            La localidad donde se van a formatear los elementos.
 	 */
-	public static void setLocale(Locale locale) {
+	public void setLocale(Locale locale) {
 		FormatUtil.locale = locale;
 	}
 
@@ -53,7 +53,7 @@ public class FormatUtil {
 	 * @param dateFormat
 	 *            El formato de la fecha que vamos a utilizar para formatear.
 	 */
-	public static void setDateFormat(String dateFormat) {
+	public void setDateFormat(String dateFormat) {
 		FormatUtil.dateFormat = dateFormat;
 	}
 
