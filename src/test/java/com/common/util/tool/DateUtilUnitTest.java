@@ -19,7 +19,12 @@ import com.common.util.tool.date.DateUtil;
  * @version 1.0
  */
 public class DateUtilUnitTest {
-	
+
+	/**
+	 * El formateador de las fechas.
+	 */
+	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS");
+
 	/**
 	 * La pruebas sobre el método <i><b>createDate</b></i> de {@link DateUtil}
 	 * 
@@ -58,8 +63,8 @@ public class DateUtilUnitTest {
 			Date date1 = null;
 			Date date2 = null;
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 
 			try {
 				Assert.assertTrue(DateUtil.compare(null, null, null) > 0);
@@ -91,200 +96,200 @@ public class DateUtilUnitTest {
 			} catch (Exception e) {
 			}
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.YEAR) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.YEAR) == 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.YEAR) < 0);
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MONTH) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MONTH) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MONTH) == 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MONTH) < 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MONTH) < 0);
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.DAY) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.DAY) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.DAY) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.DAY) == 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.DAY) < 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.DAY) < 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.DAY) < 0);
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.HOUR) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.HOUR) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.HOUR) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.HOUR) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.HOUR) == 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.HOUR) < 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.HOUR) < 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.HOUR) < 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.HOUR) < 0);
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MINUTE) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MINUTE) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MINUTE) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MINUTE) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MINUTE) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MINUTE) == 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MINUTE) < 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MINUTE) < 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MINUTE) < 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MINUTE) < 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MINUTE) < 0);
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.SECOND) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.SECOND) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.SECOND) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.SECOND) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.SECOND) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:01 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:01 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.SECOND) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.SECOND) == 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:01 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:01 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.SECOND) < 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.SECOND) < 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.SECOND) < 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.SECOND) < 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.SECOND) < 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.SECOND) < 0);
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MILLISECOND) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MILLISECOND) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MILLISECOND) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MILLISECOND) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MILLISECOND) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:01 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:01 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MILLISECOND) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 001");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 001");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MILLISECOND) > 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MILLISECOND) == 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 001");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 001");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MILLISECOND) < 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:01 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:01 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MILLISECOND) < 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MILLISECOND) < 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MILLISECOND) < 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MILLISECOND) < 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MILLISECOND) < 0);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.compare(date1, date2, DatePrecision.MILLISECOND) < 0);
 
 		} catch (ParseException e) {
@@ -303,233 +308,233 @@ public class DateUtilUnitTest {
 			Date date1 = null;
 			Date date2 = null;
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 
 			try {
-				Assert.assertTrue(DateUtil.before(null, null, null));
-				Assert.fail();
+				Assert.assertFalse(DateUtil.before(null, null, null));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
-				Assert.assertTrue(DateUtil.before(date1, null, null));
-				Assert.fail();
+				Assert.assertFalse(DateUtil.before(date1, null, null));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
-				Assert.assertTrue(DateUtil.before(null, date2, null));
-				Assert.fail();
+				Assert.assertFalse(DateUtil.before(null, date2, null));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
-				Assert.assertTrue(DateUtil.before(date1, date2, null));
-				Assert.fail();
+				Assert.assertFalse(DateUtil.before(date1, date2, null));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
-				Assert.assertTrue(DateUtil.before(null, null, DatePrecision.YEAR));
-				Assert.fail();
+				Assert.assertFalse(DateUtil.before(null, null, DatePrecision.YEAR));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.YEAR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.YEAR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.YEAR));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.MONTH));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.MONTH));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.MONTH));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.MONTH));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.MONTH));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.DAY));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.HOUR));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.MINUTE));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:01 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:01 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:01 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:01 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.SECOND));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:01 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:01 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 001");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 001");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.before(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 001");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 001");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:01 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:01 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.before(date1, date2, DatePrecision.MILLISECOND));
 
 		} catch (ParseException e) {
@@ -548,233 +553,233 @@ public class DateUtilUnitTest {
 			Date date1 = null;
 			Date date2 = null;
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 
 			try {
-				Assert.assertTrue(DateUtil.beforeOrEqual(null, null, null));
-				Assert.fail();
+				Assert.assertFalse(DateUtil.beforeOrEqual(null, null, null));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
-				Assert.assertTrue(DateUtil.beforeOrEqual(date1, null, null));
-				Assert.fail();
+				Assert.assertFalse(DateUtil.beforeOrEqual(date1, null, null));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
-				Assert.assertTrue(DateUtil.beforeOrEqual(null, date2, null));
-				Assert.fail();
+				Assert.assertFalse(DateUtil.beforeOrEqual(null, date2, null));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
 				Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, null));
-				Assert.fail();
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
-				Assert.assertTrue(DateUtil.beforeOrEqual(null, null, DatePrecision.YEAR));
-				Assert.fail();
+				Assert.assertFalse(DateUtil.beforeOrEqual(null, null, DatePrecision.YEAR));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.YEAR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.YEAR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.YEAR));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MONTH));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MONTH));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MONTH));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MONTH));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MONTH));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.DAY));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.HOUR));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MINUTE));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:01 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:01 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:01 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:01 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.SECOND));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:01 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:01 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 001");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 001");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 001");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 001");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:01 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:01 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.beforeOrEqual(date1, date2, DatePrecision.MILLISECOND));
 
 		} catch (ParseException e) {
@@ -793,233 +798,233 @@ public class DateUtilUnitTest {
 			Date date1 = null;
 			Date date2 = null;
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 
 			try {
-				Assert.assertTrue(DateUtil.equal(null, null, null));
-				Assert.fail();
+				Assert.assertFalse(DateUtil.equal(null, null, null));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
-				Assert.assertTrue(DateUtil.equal(date1, null, null));
-				Assert.fail();
+				Assert.assertFalse(DateUtil.equal(date1, null, null));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
-				Assert.assertTrue(DateUtil.equal(null, date2, null));
-				Assert.fail();
+				Assert.assertFalse(DateUtil.equal(null, date2, null));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
 				Assert.assertTrue(DateUtil.equal(date1, date2, null));
-				Assert.fail();
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
-				Assert.assertTrue(DateUtil.equal(null, null, DatePrecision.YEAR));
-				Assert.fail();
+				Assert.assertFalse(DateUtil.equal(null, null, DatePrecision.YEAR));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.YEAR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.equal(date1, date2, DatePrecision.YEAR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.YEAR));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MONTH));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MONTH));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.equal(date1, date2, DatePrecision.MONTH));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MONTH));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MONTH));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.equal(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.DAY));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.equal(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.HOUR));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.equal(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MINUTE));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:01 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:01 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.equal(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:01 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:01 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.SECOND));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:01 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:01 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 001");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 001");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.equal(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 001");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 001");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:01 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:01 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.equal(date1, date2, DatePrecision.MILLISECOND));
 
 		} catch (ParseException e) {
@@ -1038,233 +1043,233 @@ public class DateUtilUnitTest {
 			Date date1 = null;
 			Date date2 = null;
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 
 			try {
-				Assert.assertTrue(DateUtil.afterOrEqual(null, null, null));
-				Assert.fail();
+				Assert.assertFalse(DateUtil.afterOrEqual(null, null, null));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
-				Assert.assertTrue(DateUtil.afterOrEqual(date1, null, null));
-				Assert.fail();
+				Assert.assertFalse(DateUtil.afterOrEqual(date1, null, null));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
-				Assert.assertTrue(DateUtil.afterOrEqual(null, date2, null));
-				Assert.fail();
+				Assert.assertFalse(DateUtil.afterOrEqual(null, date2, null));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
 				Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, null));
-				Assert.fail();
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
-				Assert.assertTrue(DateUtil.afterOrEqual(null, null, DatePrecision.YEAR));
-				Assert.fail();
+				Assert.assertFalse(DateUtil.afterOrEqual(null, null, DatePrecision.YEAR));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.YEAR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.YEAR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.YEAR));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.MONTH));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.MONTH));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.MONTH));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.MONTH));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.MONTH));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.DAY));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.HOUR));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.MINUTE));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:01 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:01 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:01 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:01 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.SECOND));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:01 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:01 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 001");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 001");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.afterOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 001");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 001");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:01 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:01 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.afterOrEqual(date1, date2, DatePrecision.MILLISECOND));
 
 		} catch (ParseException e) {
@@ -1283,234 +1288,599 @@ public class DateUtilUnitTest {
 			Date date1 = null;
 			Date date2 = null;
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 
 			try {
-				Assert.assertTrue(DateUtil.after(null, null, null));
-				Assert.fail();
+				Assert.assertFalse(DateUtil.after(null, null, null));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
-				Assert.assertTrue(DateUtil.after(date1, null, null));
-				Assert.fail();
+				Assert.assertFalse(DateUtil.after(date1, null, null));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
-				Assert.assertTrue(DateUtil.after(null, date2, null));
-				Assert.fail();
+				Assert.assertFalse(DateUtil.after(null, date2, null));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
-				Assert.assertTrue(DateUtil.after(date1, date2, null));
-				Assert.fail();
+				Assert.assertFalse(DateUtil.after(date1, date2, null));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
-				Assert.assertTrue(DateUtil.after(null, null, DatePrecision.YEAR));
-				Assert.fail();
+				Assert.assertFalse(DateUtil.after(null, null, DatePrecision.YEAR));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.YEAR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.YEAR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.YEAR));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.MONTH));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.MONTH));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.MONTH));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.MONTH));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.MONTH));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.DAY));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.DAY));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.HOUR));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.HOUR));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.MINUTE));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.MINUTE));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:01 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:01 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:01 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:01 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.SECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.SECOND));
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:01 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:01 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 001");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 001");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertFalse(DateUtil.after(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 001");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 001");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:01 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:01 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:01:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:01:00 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 01:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 01:00:00 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.MILLISECOND));
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.after(date1, date2, DatePrecision.MILLISECOND));
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * La pruebas sobre el método <i><b>between</b></i> de {@link DateUtil}
+	 * 
+	 * @see DateUtil#between(Date, Date, Date, DatePrecision)
+	 */
+	@Test
+	public void testBetween() {
+		try {
+			Date date = null;
+			Date after = null;
+			Date before = null;
+
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+
+			try {
+				Assert.assertFalse(DateUtil.between(null, null, null, null));
+			} catch (Exception e) {
+				Assert.fail();
+			}
+
+			try {
+				Assert.assertFalse(DateUtil.between(date, null, null, null));
+			} catch (Exception e) {
+				Assert.fail();
+			}
+
+			try {
+				Assert.assertFalse(DateUtil.between(null, after, null, null));
+			} catch (Exception e) {
+				Assert.fail();
+			}
+
+			try {
+				Assert.assertFalse(DateUtil.between(null, null, before, null));
+			} catch (Exception e) {
+				Assert.fail();
+			}
+
+			try {
+				Assert.assertFalse(DateUtil.between(null, null, null, DatePrecision.YEAR));
+			} catch (Exception e) {
+				Assert.fail();
+			}
+
+			try {
+				Assert.assertFalse(DateUtil.between(date, null, null, DatePrecision.YEAR));
+			} catch (Exception e) {
+				Assert.fail();
+			}
+
+			// YEAR
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2002/01/01 00:00:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.YEAR));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.YEAR));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.YEAR));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2002/01/01 00:00:00 000");
+			Assert.assertFalse(DateUtil.between(date, before, after, DatePrecision.YEAR));
+
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			after = null;
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.YEAR));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = null;
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.YEAR));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2002/01/01 00:00:00 000");
+			after = null;
+			Assert.assertFalse(DateUtil.between(date, before, after, DatePrecision.YEAR));
+
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			before = null;
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.YEAR));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = null;
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.YEAR));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2002/01/01 00:00:00 000");
+			before = null;
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			Assert.assertFalse(DateUtil.between(date, before, after, DatePrecision.YEAR));
+
+			// MONTH
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/02/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/03/01 00:00:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.MONTH));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/02/01 00:00:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.MONTH));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/02/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/02/01 00:00:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.MONTH));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/03/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/02/01 00:00:00 000");
+			Assert.assertFalse(DateUtil.between(date, before, after, DatePrecision.MONTH));
+
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/02/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = null;
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.MONTH));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = null;
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.MONTH));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/02/01 00:00:00 000");
+			after = null;
+			Assert.assertFalse(DateUtil.between(date, before, after, DatePrecision.MONTH));
+
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = null;
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/02/01 00:00:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.MONTH));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = null;
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.MONTH));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/02/01 00:00:00 000");
+			before = null;
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			Assert.assertFalse(DateUtil.between(date, before, after, DatePrecision.MONTH));
+
+			// DAY
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/02 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/03 00:00:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.DAY));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/02 00:00:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.DAY));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/02 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/02 00:00:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.DAY));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/03 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/02 00:00:00 000");
+			Assert.assertFalse(DateUtil.between(date, before, after, DatePrecision.DAY));
+
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/02 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = null;
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.DAY));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = null;
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.DAY));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/02 00:00:00 000");
+			after = null;
+			Assert.assertFalse(DateUtil.between(date, before, after, DatePrecision.DAY));
+
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = null;
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/02 00:00:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.DAY));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = null;
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.DAY));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/02 00:00:00 000");
+			before = null;
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			Assert.assertFalse(DateUtil.between(date, before, after, DatePrecision.DAY));
+
+			// HOUR
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 01:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 02:00:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.HOUR));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 01:00:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.HOUR));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 01:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 01:00:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.HOUR));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 02:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 01:00:00 000");
+			Assert.assertFalse(DateUtil.between(date, before, after, DatePrecision.HOUR));
+
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 01:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = null;
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.HOUR));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = null;
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.HOUR));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/02 01:00:00 000");
+			after = null;
+			Assert.assertFalse(DateUtil.between(date, before, after, DatePrecision.HOUR));
+
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = null;
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 01:00:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.HOUR));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = null;
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.HOUR));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 01:00:00 000");
+			before = null;
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			Assert.assertFalse(DateUtil.between(date, before, after, DatePrecision.HOUR));
+
+			// MINUTE
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:01:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:02:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.MINUTE));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:01:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.MINUTE));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:01:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:01:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.MINUTE));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:02:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:01:00 000");
+			Assert.assertFalse(DateUtil.between(date, before, after, DatePrecision.MINUTE));
+
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:01:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = null;
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.MINUTE));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = null;
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.MINUTE));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/02 00:01:00 000");
+			after = null;
+			Assert.assertFalse(DateUtil.between(date, before, after, DatePrecision.MINUTE));
+
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = null;
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:01:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.MINUTE));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = null;
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.MINUTE));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:01:00 000");
+			before = null;
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			Assert.assertFalse(DateUtil.between(date, before, after, DatePrecision.MINUTE));
+
+			// SECOND
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:01 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:02 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.SECOND));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:01 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.SECOND));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:01 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:01 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.SECOND));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:02 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:01 000");
+			Assert.assertFalse(DateUtil.between(date, before, after, DatePrecision.SECOND));
+
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:01 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = null;
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.SECOND));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = null;
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.SECOND));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/02 00:00:01 000");
+			after = null;
+			Assert.assertFalse(DateUtil.between(date, before, after, DatePrecision.SECOND));
+
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = null;
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:01 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.SECOND));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = null;
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.SECOND));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:01 000");
+			before = null;
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			Assert.assertFalse(DateUtil.between(date, before, after, DatePrecision.SECOND));
+
+			// MILLISECOND
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 001");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 002");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.MILLISECOND));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 001");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.MILLISECOND));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 001");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 001");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.MILLISECOND));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 002");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 001");
+			Assert.assertFalse(DateUtil.between(date, before, after, DatePrecision.MILLISECOND));
+
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 001");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = null;
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.MILLISECOND));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			after = null;
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.MILLISECOND));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/02 00:00:00 001");
+			after = null;
+			Assert.assertFalse(DateUtil.between(date, before, after, DatePrecision.MILLISECOND));
+
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = null;
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 001");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.MILLISECOND));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			before = null;
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			Assert.assertTrue(DateUtil.between(date, before, after, DatePrecision.MILLISECOND));
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 001");
+			before = null;
+			after = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			Assert.assertFalse(DateUtil.between(date, before, after, DatePrecision.MILLISECOND));
 
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -1530,8 +1900,8 @@ public class DateUtilUnitTest {
 			Date truncateDate1 = null;
 			Date truncateDate2 = null;
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 
 			try {
 				DateUtil.truncate(null, null);
@@ -1551,79 +1921,79 @@ public class DateUtilUnitTest {
 			} catch (Exception e) {
 			}
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			truncateDate1 = DateUtil.truncate(date1, DatePrecision.YEAR);
 			truncateDate2 = DateUtil.truncate(date2, DatePrecision.YEAR);
 			Assert.assertEquals(truncateDate1, truncateDate2);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/02/02 01:01:01 001");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/02/02 01:01:01 001");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			truncateDate1 = DateUtil.truncate(date1, DatePrecision.YEAR);
 			truncateDate2 = DateUtil.truncate(date2, DatePrecision.YEAR);
 			Assert.assertEquals(truncateDate1, truncateDate2);
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			truncateDate1 = DateUtil.truncate(date1, DatePrecision.MONTH);
 			truncateDate2 = DateUtil.truncate(date2, DatePrecision.MONTH);
 			Assert.assertEquals(truncateDate1, truncateDate2);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/02 01:01:01 001");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/02 01:01:01 001");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			truncateDate1 = DateUtil.truncate(date1, DatePrecision.MONTH);
 			truncateDate2 = DateUtil.truncate(date2, DatePrecision.MONTH);
 			Assert.assertEquals(truncateDate1, truncateDate2);
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			truncateDate1 = DateUtil.truncate(date1, DatePrecision.DAY);
 			truncateDate2 = DateUtil.truncate(date2, DatePrecision.DAY);
 			Assert.assertEquals(truncateDate1, truncateDate2);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 01:01:01 001");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 01:01:01 001");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			truncateDate1 = DateUtil.truncate(date1, DatePrecision.DAY);
 			truncateDate2 = DateUtil.truncate(date2, DatePrecision.DAY);
 			Assert.assertEquals(truncateDate1, truncateDate2);
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			truncateDate1 = DateUtil.truncate(date1, DatePrecision.HOUR);
 			truncateDate2 = DateUtil.truncate(date2, DatePrecision.HOUR);
 			Assert.assertEquals(truncateDate1, truncateDate2);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:01:01 001");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:01:01 001");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			truncateDate1 = DateUtil.truncate(date1, DatePrecision.HOUR);
 			truncateDate2 = DateUtil.truncate(date2, DatePrecision.HOUR);
 			Assert.assertEquals(truncateDate1, truncateDate2);
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			truncateDate1 = DateUtil.truncate(date1, DatePrecision.MINUTE);
 			truncateDate2 = DateUtil.truncate(date2, DatePrecision.MINUTE);
 			Assert.assertEquals(truncateDate1, truncateDate2);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:01 001");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:01 001");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			truncateDate1 = DateUtil.truncate(date1, DatePrecision.MINUTE);
 			truncateDate2 = DateUtil.truncate(date2, DatePrecision.MINUTE);
 			Assert.assertEquals(truncateDate1, truncateDate2);
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			truncateDate1 = DateUtil.truncate(date1, DatePrecision.SECOND);
 			truncateDate2 = DateUtil.truncate(date2, DatePrecision.SECOND);
 			Assert.assertEquals(truncateDate1, truncateDate2);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 001");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 001");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			truncateDate1 = DateUtil.truncate(date1, DatePrecision.SECOND);
 			truncateDate2 = DateUtil.truncate(date2, DatePrecision.SECOND);
 			Assert.assertEquals(truncateDate1, truncateDate2);
 
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			truncateDate1 = DateUtil.truncate(date1, DatePrecision.MILLISECOND);
 			truncateDate2 = DateUtil.truncate(date2, DatePrecision.MILLISECOND);
 			Assert.assertEquals(truncateDate1, truncateDate2);
-			date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			date2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			date1 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			date2 = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			truncateDate1 = DateUtil.truncate(date1, DatePrecision.MILLISECOND);
 			truncateDate2 = DateUtil.truncate(date2, DatePrecision.MILLISECOND);
 			Assert.assertEquals(truncateDate1, truncateDate2);
@@ -1644,86 +2014,86 @@ public class DateUtilUnitTest {
 			Date highDate = null;
 			Date lowDate = null;
 
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 
 			try {
-				DateUtil.getHigherDate(null, null, null);
-				Assert.fail();
+				Assert.assertEquals(null, DateUtil.getHigherDate(null, null, null));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
-				DateUtil.getHigherDate(null, null, DatePrecision.YEAR);
-				Assert.fail();
+				Assert.assertEquals(null, DateUtil.getHigherDate(null, null, DatePrecision.YEAR));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
-				DateUtil.getHigherDate(highDate, null, null);
-				Assert.fail();
+				Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, null, null));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
-				DateUtil.getHigherDate(null, lowDate, null);
-				Assert.fail();
+				Assert.assertEquals(lowDate, DateUtil.getHigherDate(null, lowDate, null));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
-				DateUtil.getHigherDate(highDate, lowDate, null);
-				Assert.fail();
+				Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, null));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2002/01/01 00:00:00 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2002/01/01 00:00:00 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecision.YEAR));
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecision.YEAR));
 
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/02/01 00:00:00 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/02/01 00:00:00 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecision.MONTH));
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecision.MONTH));
 
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/02 00:00:00 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/02 00:00:00 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecision.DAY));
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecision.DAY));
 
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 01:00:00 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 01:00:00 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecision.HOUR));
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecision.HOUR));
 
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:01:00 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:01:00 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecision.MINUTE));
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecision.MINUTE));
 
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:01 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:01 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecision.SECOND));
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecision.SECOND));
 
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 001");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 001");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecision.MILLISECOND));
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecision.MILLISECOND));
 
 		} catch (ParseException e) {
@@ -1742,86 +2112,86 @@ public class DateUtilUnitTest {
 			Date highDate = null;
 			Date lowDate = null;
 
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 
 			try {
-				DateUtil.getLowerDate(null, null, null);
-				Assert.fail();
+				Assert.assertEquals(null, DateUtil.getLowerDate(null, null, null));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
-				DateUtil.getLowerDate(null, null, DatePrecision.YEAR);
-				Assert.fail();
+				Assert.assertEquals(null, DateUtil.getLowerDate(null, null, DatePrecision.YEAR));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
-				DateUtil.getLowerDate(highDate, null, null);
-				Assert.fail();
+				Assert.assertEquals(highDate, DateUtil.getLowerDate(highDate, null, null));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
-				DateUtil.getLowerDate(null, lowDate, null);
-				Assert.fail();
+				Assert.assertEquals(lowDate, DateUtil.getLowerDate(null, lowDate, null));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
-				DateUtil.getLowerDate(highDate, lowDate, null);
-				Assert.fail();
+				Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, null));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2002/01/01 00:00:00 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2002/01/01 00:00:00 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecision.YEAR));
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecision.YEAR));
 
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/02/01 00:00:00 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/02/01 00:00:00 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecision.MONTH));
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecision.MONTH));
 
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/02 00:00:00 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/02 00:00:00 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecision.DAY));
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecision.DAY));
 
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 01:00:00 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 01:00:00 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecision.HOUR));
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecision.HOUR));
 
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:01:00 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:01:00 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecision.MINUTE));
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecision.MINUTE));
 
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:01 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:01 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecision.SECOND));
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecision.SECOND));
 
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 001");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 001");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecision.MILLISECOND));
-			highDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
-			lowDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2001/01/01 00:00:00 000");
+			highDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
+			lowDate = DateUtilUnitTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecision.MILLISECOND));
 
 		} catch (ParseException e) {
@@ -1845,25 +2215,25 @@ public class DateUtilUnitTest {
 			} catch (Exception e) {
 			}
 
-			date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.isWeekend(date));
 
-			date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
 			Assert.assertTrue(DateUtil.isWeekend(date));
 
-			date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/03 00:00:00 000");
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/03 00:00:00 000");
 			Assert.assertFalse(DateUtil.isWeekend(date));
 
-			date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/04 00:00:00 000");
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/04 00:00:00 000");
 			Assert.assertFalse(DateUtil.isWeekend(date));
 
-			date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2008/03/01 00:00:00 000");
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2008/03/01 00:00:00 000");
 			Assert.assertTrue(DateUtil.isWeekend(date));
 
-			date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2008/03/02 00:00:00 000");
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2008/03/02 00:00:00 000");
 			Assert.assertTrue(DateUtil.isWeekend(date));
 
-			date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2008/03/03 00:00:00 000");
+			date = DateUtilUnitTest.FORMAT_DATE.parse("2008/03/03 00:00:00 000");
 			Assert.assertFalse(DateUtil.isWeekend(date));
 
 		} catch (ParseException e) {
@@ -1888,40 +2258,40 @@ public class DateUtilUnitTest {
 			} catch (Exception e) {
 			}
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("1999/12/01 00:00:00 000");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("1999/12/01 00:00:00 000");
 			Assert.assertEquals(expectedDate, DateUtil.getPreviousMonth(originalDate));
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertEquals(expectedDate, DateUtil.getPreviousMonth(originalDate));
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/12/01 00:00:00 000");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/11/01 00:00:00 000");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/12/01 00:00:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/11/01 00:00:00 000");
 			Assert.assertEquals(expectedDate, DateUtil.getPreviousMonth(originalDate));
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/12/12 12:12:12 120");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/11/01 00:00:00 000");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/12/12 12:12:12 120");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/11/01 00:00:00 000");
 			Assert.assertEquals(expectedDate, DateUtil.getPreviousMonth(originalDate));
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/02 00:00:00 000");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/02 00:00:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertEquals(expectedDate, DateUtil.getPreviousMonth(originalDate));
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/02 01:00:00 000");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/02 01:00:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertEquals(expectedDate, DateUtil.getPreviousMonth(originalDate));
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/02 01:01:00 000");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/02 01:01:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertEquals(expectedDate, DateUtil.getPreviousMonth(originalDate));
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/02 01:01:01 000");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/02 01:01:01 000");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertEquals(expectedDate, DateUtil.getPreviousMonth(originalDate));
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/02 01:01:01 001");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/02 01:01:01 001");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertEquals(expectedDate, DateUtil.getPreviousMonth(originalDate));
 
 		} catch (ParseException e) {
@@ -1940,7 +2310,7 @@ public class DateUtilUnitTest {
 			Date originalDate = null;
 			Date expectedDate = null;
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 
 			try {
 				DateUtil.getNextMonth(null);
@@ -1948,48 +2318,49 @@ public class DateUtilUnitTest {
 			} catch (Exception e) {
 			}
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("1999/12/01 00:00:00 000");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("1999/12/01 00:00:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 			Assert.assertEquals(expectedDate, DateUtil.getNextMonth(originalDate));
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/01 00:00:00 000");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertEquals(expectedDate, DateUtil.getNextMonth(originalDate));
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/11/01 00:00:00 000");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/12/01 00:00:00 000");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/11/01 00:00:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/12/01 00:00:00 000");
 			Assert.assertEquals(expectedDate, DateUtil.getNextMonth(originalDate));
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/11/12 12:12:12 120");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/12/01 00:00:00 000");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/11/12 12:12:12 120");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/12/01 00:00:00 000");
 			Assert.assertEquals(expectedDate, DateUtil.getNextMonth(originalDate));
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 00:00:00 000");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 00:00:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertEquals(expectedDate, DateUtil.getNextMonth(originalDate));
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 01:00:00 000");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 01:00:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertEquals(expectedDate, DateUtil.getNextMonth(originalDate));
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 01:01:00 000");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 01:01:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertEquals(expectedDate, DateUtil.getNextMonth(originalDate));
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 01:01:01 000");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 01:01:01 000");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertEquals(expectedDate, DateUtil.getNextMonth(originalDate));
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/01/02 01:01:01 001");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2000/02/01 00:00:00 000");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/01/02 01:01:01 001");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2000/02/01 00:00:00 000");
 			Assert.assertEquals(expectedDate, DateUtil.getNextMonth(originalDate));
 
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	/** La pruebas sobre el método <i><b>getFirstDayOfMonth</b></i> de {@link DateUtil}
+
+	/**
+	 * La pruebas sobre el método <i><b>getFirstDayOfMonth</b></i> de {@link DateUtil}
 	 * 
 	 * @see DateUtil#getFirstDayOfMonth(Date)
 	 */
@@ -2005,28 +2376,28 @@ public class DateUtilUnitTest {
 			} catch (Exception e) {
 			}
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2013/01/01 00:00:00 000");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2013/01/01 00:00:00 000");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2013/01/01 00:00:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2013/01/01 00:00:00 000");
 			Assert.assertEquals(expectedDate, DateUtil.getFirstDayOfMonth(originalDate));
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2013/12/20 00:00:00 000");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2013/12/01 00:00:00 000");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2013/12/20 00:00:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2013/12/01 00:00:00 000");
 			Assert.assertEquals(expectedDate, DateUtil.getFirstDayOfMonth(originalDate));
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2013/01/01 01:00:00 000");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2013/01/01 00:00:00 000");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2013/01/01 01:00:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2013/01/01 00:00:00 000");
 			Assert.assertEquals(expectedDate, DateUtil.getFirstDayOfMonth(originalDate));
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2013/01/01 01:01:00 000");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2013/01/01 00:00:00 000");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2013/01/01 01:01:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2013/01/01 00:00:00 000");
 			Assert.assertEquals(expectedDate, DateUtil.getFirstDayOfMonth(originalDate));
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2013/01/01 01:01:01 000");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2013/01/01 00:00:00 000");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2013/01/01 01:01:01 000");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2013/01/01 00:00:00 000");
 			Assert.assertEquals(expectedDate, DateUtil.getFirstDayOfMonth(originalDate));
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2013/01/01 01:01:01 001");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2013/01/01 00:00:00 000");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2013/01/01 01:01:01 001");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2013/01/01 00:00:00 000");
 			Assert.assertEquals(expectedDate, DateUtil.getFirstDayOfMonth(originalDate));
 
 		} catch (ParseException e) {
@@ -2051,24 +2422,24 @@ public class DateUtilUnitTest {
 			} catch (Exception e) {
 			}
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2013/01/31 23:59:59 999");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2013/01/31 23:59:59 999");
-			Assert.assertEquals(expectedDate, DateUtil.getLastDayOfMonth(originalDate));
-			
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2013/01/01 00:00:00 000");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2013/01/31 23:59:59 999");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2013/01/31 23:59:59 999");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2013/01/31 23:59:59 999");
 			Assert.assertEquals(expectedDate, DateUtil.getLastDayOfMonth(originalDate));
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2012/02/01 00:00:00 000");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2012/02/29 23:59:59 999");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2013/01/01 00:00:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2013/01/31 23:59:59 999");
 			Assert.assertEquals(expectedDate, DateUtil.getLastDayOfMonth(originalDate));
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2013/02/01 00:00:00 000");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2013/02/28 23:59:59 999");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2012/02/01 00:00:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2012/02/29 23:59:59 999");
 			Assert.assertEquals(expectedDate, DateUtil.getLastDayOfMonth(originalDate));
 
-			originalDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2013/04/01 00:00:00 000");
-			expectedDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS").parse("2013/04/30 23:59:59 999");
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2013/02/01 00:00:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2013/02/28 23:59:59 999");
+			Assert.assertEquals(expectedDate, DateUtil.getLastDayOfMonth(originalDate));
+
+			originalDate = DateUtilUnitTest.FORMAT_DATE.parse("2013/04/01 00:00:00 000");
+			expectedDate = DateUtilUnitTest.FORMAT_DATE.parse("2013/04/30 23:59:59 999");
 			Assert.assertEquals(expectedDate, DateUtil.getLastDayOfMonth(originalDate));
 
 		} catch (ParseException e) {

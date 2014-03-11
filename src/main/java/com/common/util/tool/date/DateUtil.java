@@ -1,9 +1,12 @@
 package com.common.util.tool.date;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import org.apache.log4j.Logger;
 
 import com.common.util.exception.UncheckedException;
 
@@ -16,7 +19,9 @@ import com.common.util.exception.UncheckedException;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class DateUtil {
+public class DateUtil implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private static final Logger log = Logger.getLogger(DateUtil.class);
 
 	public static final long HOURS_PER_DAY = 24;
 
@@ -40,10 +45,12 @@ public class DateUtil {
 	public static Date createDate(String date, String pattern) {
 		// Verificamos que los parámetros no sean nulos.
 		if (date == null) {
+			log.warn("The date cannot be null.");
 			throw new UncheckedException("The date cannot be null.");
 		}
 
 		if (pattern == null) {
+			log.warn("The pattern cannot be null.");
 			throw new UncheckedException("The pattern cannot be null.");
 		}
 
@@ -72,10 +79,12 @@ public class DateUtil {
 	public static int compare(Date date, Date otherDate, DatePrecision datePrecision) {
 		// Verificamos que los parámetros no sean nulos.
 		if (date == null || otherDate == null) {
+			log.warn("The dates cannot be null.");
 			throw new UncheckedException("The dates cannot be null.");
 		}
 
 		if (datePrecision == null) {
+			log.warn("The precision cannot be null.");
 			throw new UncheckedException("The precision cannot be null.");
 		}
 
@@ -136,90 +145,167 @@ public class DateUtil {
 	}
 
 	/**
-	 * Determina si la fecha <i>beforeDate</i> es menor a la fecha <i>date</i> de acuerdo al nivel de precisión recibida.
+	 * Determina si la fecha <i>beforeDate</i> es menor a la fecha <i>date</i> de acuerdo al nivel de precisión recibida. Este método es null-safe.
 	 * 
 	 * @param date
 	 *            la fecha que vamos a comparar.
 	 * @param beforeDate
 	 *            la fecha que consideramos que es anterior a la fecha de comparación.
 	 * @param datePrecision
-	 *            La precisión con la que van a compararse las fechas.
-	 * @return <i>true</i> en caso que la fecha <i>beforeDate</i> es anterior a la fecha <i>date</i>, en caso contrario, retornamos <i>false</i>.
-	 * @throws UncheckedException
-	 *             En caso de que alguno de los parámetros recibidos sea inválidos o nulos.
+	 *            La precisión con la que van a compararse las fechas. Si es <code>null</code> se toma la precisión {@link DatePrecision#MILLISECOND}.
+	 * @return <i>true</i> en caso que la fecha <i>beforeDate</i> es anterior a la fecha <i>date</i>, en caso contrario, o en caso de que alguno de
+	 *         los parámetros recibidos sea <code>null</code>, retornamos <i>false</i>.
 	 */
 	public static boolean before(Date date, Date beforeDate, DatePrecision datePrecision) {
-		return DateUtil.compare(date, beforeDate, datePrecision) > 0;
+		if (datePrecision == null) {
+			datePrecision = DatePrecision.MILLISECOND;
+		}
+
+		try {
+			return DateUtil.compare(date, beforeDate, datePrecision) > 0;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	/**
-	 * Determina si la fecha <i>beforeOrEqualDate</i> es menor o igual la fecha <i>date</i> de acuerdo al nivel de precisión recibida.
+	 * Determina si la fecha <i>beforeOrEqualDate</i> es menor o igual la fecha <i>date</i> de acuerdo al nivel de precisión recibida. Este método es
+	 * null-safe.
 	 * 
 	 * @param date
 	 *            la fecha que vamos a comparar.
 	 * @param beforeOrEqualDate
 	 *            la fecha que consideramos que es anterior o igual a la fecha de comparación.
 	 * @param datePrecision
-	 *            La precisión con la que van a compararse las fechas.
-	 * @return <i>true</i> en caso que la fecha <i>beforeOrEqualDate</i> es anterior o igual a la fecha <i>date</i>, en caso contrario, retornamos
-	 *         <i>false</i>.
-	 * @throws UncheckedException
-	 *             En caso de que alguno de los parámetros recibidos sea inválidos o nulos.
+	 *            La precisión con la que van a compararse las fechas. Si es <code>null</code> se toma la precisión {@link DatePrecision#MILLISECOND}.
+	 * @return <i>true</i> en caso que la fecha <i>beforeOrEqualDate</i> es anterior o igual a la fecha <i>date</i>, en caso contrario, o en caso de
+	 *         que alguno de los parámetros recibidos sea <code>null</code>, retornamos <i>false</i>.
 	 */
 	public static boolean beforeOrEqual(Date date, Date beforeOrEqualDate, DatePrecision datePrecision) {
-		return DateUtil.compare(date, beforeOrEqualDate, datePrecision) >= 0;
+		if (datePrecision == null) {
+			datePrecision = DatePrecision.MILLISECOND;
+		}
+
+		try {
+			return DateUtil.compare(date, beforeOrEqualDate, datePrecision) >= 0;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	/**
-	 * Determina si la fecha <i>equalDate</i> es igual la fecha <i>date</i> de acuerdo al nivel de precisión recibida.
+	 * Determina si la fecha <i>equalDate</i> es igual la fecha <i>date</i> de acuerdo al nivel de precisión recibida. Este método es null-safe.
 	 * 
 	 * @param date
 	 *            la fecha que vamos a comparar.
 	 * @param equalDate
 	 *            la fecha que consideramos que es igual a la fecha de comparación.
 	 * @param datePrecision
-	 *            La precisión con la que van a compararse las fechas.
-	 * @return <i>true</i> en caso que la fecha <i>equalDate</i> es igual a la fecha <i>date</i>, en caso contrario, retornamos <i>false</i>.
-	 * @throws UncheckedException
-	 *             En caso de que alguno de los parámetros recibidos sea inválidos o nulos.
+	 *            La precisión con la que van a compararse las fechas. Si es <code>null</code> se toma la precisión {@link DatePrecision#MILLISECOND}.
+	 * @return <i>true</i> en caso que la fecha <i>equalDate</i> es igual a la fecha <i>date</i>, en caso contrario, o en caso de que alguno de los
+	 *         parámetros recibidos sea <code>null</code>, retornamos <i>false</i>.
 	 */
 	public static boolean equal(Date date, Date equalDate, DatePrecision datePrecision) {
-		return DateUtil.compare(date, equalDate, datePrecision) == 0;
+		if (datePrecision == null) {
+			datePrecision = DatePrecision.MILLISECOND;
+		}
+
+		try {
+			return DateUtil.compare(date, equalDate, datePrecision) == 0;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	/**
-	 * Determina si la fecha <i>afterOrEqualDate</i> es mayor a la fecha <i>date</i> de acuerdo al nivel de precisión recibida.
+	 * Determina si la fecha <i>afterOrEqualDate</i> es mayor a la fecha <i>date</i> de acuerdo al nivel de precisión recibida. Este método es
+	 * null-safe.
 	 * 
 	 * @param date
 	 *            la fecha que vamos a comparar.
 	 * @param afterOrEqualDate
 	 *            la fecha que consideramos que es mayor o igual a la fecha de comparación.
 	 * @param datePrecision
-	 *            La precisión con la que van a compararse las fechas.
-	 * @return <i>true</i> en caso que la fecha <i>afterOrEqualDate</i> es posterior o igual a la fecha <i>date</i>, en caso contrario, retornamos
-	 *         <i>false</i>.
-	 * @throws UncheckedException
-	 *             En caso de que alguno de los parámetros recibidos sea inválidos o nulos.
+	 *            La precisión con la que van a compararse las fechas. Si es <code>null</code> se toma la precisión {@link DatePrecision#MILLISECOND}.
+	 * @return <i>true</i> en caso que la fecha <i>afterOrEqualDate</i> es posterior o igual a la fecha <i>date</i>, en caso contrario, o en caso de
+	 *         que alguno de los parámetros recibidos sea <code>null</code>, retornamos <i>false</i>.
 	 */
 	public static boolean afterOrEqual(Date date, Date afterOrEqualDate, DatePrecision datePrecision) {
-		return DateUtil.compare(date, afterOrEqualDate, datePrecision) <= 0;
+		if (datePrecision == null) {
+			datePrecision = DatePrecision.MILLISECOND;
+		}
+
+		try {
+			return DateUtil.compare(date, afterOrEqualDate, datePrecision) <= 0;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	/**
-	 * Determina si la fecha <i>afterDate</i> es mayor a la fecha <i>date</i> de acuerdo al nivel de precisión recibida.
+	 * Determina si la fecha <i>afterDate</i> es mayor a la fecha <i>date</i> de acuerdo al nivel de precisión recibida. Este método es null-safe.
 	 * 
 	 * @param date
 	 *            la fecha que vamos a comparar.
 	 * @param afterDate
 	 *            la fecha que consideramos que es mayor a la fecha de comparación.
 	 * @param datePrecision
-	 *            La precisión con la que van a compararse las fechas.
-	 * @return <i>true</i> en caso que la fecha <i>afterDate</i> es posterior a la fecha <i>date</i>, en caso contrario, retornamos <i>false</i>.
-	 * @throws UncheckedException
-	 *             En caso de que alguno de los parámetros recibidos sea inválidos o nulos.
+	 *            La precisión con la que van a compararse las fechas. Si es <code>null</code> se toma la precisión {@link DatePrecision#MILLISECOND}.
+	 * @return <i>true</i> en caso que la fecha <i>afterDate</i> es posterior a la fecha <i>date</i>, en caso contrario, o en caso de que alguno de
+	 *         los parámetros recibidos sea <code>null</code>, retornamos <i>false</i>.
 	 */
 	public static boolean after(Date date, Date afterDate, DatePrecision datePrecision) {
-		return DateUtil.compare(date, afterDate, datePrecision) < 0;
+		if (datePrecision == null) {
+			datePrecision = DatePrecision.MILLISECOND;
+		}
+
+		try {
+			return DateUtil.compare(date, afterDate, datePrecision) < 0;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	/**
+	 * Determina si la fecha <i>beforeDate</i> es menor a la fecha <i>date</i> y la fecha <i>afterDate</i> es mayor a la fecha <i>date</i> de acuerdo
+	 * al nivel de precisión recibida. En caso de recibir un valor <code>null</code> para alguna de las fechas <i>beforeDate</i> o <i>afterDate</i> se
+	 * toma como el intervalo abierto. Este método es null-safe.
+	 * 
+	 * @param date
+	 *            la fecha que vamos a comparar.
+	 * @param beforeDate
+	 *            la fecha que consideramos que es anterior a la fecha de comparación. En caso de ser <code>null</code>, esta fecha se omite.
+	 * @param afterDate
+	 *            la fecha que consideramos que es mayor a la fecha de comparación. En caso de ser <code>null</code>, esta fecha se omite.
+	 * @param datePrecision
+	 *            La precisión con la que van a compararse las fechas. Si es <code>null</code> se toma la precisión {@link DatePrecision#MILLISECOND}.
+	 * @return <i>true</i> en caso que la fecha <i>afterDate</i> es posterior a la fecha <i>date</i>, en caso contrario, retornamos <i>false</i>.
+	 */
+	public static boolean between(Date date, Date beforeDate, Date afterDate, DatePrecision datePrecision) {
+		if (date == null) {
+			return false;
+		}
+
+		if (datePrecision == null) {
+			datePrecision = DatePrecision.MILLISECOND;
+		}
+
+		if (beforeDate == null) {
+			if (afterDate == null) {
+				return false;
+			} else {
+				return DateUtil.afterOrEqual(date, afterDate, datePrecision);
+			}
+		} else {
+			if (afterDate == null) {
+				return DateUtil.beforeOrEqual(date, beforeDate, datePrecision);
+			} else {
+				Date myBeforeDate = DateUtil.getLowerDate(beforeDate, afterDate, datePrecision);
+				Date myAfterDate = DateUtil.getHigherDate(beforeDate, afterDate, datePrecision);
+
+				return DateUtil.beforeOrEqual(date, myBeforeDate, datePrecision) && DateUtil.afterOrEqual(date, myAfterDate, datePrecision);
+			}
+		}
 	}
 
 	/**
@@ -236,10 +322,12 @@ public class DateUtil {
 	public static Date truncate(Date date, DatePrecision datePrecision) {
 		// Verificamos que los parámetros no sean nulos.
 		if (date == null) {
+			log.warn("The date cannot be null.");
 			throw new UncheckedException("The date cannot be null.");
 		}
 
 		if (datePrecision == null) {
+			log.warn("The precision cannot be null.");
 			throw new UncheckedException("The precision cannot be null.");
 		}
 
@@ -290,6 +378,18 @@ public class DateUtil {
 	 *             En caso de que alguno de los parámetros recibidos sea inválidos o nulos.
 	 */
 	public static Date getHigherDate(Date date1, Date date2, DatePrecision datePrecision) {
+		if (date1 == null) {
+			return date2;
+		}
+
+		if (date2 == null) {
+			return date1;
+		}
+
+		if (datePrecision == null) {
+			datePrecision = DatePrecision.MILLISECOND;
+		}
+
 		if (DateUtil.beforeOrEqual(date1, date2, datePrecision)) {
 			return date1;
 		} else {
@@ -309,6 +409,18 @@ public class DateUtil {
 	 *             En caso de que alguno de los parámetros recibidos sea inválidos o nulos.
 	 */
 	public static Date getLowerDate(Date date1, Date date2, DatePrecision datePrecision) {
+		if (date1 == null) {
+			return date2;
+		}
+
+		if (date2 == null) {
+			return date1;
+		}
+
+		if (datePrecision == null) {
+			datePrecision = DatePrecision.MILLISECOND;
+		}
+
 		if (DateUtil.afterOrEqual(date1, date2, datePrecision)) {
 			return date1;
 		} else {
@@ -328,6 +440,7 @@ public class DateUtil {
 	public static boolean isWeekend(Date date) {
 		// Verificamos que el parámetro no sea nulo.
 		if (date == null) {
+			log.warn("The date cannot be null.");
 			throw new UncheckedException("The date cannot be null.");
 		}
 
@@ -350,6 +463,7 @@ public class DateUtil {
 	public static Date getPreviousMonth(Date date) {
 		// Verificamos que la fecha no sea nula.
 		if (date == null) {
+			log.warn("The date cannot be null.");
 			throw new UncheckedException("The date cannot be null.");
 		}
 
@@ -390,6 +504,7 @@ public class DateUtil {
 	public static Date getNextMonth(Date date) {
 		// Verificamos que la fecha no sea nula.
 		if (date == null) {
+			log.warn("The date cannot be null.");
 			throw new UncheckedException("The date cannot be null.");
 		}
 
@@ -430,6 +545,7 @@ public class DateUtil {
 	public static Date getFirstDayOfMonth(Date date) {
 		// Verificamos que la fecha no sea nula.
 		if (date == null) {
+			log.warn("The date cannot be null.");
 			throw new UncheckedException("The date cannot be null.");
 		}
 
@@ -458,6 +574,7 @@ public class DateUtil {
 	public static Date getLastDayOfMonth(Date date) {
 		// Verificamos que la fecha no sea nula.
 		if (date == null) {
+			log.warn("The date cannot be null.");
 			throw new UncheckedException("The date cannot be null.");
 		}
 
