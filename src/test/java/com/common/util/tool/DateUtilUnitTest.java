@@ -1910,9 +1910,9 @@ public class DateUtilUnitTest {
 			}
 
 			try {
-				DateUtil.truncate(date1, null);
-				Assert.fail();
+				Assert.assertEquals(date1, DateUtil.truncate(date1, null));
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {
