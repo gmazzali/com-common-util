@@ -24,14 +24,6 @@ public class DateUtil implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(DateUtil.class);
 
-	public static final long HOURS_PER_DAY = 24;
-
-	public static final long MINUTES_PER_HOUR = 60;
-
-	public static final long SECONDS_PER_MINUTE = 60;
-
-	public static final long MILLISECONDS_PER_DAY = DateUtil.HOURS_PER_DAY * DateUtil.MINUTES_PER_HOUR * DateUtil.SECONDS_PER_MINUTE * 1000;
-
 	/**
 	 * Crea una fecha de acuerdo a una cadena que contiene la misma y al patron de fecha que se recibe.
 	 * 
