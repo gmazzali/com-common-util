@@ -9,6 +9,7 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 
 import com.common.util.exception.UncheckedException;
+import com.common.util.tool.VerifierUtil;
 
 /**
  * La clase que permite manipular las fechas dentro de un sistema.
@@ -64,12 +65,50 @@ public class DateUtil implements Serializable {
 	/**
 	 * Compara las 2 fechas que recibe para determinar cual de las 2 fechas es menor a la otra de acuerdo a un nivel de precisión recibido.
 	 * 
+	 * <pre>
+	 * DateUtil.compare(null, null, null)                                                  = UncheckedException
+	 * DateUtil.compare("2014/01/01 00:00:00 001", null, null)                             = UncheckedException
+	 * DateUtil.compare(null, "2014/01/01 00:00:00 001", null)                             = UncheckedException
+	 * 
+	 * DateUtil.compare("2014/01/01 00:00:00 001", "2014/01/01 00:00:00 000", null)        = 1
+	 * DateUtil.compare("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 001", null)        = -1
+	 * DateUtil.compare("2014/01/01 00:00:00 001", "2014/01/01 00:00:00 001", null)        = 0
+	 * 
+	 * DateUtil.compare("2015/01/01 00:00:00 000", "2014/01/01 00:00:00 000", YEAR)        = 1
+	 * DateUtil.compare("2014/01/01 00:00:00 000", "2015/01/01 00:00:00 000", YEAR)        = -1
+	 * DateUtil.compare("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", YEAR)        = 0
+	 * 
+	 * DateUtil.compare("2014/02/01 00:00:00 000", "2014/01/01 00:00:00 000", MONTH)       = 1
+	 * DateUtil.compare("2014/01/01 00:00:00 000", "2014/02/01 00:00:00 000", MONTH)       = -1
+	 * DateUtil.compare("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", MONTH)       = 0
+	 * 
+	 * DateUtil.compare("2014/01/02 00:00:00 000", "2014/01/01 00:00:00 000", DAY)         = 1
+	 * DateUtil.compare("2014/01/01 00:00:00 000", "2014/01/02 00:00:00 000", DAY)         = -1
+	 * DateUtil.compare("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", DAY)         = 0
+	 * 
+	 * DateUtil.compare("2014/01/01 01:00:00 000", "2014/01/01 00:00:00 000", HOUR)        = 1
+	 * DateUtil.compare("2014/01/01 00:00:00 000", "2014/01/01 01:00:00 000", HOUR)        = -1
+	 * DateUtil.compare("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", HOUR)        = 0
+	 * 
+	 * DateUtil.compare("2014/01/01 00:01:00 000", "2014/01/01 00:00:00 000", MINUTE)      = 1
+	 * DateUtil.compare("2014/01/01 00:00:00 000", "2014/01/01 00:01:00 000", MINUTE)      = -1
+	 * DateUtil.compare("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", MINUTE)      = 0
+	 * 
+	 * DateUtil.compare("2014/01/01 00:00:01 000", "2014/01/01 00:00:00 000", SECOND)      = 1
+	 * DateUtil.compare("2014/01/01 00:00:00 000", "2014/01/01 00:00:01 000", SECOND)      = -1
+	 * DateUtil.compare("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", SECOND)      = 0
+	 * 
+	 * DateUtil.compare("2014/01/01 00:00:00 001", "2014/01/01 00:00:00 000", MILLISECOND) = 1
+	 * DateUtil.compare("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 001", MILLISECOND) = -1
+	 * DateUtil.compare("2014/01/01 00:00:00 001", "2014/01/01 00:00:00 001", MILLISECOND) = 0
+	 * </pre>
+	 * 
 	 * @param date
 	 *            la primer fecha a comparar.
 	 * @param otherDate
 	 *            la segunda fecha a comparar.
 	 * @param datePrecision
-	 *            La precisión con la que va a compararse la fecha.
+	 *            La precisión con la que va a compararse la fecha. Si es <code>null</code> se toma la precisión {@link DatePrecision#MILLISECOND}.
 	 * 
 	 * @return Un valor positivo si la fecha <i>date</i> es mayor a la fecha <i>otherDate</i>, un valor cero (0) si las 2 fechas son iguales o un
 	 *         valor negativo si la fecha <i>otherDate</i> es mayor a la fecha <i>date</i>.
@@ -84,8 +123,8 @@ public class DateUtil implements Serializable {
 		}
 
 		if (datePrecision == null) {
-			log.warn("The precision cannot be null.");
-			throw new UncheckedException("The precision cannot be null.");
+			log.info("The precision cannot be null.");
+			datePrecision = DatePrecision.MILLISECOND;
 		}
 
 		// Creamos los calendarios para comparar.
@@ -147,6 +186,44 @@ public class DateUtil implements Serializable {
 	/**
 	 * Determina si la fecha <i>beforeDate</i> es menor a la fecha <i>date</i> de acuerdo al nivel de precisión recibida. Este método es null-safe.
 	 * 
+	 * <pre>
+	 * DateUtil.before(null, null, null)                                                  = false
+	 * DateUtil.before("2014/01/01 00:00:00 001", null, null)                             = false
+	 * DateUtil.before(null, "2014/01/01 00:00:00 001", null)                             = false
+	 * 
+	 * DateUtil.before("2014/01/01 00:00:00 001", "2014/01/01 00:00:00 000", null)        = true
+	 * DateUtil.before("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 001", null)        = false
+	 * DateUtil.before("2014/01/01 00:00:00 001", "2014/01/01 00:00:00 001", null)        = false
+	 * 
+	 * DateUtil.before("2015/01/01 00:00:00 000", "2014/01/01 00:00:00 000", YEAR)        = true
+	 * DateUtil.before("2014/01/01 00:00:00 000", "2015/01/01 00:00:00 000", YEAR)        = false
+	 * DateUtil.before("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", YEAR)        = false
+	 * 
+	 * DateUtil.before("2014/02/01 00:00:00 000", "2014/01/01 00:00:00 000", MONTH)       = true
+	 * DateUtil.before("2014/01/01 00:00:00 000", "2014/02/01 00:00:00 000", MONTH)       = false
+	 * DateUtil.before("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", MONTH)       = false
+	 * 
+	 * DateUtil.before("2014/01/02 00:00:00 000", "2014/01/01 00:00:00 000", DAY)         = true
+	 * DateUtil.before("2014/01/01 00:00:00 000", "2014/01/02 00:00:00 000", DAY)         = false
+	 * DateUtil.before("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", DAY)         = false
+	 * 
+	 * DateUtil.before("2014/01/01 01:00:00 000", "2014/01/01 00:00:00 000", HOUR)        = true
+	 * DateUtil.before("2014/01/01 00:00:00 000", "2014/01/01 01:00:00 000", HOUR)        = false
+	 * DateUtil.before("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", HOUR)        = false
+	 * 
+	 * DateUtil.before("2014/01/01 00:01:00 000", "2014/01/01 00:00:00 000", MINUTE)      = true
+	 * DateUtil.before("2014/01/01 00:00:00 000", "2014/01/01 00:01:00 000", MINUTE)      = false
+	 * DateUtil.before("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", MINUTE)      = false
+	 * 
+	 * DateUtil.before("2014/01/01 00:00:01 000", "2014/01/01 00:00:00 000", SECOND)      = true
+	 * DateUtil.before("2014/01/01 00:00:00 000", "2014/01/01 00:00:01 000", SECOND)      = false
+	 * DateUtil.before("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", SECOND)      = false
+	 * 
+	 * DateUtil.before("2014/01/01 00:00:00 001", "2014/01/01 00:00:00 000", MILLISECOND) = true
+	 * DateUtil.before("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 001", MILLISECOND) = false
+	 * DateUtil.before("2014/01/01 00:00:00 001", "2014/01/01 00:00:00 001", MILLISECOND) = false
+	 * </pre>
+	 * 
 	 * @param date
 	 *            la fecha que vamos a comparar.
 	 * @param beforeDate
@@ -157,8 +234,9 @@ public class DateUtil implements Serializable {
 	 *         los parámetros recibidos sea <code>null</code>, retornamos <i>false</i>.
 	 */
 	public static boolean before(Date date, Date beforeDate, DatePrecision datePrecision) {
-		if (datePrecision == null) {
-			datePrecision = DatePrecision.MILLISECOND;
+		if (date == null || beforeDate == null) {
+			log.warn("Any date is null.");
+			return false;
 		}
 
 		try {
@@ -172,6 +250,44 @@ public class DateUtil implements Serializable {
 	 * Determina si la fecha <i>beforeOrEqualDate</i> es menor o igual la fecha <i>date</i> de acuerdo al nivel de precisión recibida. Este método es
 	 * null-safe.
 	 * 
+	 * <pre>
+	 * DateUtil.beforeOrEqual(null, null, null)                                                  = false
+	 * DateUtil.beforeOrEqual("2014/01/01 00:00:00 001", null, null)                             = false
+	 * DateUtil.beforeOrEqual(null, "2014/01/01 00:00:00 001", null)                             = false
+	 * 
+	 * DateUtil.beforeOrEqual("2014/01/01 00:00:00 001", "2014/01/01 00:00:00 000", null)        = true
+	 * DateUtil.beforeOrEqual("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 001", null)        = false
+	 * DateUtil.beforeOrEqual("2014/01/01 00:00:00 001", "2014/01/01 00:00:00 001", null)        = true
+	 * 
+	 * DateUtil.beforeOrEqual("2015/01/01 00:00:00 000", "2014/01/01 00:00:00 000", YEAR)        = true
+	 * DateUtil.beforeOrEqual("2014/01/01 00:00:00 000", "2015/01/01 00:00:00 000", YEAR)        = false
+	 * DateUtil.beforeOrEqual("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", YEAR)        = true
+	 * 
+	 * DateUtil.beforeOrEqual("2014/02/01 00:00:00 000", "2014/01/01 00:00:00 000", MONTH)       = true
+	 * DateUtil.beforeOrEqual("2014/01/01 00:00:00 000", "2014/02/01 00:00:00 000", MONTH)       = false
+	 * DateUtil.beforeOrEqual("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", MONTH)       = true
+	 * 
+	 * DateUtil.beforeOrEqual("2014/01/02 00:00:00 000", "2014/01/01 00:00:00 000", DAY)         = true
+	 * DateUtil.beforeOrEqual("2014/01/01 00:00:00 000", "2014/01/02 00:00:00 000", DAY)         = false
+	 * DateUtil.beforeOrEqual("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", DAY)         = true
+	 * 
+	 * DateUtil.beforeOrEqual("2014/01/01 01:00:00 000", "2014/01/01 00:00:00 000", HOUR)        = true
+	 * DateUtil.beforeOrEqual("2014/01/01 00:00:00 000", "2014/01/01 01:00:00 000", HOUR)        = false
+	 * DateUtil.beforeOrEqual("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", HOUR)        = true
+	 * 
+	 * DateUtil.beforeOrEqual("2014/01/01 00:01:00 000", "2014/01/01 00:00:00 000", MINUTE)      = true
+	 * DateUtil.beforeOrEqual("2014/01/01 00:00:00 000", "2014/01/01 00:01:00 000", MINUTE)      = false
+	 * DateUtil.beforeOrEqual("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", MINUTE)      = true
+	 * 
+	 * DateUtil.beforeOrEqual("2014/01/01 00:00:01 000", "2014/01/01 00:00:00 000", SECOND)      = true
+	 * DateUtil.beforeOrEqual("2014/01/01 00:00:00 000", "2014/01/01 00:00:01 000", SECOND)      = false
+	 * DateUtil.beforeOrEqual("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", SECOND)      = true
+	 * 
+	 * DateUtil.beforeOrEqual("2014/01/01 00:00:00 001", "2014/01/01 00:00:00 000", MILLISECOND) = true
+	 * DateUtil.beforeOrEqual("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 001", MILLISECOND) = false
+	 * DateUtil.beforeOrEqual("2014/01/01 00:00:00 001", "2014/01/01 00:00:00 001", MILLISECOND) = true
+	 * </pre>
+	 * 
 	 * @param date
 	 *            la fecha que vamos a comparar.
 	 * @param beforeOrEqualDate
@@ -182,8 +298,9 @@ public class DateUtil implements Serializable {
 	 *         que alguno de los parámetros recibidos sea <code>null</code>, retornamos <i>false</i>.
 	 */
 	public static boolean beforeOrEqual(Date date, Date beforeOrEqualDate, DatePrecision datePrecision) {
-		if (datePrecision == null) {
-			datePrecision = DatePrecision.MILLISECOND;
+		if (date == null || beforeOrEqualDate == null) {
+			log.warn("Any date is null.");
+			return false;
 		}
 
 		try {
@@ -194,7 +311,47 @@ public class DateUtil implements Serializable {
 	}
 
 	/**
-	 * Determina si la fecha <i>equalDate</i> es igual la fecha <i>date</i> de acuerdo al nivel de precisión recibida. Este método es null-safe.
+	 * Determina si la fecha <i>equalDate</i> es igual la fecha <i>date</i> de acuerdo al nivel de precisión recibida. Este método es null-safe. *
+	 * 
+	 * <pre>
+	 * DateUtil.equal(null, null, null)                                                  = false
+	 * DateUtil.equal("2014/01/01 00:00:00 001", null, null)                             = false
+	 * DateUtil.equal(null, "2014/01/01 00:00:00 001", null)                             = false
+	 * 
+	 * DateUtil.equal("2014/01/01 00:00:00 001", "2014/01/01 00:00:00 000", null)        = false
+	 * DateUtil.equal("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 001", null)        = false
+	 * DateUtil.equal("2014/01/01 00:00:00 001", "2014/01/01 00:00:00 001", null)        = true
+	 * 
+	 * DateUtil.equal("2015/01/01 00:00:00 000", "2014/01/01 00:00:00 000", YEAR)        = false
+	 * DateUtil.equal("2014/01/01 00:00:00 000", "2015/01/01 00:00:00 000", YEAR)        = false
+	 * DateUtil.equal("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", YEAR)        = true
+	 * 
+	 * DateUtil.equal("2014/02/01 00:00:00 000", "2014/01/01 00:00:00 000", MONTH)       = false
+	 * DateUtil.equal("2014/01/01 00:00:00 000", "2014/02/01 00:00:00 000", MONTH)       = false
+	 * DateUtil.equal("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", MONTH)       = true
+	 * 
+	 * DateUtil.equal("2014/01/02 00:00:00 000", "2014/01/01 00:00:00 000", DAY)         = false
+	 * DateUtil.equal("2014/01/01 00:00:00 000", "2014/01/02 00:00:00 000", DAY)         = false
+	 * DateUtil.equal("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", DAY)         = true
+	 * 
+	 * DateUtil.equal("2014/01/01 01:00:00 000", "2014/01/01 00:00:00 000", HOUR)        = false
+	 * DateUtil.equal("2014/01/01 00:00:00 000", "2014/01/01 01:00:00 000", HOUR)        = false
+	 * DateUtil.equal("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", HOUR)        = true
+	 * 
+	 * DateUtil.equal("2014/01/01 00:01:00 000", "2014/01/01 00:00:00 000", MINUTE)      = false
+	 * DateUtil.equal("2014/01/01 00:00:00 000", "2014/01/01 00:01:00 000", MINUTE)      = false
+	 * DateUtil.equal("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", MINUTE)      = true
+	 * 
+	 * DateUtil.equal("2014/01/01 00:00:01 000", "2014/01/01 00:00:00 000", SECOND)      = false
+	 * DateUtil.equal("2014/01/01 00:00:00 000", "2014/01/01 00:00:01 000", SECOND)      = false
+	 * DateUtil.equal("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", SECOND)      = true
+	 * 
+	 * DateUtil.equal("2014/01/01 00:00:00 001", "2014/01/01 00:00:00 000", MILLISECOND) = false
+	 * DateUtil.equal("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 001", MILLISECOND) = false
+	 * DateUtil.equal("2014/01/01 00:00:00 001", "2014/01/01 00:00:00 001", MILLISECOND) = true
+	 * </pre>
+	 * 
+	 * @see VerifierUtil#equals(Serializable, Serializable)
 	 * 
 	 * @param date
 	 *            la fecha que vamos a comparar.
@@ -206,8 +363,9 @@ public class DateUtil implements Serializable {
 	 *         parámetros recibidos sea <code>null</code>, retornamos <i>false</i>.
 	 */
 	public static boolean equal(Date date, Date equalDate, DatePrecision datePrecision) {
-		if (datePrecision == null) {
-			datePrecision = DatePrecision.MILLISECOND;
+		if (date == null || equalDate == null) {
+			log.warn("Any date is null.");
+			return false;
 		}
 
 		try {
@@ -221,6 +379,44 @@ public class DateUtil implements Serializable {
 	 * Determina si la fecha <i>afterOrEqualDate</i> es mayor a la fecha <i>date</i> de acuerdo al nivel de precisión recibida. Este método es
 	 * null-safe.
 	 * 
+	 * <pre>
+	 * DateUtil.afterOrEqual(null, null, null)                                                  = false
+	 * DateUtil.afterOrEqual("2014/01/01 00:00:00 001", null, null)                             = false
+	 * DateUtil.afterOrEqual(null, "2014/01/01 00:00:00 001", null)                             = false
+	 * 
+	 * DateUtil.afterOrEqual("2014/01/01 00:00:00 001", "2014/01/01 00:00:00 000", null)        = false
+	 * DateUtil.afterOrEqual("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 001", null)        = true
+	 * DateUtil.afterOrEqual("2014/01/01 00:00:00 001", "2014/01/01 00:00:00 001", null)        = true
+	 * 
+	 * DateUtil.afterOrEqual("2015/01/01 00:00:00 000", "2014/01/01 00:00:00 000", YEAR)        = false
+	 * DateUtil.afterOrEqual("2014/01/01 00:00:00 000", "2015/01/01 00:00:00 000", YEAR)        = true
+	 * DateUtil.afterOrEqual("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", YEAR)        = true
+	 * 
+	 * DateUtil.afterOrEqual("2014/02/01 00:00:00 000", "2014/01/01 00:00:00 000", MONTH)       = false
+	 * DateUtil.afterOrEqual("2014/01/01 00:00:00 000", "2014/02/01 00:00:00 000", MONTH)       = true
+	 * DateUtil.afterOrEqual("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", MONTH)       = true
+	 * 
+	 * DateUtil.afterOrEqual("2014/01/02 00:00:00 000", "2014/01/01 00:00:00 000", DAY)         = false
+	 * DateUtil.afterOrEqual("2014/01/01 00:00:00 000", "2014/01/02 00:00:00 000", DAY)         = true
+	 * DateUtil.afterOrEqual("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", DAY)         = true
+	 * 
+	 * DateUtil.afterOrEqual("2014/01/01 01:00:00 000", "2014/01/01 00:00:00 000", HOUR)        = false
+	 * DateUtil.afterOrEqual("2014/01/01 00:00:00 000", "2014/01/01 01:00:00 000", HOUR)        = true
+	 * DateUtil.afterOrEqual("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", HOUR)        = true
+	 * 
+	 * DateUtil.afterOrEqual("2014/01/01 00:01:00 000", "2014/01/01 00:00:00 000", MINUTE)      = false
+	 * DateUtil.afterOrEqual("2014/01/01 00:00:00 000", "2014/01/01 00:01:00 000", MINUTE)      = true
+	 * DateUtil.afterOrEqual("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", MINUTE)      = true
+	 * 
+	 * DateUtil.afterOrEqual("2014/01/01 00:00:01 000", "2014/01/01 00:00:00 000", SECOND)      = false
+	 * DateUtil.afterOrEqual("2014/01/01 00:00:00 000", "2014/01/01 00:00:01 000", SECOND)      = true
+	 * DateUtil.afterOrEqual("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", SECOND)      = true
+	 * 
+	 * DateUtil.afterOrEqual("2014/01/01 00:00:00 001", "2014/01/01 00:00:00 000", MILLISECOND) = false
+	 * DateUtil.afterOrEqual("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 001", MILLISECOND) = true
+	 * DateUtil.afterOrEqual("2014/01/01 00:00:00 001", "2014/01/01 00:00:00 001", MILLISECOND) = true
+	 * </pre>
+	 * 
 	 * @param date
 	 *            la fecha que vamos a comparar.
 	 * @param afterOrEqualDate
@@ -231,8 +427,9 @@ public class DateUtil implements Serializable {
 	 *         que alguno de los parámetros recibidos sea <code>null</code>, retornamos <i>false</i>.
 	 */
 	public static boolean afterOrEqual(Date date, Date afterOrEqualDate, DatePrecision datePrecision) {
-		if (datePrecision == null) {
-			datePrecision = DatePrecision.MILLISECOND;
+		if (date == null || afterOrEqualDate == null) {
+			log.warn("Any date is null.");
+			return false;
 		}
 
 		try {
@@ -245,6 +442,44 @@ public class DateUtil implements Serializable {
 	/**
 	 * Determina si la fecha <i>afterDate</i> es mayor a la fecha <i>date</i> de acuerdo al nivel de precisión recibida. Este método es null-safe.
 	 * 
+	 * <pre>
+	 * DateUtil.after(null, null, null)                                                  = false
+	 * DateUtil.after("2014/01/01 00:00:00 001", null, null)                             = false
+	 * DateUtil.after(null, "2014/01/01 00:00:00 001", null)                             = false
+	 * 
+	 * DateUtil.after("2014/01/01 00:00:00 001", "2014/01/01 00:00:00 000", null)        = false
+	 * DateUtil.after("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 001", null)        = true
+	 * DateUtil.after("2014/01/01 00:00:00 001", "2014/01/01 00:00:00 001", null)        = false
+	 * 
+	 * DateUtil.after("2015/01/01 00:00:00 000", "2014/01/01 00:00:00 000", YEAR)        = false
+	 * DateUtil.after("2014/01/01 00:00:00 000", "2015/01/01 00:00:00 000", YEAR)        = true
+	 * DateUtil.after("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", YEAR)        = false
+	 * 
+	 * DateUtil.after("2014/02/01 00:00:00 000", "2014/01/01 00:00:00 000", MONTH)       = false
+	 * DateUtil.after("2014/01/01 00:00:00 000", "2014/02/01 00:00:00 000", MONTH)       = true
+	 * DateUtil.after("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", MONTH)       = false
+	 * 
+	 * DateUtil.after("2014/01/02 00:00:00 000", "2014/01/01 00:00:00 000", DAY)         = false
+	 * DateUtil.after("2014/01/01 00:00:00 000", "2014/01/02 00:00:00 000", DAY)         = true
+	 * DateUtil.after("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", DAY)         = false
+	 * 
+	 * DateUtil.after("2014/01/01 01:00:00 000", "2014/01/01 00:00:00 000", HOUR)        = false
+	 * DateUtil.after("2014/01/01 00:00:00 000", "2014/01/01 01:00:00 000", HOUR)        = true
+	 * DateUtil.after("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", HOUR)        = false
+	 * 
+	 * DateUtil.after("2014/01/01 00:01:00 000", "2014/01/01 00:00:00 000", MINUTE)      = false
+	 * DateUtil.after("2014/01/01 00:00:00 000", "2014/01/01 00:01:00 000", MINUTE)      = true
+	 * DateUtil.after("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", MINUTE)      = false
+	 * 
+	 * DateUtil.after("2014/01/01 00:00:01 000", "2014/01/01 00:00:00 000", SECOND)      = false
+	 * DateUtil.after("2014/01/01 00:00:00 000", "2014/01/01 00:00:01 000", SECOND)      = true
+	 * DateUtil.after("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 000", SECOND)      = false
+	 * 
+	 * DateUtil.after("2014/01/01 00:00:00 001", "2014/01/01 00:00:00 000", MILLISECOND) = false
+	 * DateUtil.after("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 001", MILLISECOND) = true
+	 * DateUtil.after("2014/01/01 00:00:00 001", "2014/01/01 00:00:00 001", MILLISECOND) = false
+	 * </pre>
+	 * 
 	 * @param date
 	 *            la fecha que vamos a comparar.
 	 * @param afterDate
@@ -255,8 +490,9 @@ public class DateUtil implements Serializable {
 	 *         los parámetros recibidos sea <code>null</code>, retornamos <i>false</i>.
 	 */
 	public static boolean after(Date date, Date afterDate, DatePrecision datePrecision) {
-		if (datePrecision == null) {
-			datePrecision = DatePrecision.MILLISECOND;
+		if (date == null || afterDate == null) {
+			log.warn("Any date is null.");
+			return false;
 		}
 
 		try {
@@ -269,25 +505,23 @@ public class DateUtil implements Serializable {
 	/**
 	 * Determina si la fecha <i>beforeDate</i> es menor a la fecha <i>date</i> y la fecha <i>afterDate</i> es mayor a la fecha <i>date</i> de acuerdo
 	 * al nivel de precisión recibida. En caso de recibir un valor <code>null</code> para alguna de las fechas <i>beforeDate</i> o <i>afterDate</i> se
-	 * toma como el intervalo abierto. Este método es null-safe.
+	 * toma como el intervalo abierto. En caso de recibir las fechas del intervalo invertidas, las colocamos de manera correcta para su verificación.
+	 * Este método es null-safe.
 	 * 
 	 * @param date
-	 *            la fecha que vamos a comparar.
+	 *            La fecha que vamos a comparar.
 	 * @param beforeDate
-	 *            la fecha que consideramos que es anterior a la fecha de comparación. En caso de ser <code>null</code>, esta fecha se omite.
+	 *            La fecha que corresponde con el inicio del intervalo de las fechas. En caso de ser <code>null</code>, esta fecha se omite.
 	 * @param afterDate
-	 *            la fecha que consideramos que es mayor a la fecha de comparación. En caso de ser <code>null</code>, esta fecha se omite.
+	 *            La fecha que corresponde con el fin del intervalo de las fechas. En caso de ser <code>null</code>, esta fecha se omite.
 	 * @param datePrecision
 	 *            La precisión con la que van a compararse las fechas. Si es <code>null</code> se toma la precisión {@link DatePrecision#MILLISECOND}.
 	 * @return <i>true</i> en caso que la fecha <i>afterDate</i> es posterior a la fecha <i>date</i>, en caso contrario, retornamos <i>false</i>.
 	 */
 	public static boolean between(Date date, Date beforeDate, Date afterDate, DatePrecision datePrecision) {
 		if (date == null) {
+			log.warn("The date is null.");
 			return false;
-		}
-
-		if (datePrecision == null) {
-			datePrecision = DatePrecision.MILLISECOND;
 		}
 
 		if (beforeDate == null) {
@@ -314,7 +548,7 @@ public class DateUtil implements Serializable {
 	 * @param date
 	 *            La fecha que vamos a truncar.
 	 * @param datePrecision
-	 *            La precisión con la que va a recortarse la fecha.
+	 *            La precisión con la que va a recortarse la fecha. Si es <code>null</code> se va a retornar la misma fecha recibida.
 	 * @return La fecha truncada de acuerdo a la precisión.
 	 * @throws UncheckedException
 	 *             En caso de que alguno de los parámetros recibidos sea inválidos o nulos.
@@ -327,8 +561,8 @@ public class DateUtil implements Serializable {
 		}
 
 		if (datePrecision == null) {
-			log.warn("The precision cannot be null.");
-			throw new UncheckedException("The precision cannot be null.");
+			log.info("datePrecision = MILISECOND -> return the same date");
+			return date;
 		}
 
 		// Seteamos la instancia del calendario.
@@ -379,14 +613,17 @@ public class DateUtil implements Serializable {
 	 */
 	public static Date getHigherDate(Date date1, Date date2, DatePrecision datePrecision) {
 		if (date1 == null) {
+			log.info("The first date is null.");
 			return date2;
 		}
 
 		if (date2 == null) {
+			log.info("The second date is null.");
 			return date1;
 		}
 
 		if (datePrecision == null) {
+			log.info("datePrecision = MILISECOND.");
 			datePrecision = DatePrecision.MILLISECOND;
 		}
 
@@ -410,14 +647,17 @@ public class DateUtil implements Serializable {
 	 */
 	public static Date getLowerDate(Date date1, Date date2, DatePrecision datePrecision) {
 		if (date1 == null) {
+			log.info("The first date is null.");
 			return date2;
 		}
 
 		if (date2 == null) {
+			log.info("The second date is null.");
 			return date1;
 		}
 
 		if (datePrecision == null) {
+			log.info("datePrecision = MILISECOND.");
 			datePrecision = DatePrecision.MILLISECOND;
 		}
 
@@ -453,6 +693,16 @@ public class DateUtil implements Serializable {
 
 	/**
 	 * Permite obtener el primer día del mes anterior a la fecha recibida.
+	 * 
+	 * <pre>
+	 * DateUtil.getPreviousMonth(null)                  = UncheckedException
+	 * DateUtil.getPreviousMonth("2014/01/10 00:00:00") = "2013/12/01 00:00:00"
+	 * DateUtil.getPreviousMonth("2013/12/10 00:00:00") = "2013/11/01 00:00:00"
+	 * DateUtil.getPreviousMonth("2014/02/01 00:00:00") = "2014/01/01 00:00:00"
+	 * DateUtil.getPreviousMonth("2014/02/10 00:00:00") = "2014/01/01 00:00:00"
+	 * DateUtil.getPreviousMonth("2014/02/28 00:00:00") = "2014/01/01 00:00:00"
+	 * DateUtil.getPreviousMonth("2014/02/28 23:59:59") = "2014/01/01 00:00:00"
+	 * </pre>
 	 * 
 	 * @param date
 	 *            La fecha que nos permite calcular el mes anterior a la misma.
@@ -494,6 +744,15 @@ public class DateUtil implements Serializable {
 
 	/**
 	 * Permite obtener el primer día del mes siguiente a la fecha recibida.
+	 * 
+	 * <pre>
+	 * DateUtil.getNextMonth(null)                  = UncheckedException
+	 * DateUtil.getNextMonth("2014/02/01 00:00:00") = "2014/03/01 00:00:00"
+	 * DateUtil.getNextMonth("2014/02/10 00:00:00") = "2014/03/01 00:00:00"
+	 * DateUtil.getNextMonth("2014/02/28 00:00:00") = "2014/03/01 00:00:00"
+	 * DateUtil.getNextMonth("2014/02/28 23:59:59") = "2014/03/01 00:00:00"
+	 * DateUtil.getNextMonth("2014/12/10 00:00:00") = "2015/01/01 00:00:00"
+	 * </pre>
 	 * 
 	 * @param date
 	 *            La fecha que nos permite calcular el mes siguiente a la misma.
