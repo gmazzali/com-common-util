@@ -22,7 +22,15 @@ public class OrderBy implements Serializable {
 	Map<String, Order> orders;
 
 	/**
-	 * Constructor de un orden para un atributo dado.
+	 * El constructor por omisión de un listado de ordenes.
+	 */
+	public OrderBy() {
+		super();
+		this.orders = new HashMap<String, Order>();
+	}
+
+	/**
+	 * El constructor de un listado de ordenes que recibe un atributo y el orden del mismo.
 	 * 
 	 * @param attribute
 	 *            El atributo que vamos a ordenar.
@@ -30,7 +38,7 @@ public class OrderBy implements Serializable {
 	 *            El orden del atributo. Puede ser {@link Order#ASC} o {@link Order#DESC}.
 	 */
 	public OrderBy(String attribute, Order order) {
-		this.orders = new HashMap<String, Order>();
+		this();
 		this.orders.put(attribute, order);
 	}
 

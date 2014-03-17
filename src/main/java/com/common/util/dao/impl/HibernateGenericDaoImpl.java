@@ -12,7 +12,7 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
-import com.common.util.dao.GenericDao;
+import com.common.util.dao.BaseDao;
 import com.common.util.model.Persistence;
 import com.common.util.model.query.filter.AtomicFilter;
 import com.common.util.model.query.filter.BetweenFilter;
@@ -28,9 +28,9 @@ import com.common.util.model.query.order.Order;
 import com.common.util.model.query.order.OrderBy;
 
 /**
- * La clase que implementa la interfaz {@link GenericDao} para acceder a una base de datos desde el framework Hibernate.
+ * La clase que implementa la interfaz {@link BaseDao} para acceder a una base de datos desde el framework Hibernate.
  * 
- * @see GenericDao
+ * @see BaseDao
  * 
  * @since 05/02/2014
  * @author Guillermo Mazzali
@@ -42,7 +42,7 @@ import com.common.util.model.query.order.OrderBy;
  *            La clase que corresponde al identificador de la entidad <T>.
  */
 @SuppressWarnings("unchecked")
-public abstract class HibernateGenericDaoImpl<E extends Persistence<PK>, PK extends Serializable> implements GenericDao<E, PK> {
+public abstract class HibernateGenericDaoImpl<E extends Persistence<PK>, PK extends Serializable> implements BaseDao<E, PK> {
 	private static final long serialVersionUID = 1L;
 
 	/**
