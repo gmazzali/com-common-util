@@ -1,4 +1,4 @@
-package com.common.util.model.query.order;
+package com.common.util.model.filter.order;
 
 /**
  * La enumeración que determina los ordenes en los que vamos a poder ordenar los atributos de una consulta.

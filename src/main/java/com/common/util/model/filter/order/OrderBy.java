@@ -1,4 +1,4 @@
-package com.common.util.model.query.order;
+package com.common.util.model.filter.order;
 
 import java.io.Serializable;
 import java.util.HashMap;
