@@ -7,8 +7,7 @@ import com.common.util.exception.UncheckedException;
 import com.common.util.model.Entity;
 import com.common.util.model.Persistence;
 import com.common.util.model.filter.BaseFilter;
-import com.common.util.model.query.filter.Filter;
-import com.common.util.model.query.order.OrderBy;
+import com.common.util.model.filter.order.OrderBy;
 
 /**
  * La interfaz que define todos los métodos comunes a todos los DAOs que vamos a generar dentro de un sistema.
@@ -31,7 +30,7 @@ public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializ
 	/**
 	 * La función encargada de contar la cantidad de entidades.
 	 * 
-	 * @see #countByFilter(Filter)
+	 * @see #countByFilter(BaseFilter)
 	 * 
 	 * @return El numero de registros.
 	 * @throws UncheckedException
@@ -58,7 +57,7 @@ public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializ
 	 * La función que utilizamos para recuperar una entidad dado su identificador.
 	 * 
 	 * @see #findAll()
-	 * @see #findByFilter(Filter)
+	 * @see #findByFilter(BaseFilter)
 	 * 
 	 * @param id
 	 *            El identificador de la entidad que vamos a recuperar desde la base de datos.
@@ -74,7 +73,7 @@ public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializ
 	 * @see OrderBy
 	 * 
 	 * @see #findById(Serializable)
-	 * @see #findByFilter(Filter)
+	 * @see #findByFilter(BaseFilter)
 	 * 
 	 * @param orders
 	 *            Los ordenes en los que queremos recuperar las entidades. Si el mismo es mulo, se recuperan si un orden en particular.

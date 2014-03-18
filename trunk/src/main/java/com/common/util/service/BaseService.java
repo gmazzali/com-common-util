@@ -8,7 +8,7 @@ import com.common.util.exception.CheckedException;
 import com.common.util.model.Entity;
 import com.common.util.model.Persistence;
 import com.common.util.model.filter.BaseFilter;
-import com.common.util.model.query.order.OrderBy;
+import com.common.util.model.filter.order.OrderBy;
 
 /**
  * La interfaz que permite establecer un servicio para un elemento genérico junto al DAO correspondiente a este.
