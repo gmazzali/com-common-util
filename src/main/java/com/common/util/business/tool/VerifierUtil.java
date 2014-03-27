@@ -2,6 +2,10 @@ package com.common.util.business.tool;
 
 import java.io.Serializable;
 
+import org.apache.log4j.Logger;
+
+import com.common.util.domain.exception.UncheckedException;
+
 /**
  * La clase encargada de verificar que los campos de entrada de una aplicación tenga los valores correctos y que no sean cualquier cosa.
  * 
@@ -9,7 +13,9 @@ import java.io.Serializable;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class VerifierUtil {
+public class VerifierUtil implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private static final Logger log = Logger.getLogger(VerifierUtil.class);
 
 	/**
 	 * Se encarga de validar que los 2 elementos recibidos sean iguales. Permite recibir los 2 elementos nulos, lo que retorna que los elementos sean
@@ -46,6 +52,22 @@ public class VerifierUtil {
 			return firstEntity.equals(secondEntity);
 		} else {
 			return secondEntity.equals(firstEntity);
+		}
+	}
+
+	/**
+	 * Permite verificar si un objeto recibido es <code>null</code> o no. En caso de que el objeto recibido sea <code>null</code> se va a lanzar
+	 * {@link UncheckedException} para cortar validaciones.
+	 * 
+	 * @param object
+	 *            El objeto que vamos a verificar si es <code>null</code> o no.
+	 * @param message
+	 *            El mensaje que vamos a incluir dentro de la {@link UncheckedException} en caso de que el objeto recibido sea <code>null</code>.
+	 */
+	public static void checkNotNull(Object object, String message) {
+		if (object == null) {
+			log.warn(message);
+			throw new UncheckedException(message);
 		}
 	}
 }

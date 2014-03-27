@@ -37,15 +37,8 @@ public class DateUtil implements Serializable {
 	 */
 	public static Date createDate(String date, String pattern) {
 		// Verificamos que los parámetros no sean nulos.
-		if (date == null) {
-			log.warn("The date cannot be null.");
-			throw new UncheckedException("The date cannot be null.");
-		}
-
-		if (pattern == null) {
-			log.warn("The pattern cannot be null.");
-			throw new UncheckedException("The pattern cannot be null.");
-		}
+		VerifierUtil.checkNotNull(date, "The date cannot be null.");
+		VerifierUtil.checkNotNull(pattern, "The pattern cannot be null.");
 
 		try {
 			return new SimpleDateFormat(pattern).parse(date);
@@ -109,10 +102,8 @@ public class DateUtil implements Serializable {
 	 */
 	public static int compare(Date date, Date otherDate, DatePrecision datePrecision) {
 		// Verificamos que los parámetros no sean nulos.
-		if (date == null || otherDate == null) {
-			log.warn("The dates cannot be null.");
-			throw new UncheckedException("The dates cannot be null.");
-		}
+		VerifierUtil.checkNotNull(date, "The date cannot be null.");
+		VerifierUtil.checkNotNull(otherDate, "The otherDate cannot be null.");
 
 		if (datePrecision == null) {
 			log.info("The precision cannot be null.");
@@ -547,10 +538,7 @@ public class DateUtil implements Serializable {
 	 */
 	public static Date truncate(Date date, DatePrecision datePrecision) {
 		// Verificamos que los parámetros no sean nulos.
-		if (date == null) {
-			log.warn("The date cannot be null.");
-			throw new UncheckedException("The date cannot be null.");
-		}
+		VerifierUtil.checkNotNull(date, "The date cannot be null.");
 
 		if (datePrecision == null) {
 			log.info("datePrecision = MILISECOND -> return the same date");
@@ -671,10 +659,7 @@ public class DateUtil implements Serializable {
 	 */
 	public static boolean isWeekend(Date date) {
 		// Verificamos que el parámetro no sea nulo.
-		if (date == null) {
-			log.warn("The date cannot be null.");
-			throw new UncheckedException("The date cannot be null.");
-		}
+		VerifierUtil.checkNotNull(date, "The date cannot be null.");
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
@@ -704,10 +689,7 @@ public class DateUtil implements Serializable {
 	 */
 	public static Date getPreviousMonth(Date date) {
 		// Verificamos que la fecha no sea nula.
-		if (date == null) {
-			log.warn("The date cannot be null.");
-			throw new UncheckedException("The date cannot be null.");
-		}
+		VerifierUtil.checkNotNull(date, "The date cannot be null.");
 
 		// Hacemos los calculos.
 		Calendar calendar = Calendar.getInstance();
@@ -754,10 +736,7 @@ public class DateUtil implements Serializable {
 	 */
 	public static Date getNextMonth(Date date) {
 		// Verificamos que la fecha no sea nula.
-		if (date == null) {
-			log.warn("The date cannot be null.");
-			throw new UncheckedException("The date cannot be null.");
-		}
+		VerifierUtil.checkNotNull(date, "The date cannot be null.");
 
 		// Hacemos los calculos.
 		Calendar calendar = Calendar.getInstance();
@@ -795,10 +774,7 @@ public class DateUtil implements Serializable {
 	 */
 	public static Date getFirstDayOfMonth(Date date) {
 		// Verificamos que la fecha no sea nula.
-		if (date == null) {
-			log.warn("The date cannot be null.");
-			throw new UncheckedException("The date cannot be null.");
-		}
+		VerifierUtil.checkNotNull(date, "The date cannot be null.");
 
 		// Hacemos los calculos.
 		Calendar calendar = Calendar.getInstance();
@@ -824,10 +800,7 @@ public class DateUtil implements Serializable {
 	 */
 	public static Date getLastDayOfMonth(Date date) {
 		// Verificamos que la fecha no sea nula.
-		if (date == null) {
-			log.warn("The date cannot be null.");
-			throw new UncheckedException("The date cannot be null.");
-		}
+		VerifierUtil.checkNotNull(date, "The date cannot be null.");
 
 		// Hacemos los calculos.
 		Calendar calendar = Calendar.getInstance();
