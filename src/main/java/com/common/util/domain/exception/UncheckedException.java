@@ -55,41 +55,39 @@ public class UncheckedException extends RuntimeException {
 	}
 
 	/**
-	 * El constructor de una instancia de {@link UncheckedException} que recibe como parámetro el {@link Throwable} para mantener el
-	 * problema que produjo el lanzamiento de esta {@link UncheckedException} y un un mensaje de {@link ErrorDetail} que vamos a crear en el momento.
+	 * El constructor de una instancia de {@link UncheckedException} que recibe como parámetro el {@link Throwable} para mantener el problema que
+	 * produjo el lanzamiento de esta {@link UncheckedException} y un un mensaje de {@link ErrorDetail} que vamos a crear en el momento.
 	 * 
 	 * @param cause
 	 *            La causa de un problema que vamos a contener dentro de esta excepción.
-	 * @param message
-	 *            El mensaje del error.
-	 * @param parameter
+	 * @param defaultMessage
+	 *            El mensaje por omisión del detalle del error.
+	 * @param keyMessage
+	 *            La clave del mensaje del detalle del error.
+	 * @param parameters
 	 *            Los parámetros que requerimos para el detalle del error.
 	 */
-	public UncheckedException(Throwable cause, String message, Object... parameter) {
-		super(message, cause);
+	public UncheckedException(Throwable cause, String defaultMessage, String keyMessage, Object... parameters) {
+		super(defaultMessage, cause);
 		this.errors = new Errors();
-		
-		if (message != null) {
-			this.errors.addError(message);
-		}
+		this.errors.addError(defaultMessage, keyMessage, parameters);
 	}
 
 	/**
 	 * El constructor de una instancia de {@link UncheckedException} que recibe como parámetro un mensaje de {@link ErrorDetail} que vamos a crear en
 	 * el momento.
 	 * 
-	 * @param message
-	 *            El mensaje del error.
-	 * @param parameter
+	 * @param defaultMessage
+	 *            El mensaje por omisión del detalle del error.
+	 * @param keyMessage
+	 *            La clave del mensaje del detalle del error.
+	 * @param parameters
 	 *            Los parámetros que requerimos para el detalle del error.
 	 */
-	public UncheckedException(String message, Object... parameter) {
-		super(message);
+	public UncheckedException(String defaultMessage, String keyMessage, Object... parameters) {
+		super(defaultMessage);
 		this.errors = new Errors();
-		
-		if (message != null) {
-			this.errors.addError(message, parameter);
-		}
+		this.errors.addError(defaultMessage, keyMessage, parameters);
 	}
 
 	/**
@@ -121,7 +119,7 @@ public class UncheckedException extends RuntimeException {
 		StringBuffer stringBuffer = new StringBuffer();
 
 		for (ErrorDetail errorDetail : this.errors.getErrorDetails()) {
-			stringBuffer.append(HolderMessage.getMessage(errorDetail.getMessage(), errorDetail.getParameters()));
+			stringBuffer.append(HolderMessage.getMessage(errorDetail.getDefaultMessage(), errorDetail.getKeyMessage(), errorDetail.getParameters()));
 			stringBuffer.append(this.getMessageSeparator());
 		}
 

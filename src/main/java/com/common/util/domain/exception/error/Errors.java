@@ -53,13 +53,15 @@ public class Errors implements Serializable {
 	/**
 	 * Se encarga de agregar un nuevo detalle dentro de este conjunto.
 	 * 
-	 * @param message
-	 *            La clave del error.
+	 * @param defaultMessage
+	 *            El mensaje por omisión del detalle del error.
+	 * @param keyMessage
+	 *            La clave del mensaje del detalle del error.
 	 * @param parameters
 	 *            El listado de los parámetros que vamos a utilizar para detallar el error.
 	 */
-	public void addError(String message, Object... parameters) {
-		this.errorDetails.add(new ErrorDetail(message, parameters));
+	public void addError(String defaultMessage, String keyMessage, Object... parameters) {
+		this.errorDetails.add(new ErrorDetail(defaultMessage, keyMessage, parameters));
 	}
 
 	/**

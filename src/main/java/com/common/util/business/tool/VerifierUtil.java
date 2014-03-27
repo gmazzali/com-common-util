@@ -61,13 +61,17 @@ public class VerifierUtil implements Serializable {
 	 * 
 	 * @param object
 	 *            El objeto que vamos a verificar si es <code>null</code> o no.
-	 * @param message
-	 *            El mensaje que vamos a incluir dentro de la {@link UncheckedException} en caso de que el objeto recibido sea <code>null</code>.
+	 * @param defaultMessage
+	 *            El mensaje por omisión que vamos a incluir dentro de la {@link UncheckedException} en caso de que el objeto recibido sea
+	 *            <code>null</code>.
+	 * @param keyMessage
+	 *            La clave del mensaje que vamos a incluir dentro de la {@link UncheckedException} en caso de que el objeto recibido sea
+	 *            <code>null</code>.
 	 */
-	public static void checkNotNull(Object object, String message) {
+	public static void checkNotNull(Object object, String defaultMessage, String keyMessage) {
 		if (object == null) {
-			log.warn(message);
-			throw new UncheckedException(message);
+			log.warn("DEFAULT: " + defaultMessage + " KEY: " + keyMessage);
+			throw new UncheckedException(defaultMessage, keyMessage);
 		}
 	}
 }

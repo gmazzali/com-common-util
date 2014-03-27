@@ -15,6 +15,8 @@ import com.common.util.domain.exception.UncheckedException;
 /**
  * Contiene las funciones básicas de manejo de colecciones dentro de un sistema.
  * 
+ * @see ArrayUtil
+ * 
  * @see Collection
  * @see Predicate
  * @see Process
@@ -30,8 +32,8 @@ public class CollectionUtil {
 	 * Función Null-safe que verifica si una colección es vacia.
 	 * 
 	 * @param items
-	 *            La colección que vamos a verificar, puede ser nula.
-	 * @return <i>true</i> si la colección recibida es nula o esta vacía, en caso contrario retorna <i>false</i>.
+	 *            La colección que vamos a verificar, puede ser <code>null</code>.
+	 * @return <i>true</i> si la colección recibida es <code>null</code> o esta vacía, en caso contrario retorna <i>false</i>.
 	 */
 	public static boolean isEmpty(Collection<? extends Object> items) {
 		return (items == null || items.isEmpty());
@@ -72,7 +74,7 @@ public class CollectionUtil {
 	 */
 	public static <I extends Serializable> Map<I, Integer> cardinalities(Collection<I> items) {
 		// Verificamos que la colección recibida no sea nula.
-		VerifierUtil.checkNotNull(items, "The collection cannot be null.");
+		VerifierUtil.checkNotNull(items, "The collection cannot be null", "util.collection.error.cardinalities.collection.null");
 
 		Map<I, Integer> cardinalities = new HashMap<I, Integer>();
 		Iterator<I> iterator = items.iterator();
@@ -103,7 +105,7 @@ public class CollectionUtil {
 	 */
 	public static <I extends Serializable> int cardinality(Collection<I> items, I item) {
 		// Verificamos que la colección recibida no sea nula.
-		VerifierUtil.checkNotNull(items, "The collection cannot be null.");
+		VerifierUtil.checkNotNull(items, "The collection cannot be null", "util.collection.error.cardinality.collection.null");
 
 		int count = 0;
 		Iterator<I> it = items.iterator();
@@ -132,8 +134,8 @@ public class CollectionUtil {
 	 */
 	public static <I extends Serializable> int count(Collection<I> items, Predicate<I> predicate) {
 		// Verificamos que la colección o el predicado no sean nulos.
-		VerifierUtil.checkNotNull(items, "The collection cannot be null.");
-		VerifierUtil.checkNotNull(predicate, "The predicate cannot be null.");
+		VerifierUtil.checkNotNull(items, "The collection cannot be null", "util.collection.error.count.collection.null");
+		VerifierUtil.checkNotNull(predicate, "The predicate cannot be null", "util.collection.error.count.predicate.null");
 
 		int count = 0;
 		Iterator<I> iterator = items.iterator();
@@ -163,8 +165,8 @@ public class CollectionUtil {
 	 */
 	public static <I extends Serializable> I find(Collection<I> items, Predicate<I> predicate) {
 		// Verificamos que la colección o el predicado no sean nulos.
-		VerifierUtil.checkNotNull(items, "The collection cannot be null.");
-		VerifierUtil.checkNotNull(predicate, "The predicate cannot be null.");
+		VerifierUtil.checkNotNull(items, "The collection cannot be null", "util.collection.error.find.collection.null");
+		VerifierUtil.checkNotNull(predicate, "The predicate cannot be null", "util.collection.error.find.predicate.null");
 
 		Iterator<I> iterator = items.iterator();
 
@@ -192,8 +194,8 @@ public class CollectionUtil {
 	 */
 	public static <I extends Serializable> void filter(Collection<I> items, Predicate<I> predicate) {
 		// Verificamos que la colección o el predicado no sean nulos.
-		VerifierUtil.checkNotNull(items, "The collection cannot be null.");
-		VerifierUtil.checkNotNull(predicate, "The predicate cannot be null.");
+		VerifierUtil.checkNotNull(items, "The collection cannot be null", "util.collection.error.filter.collection.null");
+		VerifierUtil.checkNotNull(predicate, "The predicate cannot be null", "util.collection.error.filter.predicate.null");
 
 		Iterator<I> iterator = items.iterator();
 
@@ -220,8 +222,8 @@ public class CollectionUtil {
 	 */
 	public static <I extends Serializable> boolean exist(Collection<I> items, Predicate<I> predicate) {
 		// Verificamos que la colección o el predicado no sean nulos.
-		VerifierUtil.checkNotNull(items, "The collection cannot be null.");
-		VerifierUtil.checkNotNull(predicate, "The predicate cannot be null.");
+		VerifierUtil.checkNotNull(items, "The collection cannot be null", "util.collection.error.exist.collection.null");
+		VerifierUtil.checkNotNull(predicate, "The predicate cannot be null", "util.collection.error.exist.predicate.null");
 
 		Iterator<I> iterator = items.iterator();
 
@@ -250,8 +252,8 @@ public class CollectionUtil {
 	 */
 	public static <I extends Serializable> Collection<I> select(Collection<I> items, Predicate<I> predicate) {
 		// Verificamos que la colección o el predicado no sean nulos.
-		VerifierUtil.checkNotNull(items, "The collection cannot be null.");
-		VerifierUtil.checkNotNull(predicate, "The predicate cannot be null.");
+		VerifierUtil.checkNotNull(items, "The collection cannot be null", "util.collection.error.select.collection.null");
+		VerifierUtil.checkNotNull(predicate, "The predicate cannot be null", "util.collection.error.select.predicate.null");
 
 		ArrayList<I> outputCollection = new ArrayList<I>(items.size());
 		Iterator<I> iterator = items.iterator();
@@ -279,8 +281,8 @@ public class CollectionUtil {
 	 */
 	public static <I extends Serializable> void processAll(Collection<I> items, Process<I> process) {
 		// Verificamos que la colección o el procesador no sean nulos.
-		VerifierUtil.checkNotNull(items, "The collection cannot be null.");
-		VerifierUtil.checkNotNull(process, "The process cannot be null.");
+		VerifierUtil.checkNotNull(items, "The collection cannot be null", "util.collection.error.processall.collection.null");
+		VerifierUtil.checkNotNull(process, "The process cannot be null", "util.collection.error.processall.process.null");
 
 		Iterator<I> iterator = items.iterator();
 
@@ -304,8 +306,8 @@ public class CollectionUtil {
 	 */
 	public static <I extends Serializable, O extends Serializable> Collection<O> transform(Collection<I> items, Transformer<I, O> transformer) {
 		// Verificamos que la colección o el transformador no sean nulos.
-		VerifierUtil.checkNotNull(items, "The collection cannot be null.");
-		VerifierUtil.checkNotNull(transformer, "The transformer cannot be null.");
+		VerifierUtil.checkNotNull(items, "The collection cannot be null", "util.collection.error.transformer.collection.null");
+		VerifierUtil.checkNotNull(transformer, "The transformer cannot be null", "util.collection.error.transformer.transformer.null");
 
 		ArrayList<O> outputCollection = new ArrayList<O>(items.size());
 		Iterator<I> iterator = items.iterator();
@@ -332,8 +334,8 @@ public class CollectionUtil {
 	 */
 	public static <I extends Serializable> Collection<I> union(Collection<I> firstCollection, Collection<I> secondCollection) {
 		// Verificamos que las colecciones no sean nulas.
-		VerifierUtil.checkNotNull(firstCollection, "The fisrt collection cannot be null.");
-		VerifierUtil.checkNotNull(secondCollection, "The second collection cannot be null.");
+		VerifierUtil.checkNotNull(firstCollection, "The first collection cannot be null", "util.collection.error.union.collection.1.null");
+		VerifierUtil.checkNotNull(secondCollection, "The second collection cannot be null", "util.collection.error.union.collection.2.null");
 
 		ArrayList<I> outputCollection = new ArrayList<I>();
 
@@ -370,8 +372,8 @@ public class CollectionUtil {
 	 */
 	public static <I extends Serializable> Collection<I> intersection(Collection<I> firstCollection, Collection<I> secondCollection) {
 		// Verificamos que las colecciones no sean nulas.
-		VerifierUtil.checkNotNull(firstCollection, "The fisrt collection cannot be null.");
-		VerifierUtil.checkNotNull(secondCollection, "The second collection cannot be null.");
+		VerifierUtil.checkNotNull(firstCollection, "The first collection cannot be null", "util.collection.error.intersection.collection.1.null");
+		VerifierUtil.checkNotNull(secondCollection, "The second collection cannot be null", "util.collection.error.intersection.collection.2.null");
 
 		ArrayList<I> outputCollection = new ArrayList<I>();
 
@@ -408,8 +410,8 @@ public class CollectionUtil {
 	 */
 	public static <I extends Serializable> Collection<I> disjunction(Collection<I> firstCollection, Collection<I> secondCollection) {
 		// Verificamos que las colecciones no sean nulas.
-		VerifierUtil.checkNotNull(firstCollection, "The fisrt collection cannot be null.");
-		VerifierUtil.checkNotNull(secondCollection, "The second collection cannot be null.");
+		VerifierUtil.checkNotNull(firstCollection, "The first collection cannot be null", "util.collection.error.disjunction.collection.1.null");
+		VerifierUtil.checkNotNull(secondCollection, "The second collection cannot be null", "util.collection.error.disjunction.collection.2.null");
 
 		ArrayList<I> outputCollection = new ArrayList<I>();
 
@@ -449,8 +451,8 @@ public class CollectionUtil {
 	 */
 	public static <I extends Serializable> Collection<I> subtract(Collection<I> firstCollection, Collection<I> secondCollection) {
 		// Verificamos que las colecciones no sean nulas.
-		VerifierUtil.checkNotNull(firstCollection, "The fisrt collection cannot be null.");
-		VerifierUtil.checkNotNull(secondCollection, "The second collection cannot be null.");
+		VerifierUtil.checkNotNull(firstCollection, "The first collection cannot be null", "util.collection.error.subtract.collection.1.null");
+		VerifierUtil.checkNotNull(secondCollection, "The second collection cannot be null", "util.collection.error.subtract.collection.2.null");
 
 		ArrayList<I> outputCollection = new ArrayList<I>(firstCollection);
 		Iterator<I> iterator = secondCollection.iterator();

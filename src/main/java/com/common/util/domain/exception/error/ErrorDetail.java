@@ -3,6 +3,8 @@ package com.common.util.domain.exception.error;
 import java.io.Serializable;
 import java.util.Arrays;
 
+import com.common.util.business.tool.StringUtil;
+
 /**
  * Los detalles de los errores dados mediante una frase dada y un conjuntos de parámetros que permiten complementar el mismo.
  * 
@@ -16,69 +18,56 @@ public class ErrorDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * El mensaje que describe el error.
+	 * El mensaje por omisión de este detalle del error.
 	 */
-	protected final String message;
+	protected final String defaultMessage;
 	/**
-	 * El arreglo de elementos que complementan el detalle del error.
+	 * La clave que corresponde con el mensaje de este detalle del error.
+	 */
+	protected final String keyMessage;
+	/**
+	 * Los parámetros que nos permiten completar los datos del detalle de este error.
 	 */
 	protected final Object[] parameters;
 
 	/**
-	 * El constructor por copia de un detalle de un error.
+	 * El construtor de un detalle de un error.
 	 * 
-	 * @param message
-	 *            El mensaje que describe el error.
+	 * @param defaultMessage
+	 *            El mensaje por omisión de este detalle del error.
+	 * @param keyMessage
+	 *            La clave que corresponde con el mensaje de este detalle del error.
 	 * @param parameters
-	 *            El listado de los parámetros que detallan el error.
+	 *            Los parámetros que nos permiten completar los datos del detalle de este error.
 	 */
-	public ErrorDetail(String message, Object... parameters) {
+	public ErrorDetail(String defaultMessage, String keyMessage, Object... parameters) {
 		super();
-		this.message = message;
+		this.defaultMessage = defaultMessage;
+		this.keyMessage = keyMessage;
 		this.parameters = parameters;
-	}
-
-	/**
-	 * El constructor de un detalle solo con un mensaje de error.
-	 * 
-	 * @param message
-	 *            El mensaje que contiene una descripción del error.
-	 */
-	public ErrorDetail(String message) {
-		this(message, new Object[0]);
-	}
-
-	/**
-	 * El constructor por omisión.
-	 */
-	public ErrorDetail() {
-		this(null, new Object[0]);
 	}
 
 	/**
 	 * La función que despliega el detalle de error de la forma:
 	 * 
 	 * <pre>
-	 * message [parameter1, parameter2, etc...]
+	 * DEFAULT: {@link #defaultMessage} KEY: {@link #keyMessage} VALUES: {@link #parameters} };
 	 * </pre>
 	 * 
 	 * @return El mensaje que contiene el detalle formateado.
 	 */
 	@Override
 	public String toString() {
-		StringBuffer buffer = new StringBuffer(this.message);
-		
-		if (this.parameters != null) {
-			buffer.append(" [");
-			for (int index = 0; index < this.parameters.length; index++) {
-				buffer.append(this.parameters[index]);
+		StringBuffer buffer = new StringBuffer();
 
-				if (index < this.parameters.length - 1) {
-					buffer.append(", ");
-				}
-			}
-			buffer.append(" ]");
-		}
+		buffer.append("DEFAULT: ");
+		buffer.append(this.defaultMessage);
+		buffer.append(" KEY: ");
+		buffer.append(this.keyMessage);
+		buffer.append(" VALUES: {");
+		buffer.append(StringUtil.arrayToDelimitedString(parameters, ", "));
+		buffer.append("};");
+
 		return buffer.toString();
 	}
 
@@ -86,8 +75,9 @@ public class ErrorDetail implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((this.message == null) ? 0 : this.message.hashCode());
-		result = prime * result + Arrays.hashCode(this.parameters);
+		result = prime * result + ((defaultMessage == null) ? 0 : defaultMessage.hashCode());
+		result = prime * result + ((keyMessage == null) ? 0 : keyMessage.hashCode());
+		result = prime * result + Arrays.hashCode(parameters);
 		return result;
 	}
 
@@ -96,42 +86,53 @@ public class ErrorDetail implements Serializable {
 		if (this == obj) {
 			return true;
 		}
-
 		if (obj == null) {
 			return false;
 		}
-
-		if (this.getClass() != obj.getClass()) {
+		if (getClass() != obj.getClass()) {
 			return false;
 		}
-
 		ErrorDetail other = (ErrorDetail) obj;
-		if (this.message == null) {
-			if (other.message != null) {
+		if (defaultMessage == null) {
+			if (other.defaultMessage != null) {
 				return false;
 			}
-		} else if (!this.message.equals(other.message)) {
+		} else if (!defaultMessage.equals(other.defaultMessage)) {
 			return false;
 		}
-
-		if (!Arrays.equals(this.parameters, other.parameters)) {
+		if (keyMessage == null) {
+			if (other.keyMessage != null) {
+				return false;
+			}
+		} else if (!keyMessage.equals(other.keyMessage)) {
 			return false;
 		}
-
+		if (!Arrays.equals(parameters, other.parameters)) {
+			return false;
+		}
 		return true;
 	}
 
 	/**
-	 * La función encargada de retornar el mensaje que contiene el detalle de un error.
+	 * Se ncargada de retornar el mensaje por omisión que contiene el detalle de un error.
 	 * 
-	 * @return El mensaje de detalle del error.
+	 * @return El mensaje por omisión de detalle del error.
 	 */
-	public String getMessage() {
-		return this.message;
+	public String getDefaultMessage() {
+		return this.defaultMessage;
 	}
 
 	/**
-	 * La función encargada de retornar el conjunto de parámetros que recibimos para complementar el detalle del error.
+	 * Se encargada de retornar la clave del mensaje que contiene el detalle de un error.
+	 * 
+	 * @return La clave del mensaje que contiene el detalle del error.
+	 */
+	public String getKeyMessage() {
+		return this.keyMessage;
+	}
+
+	/**
+	 * Se encargada de retornar el conjunto de parámetros que recibimos para complementar el detalle del error.
 	 * 
 	 * @return El conjunto de elementos para complementar el detalle del error.
 	 */
