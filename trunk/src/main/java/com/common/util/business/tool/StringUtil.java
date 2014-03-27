@@ -5,6 +5,8 @@ import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
+import com.common.util.business.tool.collection.ArrayUtil;
+
 /**
  * La utilería para el manejo de los String.
  * 
@@ -396,5 +398,34 @@ public class StringUtil implements Serializable {
 			log.error("pattern failed", ex);
 			return false;
 		}
+	}
+
+	/**
+	 * Permite crear una cadena conteniendo el listado de los objetos que recibimos en el arreglo separados por un delimitador dado.
+	 * 
+	 * @param objects
+	 *            El arreglo que vamos a recorrer para convertirlo en una cadena.
+	 * @param delimiter
+	 *            El delimitador que vamos a usar entre medio de cada objeto del arreglo.
+	 * @return La cadena convertida de todos los objetos del arreglo separador por un delimitador entre medio de cada par de objetos. En caso de
+	 *         recibir un arreglo vacío, se retorna una cadena vacía.
+	 */
+	public static String arrayToDelimitedString(Object[] objects, String delimiter) {
+		if (ArrayUtil.isEmpty(objects)) {
+			return "";
+		}
+		
+		if (objects.length == 1) {
+			return StringUtil.toString(objects[0]);
+		}
+		
+		StringBuilder buffer = new StringBuilder();
+		for (int i = 0; i < objects.length; i++) {
+			if (i > 0) {
+				buffer.append(delimiter);
+			}
+			buffer.append(objects[i]);
+		}
+		return buffer.toString();
 	}
 }

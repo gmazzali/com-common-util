@@ -6,6 +6,9 @@ import com.common.util.domain.exception.UncheckedException;
  * La clase que nos permite realizar conversiones basicas entre diferentes elementos dentro de un sistema, como ser conversiones físicas o químicas, o
  * convertir un número en una cadena de caracteres con su descripción.
  * 
+ * TODO Terminar de ver si esto deberia estar aca o no.
+ * 
+ * @since 02/03/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */
@@ -97,7 +100,7 @@ public class ConverterUtil {
 	 * El conjunto de los nombres de los grupos de miles en singular.
 	 * 
 	 * La lista en la ubicación <b>cero</b> debe corresponder a:
-	 *  
+	 * 
 	 * <ul>
 	 * <li>0: mil</li>
 	 * <li>1: millón</li>
@@ -108,8 +111,8 @@ public class ConverterUtil {
 	 * <li>...</li>
 	 * </ul>
 	 * 
-	 *  La lista en la ubicación <b>uno</b> debe corresponder a:
-	 *  
+	 * La lista en la ubicación <b>uno</b> debe corresponder a:
+	 * 
 	 * <ul>
 	 * <li>0: miles</li>
 	 * <li>1: millones</li>
@@ -230,8 +233,8 @@ public class ConverterUtil {
 	 * <li>UBICACION: 1 -> Cadena en plural</li>
 	 * </ul>
 	 * 
-	 *  La lista recibida en la ubicación <b>cero</b> debe corresponder a:
-	 *  
+	 * La lista recibida en la ubicación <b>cero</b> debe corresponder a:
+	 * 
 	 * <ul>
 	 * <li>0: mil</li>
 	 * <li>1: millón</li>
@@ -242,8 +245,8 @@ public class ConverterUtil {
 	 * <li>...</li>
 	 * </ul>
 	 * 
-	 *  La lista recibida en la ubicación <b>uno</b> debe corresponder a:
-	 *  
+	 * La lista recibida en la ubicación <b>uno</b> debe corresponder a:
+	 * 
 	 * <ul>
 	 * <li>0: miles</li>
 	 * <li>1: millones</li>
@@ -333,7 +336,7 @@ public class ConverterUtil {
 
 		return output.trim();
 	}
-	
+
 	/**
 	 * Permite convertir un número entero en una cadena de texto que contiene el nombre del número. Por ejemplo:
 	 * 
@@ -368,7 +371,7 @@ public class ConverterUtil {
 	public static String convertIntegerNumberToWords(final Integer value) {
 		// Verificamos que el número recibido no sea nulo.
 		if (value == null) {
-			throw new UncheckedException("The value don't must be null.");
+			throw new UncheckedException();
 		}
 
 		Integer integer = value.intValue();

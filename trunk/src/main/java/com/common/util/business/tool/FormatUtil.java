@@ -70,8 +70,8 @@ public class FormatUtil {
 	 */
 	public static String formatDate(Date date, String pattern) {
 		// Verificamos que la fecha y el patrón no sea nulos.
-		VerifierUtil.checkNotNull(date, "The date cannot be null.");
-		VerifierUtil.checkNotNull(pattern, "The pattern cannot be null.");
+		VerifierUtil.checkNotNull(date, "The date cannot be null", "util.format.error.date.date.null");
+		VerifierUtil.checkNotNull(pattern, "The pattern cannot be null", "util.format.error.date.pattern.null");
 
 		// Retornamos la fecha formateada.
 		return new SimpleDateFormat(pattern).format(date);
@@ -173,7 +173,7 @@ public class FormatUtil {
 	 * <b>OUTPUT: "000.001.234.567.890,123"</b>
 	 * </pre>
 	 * 
-	 * @param value
+	 * @param number
 	 *            El valor entero que vamos a formatear.
 	 * @param minimumIntegerSize
 	 *            La mínima cantidad de digitos con la que vamos a formatear la parte entera del número. En caso de que este valor sea nulo o menor o
@@ -199,10 +199,10 @@ public class FormatUtil {
 	 * @throws UncheckedException
 	 *             En caso de que alguno de los parámetros sea nulo.
 	 */
-	public static String formatNumber(Number value, Integer minimumIntegerSize, Integer maximumIntegerSize, Integer minimumDecimalSize,
+	public static String formatNumber(Number number, Integer minimumIntegerSize, Integer maximumIntegerSize, Integer minimumDecimalSize,
 			Integer maximumDecimalSize, Character decimalSeparator, Integer groupSize, Character groupSeparator) {
 		// Verificamos que el número a formatear no sea nulo.
-		VerifierUtil.checkNotNull(value, "The value cannot be null.");
+		VerifierUtil.checkNotNull(number, "The number cannot be null", "util.format.error.number.number.null");
 
 		DecimalFormat formatter = FormatUtil.getNumberFormat();
 		DecimalFormatSymbols symbols = formatter.getDecimalFormatSymbols();
@@ -234,8 +234,8 @@ public class FormatUtil {
 		}
 
 		// Solo agregamos los decimales si el numero lo soporta.
-		Boolean decimal = !(value instanceof Long || value instanceof Integer || value instanceof Short || value instanceof Byte
-				|| value instanceof AtomicInteger || value instanceof AtomicLong || (value instanceof BigInteger && ((BigInteger) value).bitLength() < 64));
+		Boolean decimal = !(number instanceof Long || number instanceof Integer || number instanceof Short || number instanceof Byte
+				|| number instanceof AtomicInteger || number instanceof AtomicLong || (number instanceof BigInteger && ((BigInteger) number).bitLength() < 64));
 
 		if (decimal) {
 			// Seteamos la cantidad de digitos a mostrar.
@@ -261,7 +261,7 @@ public class FormatUtil {
 		// Volvemos a setear el conjunto de simbolos al formateador.
 		formatter.setDecimalFormatSymbols(symbols);
 
-		return value != null ? formatter.format(value) : "";
+		return number != null ? formatter.format(number) : "";
 	}
 
 	/**
