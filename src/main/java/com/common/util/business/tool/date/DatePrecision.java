@@ -4,13 +4,13 @@ package com.common.util.business.tool.date;
  * La enumeración que vamos a ocupar para definir la precisión con la que se va a manipular las fechas.
  * 
  * <ul>
- * <li>{@link DatePrecision#YEAR}</li>
- * <li>{@link DatePrecision#MONTH}</li>
- * <li>{@link DatePrecision#DAY}</li>
- * <li>{@link DatePrecision#HOUR}</li>
- * <li>{@link DatePrecision#MINUTE}</li>
- * <li>{@link DatePrecision#SECOND}</li>
- * <li>{@link DatePrecision#MILLISECOND}</li>
+ * <li>{@link DatePrecision#YEAR YEAR}</li>
+ * <li>{@link DatePrecision#MONTH MONTH}</li>
+ * <li>{@link DatePrecision#DAY DAY}</li>
+ * <li>{@link DatePrecision#HOUR HOUR}</li>
+ * <li>{@link DatePrecision#MINUTE MINUTE}</li>
+ * <li>{@link DatePrecision#SECOND SECOND}</li>
+ * <li>{@link DatePrecision#MILLISECOND MILLISECOND}</li>
  * </ul>
  * 
  * @see DateUtil

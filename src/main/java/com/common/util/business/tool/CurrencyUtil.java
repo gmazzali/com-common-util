@@ -1,5 +1,12 @@
 package com.common.util.business.tool;
 
+/**
+ * La clase que nos permite manipular las importes de dinero dentro de un sistema.
+ * 
+ * @since 05/02/2014
+ * @author Guillermo Mazzali
+ * @version 1.0
+ */
 public class CurrencyUtil {
 
 	/**
