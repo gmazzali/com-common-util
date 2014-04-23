@@ -59,11 +59,14 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	 * datos.
 	 */
 	public BaseDaoImpl() {
-		// if (this instanceof ParameterizedType) {
-		// ParameterizedType pt = (ParameterizedType) super.getClass().getGenericSuperclass();
-		// this.persistentClass = (Class<E>) pt.getActualTypeArguments()[0];
-		// }
-		this.persistentClass = (Class<E>) ((ParameterizedType) super.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+		try {
+			this.persistentClass = (Class<E>) ((ParameterizedType) super.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+		} catch (Exception ex) {
+			log.error("The generic parameter class of the base dao cannot be empty", ex);
+			throw new UncheckedException("The generic parameter class of the base dao cannot be empty", "base.dao.error.parameter.empty");
+		}
+
+		// this.persistentClass = (Class<E>) ((ParameterizedType) super.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	}
 
 	/**
