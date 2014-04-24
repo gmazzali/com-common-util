@@ -2,6 +2,8 @@ package com.common.util.business.tool;
 
 import junit.framework.Assert;
 
+import org.apache.log4j.BasicConfigurator;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.common.util.business.tool.ConverterUtil;
@@ -15,6 +17,11 @@ import com.common.util.business.tool.ConverterUtil;
  */
 public class ConverterUtilUnitTest {
 
+	@BeforeClass
+	public static void initClass() {
+		BasicConfigurator.configure();
+	}
+
 	/**
 	 * La pruebas sobre el método <i><b>formatCurrency</b></i> de {@link ConverterUtil}
 	 * 
@@ -22,7 +29,6 @@ public class ConverterUtilUnitTest {
 	 */
 	@Test
 	public void testConvertNumberToString() {
-
 		Short value = null;
 		String output = null;
 

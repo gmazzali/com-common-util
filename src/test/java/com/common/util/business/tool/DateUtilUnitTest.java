@@ -6,6 +6,8 @@ import java.util.Date;
 
 import junit.framework.Assert;
 
+import org.apache.log4j.BasicConfigurator;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.common.util.business.tool.date.DatePrecision;
@@ -25,6 +27,11 @@ public class DateUtilUnitTest {
 	 */
 	private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss SSS");
 
+	@BeforeClass
+	public static void initClass() {
+		BasicConfigurator.configure();
+	}
+
 	/**
 	 * La pruebas sobre el método <i><b>createDate</b></i> de {@link DateUtil}
 	 * 
@@ -32,7 +39,6 @@ public class DateUtilUnitTest {
 	 */
 	@Test
 	public void testCreateDate() {
-
 		try {
 			DateUtil.createDate(null, null);
 			Assert.fail();
@@ -85,9 +91,9 @@ public class DateUtilUnitTest {
 			}
 
 			try {
-				Assert.assertTrue(DateUtil.compare(date1, date2, null) > 0);
-				Assert.fail();
+				Assert.assertTrue(DateUtil.compare(date1, date2, null) == 0);
 			} catch (Exception e) {
+				Assert.fail();
 			}
 
 			try {

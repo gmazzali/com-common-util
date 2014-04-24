@@ -8,6 +8,8 @@ import java.util.Map;
 
 import junit.framework.Assert;
 
+import org.apache.log4j.BasicConfigurator;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.common.util.business.tool.collection.CollectionUtil;
@@ -24,6 +26,11 @@ import com.common.util.business.tool.collection.Transformer;
  */
 public class CollectionUtilUnitTest {
 
+	@BeforeClass
+	public static void initClass() {
+		BasicConfigurator.configure();
+	}
+
 	/**
 	 * La pruebas sobre los métodos <i><b>isEmpty</b></i> y <i><b>isNotEmpty</b></i> de {@link CollectionUtil}
 	 * 
@@ -32,7 +39,6 @@ public class CollectionUtilUnitTest {
 	 */
 	@Test
 	public void testEmpty() {
-
 		// Probamos con el valor nulo.
 		try {
 			CollectionUtil.isEmpty(null);
@@ -60,7 +66,6 @@ public class CollectionUtilUnitTest {
 	 */
 	@Test
 	public void testInclude() {
-
 		// Probamos con el valor nulo.
 		try {
 			CollectionUtil.<String> isInclude(null, null);
@@ -99,7 +104,6 @@ public class CollectionUtilUnitTest {
 	 */
 	@Test
 	public void testCardinalities() {
-
 		// Probamos con el valor nulo.
 		try {
 			CollectionUtil.<String> cardinalities(null);
@@ -134,7 +138,6 @@ public class CollectionUtilUnitTest {
 	 */
 	@Test
 	public void testCardinality() {
-
 		// Probamos con el valor nulo.
 		try {
 			CollectionUtil.<String> cardinality(null, null);
@@ -179,7 +182,6 @@ public class CollectionUtilUnitTest {
 	 */
 	@Test
 	public void testCount() {
-
 		// Probamos con el valor nulo.
 		try {
 			CollectionUtil.count(null, null);
@@ -252,7 +254,6 @@ public class CollectionUtilUnitTest {
 	 */
 	@Test
 	public void testExist() {
-
 		// Probamos con el valor nulo.
 		try {
 			CollectionUtil.<String> exist(null, null);
@@ -334,7 +335,6 @@ public class CollectionUtilUnitTest {
 	 */
 	@Test
 	public void testFilter() {
-
 		// Probamos con el valor nulo.
 		try {
 			CollectionUtil.<String> filter(null, null);
@@ -407,7 +407,6 @@ public class CollectionUtilUnitTest {
 	 */
 	@Test
 	public void testFind() {
-
 		// Probamos con el valor nulo.
 		try {
 			CollectionUtil.<String> find(null, null);
@@ -481,7 +480,6 @@ public class CollectionUtilUnitTest {
 	 */
 	@Test
 	public void testSelect() {
-
 		// Probamos con el valor nulo.
 		try {
 			CollectionUtil.<String> select(null, null);
@@ -546,7 +544,6 @@ public class CollectionUtilUnitTest {
 	 */
 	@Test
 	public void testProcessAll() {
-
 		// Probamos con el valor nulo.
 		try {
 			CollectionUtil.<StringBuffer> processAll(null, null);
@@ -603,7 +600,6 @@ public class CollectionUtilUnitTest {
 	 */
 	@Test
 	public void testTransform() {
-
 		// Probamos con el valor nulo.
 		try {
 			CollectionUtil.<String, Integer> transform(null, null);
@@ -659,7 +655,6 @@ public class CollectionUtilUnitTest {
 	 */
 	@Test
 	public void testUnion() {
-
 		// Probamos con el valor nulo.
 		try {
 			CollectionUtil.<String> union(null, null);
@@ -716,7 +711,6 @@ public class CollectionUtilUnitTest {
 	 */
 	@Test
 	public void testIntersection() {
-
 		// Probamos con el valor nulo.
 		try {
 			CollectionUtil.<String> intersection(null, null);
@@ -768,7 +762,6 @@ public class CollectionUtilUnitTest {
 	 */
 	@Test
 	public void testDisjunction() {
-
 		// Probamos con el valor nulo.
 		try {
 			CollectionUtil.<String> disjunction(null, null);
@@ -823,7 +816,6 @@ public class CollectionUtilUnitTest {
 	 */
 	@Test
 	public void testSubtract() {
-
 		// Probamos con el valor nulo.
 		try {
 			CollectionUtil.<String> subtract(null, null);

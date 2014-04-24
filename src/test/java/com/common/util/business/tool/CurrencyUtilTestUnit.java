@@ -2,7 +2,9 @@ package com.common.util.business.tool;
 
 import junit.framework.Assert;
 
+import org.apache.log4j.BasicConfigurator;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.common.util.business.tool.CurrencyUtil;
@@ -15,6 +17,11 @@ import com.common.util.business.tool.CurrencyUtil;
  * @version 1.0
  */
 public class CurrencyUtilTestUnit {
+
+	@BeforeClass
+	public static void initClass() {
+		BasicConfigurator.configure();
+	}
 
 	/**
 	 * Iniciamos el formato de la moneda.
@@ -34,7 +41,6 @@ public class CurrencyUtilTestUnit {
 	 */
 	@Test
 	public void testFormatCurrency() {
-
 		Double currency = null;
 		String output = null;
 
