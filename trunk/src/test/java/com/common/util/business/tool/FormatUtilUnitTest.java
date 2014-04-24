@@ -2,7 +2,9 @@ package com.common.util.business.tool;
 
 import junit.framework.Assert;
 
+import org.apache.log4j.BasicConfigurator;
 import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.common.util.business.tool.FormatUtil;
@@ -20,6 +22,11 @@ public class FormatUtilUnitTest {
 
 	public static final String DECIMAL_SEPARATOR = ",";
 
+	@BeforeClass
+	public static void initClass() {
+		BasicConfigurator.configure();
+	}
+	
 	/**
 	 * Cuando se termina de ejecutar la prueba, dejamos un espacio en blanco.
 	 */
@@ -656,7 +663,6 @@ public class FormatUtilUnitTest {
 	 */
 	@Test
 	public void testZeroFill() {
-
 		// Probamos con valores nulos.
 		try {
 			FormatUtil.zeroFill(null, null);

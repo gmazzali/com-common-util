@@ -106,7 +106,7 @@ public class DateUtil implements Serializable {
 		VerifierUtil.checkNotNull(otherDate, "The otherDate cannot be null", "util.date.error.compare.date.2.null");
 
 		if (datePrecision == null) {
-			log.info("The precision cannot be null.");
+			log.info("The precision is set to MILLISECOND");
 			datePrecision = DatePrecision.MILLISECOND;
 		}
 

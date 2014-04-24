@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 import junit.framework.Assert;
 
+import org.apache.log4j.BasicConfigurator;
+import org.junit.BeforeClass;
 import org.junit.Test;
-
-import com.common.util.business.tool.VerifierUtil;
 
 /**
  * La clase que permite probar los métodos de verificación base de la libreria.
@@ -17,6 +17,11 @@ import com.common.util.business.tool.VerifierUtil;
  */
 public class VerifierUtilUnitTest {
 
+	@BeforeClass
+	public static void initClass() {
+		BasicConfigurator.configure();
+	}
+
 	/**
 	 * La pruebas sobre el método <i><b>isEqual</b></i> de {@link VerifierUtil}
 	 * 
@@ -24,7 +29,6 @@ public class VerifierUtilUnitTest {
 	 */
 	@Test
 	public void testIsEqual() {
-
 		// Valores nulos.
 		Assert.assertEquals(true, VerifierUtil.<String> equals(null, null));
 

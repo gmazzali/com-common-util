@@ -2,6 +2,8 @@ package com.common.util.business.tool;
 
 import junit.framework.Assert;
 
+import org.apache.log4j.BasicConfigurator;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.common.util.business.tool.collection.ArrayUtil;
@@ -16,6 +18,11 @@ import com.common.util.business.tool.collection.CollectionUtil;
  */
 public class ArrayUtilTest {
 
+	@BeforeClass
+	public static void initClass() {
+		BasicConfigurator.configure();
+	}
+	
 	/**
 	 * La pruebas sobre los métodos <i><b>isEmpty</b></i> y <i><b>isNotEmpty</b></i> de {@link ArrayUtil}
 	 * 
@@ -23,7 +30,6 @@ public class ArrayUtilTest {
 	 */
 	@Test
 	public void testEmpty() {
-
 		// Probamos con el valor nulo.
 		try {
 			CollectionUtil.isEmpty(null);

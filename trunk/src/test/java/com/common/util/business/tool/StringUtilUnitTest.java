@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 import junit.framework.Assert;
 
+import org.apache.log4j.BasicConfigurator;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.common.util.business.tool.PatternUtil;
@@ -18,6 +20,11 @@ import com.common.util.business.tool.StringUtil;
  */
 public class StringUtilUnitTest {
 
+	@BeforeClass
+	public static void initClass() {
+		BasicConfigurator.configure();
+	}
+	
 	/**
 	 * La pruebas sobre el método <i><b>isEmpty</b></i> de {@link StringUtil}.
 	 * 
@@ -25,7 +32,6 @@ public class StringUtilUnitTest {
 	 */
 	@Test
 	public void testIsEmpty() {
-
 		// Valor nulo.
 		Assert.assertEquals(true, StringUtil.isEmpty(null));
 
@@ -47,7 +53,6 @@ public class StringUtilUnitTest {
 	 */
 	@Test
 	public void testIsBlank() {
-
 		// Valor nulo.
 		Assert.assertEquals(true, StringUtil.isBlank(null));
 
@@ -69,7 +74,6 @@ public class StringUtilUnitTest {
 	 */
 	@Test
 	public void testArrayToString() {
-
 		// Valor nulo.
 		Assert.assertEquals("", StringUtil.arrayToString());
 		Assert.assertEquals("", StringUtil.arrayToString((Character) null));
@@ -93,7 +97,6 @@ public class StringUtilUnitTest {
 	 */
 	@Test
 	public void testStringToArray() {
-
 		// Valor nulo.
 		Assert.assertTrue(Arrays.deepEquals(new Character[] {}, StringUtil.stringToArray(null)));
 
@@ -116,7 +119,6 @@ public class StringUtilUnitTest {
 	 */
 	@Test
 	public void testTrim() {
-
 		// Valor nulo.
 		Assert.assertEquals(null, StringUtil.trim(null));
 		Assert.assertEquals("", StringUtil.trimToEmpty(null));
@@ -161,7 +163,6 @@ public class StringUtilUnitTest {
 	 */
 	@Test
 	public void testStrip() {
-
 		// Valor nulo.
 		Assert.assertEquals(null, StringUtil.strip(null));
 		Assert.assertEquals(null, StringUtil.stripEnd(null));
@@ -276,7 +277,6 @@ public class StringUtilUnitTest {
 	 */
 	@Test
 	public void testMatch() {
-
 		// Valor nulo.
 		Assert.assertEquals(true, StringUtil.match(null, null));
 
