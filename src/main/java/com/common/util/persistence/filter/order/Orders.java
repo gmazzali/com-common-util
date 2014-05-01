@@ -13,7 +13,7 @@ import java.util.Map;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class OrderBy implements Serializable {
+public class Orders implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -24,7 +24,7 @@ public class OrderBy implements Serializable {
 	/**
 	 * El constructor por omisión de un listado de ordenes.
 	 */
-	public OrderBy() {
+	public Orders() {
 		super();
 		this.orders = new HashMap<String, Order>();
 	}
@@ -32,26 +32,26 @@ public class OrderBy implements Serializable {
 	/**
 	 * El constructor de un listado de ordenes que recibe un atributo y el orden del mismo.
 	 * 
-	 * @param attribute
+	 * @param property
 	 *            El atributo que vamos a ordenar.
 	 * @param order
 	 *            El orden del atributo. Puede ser {@link Order#ASC} o {@link Order#DESC}.
 	 */
-	public OrderBy(String attribute, Order order) {
+	public Orders(String property, Order order) {
 		this();
-		this.orders.put(attribute, order);
+		this.orders.put(property, order);
 	}
 
 	/**
 	 * Función encargada de agregar una nueva restricción de orden a las que ya tenemos.
 	 * 
-	 * @param attribute
+	 * @param property
 	 *            El atributo que vamos a ordenar.
 	 * @param order
 	 *            El orden en el que se va a recuperar. Este orden puede ser {@link Order#ASC} o {@link Order#DESC}.
 	 */
-	public OrderBy addOrder(String attribute, Order order) {
-		this.orders.put(attribute, order);
+	public Orders addOrder(String property, Order order) {
+		this.orders.put(property, order);
 		return this;
 	}
 

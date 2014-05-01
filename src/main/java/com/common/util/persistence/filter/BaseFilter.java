@@ -5,6 +5,9 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 
+import com.common.util.persistence.filter.order.Order;
+import com.common.util.persistence.filter.order.Orders;
+
 /**
  * Representa un filtro para la busqueda de registros en la base de datos.
  * 
@@ -17,6 +20,10 @@ import java.io.Serializable;
  */
 public class BaseFilter<PK extends Serializable> {
 
+	/**
+	 * El orden en el que se quiere recuperar la consulta.
+	 */
+	private Orders orders;
 	/**
 	 * El listado de ID que vamos a excluir de la consulta.
 	 */
@@ -35,10 +42,12 @@ public class BaseFilter<PK extends Serializable> {
 	 */
 	public BaseFilter() {
 		super();
+		this.orders = new Orders();
 	}
 
 	@Override
 	public String toString() {
+		// TODO Hacer este metodo mejor.
 		StringBuilder buffer = new StringBuilder(getClass().getName());
 		try {
 			buffer.append("{ ");
@@ -52,6 +61,47 @@ public class BaseFilter<PK extends Serializable> {
 			buffer.append("Error: " + e.getMessage());
 		}
 		return buffer.toString();
+	}
+
+	/**
+	 * Retorna el listado de los ordenes en los que queremos realizar el filtrado.
+	 * 
+	 * @return El listado de los ordenes en los que queremos realizar el filtrado.
+	 */
+	public Orders getOrders() {
+		return orders;
+	}
+
+	/**
+	 * Carga el listado de los ordenes en los que queremos realizar el filtrado.
+	 * 
+	 * @param orders
+	 *            El listado de los ordenes en los que queremos realizar el filtrado.
+	 */
+	public void setOrders(Orders orders) {
+		this.orders = orders;
+	}
+
+	/**
+	 * Permite agregar un nuevo orden al filtrado de la consulta.
+	 * 
+	 * @param property
+	 *            La propiedad sobre la que va a ordenarse la consulta.
+	 * @param order
+	 *            El tipo de orden que vamos a utilizar.
+	 */
+	public void addOrder(String property, Order order) {
+		this.orders.addOrder(property, order);
+	}
+
+	/**
+	 * Permite agregar un nuevo orden {@link Order#ASC} al filtrado de la consulta.
+	 * 
+	 * @param property
+	 *            La propiedad sobre la que va a ordenarse de manera ascendente la consulta.
+	 */
+	public void addOrder(String property) {
+		this.addOrder(property, Order.ASC);
 	}
 
 	/**
