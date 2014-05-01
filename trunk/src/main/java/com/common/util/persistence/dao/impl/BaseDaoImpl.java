@@ -20,7 +20,7 @@ import com.common.util.domain.model.RangeType;
 import com.common.util.persistence.dao.BaseDao;
 import com.common.util.persistence.filter.BaseFilter;
 import com.common.util.persistence.filter.order.Order;
-import com.common.util.persistence.filter.order.OrderBy;
+import com.common.util.persistence.filter.order.Orders;
 
 /**
  * La clase que implementa la interfaz {@link BaseDao} para acceder a una base de datos desde el framework Hibernate.
@@ -138,7 +138,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	@Override
-	public List<E> findAll(OrderBy orders) throws UncheckedException {
+	public List<E> findAll(Orders orders) throws UncheckedException {
 		try {
 			Session session = this.getSession();
 			Criteria criteria = session.createCriteria(this.persistentClass);
@@ -158,11 +158,12 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	@Override
-	public List<E> findByFilter(BaseFilter<PK> filter, OrderBy orders) throws UncheckedException {
+	public List<E> findByFilter(BaseFilter<PK> filter) throws UncheckedException {
 		try {
 			List<E> entities = null;
 
 			if (filter != null) {
+				Orders orders = filter.getOrders();
 				Session session = this.getSession();
 				Criteria criteria = this.session.createCriteria(persistentClass);
 
@@ -176,8 +177,6 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 
 				entities = criteria.list();
 				this.closeSession(session);
-			} else {
-				entities = this.findAll(orders);
 			}
 
 			return entities;
@@ -282,7 +281,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	 * @param orders
 	 *            Los {@link Order} de las propiedades de las entidades que queremos ordenar.
 	 */
-	protected void addOrders(Criteria criteria, OrderBy orders) {
+	protected void addOrders(Criteria criteria, Orders orders) {
 		for (Entry<String, Order> entry : orders.getOrders().entrySet()) {
 			if (Order.ASC.equals(entry.getValue())) {
 				criteria.addOrder(org.hibernate.criterion.Order.asc(entry.getKey()));

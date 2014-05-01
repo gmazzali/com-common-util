@@ -56,7 +56,7 @@ public class HolderMessage implements Serializable {
 	 *            Los parámetros necesarios para completar el mensaje en caso de que se requiera.
 	 * @return El mensaje correspondiente a la clave recibida.
 	 */
-	public static String getMessage(String key, Object[] parameter) {
+	public static String getMessage(String key, Object... parameter) {
 		if (HolderMessage.resources != null && key != null) {
 			return HolderMessage.resources.getMessage(key, parameter, key, HolderMessage.locale);
 		} else {
@@ -81,7 +81,7 @@ public class HolderMessage implements Serializable {
 	 * @return El mensaje correspondiente a la clave recibida. En caso de no encontrar ninguna entrada para la clave, se retorna el mensaje que
 	 *         tenemos definido por omisión.
 	 */
-	public static String getMessage(String defaultMessage, String key, Object[] parameter) {
+	public static String getMessage(String defaultMessage, String key, Object... parameter) {
 		if (HolderMessage.resources != null && key != null) {
 			return HolderMessage.resources.getMessage(key, parameter, defaultMessage, HolderMessage.locale);
 		} else {

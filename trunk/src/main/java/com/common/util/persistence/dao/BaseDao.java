@@ -7,7 +7,7 @@ import com.common.util.domain.exception.UncheckedException;
 import com.common.util.domain.model.Entity;
 import com.common.util.domain.model.Persistence;
 import com.common.util.persistence.filter.BaseFilter;
-import com.common.util.persistence.filter.order.OrderBy;
+import com.common.util.persistence.filter.order.Orders;
 
 /**
  * La interfaz que define todos los métodos comunes a todos los DAOs que vamos a generar dentro de un sistema.
@@ -70,7 +70,7 @@ public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializ
 	/**
 	 * La función que nos permite recuperar todos las entidades del mismo tipo almacenados dentro de la base de datos.
 	 * 
-	 * @see OrderBy
+	 * @see Orders
 	 * 
 	 * @see #findById(Serializable)
 	 * @see #findByFilter(BaseFilter)
@@ -81,27 +81,24 @@ public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializ
 	 * @throws UncheckedException
 	 *             En caso de un problema durante la recuperación de todos las entidades desde la base de datos.
 	 */
-	public List<E> findAll(OrderBy orders) throws UncheckedException;
+	public List<E> findAll(Orders orders) throws UncheckedException;
 
 	/**
 	 * La función que utilizamos para recuperar una entidad dado un filtro del tipo {@link BaseFilter} para la consulta.
 	 * 
 	 * @see BaseFilter
-	 * @see OrderBy
+	 * @see Orders
 	 * 
 	 * @see #findAll()
 	 * @see #findById(Serializable)
 	 * 
 	 * @param filter
 	 *            El filtro del tipo {@link BaseFilter} que vamos a ocupar para recuperar un listado de entidades de acuerdo a un criterio.
-	 * @param orders
-	 *            Los ordenes dentro de {@link OrderBy} en los que queremos recuperar las entidades. Si el mismo es mulo, se recuperan si un orden en
-	 *            particular.
 	 * @return El listado de las entidades almacenadas que cumplen con la consulta recibida.
 	 * @throws UncheckedException
 	 *             En caso de un problema durante la recuperación de las entidades desde la base de datos.
 	 */
-	public List<E> findByFilter(BaseFilter<PK> filter, OrderBy orders) throws UncheckedException;
+	public List<E> findByFilter(BaseFilter<PK> filter) throws UncheckedException;
 
 	/**
 	 * La función para guardar una nueva entidad dentro de la base de datos.
