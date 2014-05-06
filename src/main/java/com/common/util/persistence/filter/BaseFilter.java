@@ -5,6 +5,8 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 
+import org.apache.log4j.Logger;
+
 import com.common.util.persistence.filter.order.Order;
 import com.common.util.persistence.filter.order.Orders;
 
@@ -19,6 +21,7 @@ import com.common.util.persistence.filter.order.Orders;
  *            La clave que corresponde con el ID de las entidades de filtrado.
  */
 public class BaseFilter<PK extends Serializable> {
+	private static final Logger log = Logger.getLogger(BaseFilter.class);
 
 	/**
 	 * El orden en el que se quiere recuperar la consulta.
@@ -47,18 +50,18 @@ public class BaseFilter<PK extends Serializable> {
 
 	@Override
 	public String toString() {
-		// TODO Hacer este metodo mejor.
 		StringBuilder buffer = new StringBuilder(getClass().getName());
 		try {
-			buffer.append("{ ");
+			buffer.append(" {");
 			BeanInfo info = Introspector.getBeanInfo(getClass(), Object.class);
 			for (PropertyDescriptor pd : info.getPropertyDescriptors()) {
 				String value = String.valueOf((pd.getReadMethod() != null ? pd.getReadMethod().invoke(this) : "?"));
-				buffer.append(" [" + pd.getName() + "=" + value + "]");
+				buffer.append(" [").append(pd.getName().toUpperCase()).append("=").append(value).append("]");
 			}
 			buffer.append(" }");
 		} catch (Exception e) {
-			buffer.append("Error: " + e.getMessage());
+			log.error("fail to converte filter to string", e);
+			buffer.append("Error: ").append(e.getMessage());
 		}
 		return buffer.toString();
 	}
