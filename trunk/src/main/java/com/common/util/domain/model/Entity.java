@@ -73,9 +73,4 @@ public abstract class Entity<PK extends Serializable> implements Persistence<PK>
 	public void setId(PK id) {
 		this.id = id;
 	}
-
-	@Override
-	public PK getId() {
-		return this.id;
-	}
 }
