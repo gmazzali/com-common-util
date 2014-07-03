@@ -54,7 +54,7 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 	}
 
 	@Override
-	public Long countByFilter(BaseFilter<PK> filter) throws UncheckedException {
+	public Long countByFilter(BaseFilter<E, PK> filter) throws UncheckedException {
 		try {
 			return this.dao.countByFilter(filter);
 		} catch (Exception e) {
@@ -74,7 +74,7 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 	}
 
 	@Override
-	public List<E> findByFilter(BaseFilter<PK> filter) throws UncheckedException {
+	public List<E> findByFilter(BaseFilter<E, PK> filter) throws UncheckedException {
 		try {
 			return this.dao.findByFilter(filter);
 		} catch (Exception e) {

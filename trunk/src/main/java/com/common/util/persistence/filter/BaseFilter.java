@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 import org.apache.log4j.Logger;
 
+import com.common.util.domain.model.Persistence;
 import com.common.util.persistence.filter.order.Order;
 import com.common.util.persistence.filter.order.Orders;
 
@@ -17,10 +18,13 @@ import com.common.util.persistence.filter.order.Orders;
  * @author Guillermo Mazzali
  * @version 1.0
  * 
+ * @param <E>
+ *            Las entidades que vamos a manipular con este filtro.
  * @param <PK>
  *            La clave que corresponde con el ID de las entidades de filtrado.
  */
-public class BaseFilter<PK extends Serializable> {
+public class BaseFilter<E extends Persistence<PK>, PK extends Serializable> implements Serializable {	
+	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(BaseFilter.class);
 
 	/**

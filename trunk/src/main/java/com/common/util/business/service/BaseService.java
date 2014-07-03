@@ -81,7 +81,7 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * @throws UncheckedException
 	 *             En caso de que ocurra un error a la hora de contar filas dentro de la base de datos.
 	 */
-	public Long countByFilter(BaseFilter<PK> filter) throws UncheckedException;
+	public Long countByFilter(BaseFilter<E, PK> filter) throws UncheckedException;
 
 	/**
 	 * La función que nos permite recuperar todos las entidades del mismo tipo almacenados dentro de la base de datos.
@@ -120,7 +120,7 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * @throws UncheckedException
 	 *             En caso de un problema durante la recuperación de todos las entidades desde la base de datos.
 	 */
-	public List<E> findByFilter(BaseFilter<PK> filter) throws UncheckedException;
+	public List<E> findByFilter(BaseFilter<E, PK> filter) throws UncheckedException;
 
 	/**
 	 * La función que utilizamos para recuperar una entidad dado su identificador.
