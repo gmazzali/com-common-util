@@ -89,7 +89,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	@Override
-	public Long count() throws UncheckedException {
+	public Long count() {
 		try {
 			Session session = this.getSession();
 			Criteria criteria = session.createCriteria(this.persistentClass);
@@ -103,7 +103,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	@Override
-	public Long countByFilter(BaseFilter<PK> filter) throws UncheckedException {
+	public Long countByFilter(BaseFilter<E, PK> filter) {
 		try {
 			Long value = null;
 			if (filter != null) {
@@ -125,7 +125,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	@Override
-	public E findById(PK id) throws UncheckedException {
+	public E findById(PK id) {
 		try {
 			Session session = this.getSession();
 			E entity = (E) session.get(this.persistentClass, id);
@@ -138,7 +138,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	@Override
-	public List<E> findAll(Orders orders) throws UncheckedException {
+	public List<E> findAll(Orders orders) {
 		try {
 			Session session = this.getSession();
 			Criteria criteria = session.createCriteria(this.persistentClass);
@@ -158,7 +158,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	@Override
-	public List<E> findByFilter(BaseFilter<PK> filter) throws UncheckedException {
+	public List<E> findByFilter(BaseFilter<E, PK> filter) {
 		try {
 			List<E> entities = null;
 
@@ -187,7 +187,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	@Override
-	public PK save(E entity) throws UncheckedException {
+	public PK save(E entity) {
 		try {
 			Session session = this.getSession();
 			PK pk = (PK) session.save(entity);
@@ -200,7 +200,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	@Override
-	public void update(E entity) throws UncheckedException {
+	public void update(E entity) {
 		try {
 			Session session = this.getSession();
 			session.update(entity);
@@ -212,7 +212,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	@Override
-	public void saveOrUpdate(E entity) throws UncheckedException {
+	public void saveOrUpdate(E entity) {
 		try {
 			Session session = this.getSession();
 			session.saveOrUpdate(entity);
@@ -224,7 +224,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	@Override
-	public void delete(E entity) throws UncheckedException {
+	public void delete(E entity) {
 		try {
 			Session session = this.getSession();
 			session.delete(entity);
@@ -236,7 +236,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	@Override
-	public void deleteById(PK id) throws UncheckedException {
+	public void deleteById(PK id) {
 		try {
 			Session session = this.getSession();
 			E entity = (E) session.load(this.persistentClass, id);
@@ -306,7 +306,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	 *            El filtro que vamos a utilizar para crear el {@link Criteria}.
 	 * @return El {@link Criteria} que corresponde al filtro de búsqueda.
 	 */
-	protected Criteria addFilterRestriction(Criteria criteria, BaseFilter<PK> filter) {
+	protected Criteria addFilterRestriction(Criteria criteria, BaseFilter<E, PK> filter) {
 		if (filter.getExcludeIds() != null && filter.getExcludeIds().length > 0) {
 			criteria.add(Restrictions.not(Restrictions.in(Entity.Attributes.ID, filter.getExcludeIds())));
 		}
@@ -359,11 +359,10 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	 * @param filter
 	 *            El {@link BaseFilter} que vamos a usar para la paginación.
 	 */
-	protected void addPagination(Criteria criteria, BaseFilter<PK> filter) {
+	protected void addPagination(Criteria criteria, BaseFilter<E, PK> filter) {
 		if (filter.getFirstResult() != null) {
 			criteria.setFirstResult(filter.getFirstResult());
 		}
-
 		if (filter.getMaxResult() != null) {
 			criteria.setMaxResults(filter.getMaxResult());
 		}
