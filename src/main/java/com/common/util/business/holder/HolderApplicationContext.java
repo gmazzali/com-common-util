@@ -8,13 +8,15 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 /**
  * La clase encargada de mantener el contexto de la aplicación al alcance de toda la aplicación.
  * 
+ * @see ConfigurableBean
+ * 
  * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */
 public class HolderApplicationContext implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * El contexto de la aplicación para manejar Spring.
 	 */
