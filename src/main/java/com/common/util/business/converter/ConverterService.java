@@ -1,5 +1,6 @@
 package com.common.util.business.converter;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
@@ -10,7 +11,14 @@ import java.util.List;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public interface ConverterService {
+public interface ConverterService extends Serializable {
+
+	/**
+	 * Permite retornar el listado de los conversores que tenemos dentro del sistema.
+	 * 
+	 * @return El listado de los conversores que vamos a manejar dentro del sistema.
+	 */
+	public Collection<Converter<?, ?>> getConverters();
 
 	/**
 	 * La función encargada de validar que un objeto de una clase fuente puede ser convertida en un objeto de una clase destino dentro del convertidor
@@ -22,7 +30,7 @@ public interface ConverterService {
 	 *            La clase del objeto destino.
 	 * @return TRUE en caso de que el convertidor actual pueda convertir de la clase fuente a la destino, en caso contrario retornamos FALSE.
 	 */
-	public <S, T> boolean canConvertTo(Class<S> sourceClass, Class<T> targetClass);
+	public <S, T> boolean canConvert(Class<S> sourceClass, Class<T> targetClass);
 
 	/**
 	 * La función encargada de convertir un objeto de una clase origen en un objeto de otra clase destino.
@@ -33,7 +41,7 @@ public interface ConverterService {
 	 *            La clase a la que vamos a convertir el objeto fuente.
 	 * @return El objeto de la clase destino que contiene los datos del objeto de la clase fuente.
 	 */
-	public <S, T> T convertTo(S source, Class<T> targetClass);
+	public <S, T> T convert(S source, Class<T> targetClass);
 
 	/**
 	 * Se encarga de convertir una colección de elementos de un tipo a una lista de otro tipo.
@@ -44,5 +52,5 @@ public interface ConverterService {
 	 *            La clase de los elementos a los que queremos convertir la colección.
 	 * @return El listado con los elementos de la primer colección convertidos.
 	 */
-	public <S, T> List<T> convertListTo(Collection<S> collection, Class<T> returnClass);
+	public <S, T> List<T> convert(Collection<S> collection, Class<T> returnClass);
 }
