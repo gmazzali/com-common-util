@@ -6,9 +6,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import junit.framework.Assert;
-
 import org.apache.log4j.BasicConfigurator;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -24,7 +23,7 @@ import com.common.util.business.tool.collection.Transformer;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class CollectionUtilUnitTest {
+public class CollectionUtilTest {
 
 	@BeforeClass
 	public static void initClass() {

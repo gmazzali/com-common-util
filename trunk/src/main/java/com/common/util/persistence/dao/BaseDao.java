@@ -3,7 +3,7 @@ package com.common.util.persistence.dao;
 import java.io.Serializable;
 import java.util.List;
 
-import com.common.util.domain.exception.UncheckedException;
+import com.common.util.domain.exception.PersistenceException;
 import com.common.util.domain.model.Entity;
 import com.common.util.domain.model.Persistence;
 import com.common.util.persistence.filter.BaseFilter;
@@ -33,10 +33,10 @@ public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializ
 	 * @see #countByFilter(BaseFilter)
 	 * 
 	 * @return El numero de registros.
-	 * @throws UncheckedException
+	 * @throws PersistenceException
 	 *             En caso de un problema durante la consulta de la cantidad de entidades.
 	 */
-	public Long count() throws UncheckedException;
+	public Long count() throws PersistenceException;
 
 	/**
 	 * La función encargada de contar la cantidad de entidades que corresponden a un filtro del tipo {@link BaseFilter} que se recibe.
@@ -48,10 +48,10 @@ public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializ
 	 * @param filter
 	 *            El filtro del tipo {@link BaseFilter} con el que vamos a realizar la consulta de la cantidad de entidades que vamos a recuperar.
 	 * @return El numero de registros que va a corresponder a la consulta con el filtro.
-	 * @throws UncheckedException
+	 * @throws PersistenceException
 	 *             En caso de un problema durante la consulta de la cantidad de entidades.
 	 */
-	public Long countByFilter(BaseFilter<E, PK> filter) throws UncheckedException;
+	public Long countByFilter(BaseFilter<E, PK> filter) throws PersistenceException;
 
 	/**
 	 * La función que utilizamos para recuperar una entidad dado su identificador.
@@ -62,10 +62,10 @@ public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializ
 	 * @param id
 	 *            El identificador de la entidad que vamos a recuperar desde la base de datos.
 	 * @return La entidad que corresponde al identificador recibido. En caso de no encontrar nada, retorna <i>NULL</i>.
-	 * @throws UncheckedException
+	 * @throws PersistenceException
 	 *             En caso de un problema durante la recuperación de la entidad desde la base de datos.
 	 */
-	public E findById(PK id) throws UncheckedException;
+	public E findById(PK id) throws PersistenceException;
 
 	/**
 	 * La función que nos permite recuperar todos las entidades del mismo tipo almacenados dentro de la base de datos.
@@ -78,10 +78,10 @@ public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializ
 	 * @param orders
 	 *            Los ordenes en los que queremos recuperar las entidades. Si el mismo es mulo, se recuperan si un orden en particular.
 	 * @return El listado de entidades almacenadas.
-	 * @throws UncheckedException
+	 * @throws PersistenceException
 	 *             En caso de un problema durante la recuperación de todos las entidades desde la base de datos.
 	 */
-	public List<E> findAll(Orders orders) throws UncheckedException;
+	public List<E> findAll(Orders orders) throws PersistenceException;
 
 	/**
 	 * La función que utilizamos para recuperar una entidad dado un filtro del tipo {@link BaseFilter} para la consulta.
@@ -95,10 +95,10 @@ public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializ
 	 * @param filter
 	 *            El filtro del tipo {@link BaseFilter} que vamos a ocupar para recuperar un listado de entidades de acuerdo a un criterio.
 	 * @return El listado de las entidades almacenadas que cumplen con la consulta recibida.
-	 * @throws UncheckedException
+	 * @throws PersistenceException
 	 *             En caso de un problema durante la recuperación de las entidades desde la base de datos.
 	 */
-	public List<E> findByFilter(BaseFilter<E, PK> filter) throws UncheckedException;
+	public List<E> findByFilter(BaseFilter<E, PK> filter) throws PersistenceException;
 
 	/**
 	 * La función para guardar una nueva entidad dentro de la base de datos.
@@ -113,10 +113,10 @@ public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializ
 	 * @param entity
 	 *            La entidad {@link E} que vamos a almacenar.
 	 * @return El identificador {@link PK} del elemento que acabamos de guardar dentro de la base de datos.
-	 * @throws UncheckedException
+	 * @throws PersistenceException
 	 *             En caso de un problema durante el guardado de la entidad dentro de la base de datos.
 	 */
-	public PK save(E entity) throws UncheckedException;
+	public PK save(E entity) throws PersistenceException;
 
 	/**
 	 * La función para actualizar una entidad dentro de la base de datos.
@@ -130,10 +130,10 @@ public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializ
 	 * 
 	 * @param entity
 	 *            La entidad {@link E} que vamos a actualizar.
-	 * @throws UncheckedException
+	 * @throws PersistenceException
 	 *             En caso de un problema durante la actualización de la entidad dentro de la base de datos.
 	 */
-	public void update(E entity) throws UncheckedException;
+	public void update(E entity) throws PersistenceException;
 
 	/**
 	 * La función para insertar una nueva entidad o actualizar una que ya se encuentre dentro de la base de datos.
@@ -147,10 +147,10 @@ public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializ
 	 * 
 	 * @param entity
 	 *            La entidad {@link E} que vamos a insertar o actualizar.
-	 * @throws UncheckedException
+	 * @throws PersistenceException
 	 *             En caso de un problema durante la inserción o actualización de la entidad dentro de la base de datos.
 	 */
-	public void saveOrUpdate(E entity) throws UncheckedException;
+	public void saveOrUpdate(E entity) throws PersistenceException;
 
 	/**
 	 * La función para eliminar una entidad dentro de la base de datos.
@@ -164,10 +164,10 @@ public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializ
 	 * 
 	 * @param entity
 	 *            La entidad {@link E} que vamos a eliminar.
-	 * @throws UncheckedException
+	 * @throws PersistenceException
 	 *             En caso de un problema durante la eliminación de la entidad dentro de la base de datos.
 	 */
-	public void delete(E entity) throws UncheckedException;
+	public void delete(E entity) throws PersistenceException;
 
 	/**
 	 * La función que nos permite eliminar una entidad de la base de datos solo dando su identificador.
@@ -179,8 +179,8 @@ public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializ
 	 * 
 	 * @param id
 	 *            El identificador {@link PK} de la entidad que queremos eliminar de la base de datos.
-	 * @throws UncheckedException
+	 * @throws PersistenceException
 	 *             En caso de un problema durante la eliminación de la entidad dentro de la base de datos.
 	 */
-	public void deleteById(PK id) throws UncheckedException;
+	public void deleteById(PK id) throws PersistenceException;
 }

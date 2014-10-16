@@ -11,7 +11,8 @@ import org.apache.log4j.Logger;
 
 import com.common.util.business.converter.Converter;
 import com.common.util.business.converter.ConverterService;
-import com.common.util.domain.exception.UncheckedException;
+import com.common.util.business.tool.VerifierUtil;
+import com.common.util.domain.exception.ServiceException;
 
 /**
  * La clase que nos permite manipular los conversores que nos ofrece SPRING para convertir entidades entre ellas.
@@ -20,7 +21,7 @@ import com.common.util.domain.exception.UncheckedException;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public abstract class ConverterServiceImpl implements ConverterService {
+public class ConverterServiceImpl implements ConverterService {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(ConverterServiceImpl.class);
 
@@ -28,13 +29,14 @@ public abstract class ConverterServiceImpl implements ConverterService {
 	 * El mapa que contiene los conversores de acuerdo a la clase origen y la destino.
 	 */
 	private Map<Class<?>, Map<Class<?>, Converter<?, ?>>> converters;
-	
+
 	/**
 	 * Permite inicializar el servicio de conversión.
 	 */
-	public void init() {
+	public void init(Collection<Converter<?, ?>> convertersSet) {
+		VerifierUtil.checkNotNull(convertersSet, "The set of converters cannot be null");
+
 		this.converters = new ConcurrentHashMap<Class<?>, Map<Class<?>, Converter<?, ?>>>();
-		Collection<Converter<?, ?>> convertersSet = this.getConverters();
 		for (Converter<?, ?> converter : convertersSet) {
 			try {
 				Class<?> sourceClass = (Class<?>) ((ParameterizedType) converter.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
@@ -50,13 +52,12 @@ public abstract class ConverterServiceImpl implements ConverterService {
 					targetMap.put(targetClass, converter);
 				} else {
 					log.warn("Duplicated converter to \"" + sourceClass.getSimpleName() + "\" to \"" + targetClass.getSimpleName() + "\"");
-					throw new UncheckedException("Duplicated converter to \"" + sourceClass.getSimpleName() + "\" to \""
-							+ targetClass.getSimpleName() + "\"", "base.converter.error.duplicated", sourceClass.getSimpleName(),
-							targetClass.getSimpleName());
+					throw new ServiceException("Duplicated converter to \"" + sourceClass.getSimpleName() + "\" to \"" + targetClass.getSimpleName()
+							+ "\"", "base.converter.error.duplicated", sourceClass.getSimpleName(), targetClass.getSimpleName());
 				}
 			} catch (Exception ex) {
 				log.error("The generics parameters class of the converter service cannot be empty", ex);
-				throw new UncheckedException("The generics parameters class of the converter service cannot be empty",
+				throw new ServiceException("The generics parameters class of the converter service cannot be empty",
 						"base.converter.error.parameter.empty");
 			}
 		}
@@ -77,7 +78,17 @@ public abstract class ConverterServiceImpl implements ConverterService {
 	@Override
 	@SuppressWarnings("unchecked")
 	public <S, T> T convert(S source, Class<T> targetClass) {
-		return ((Converter<S, T>) this.converters.get(source.getClass()).get(targetClass)).convert(source);
+		VerifierUtil.checkNotNull(source, "The source cannot be null");
+		VerifierUtil.checkNotNull(targetClass, "The target class cannot be null");
+
+		if (this.canConvert(source.getClass(), targetClass)) {
+			return ((Converter<S, T>) this.converters.get(source.getClass()).get(targetClass)).convert(source);
+		} else {
+			log.error("Doesn't exist converter between \"" + source.getClass().getSimpleName() + "\" to \"" + targetClass.getSimpleName() + "\"");
+			throw new ServiceException("Doesn't exist converter between \"" + source.getClass().getSimpleName() + "\" to \""
+					+ targetClass.getSimpleName() + "\"", "base.converter.error.not.exist", source.getClass().getSimpleName(),
+					targetClass.getSimpleName());
+		}
 	}
 
 	@Override

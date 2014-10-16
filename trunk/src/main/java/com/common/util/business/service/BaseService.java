@@ -3,7 +3,7 @@ package com.common.util.business.service;
 import java.io.Serializable;
 import java.util.List;
 
-import com.common.util.domain.exception.UncheckedException;
+import com.common.util.domain.exception.ServiceException;
 import com.common.util.domain.model.Entity;
 import com.common.util.domain.model.Persistence;
 import com.common.util.persistence.dao.BaseDao;
@@ -47,10 +47,10 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * 
 	 * @param entity
 	 *            La entidad que va a corroborarse su validez.
-	 * @throws UncheckedException
+	 * @throws ServiceException
 	 *             En caso de que el contenido de la entidad no sea válido dentro del sistema.
 	 */
-	public void validate(E entity) throws UncheckedException;
+	public void validate(E entity) throws ServiceException;
 
 	/**
 	 * Se encarga de contar la cantidad de registros que tenemos dentro de la base de datos que corresponden a esta entidad.
@@ -60,10 +60,10 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * @see #countByFilter(BaseFilter)
 	 * 
 	 * @return El número de registros que tenemos almacenados dentro de la base de datos.
-	 * @throws UncheckedException
+	 * @throws ServiceException
 	 *             En caso de que ocurra un error a la hora de contar las entidades dentro de la base de datos.
 	 */
-	public Long count() throws UncheckedException;
+	public Long count() throws ServiceException;
 
 	/**
 	 * Se encarga de contar la cantidad de registros que tenemos dentro de la base de datos que corresponden a esta entidad y que cumplen con la
@@ -78,10 +78,10 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * @param filter
 	 *            El filtro {@link BaseFilter} para realizar la cuenta de registro dentro de la base de datos.
 	 * @return El número de registros que tenemos almacenados dentro de la base de datos y que corresponden con el filtro recibido.
-	 * @throws UncheckedException
+	 * @throws ServiceException
 	 *             En caso de que ocurra un error a la hora de contar filas dentro de la base de datos.
 	 */
-	public Long countByFilter(BaseFilter<E, PK> filter) throws UncheckedException;
+	public Long countByFilter(BaseFilter<E, PK> filter) throws ServiceException;
 
 	/**
 	 * La función que nos permite recuperar todos las entidades del mismo tipo almacenados dentro de la base de datos.
@@ -97,10 +97,10 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 *            Los ordenes dentro de {@link Orders} en los que queremos recuperar las entidades. Si el mismo es mulo, se recuperan si un orden en
 	 *            particular.
 	 * @return El listado de los elementos almacenados.
-	 * @throws UncheckedException
+	 * @throws ServiceException
 	 *             En caso de un problema durante la recuperación de todos las entidades desde la base de datos.
 	 */
-	public List<E> findAll(Orders orders) throws UncheckedException;
+	public List<E> findAll(Orders orders) throws ServiceException;
 
 	/**
 	 * La función que nos permite recuperar todos las entidades del mismo tipo almacenados dentro de la base de datos y que cumplen un filtro
@@ -117,10 +117,10 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * @param filter
 	 *            El filtro {@link BaseFilter} para realizar la consulta de registro dentro de la base de datos.
 	 * @return El listado de las entidades almacenados.
-	 * @throws UncheckedException
+	 * @throws ServiceException
 	 *             En caso de un problema durante la recuperación de todos las entidades desde la base de datos.
 	 */
-	public List<E> findByFilter(BaseFilter<E, PK> filter) throws UncheckedException;
+	public List<E> findByFilter(BaseFilter<E, PK> filter) throws ServiceException;
 
 	/**
 	 * La función que utilizamos para recuperar una entidad dado su identificador.
@@ -133,10 +133,10 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * @param id
 	 *            El identificador {@link PK} de la entidad que vamos a recuperar desde la base de datos.
 	 * @return La entidad {@link E} que corresponde al identificador recibido. En caso de no encontrar nada, retorna un <code>null</code>.
-	 * @throws UncheckedException
+	 * @throws ServiceException
 	 *             En caso de un problema durante la recuperación de la entidad desde la base de datos.
 	 */
-	public E findById(PK id) throws UncheckedException;
+	public E findById(PK id) throws ServiceException;
 
 	/**
 	 * La función para guardar la entidad dentro de la base de datos.
@@ -152,10 +152,10 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * 
 	 * @param entity
 	 *            La entidad {@link E} que vamos a almacenar.
-	 * @throws UncheckedException
+	 * @throws ServiceException
 	 *             En caso de un problema durante el guardado de la entidad dentro de la base de datos.
 	 */
-	public void save(E entity) throws UncheckedException;
+	public void save(E entity) throws ServiceException;
 
 	/**
 	 * La función para insertar una nueva entidad o actualizar una que ya se encuentre dentro de la base de datos.
@@ -171,10 +171,10 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * 
 	 * @param entity
 	 *            La entidad {@link E} que vamos a insertar o actualizar.
-	 * @throws UncheckedException
+	 * @throws ServiceException
 	 *             En caso de un problema durante la inserción o actualización de la entidad dentro de la base de datos.
 	 */
-	public void saveOrUpdate(E entity) throws UncheckedException;
+	public void saveOrUpdate(E entity) throws ServiceException;
 
 	/**
 	 * La función para actualizar la entidad dentro de la base de datos.
@@ -190,10 +190,10 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * 
 	 * @param entity
 	 *            La entidad {@link E} que vamos a actualizar.
-	 * @throws UncheckedException
+	 * @throws ServiceException
 	 *             En caso de un problema durante la actualización de la entidad dentro de la base de datos.
 	 */
-	public void update(E entity) throws UncheckedException;
+	public void update(E entity) throws ServiceException;
 
 	/**
 	 * La función para eliminar la entidad dentro de la base de datos.
@@ -209,10 +209,10 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * 
 	 * @param entity
 	 *            La entidad {@link E} que vamos a eliminar.
-	 * @throws UncheckedException
+	 * @throws ServiceException
 	 *             En caso de un problema durante la eliminación de la entidad dentro de la base de datos.
 	 */
-	public void delete(E entity) throws UncheckedException;
+	public void delete(E entity) throws ServiceException;
 
 	/**
 	 * La función para eliminar la entidad dentro de la base de datos de acuerdo a su identificador.
@@ -226,8 +226,8 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * 
 	 * @param id
 	 *            El identificador {@link PK} de la entidad que queremos eliminar de la base de datos.
-	 * @throws UncheckedException
+	 * @throws ServiceException
 	 *             En caso de un problema durante la eliminación de la entidad dentro de la base de datos.
 	 */
-	public void deleteById(PK id) throws UncheckedException;
+	public void deleteById(PK id) throws ServiceException;
 }

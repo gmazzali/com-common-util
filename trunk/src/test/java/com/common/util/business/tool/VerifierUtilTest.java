@@ -2,9 +2,8 @@ package com.common.util.business.tool;
 
 import java.io.Serializable;
 
-import junit.framework.Assert;
-
 import org.apache.log4j.BasicConfigurator;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -15,7 +14,7 @@ import org.junit.Test;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class VerifierUtilUnitTest {
+public class VerifierUtilTest {
 
 	@BeforeClass
 	public static void initClass() {

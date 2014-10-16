@@ -1,16 +1,18 @@
-package com.common.util.business.tool.date;
+package com.common.util.business.util;
+
+import com.common.util.business.tool.date.DateUtil;
 
 /**
  * La enumeración que vamos a ocupar para definir la precisión con la que se va a manipular las fechas.
  * 
  * <ul>
- * <li>{@link DatePrecision#YEAR YEAR}</li>
- * <li>{@link DatePrecision#MONTH MONTH}</li>
- * <li>{@link DatePrecision#DAY DAY}</li>
- * <li>{@link DatePrecision#HOUR HOUR}</li>
- * <li>{@link DatePrecision#MINUTE MINUTE}</li>
- * <li>{@link DatePrecision#SECOND SECOND}</li>
- * <li>{@link DatePrecision#MILLISECOND MILLISECOND}</li>
+ * <li>{@link DatePrecisionEnum#YEAR YEAR}</li>
+ * <li>{@link DatePrecisionEnum#MONTH MONTH}</li>
+ * <li>{@link DatePrecisionEnum#DAY DAY}</li>
+ * <li>{@link DatePrecisionEnum#HOUR HOUR}</li>
+ * <li>{@link DatePrecisionEnum#MINUTE MINUTE}</li>
+ * <li>{@link DatePrecisionEnum#SECOND SECOND}</li>
+ * <li>{@link DatePrecisionEnum#MILLISECOND MILLISECOND}</li>
  * </ul>
  * 
  * @see DateUtil
@@ -19,7 +21,7 @@ package com.common.util.business.tool.date;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public enum DatePrecision {
+public enum DatePrecisionEnum {
 
 	YEAR(1), MONTH(2), DAY(3), HOUR(4), MINUTE(5), SECOND(6), MILLISECOND(7);
 
@@ -34,7 +36,7 @@ public enum DatePrecision {
 	 * @param level
 	 *            El nivel de precisión.
 	 */
-	DatePrecision(Integer level) {
+	DatePrecisionEnum(Integer level) {
 		this.level = level;
 	}
 

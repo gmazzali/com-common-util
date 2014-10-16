@@ -10,10 +10,11 @@ import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
-import com.common.util.domain.exception.UncheckedException;
+import com.common.util.domain.exception.PersistenceException;
 import com.common.util.domain.model.Entity;
 import com.common.util.domain.model.Persistence;
 import com.common.util.domain.model.RangeType;
@@ -39,12 +40,12 @@ import com.common.util.persistence.filter.order.Orders;
 @SuppressWarnings("unchecked")
 public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializable> implements BaseDao<E, PK> {
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(BaseDaoImpl.class);
+	private static final Logger LOGGER = Logger.getLogger(BaseDaoImpl.class);
 
 	/**
 	 * La clase que persistimos dentro de la base de datos.
 	 */
-	private final Class<E> persistentClass;
+	private final Class<?> persistentClass;
 	/**
 	 * La {@link SessionFactory} que vamos a utilizar para acceder a la base de datos.
 	 */
@@ -60,10 +61,10 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	 */
 	public BaseDaoImpl() {
 		try {
-			this.persistentClass = (Class<E>) ((ParameterizedType) super.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+			this.persistentClass = (Class<?>) ((ParameterizedType) super.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 		} catch (Exception ex) {
-			log.error("The generic parameter class of the base dao cannot be empty", ex);
-			throw new UncheckedException("The generic parameter class of the base dao cannot be empty", "base.dao.error.parameter.empty");
+			LOGGER.error("The generic parameter class of the base dao cannot be empty", ex);
+			throw new PersistenceException("The generic parameter class of the base dao cannot be empty", "base.dao.error.parameter.empty");
 		}
 
 		// this.persistentClass = (Class<E>) ((ParameterizedType) super.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
@@ -84,7 +85,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	 * 
 	 * @return La clase que estamos manipualndo dentro de este Dao.
 	 */
-	public Class<E> getPersistentClass() {
+	public Class<?> getPersistentClass() {
 		return this.persistentClass;
 	}
 
@@ -97,8 +98,8 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 			this.closeSession(session);
 			return value;
 		} catch (RuntimeException e) {
-			BaseDaoImpl.log.error("count failed", e);
-			throw new UncheckedException(e);
+			LOGGER.error("count failed", e);
+			throw new PersistenceException(e);
 		}
 	}
 
@@ -119,8 +120,8 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 			}
 			return value;
 		} catch (RuntimeException e) {
-			BaseDaoImpl.log.error("count by filter failed", e);
-			throw new UncheckedException(e);
+			LOGGER.error("count by filter failed", e);
+			throw new PersistenceException(e);
 		}
 	}
 
@@ -132,8 +133,8 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 			this.closeSession(session);
 			return entity;
 		} catch (RuntimeException e) {
-			BaseDaoImpl.log.error("find by id failed", e);
-			throw new UncheckedException(e);
+			LOGGER.error("find by id failed", e);
+			throw new PersistenceException(e);
 		}
 	}
 
@@ -152,8 +153,8 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 			this.closeSession(session);
 			return listado;
 		} catch (RuntimeException e) {
-			BaseDaoImpl.log.error("find all failed", e);
-			throw new UncheckedException(e);
+			LOGGER.error("find all failed", e);
+			throw new PersistenceException(e);
 		}
 	}
 
@@ -181,8 +182,8 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 
 			return entities;
 		} catch (RuntimeException e) {
-			BaseDaoImpl.log.error("find by filter failed", e);
-			throw new UncheckedException(e);
+			LOGGER.error("find by filter failed", e);
+			throw new PersistenceException(e);
 		}
 	}
 
@@ -194,8 +195,8 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 			this.closeSession(session);
 			return pk;
 		} catch (RuntimeException e) {
-			BaseDaoImpl.log.error("save failed", e);
-			throw new UncheckedException(e);
+			LOGGER.error("save failed", e);
+			throw new PersistenceException(e);
 		}
 	}
 
@@ -206,8 +207,8 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 			session.update(entity);
 			this.closeSession(session);
 		} catch (RuntimeException e) {
-			BaseDaoImpl.log.error("update failed", e);
-			throw new UncheckedException(e);
+			LOGGER.error("update failed", e);
+			throw new PersistenceException(e);
 		}
 	}
 
@@ -218,8 +219,8 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 			session.saveOrUpdate(entity);
 			this.closeSession(session);
 		} catch (RuntimeException e) {
-			BaseDaoImpl.log.error("save or update failed", e);
-			throw new UncheckedException(e);
+			LOGGER.error("save or update failed", e);
+			throw new PersistenceException(e);
 		}
 	}
 
@@ -230,8 +231,8 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 			session.delete(entity);
 			this.closeSession(session);
 		} catch (RuntimeException e) {
-			BaseDaoImpl.log.error("delete failed", e);
-			throw new UncheckedException(e);
+			LOGGER.error("delete failed", e);
+			throw new PersistenceException(e);
 		}
 	}
 
@@ -243,8 +244,8 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 			session.delete(entity);
 			this.closeSession(session);
 		} catch (RuntimeException e) {
-			BaseDaoImpl.log.error("delete by id failed", e);
-			throw new UncheckedException(e);
+			LOGGER.error("delete by id failed", e);
+			throw new PersistenceException(e);
 		}
 	}
 
@@ -317,20 +318,19 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	/**
 	 * Permite crear una condición para los tipos de valores que vamos a manejar con rangos del tipo {@link RangeType}.
 	 * 
-	 * @see Criteria
 	 * @see RangeType
 	 * 
 	 * @see #addFilterRestriction(Criteria, BaseFilter)
 	 * @see #addPagination(Criteria, BaseFilter)
 	 * 
 	 * @param criteria
-	 *            La {@link Criteria} que vamos a cargar con la restricción.
+	 *            La {@link DetachedCriteria} que vamos a cargar con la restricción.
 	 * @param range
 	 *            El {@link RangeType} de valores que vamos a utilizar para la condición.
 	 * @param field
 	 *            El campo sobre el que se va a realizar la condición.
 	 */
-	protected void addRangeRestriction(Criteria criteria, RangeType<?> range, String field) {
+	protected void addRangeRestriction(DetachedCriteria criteria, RangeType<?> range, String field) {
 		if (range != null) {
 			if (range.getTo() != null && range.getFrom() != null) {
 				criteria.add(Restrictions.between(field, range.getFrom(), range.getTo()));

@@ -14,13 +14,6 @@ import java.util.List;
 public interface ConverterService extends Serializable {
 
 	/**
-	 * Permite retornar el listado de los conversores que tenemos dentro del sistema.
-	 * 
-	 * @return El listado de los conversores que vamos a manejar dentro del sistema.
-	 */
-	public Collection<Converter<?, ?>> getConverters();
-
-	/**
 	 * La función encargada de validar que un objeto de una clase fuente puede ser convertida en un objeto de una clase destino dentro del convertidor
 	 * que definimos dentro de este elemento.
 	 * 
