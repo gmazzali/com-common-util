@@ -3,6 +3,7 @@ package com.common.util.business.tool.collection;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -27,6 +28,14 @@ import com.common.util.domain.exception.UncheckedException;
  * @version 1.0
  */
 public class CollectionUtil {
+
+	public static <T> ArrayList<T> newArrayList(T... item) {
+		ArrayList<T> list = new ArrayList<T>();
+		if (item != null) {
+			Collections.addAll(list, item);
+		}
+		return list;
+	}
 
 	/**
 	 * Función Null-safe que verifica si una colección es vacia.

@@ -1,15 +1,17 @@
 package com.common.util.business.converter.impl;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.core.convert.support.DefaultConversionService;
+import org.apache.log4j.Logger;
 
+import com.common.util.business.converter.Converter;
 import com.common.util.business.converter.ConverterService;
-import com.common.util.business.converter.GenericConverter;
+import com.common.util.domain.exception.UncheckedException;
 
 /**
  * La clase que nos permite manipular los conversores que nos ofrece SPRING para convertir entidades entre ellas.
@@ -18,37 +20,77 @@ import com.common.util.business.converter.GenericConverter;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class ConverterServiceImpl extends DefaultConversionService implements ConverterService {
+public abstract class ConverterServiceImpl implements ConverterService {
+	private static final long serialVersionUID = 1L;
+	private static final Logger log = Logger.getLogger(ConverterServiceImpl.class);
 
-	@Override
-	public <S, T> boolean canConvertTo(Class<S> sourceClass, Class<T> targetClass) {
-		return this.canConvert(sourceClass, targetClass);
+	/**
+	 * El mapa que contiene los conversores de acuerdo a la clase origen y la destino.
+	 */
+	private Map<Class<?>, Map<Class<?>, Converter<?, ?>>> converters;
+	
+	/**
+	 * Permite inicializar el servicio de conversión.
+	 */
+	public void init() {
+		this.converters = new ConcurrentHashMap<Class<?>, Map<Class<?>, Converter<?, ?>>>();
+		Collection<Converter<?, ?>> convertersSet = this.getConverters();
+		for (Converter<?, ?> converter : convertersSet) {
+			try {
+				Class<?> sourceClass = (Class<?>) ((ParameterizedType) converter.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+				Class<?> targetClass = (Class<?>) ((ParameterizedType) converter.getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+
+				Map<Class<?>, Converter<?, ?>> targetMap = this.converters.get(sourceClass);
+				if (targetMap == null) {
+					targetMap = new ConcurrentHashMap<Class<?>, Converter<?, ?>>();
+					this.converters.put(sourceClass, targetMap);
+				}
+				Converter<?, ?> converterMap = targetMap.get(targetClass);
+				if (converterMap == null) {
+					targetMap.put(targetClass, converter);
+				} else {
+					log.warn("Duplicated converter to \"" + sourceClass.getSimpleName() + "\" to \"" + targetClass.getSimpleName() + "\"");
+					throw new UncheckedException("Duplicated converter to \"" + sourceClass.getSimpleName() + "\" to \""
+							+ targetClass.getSimpleName() + "\"", "base.converter.error.duplicated", sourceClass.getSimpleName(),
+							targetClass.getSimpleName());
+				}
+			} catch (Exception ex) {
+				log.error("The generics parameters class of the converter service cannot be empty", ex);
+				throw new UncheckedException("The generics parameters class of the converter service cannot be empty",
+						"base.converter.error.parameter.empty");
+			}
+		}
 	}
 
 	@Override
-	public <S, T> T convertTo(S source, Class<T> targetClass) {
-		return this.convert(source, targetClass);
+	public <S, T> boolean canConvert(Class<S> sourceClass, Class<T> targetClass) {
+		Map<Class<?>, Converter<?, ?>> targetMap = this.converters.get(sourceClass);
+		if (targetMap != null) {
+			Converter<?, ?> converterMap = targetMap.get(targetClass);
+			if (converterMap != null) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
-	public <S, T> List<T> convertListTo(Collection<S> collection, Class<T> returnClass) {
+	@SuppressWarnings("unchecked")
+	public <S, T> T convert(S source, Class<T> targetClass) {
+		return ((Converter<S, T>) this.converters.get(source.getClass()).get(targetClass)).convert(source);
+	}
+
+	@Override
+	public <S, T> List<T> convert(Collection<S> collection, Class<T> returnClass) {
 		List<T> resultList = new ArrayList<T>();
 		if (!collection.isEmpty()) {
 			S type = collection.iterator().next();
-			if (this.canConvertTo(type.getClass(), returnClass)) {
+			if (this.canConvert(type.getClass(), returnClass)) {
 				for (S source : collection) {
-					resultList.add(this.convertTo(source, returnClass));
+					resultList.add(this.convert(source, returnClass));
 				}
 			}
 		}
 		return resultList;
-	}
-
-	public void setConverters(Set<GenericConverter<?, ?>> converters) {
-		if (converters != null) {
-			for (Converter<?, ?> converter : converters) {
-				this.addConverter(converter);
-			}
-		}
 	}
 }

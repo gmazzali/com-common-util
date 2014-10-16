@@ -6,6 +6,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.springframework.stereotype.Component;
+
 /**
  * La anotación que nos permite definir los conversores de entidades dentro de una aplicación.
  * 
@@ -16,6 +18,7 @@ import java.lang.annotation.Target;
 @Documented
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
+@Component
 public @interface Converter {
 	public String value() default "";
 }
