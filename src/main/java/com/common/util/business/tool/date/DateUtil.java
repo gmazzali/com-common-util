@@ -9,6 +9,7 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 
 import com.common.util.business.tool.VerifierUtil;
+import com.common.util.business.util.DatePrecisionEnum;
 import com.common.util.domain.exception.UncheckedException;
 
 /**
@@ -31,19 +32,16 @@ public class DateUtil implements Serializable {
 	 *            La cadena que contiene la fecha que vamos a crear.
 	 * @param pattern
 	 *            El patrón con el que va a leer la fecha que recibimos anteriormente.
-	 * @return La fecha correctamente parseada de acuerdo al patrón recibido.
-	 * @throws UncheckedException
-	 *             En caso de que alguno de los parámetros sea nulo o que falle el parseo de la fecha.
+	 * @return La fecha correctamente parseada de acuerdo al patrón recibido. En caso que sea imposible parsear la fecha, se retorna un valor
+	 *         <code>null</code>.
 	 */
 	public static Date createDate(String date, String pattern) {
-		// Verificamos que los parámetros no sean nulos.
-		VerifierUtil.checkNotNull(date, "The date cannot be null", "util.date.error.create.date.null");
-		VerifierUtil.checkNotNull(pattern, "The pattern cannot be null", "util.date.error.create.pattern.null");
-
+		VerifierUtil.checkNotNull(date, "The date cannot be null");
+		VerifierUtil.checkNotNull(pattern, "The pattern cannot be null");
 		try {
 			return new SimpleDateFormat(pattern).parse(date);
 		} catch (ParseException e) {
-			throw new UncheckedException(e);
+			throw null;
 		}
 	}
 
@@ -92,22 +90,22 @@ public class DateUtil implements Serializable {
 	 *            la primer fecha a comparar.
 	 * @param otherDate
 	 *            la segunda fecha a comparar.
-	 * @param datePrecision
-	 *            La precisión con la que va a compararse la fecha. Si es <code>null</code> se toma la precisión {@link DatePrecision#MILLISECOND}.
+	 * @param datePrecisionEnum
+	 *            La precisión con la que va a compararse la fecha. Si es <code>null</code> se toma la precisión {@link DatePrecisionEnum#MILLISECOND}
+	 *            .
 	 * 
 	 * @return Un valor positivo si la fecha <i>date</i> es mayor a la fecha <i>otherDate</i>, un valor cero (0) si las 2 fechas son iguales o un
 	 *         valor negativo si la fecha <i>otherDate</i> es mayor a la fecha <i>date</i>.
 	 * @throws UncheckedException
 	 *             En caso de que alguno de los parámetros recibidos sea inválidos o nulos.
 	 */
-	public static int compare(Date date, Date otherDate, DatePrecision datePrecision) {
-		// Verificamos que los parámetros no sean nulos.
-		VerifierUtil.checkNotNull(date, "The date cannot be null", "util.date.error.compare.date.1.null");
-		VerifierUtil.checkNotNull(otherDate, "The otherDate cannot be null", "util.date.error.compare.date.2.null");
+	public static int compare(Date date, Date otherDate, DatePrecisionEnum datePrecisionEnum) {
+		VerifierUtil.checkNotNull(date, "The date cannot be null");
+		VerifierUtil.checkNotNull(otherDate, "The otherDate cannot be null");
 
-		if (datePrecision == null) {
+		if (datePrecisionEnum == null) {
 			log.info("The precision is set to MILLISECOND");
-			datePrecision = DatePrecision.MILLISECOND;
+			datePrecisionEnum = DatePrecisionEnum.MILLISECOND;
 		}
 
 		// Creamos los calendarios para comparar.
@@ -117,49 +115,49 @@ public class DateUtil implements Serializable {
 		calendar2.setTime(otherDate);
 
 		// Si el nivel el del año.
-		if (datePrecision.getLevel() <= DatePrecision.YEAR.getLevel()) {
+		if (datePrecisionEnum.getLevel() <= DatePrecisionEnum.YEAR.getLevel()) {
 			return calendar1.get(Calendar.YEAR) - calendar2.get(Calendar.YEAR);
 		} else if (calendar1.get(Calendar.YEAR) != calendar2.get(Calendar.YEAR)) {
 			return calendar1.get(Calendar.YEAR) - calendar2.get(Calendar.YEAR);
 		}
 
 		// Si hasta los años son iguales y el nivel de precisión es de mes.
-		if (datePrecision.getLevel() <= DatePrecision.MONTH.getLevel()) {
+		if (datePrecisionEnum.getLevel() <= DatePrecisionEnum.MONTH.getLevel()) {
 			return calendar1.get(Calendar.MONTH) - calendar2.get(Calendar.MONTH);
 		} else if (calendar1.get(Calendar.MONTH) != calendar2.get(Calendar.MONTH)) {
 			return calendar1.get(Calendar.MONTH) - calendar2.get(Calendar.MONTH);
 		}
 
 		// Si hasta los meses son iguales y el nivel de precisión es de día.
-		if (datePrecision.getLevel() <= DatePrecision.DAY.getLevel()) {
+		if (datePrecisionEnum.getLevel() <= DatePrecisionEnum.DAY.getLevel()) {
 			return calendar1.get(Calendar.DAY_OF_MONTH) - calendar2.get(Calendar.DAY_OF_MONTH);
 		} else if (calendar1.get(Calendar.DAY_OF_MONTH) != calendar2.get(Calendar.DAY_OF_MONTH)) {
 			return calendar1.get(Calendar.DAY_OF_MONTH) - calendar2.get(Calendar.DAY_OF_MONTH);
 		}
 
 		// Si hasta los días son iguales y el nivel de precisión es de hora.
-		if (datePrecision.getLevel() <= DatePrecision.HOUR.getLevel()) {
+		if (datePrecisionEnum.getLevel() <= DatePrecisionEnum.HOUR.getLevel()) {
 			return calendar1.get(Calendar.HOUR) - calendar2.get(Calendar.HOUR);
 		} else if (calendar1.get(Calendar.HOUR) != calendar2.get(Calendar.HOUR)) {
 			return calendar1.get(Calendar.HOUR) - calendar2.get(Calendar.HOUR);
 		}
 
 		// Si hasta las horas son iguales y el nivel de precisión es de minuto.
-		if (datePrecision.getLevel() <= DatePrecision.MINUTE.getLevel()) {
+		if (datePrecisionEnum.getLevel() <= DatePrecisionEnum.MINUTE.getLevel()) {
 			return calendar1.get(Calendar.MINUTE) - calendar2.get(Calendar.MINUTE);
 		} else if (calendar1.get(Calendar.MINUTE) != calendar2.get(Calendar.MINUTE)) {
 			return calendar1.get(Calendar.MINUTE) - calendar2.get(Calendar.MINUTE);
 		}
 
 		// Si hasta los minutos son iguales y el nivel de precisión es de segundos.
-		if (datePrecision.getLevel() <= DatePrecision.SECOND.getLevel()) {
+		if (datePrecisionEnum.getLevel() <= DatePrecisionEnum.SECOND.getLevel()) {
 			return calendar1.get(Calendar.SECOND) - calendar2.get(Calendar.SECOND);
 		} else if (calendar1.get(Calendar.SECOND) != calendar2.get(Calendar.SECOND)) {
 			return calendar1.get(Calendar.SECOND) - calendar2.get(Calendar.SECOND);
 		}
 
 		// Si hasta los segundos son iguales y el nivel de precisión es de milisegundos.
-		if (datePrecision.getLevel() <= DatePrecision.MILLISECOND.getLevel()) {
+		if (datePrecisionEnum.getLevel() <= DatePrecisionEnum.MILLISECOND.getLevel()) {
 			return calendar1.get(Calendar.MILLISECOND) - calendar2.get(Calendar.MILLISECOND);
 		} else {
 			return calendar1.get(Calendar.MILLISECOND) - calendar2.get(Calendar.MILLISECOND);
@@ -211,19 +209,20 @@ public class DateUtil implements Serializable {
 	 *            la fecha que vamos a comparar.
 	 * @param beforeDate
 	 *            la fecha que consideramos que es anterior a la fecha de comparación.
-	 * @param datePrecision
-	 *            La precisión con la que van a compararse las fechas. Si es <code>null</code> se toma la precisión {@link DatePrecision#MILLISECOND}.
+	 * @param datePrecisionEnum
+	 *            La precisión con la que van a compararse las fechas. Si es <code>null</code> se toma la precisión
+	 *            {@link DatePrecisionEnum#MILLISECOND}.
 	 * @return <i>true</i> en caso que la fecha <i>beforeDate</i> es anterior a la fecha <i>date</i>, en caso contrario, o en caso de que alguno de
 	 *         los parámetros recibidos sea <code>null</code>, retornamos <i>false</i>.
 	 */
-	public static boolean before(Date date, Date beforeDate, DatePrecision datePrecision) {
+	public static boolean before(Date date, Date beforeDate, DatePrecisionEnum datePrecisionEnum) {
 		if (date == null || beforeDate == null) {
 			log.warn("Any date is null.");
 			return false;
 		}
 
 		try {
-			return DateUtil.compare(date, beforeDate, datePrecision) > 0;
+			return DateUtil.compare(date, beforeDate, datePrecisionEnum) > 0;
 		} catch (Exception e) {
 			return false;
 		}
@@ -275,19 +274,20 @@ public class DateUtil implements Serializable {
 	 *            la fecha que vamos a comparar.
 	 * @param beforeOrEqualDate
 	 *            la fecha que consideramos que es anterior o igual a la fecha de comparación.
-	 * @param datePrecision
-	 *            La precisión con la que van a compararse las fechas. Si es <code>null</code> se toma la precisión {@link DatePrecision#MILLISECOND}.
+	 * @param datePrecisionEnum
+	 *            La precisión con la que van a compararse las fechas. Si es <code>null</code> se toma la precisión
+	 *            {@link DatePrecisionEnum#MILLISECOND}.
 	 * @return <i>true</i> en caso que la fecha <i>beforeOrEqualDate</i> es anterior o igual a la fecha <i>date</i>, en caso contrario, o en caso de
 	 *         que alguno de los parámetros recibidos sea <code>null</code>, retornamos <i>false</i>.
 	 */
-	public static boolean beforeOrEqual(Date date, Date beforeOrEqualDate, DatePrecision datePrecision) {
+	public static boolean beforeOrEqual(Date date, Date beforeOrEqualDate, DatePrecisionEnum datePrecisionEnum) {
 		if (date == null || beforeOrEqualDate == null) {
 			log.warn("Any date is null.");
 			return false;
 		}
 
 		try {
-			return DateUtil.compare(date, beforeOrEqualDate, datePrecision) >= 0;
+			return DateUtil.compare(date, beforeOrEqualDate, datePrecisionEnum) >= 0;
 		} catch (Exception e) {
 			return false;
 		}
@@ -340,19 +340,20 @@ public class DateUtil implements Serializable {
 	 *            la fecha que vamos a comparar.
 	 * @param equalDate
 	 *            la fecha que consideramos que es igual a la fecha de comparación.
-	 * @param datePrecision
-	 *            La precisión con la que van a compararse las fechas. Si es <code>null</code> se toma la precisión {@link DatePrecision#MILLISECOND}.
+	 * @param datePrecisionEnum
+	 *            La precisión con la que van a compararse las fechas. Si es <code>null</code> se toma la precisión
+	 *            {@link DatePrecisionEnum#MILLISECOND}.
 	 * @return <i>true</i> en caso que la fecha <i>equalDate</i> es igual a la fecha <i>date</i>, en caso contrario, o en caso de que alguno de los
 	 *         parámetros recibidos sea <code>null</code>, retornamos <i>false</i>.
 	 */
-	public static boolean equal(Date date, Date equalDate, DatePrecision datePrecision) {
+	public static boolean equal(Date date, Date equalDate, DatePrecisionEnum datePrecisionEnum) {
 		if (date == null || equalDate == null) {
 			log.warn("Any date is null.");
 			return false;
 		}
 
 		try {
-			return DateUtil.compare(date, equalDate, datePrecision) == 0;
+			return DateUtil.compare(date, equalDate, datePrecisionEnum) == 0;
 		} catch (Exception e) {
 			return false;
 		}
@@ -404,19 +405,20 @@ public class DateUtil implements Serializable {
 	 *            la fecha que vamos a comparar.
 	 * @param afterOrEqualDate
 	 *            la fecha que consideramos que es mayor o igual a la fecha de comparación.
-	 * @param datePrecision
-	 *            La precisión con la que van a compararse las fechas. Si es <code>null</code> se toma la precisión {@link DatePrecision#MILLISECOND}.
+	 * @param datePrecisionEnum
+	 *            La precisión con la que van a compararse las fechas. Si es <code>null</code> se toma la precisión
+	 *            {@link DatePrecisionEnum#MILLISECOND}.
 	 * @return <i>true</i> en caso que la fecha <i>afterOrEqualDate</i> es posterior o igual a la fecha <i>date</i>, en caso contrario, o en caso de
 	 *         que alguno de los parámetros recibidos sea <code>null</code>, retornamos <i>false</i>.
 	 */
-	public static boolean afterOrEqual(Date date, Date afterOrEqualDate, DatePrecision datePrecision) {
+	public static boolean afterOrEqual(Date date, Date afterOrEqualDate, DatePrecisionEnum datePrecisionEnum) {
 		if (date == null || afterOrEqualDate == null) {
 			log.warn("Any date is null.");
 			return false;
 		}
 
 		try {
-			return DateUtil.compare(date, afterOrEqualDate, datePrecision) <= 0;
+			return DateUtil.compare(date, afterOrEqualDate, datePrecisionEnum) <= 0;
 		} catch (Exception e) {
 			return false;
 		}
@@ -467,19 +469,20 @@ public class DateUtil implements Serializable {
 	 *            la fecha que vamos a comparar.
 	 * @param afterDate
 	 *            la fecha que consideramos que es mayor a la fecha de comparación.
-	 * @param datePrecision
-	 *            La precisión con la que van a compararse las fechas. Si es <code>null</code> se toma la precisión {@link DatePrecision#MILLISECOND}.
+	 * @param datePrecisionEnum
+	 *            La precisión con la que van a compararse las fechas. Si es <code>null</code> se toma la precisión
+	 *            {@link DatePrecisionEnum#MILLISECOND}.
 	 * @return <i>true</i> en caso que la fecha <i>afterDate</i> es posterior a la fecha <i>date</i>, en caso contrario, o en caso de que alguno de
 	 *         los parámetros recibidos sea <code>null</code>, retornamos <i>false</i>.
 	 */
-	public static boolean after(Date date, Date afterDate, DatePrecision datePrecision) {
+	public static boolean after(Date date, Date afterDate, DatePrecisionEnum datePrecisionEnum) {
 		if (date == null || afterDate == null) {
 			log.warn("Any date is null.");
 			return false;
 		}
 
 		try {
-			return DateUtil.compare(date, afterDate, datePrecision) < 0;
+			return DateUtil.compare(date, afterDate, datePrecisionEnum) < 0;
 		} catch (Exception e) {
 			return false;
 		}
@@ -497,11 +500,12 @@ public class DateUtil implements Serializable {
 	 *            La fecha que corresponde con el inicio del intervalo de las fechas. En caso de ser <code>null</code>, esta fecha se omite.
 	 * @param afterDate
 	 *            La fecha que corresponde con el fin del intervalo de las fechas. En caso de ser <code>null</code>, esta fecha se omite.
-	 * @param datePrecision
-	 *            La precisión con la que van a compararse las fechas. Si es <code>null</code> se toma la precisión {@link DatePrecision#MILLISECOND}.
+	 * @param datePrecisionEnum
+	 *            La precisión con la que van a compararse las fechas. Si es <code>null</code> se toma la precisión
+	 *            {@link DatePrecisionEnum#MILLISECOND}.
 	 * @return <i>true</i> en caso que la fecha <i>afterDate</i> es posterior a la fecha <i>date</i>, en caso contrario, retornamos <i>false</i>.
 	 */
-	public static boolean between(Date date, Date beforeDate, Date afterDate, DatePrecision datePrecision) {
+	public static boolean between(Date date, Date beforeDate, Date afterDate, DatePrecisionEnum datePrecisionEnum) {
 		if (date == null) {
 			log.warn("The date is null.");
 			return false;
@@ -511,16 +515,16 @@ public class DateUtil implements Serializable {
 			if (afterDate == null) {
 				return false;
 			} else {
-				return DateUtil.afterOrEqual(date, afterDate, datePrecision);
+				return DateUtil.afterOrEqual(date, afterDate, datePrecisionEnum);
 			}
 		} else {
 			if (afterDate == null) {
-				return DateUtil.beforeOrEqual(date, beforeDate, datePrecision);
+				return DateUtil.beforeOrEqual(date, beforeDate, datePrecisionEnum);
 			} else {
-				Date myBeforeDate = DateUtil.getLowerDate(beforeDate, afterDate, datePrecision);
-				Date myAfterDate = DateUtil.getHigherDate(beforeDate, afterDate, datePrecision);
+				Date myBeforeDate = DateUtil.getLowerDate(beforeDate, afterDate, datePrecisionEnum);
+				Date myAfterDate = DateUtil.getHigherDate(beforeDate, afterDate, datePrecisionEnum);
 
-				return DateUtil.beforeOrEqual(date, myBeforeDate, datePrecision) && DateUtil.afterOrEqual(date, myAfterDate, datePrecision);
+				return DateUtil.beforeOrEqual(date, myBeforeDate, datePrecisionEnum) && DateUtil.afterOrEqual(date, myAfterDate, datePrecisionEnum);
 			}
 		}
 	}
@@ -530,17 +534,16 @@ public class DateUtil implements Serializable {
 	 * 
 	 * @param date
 	 *            La fecha que vamos a truncar.
-	 * @param datePrecision
+	 * @param datePrecisionEnum
 	 *            La precisión con la que va a recortarse la fecha. Si es <code>null</code> se va a retornar la misma fecha recibida.
 	 * @return La fecha truncada de acuerdo a la precisión.
 	 * @throws UncheckedException
 	 *             En caso de que alguno de los parámetros recibidos sea inválidos o nulos.
 	 */
-	public static Date truncate(Date date, DatePrecision datePrecision) {
-		// Verificamos que los parámetros no sean nulos.
-		VerifierUtil.checkNotNull(date, "The date cannot be null", "util.date.error.truncate.date.null");
+	public static Date truncate(Date date, DatePrecisionEnum datePrecisionEnum) {
+		VerifierUtil.checkNotNull(date, "The date cannot be null");
 
-		if (datePrecision == null) {
+		if (datePrecisionEnum == null) {
 			log.info("datePrecision = MILISECOND -> return the same date");
 			return date;
 		}
@@ -549,31 +552,25 @@ public class DateUtil implements Serializable {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 
-		if (datePrecision.getLevel() < DatePrecision.MILLISECOND.getLevel()) {
+		if (datePrecisionEnum.getLevel() < DatePrecisionEnum.MILLISECOND.getLevel()) {
 			calendar.set(Calendar.MILLISECOND, calendar.getActualMinimum(Calendar.MILLISECOND));
 		}
-
-		if (datePrecision.getLevel() < DatePrecision.SECOND.getLevel()) {
+		if (datePrecisionEnum.getLevel() < DatePrecisionEnum.SECOND.getLevel()) {
 			calendar.set(Calendar.SECOND, calendar.getActualMinimum(Calendar.SECOND));
 		}
-
-		if (datePrecision.getLevel() < DatePrecision.MINUTE.getLevel()) {
+		if (datePrecisionEnum.getLevel() < DatePrecisionEnum.MINUTE.getLevel()) {
 			calendar.set(Calendar.MINUTE, calendar.getActualMinimum(Calendar.MINUTE));
 		}
-
-		if (datePrecision.getLevel() < DatePrecision.HOUR.getLevel()) {
+		if (datePrecisionEnum.getLevel() < DatePrecisionEnum.HOUR.getLevel()) {
 			calendar.set(Calendar.HOUR_OF_DAY, calendar.getActualMinimum(Calendar.HOUR_OF_DAY));
 		}
-
-		if (datePrecision.getLevel() < DatePrecision.DAY.getLevel()) {
+		if (datePrecisionEnum.getLevel() < DatePrecisionEnum.DAY.getLevel()) {
 			calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
 		}
-
-		if (datePrecision.getLevel() < DatePrecision.MONTH.getLevel()) {
+		if (datePrecisionEnum.getLevel() < DatePrecisionEnum.MONTH.getLevel()) {
 			calendar.set(Calendar.MONTH, calendar.getActualMinimum(Calendar.MONTH));
 		}
-
-		if (datePrecision.getLevel() < DatePrecision.YEAR.getLevel()) {
+		if (datePrecisionEnum.getLevel() < DatePrecisionEnum.YEAR.getLevel()) {
 			calendar.set(Calendar.YEAR, calendar.getActualMinimum(Calendar.YEAR));
 		}
 
@@ -591,7 +588,7 @@ public class DateUtil implements Serializable {
 	 * @throws UncheckedException
 	 *             En caso de que alguno de los parámetros recibidos sea inválidos o nulos.
 	 */
-	public static Date getHigherDate(Date date1, Date date2, DatePrecision datePrecision) {
+	public static Date getHigherDate(Date date1, Date date2, DatePrecisionEnum datePrecisionEnum) {
 		if (date1 == null) {
 			log.info("The first date is null.");
 			return date2;
@@ -602,12 +599,12 @@ public class DateUtil implements Serializable {
 			return date1;
 		}
 
-		if (datePrecision == null) {
+		if (datePrecisionEnum == null) {
 			log.info("datePrecision = MILISECOND.");
-			datePrecision = DatePrecision.MILLISECOND;
+			datePrecisionEnum = DatePrecisionEnum.MILLISECOND;
 		}
 
-		if (DateUtil.beforeOrEqual(date1, date2, datePrecision)) {
+		if (DateUtil.beforeOrEqual(date1, date2, datePrecisionEnum)) {
 			return date1;
 		} else {
 			return date2;
@@ -625,7 +622,7 @@ public class DateUtil implements Serializable {
 	 * @throws UncheckedException
 	 *             En caso de que alguno de los parámetros recibidos sea inválidos o nulos.
 	 */
-	public static Date getLowerDate(Date date1, Date date2, DatePrecision datePrecision) {
+	public static Date getLowerDate(Date date1, Date date2, DatePrecisionEnum datePrecisionEnum) {
 		if (date1 == null) {
 			log.info("The first date is null.");
 			return date2;
@@ -636,12 +633,12 @@ public class DateUtil implements Serializable {
 			return date1;
 		}
 
-		if (datePrecision == null) {
+		if (datePrecisionEnum == null) {
 			log.info("datePrecision = MILISECOND.");
-			datePrecision = DatePrecision.MILLISECOND;
+			datePrecisionEnum = DatePrecisionEnum.MILLISECOND;
 		}
 
-		if (DateUtil.afterOrEqual(date1, date2, datePrecision)) {
+		if (DateUtil.afterOrEqual(date1, date2, datePrecisionEnum)) {
 			return date1;
 		} else {
 			return date2;
@@ -658,8 +655,7 @@ public class DateUtil implements Serializable {
 	 *             En caso de que la fecha recibida sea nula.
 	 */
 	public static boolean isWeekend(Date date) {
-		// Verificamos que el parámetro no sea nulo.
-		VerifierUtil.checkNotNull(date, "The date cannot be null", "util.date.error.weekend.date.null");
+		VerifierUtil.checkNotNull(date, "The date cannot be null");
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
@@ -688,8 +684,7 @@ public class DateUtil implements Serializable {
 	 *             En caso de que la fecha recibida sea nula.
 	 */
 	public static Date getPreviousMonth(Date date) {
-		// Verificamos que la fecha no sea nula.
-		VerifierUtil.checkNotNull(date, "The date cannot be null", "util.date.error.month.previous.date.null");
+		VerifierUtil.checkNotNull(date, "The date cannot be null");
 
 		// Hacemos los calculos.
 		Calendar calendar = Calendar.getInstance();
@@ -735,8 +730,7 @@ public class DateUtil implements Serializable {
 	 *             En caso de que la fecha recibida sea nula.
 	 */
 	public static Date getNextMonth(Date date) {
-		// Verificamos que la fecha no sea nula.
-		VerifierUtil.checkNotNull(date, "The date cannot be null", "util.date.error.month.next.date.null");
+		VerifierUtil.checkNotNull(date, "The date cannot be null");
 
 		// Hacemos los calculos.
 		Calendar calendar = Calendar.getInstance();
@@ -773,8 +767,7 @@ public class DateUtil implements Serializable {
 	 *             En caso de que la fecha recibida sea nula.
 	 */
 	public static Date getFirstDayOfMonth(Date date) {
-		// Verificamos que la fecha no sea nula.
-		VerifierUtil.checkNotNull(date, "The date cannot be null", "util.date.error.month.firstday.date.null");
+		VerifierUtil.checkNotNull(date, "The date cannot be null");
 
 		// Hacemos los calculos.
 		Calendar calendar = Calendar.getInstance();
@@ -799,8 +792,7 @@ public class DateUtil implements Serializable {
 	 *             En caso de que la fecha recibida sea nula.
 	 */
 	public static Date getLastDayOfMonth(Date date) {
-		// Verificamos que la fecha no sea nula.
-		VerifierUtil.checkNotNull(date, "The date cannot be null", "util.date.error.month.lastday.date.null");
+		VerifierUtil.checkNotNull(date, "The date cannot be null");
 
 		// Hacemos los calculos.
 		Calendar calendar = Calendar.getInstance();

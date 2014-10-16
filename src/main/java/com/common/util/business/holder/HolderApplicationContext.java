@@ -29,8 +29,8 @@ public class HolderApplicationContext implements Serializable {
 	 *            El conjunto de ubicaciones de los archivos de configuración para Spring.
 	 */
 	public static ApplicationContext initApplicationContext(String[] locations) {
-		HolderApplicationContext.context = new ClassPathXmlApplicationContext(locations);
-		return HolderApplicationContext.context;
+		context = new ClassPathXmlApplicationContext(locations);
+		return context;
 	}
 
 	/**
@@ -39,7 +39,7 @@ public class HolderApplicationContext implements Serializable {
 	 * @return El contexto de la aplicación actual.
 	 */
 	public static ApplicationContext getContext() {
-		return HolderApplicationContext.context;
+		return context;
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class HolderApplicationContext implements Serializable {
 	 * @return El elemento que corresponde con el bean que recuperamos.
 	 */
 	public static Object getBean(String beanName) {
-		return HolderApplicationContext.context.getBean(beanName);
+		return context.getBean(beanName);
 	}
 
 	/**
@@ -61,6 +61,6 @@ public class HolderApplicationContext implements Serializable {
 	 * @return El elemento que corresponde con el bean que recuperamos.
 	 */
 	public static <E> E getBean(Class<E> beanClass) {
-		return beanClass.cast(HolderApplicationContext.context.getBean(beanClass));
+		return beanClass.cast(context.getBean(beanClass));
 	}
 }

@@ -2,7 +2,6 @@ package com.common.util.business.converter.impl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
 
 import org.junit.Assert;
@@ -12,7 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.common.util.business.converter.Converter;
 import com.common.util.business.tool.collection.CollectionUtil;
-import com.common.util.domain.exception.UncheckedException;
+import com.common.util.domain.exception.ServiceException;
 
 /**
  * Clase de prueba para el servicio de conversión.
@@ -22,42 +21,21 @@ public class ConverterServiceImplTest {
 
 	@Test
 	public void testInitSinDuplicado() throws Exception {
-		ConverterServiceImpl service = new ConverterServiceImpl() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public Collection<Converter<?, ?>> getConverters() {
-				return CollectionUtil.newArrayList(new StringToDateConverter(), new IntegerToIntegerConverter(), new IntegerToDateConverter());
-			}
-		};
-		service.init();
+		ConverterServiceImpl service = new ConverterServiceImpl();
+		service.init(CollectionUtil.newArrayList(new StringToDateConverter(), new IntegerToIntegerConverter(), new IntegerToDateConverter()));
 	}
 
-	@Test(expected = UncheckedException.class)
+	@Test(expected = ServiceException.class)
 	public void testInitConDuplicado() throws Exception {
-		ConverterServiceImpl service = new ConverterServiceImpl() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public Collection<Converter<?, ?>> getConverters() {
-				return CollectionUtil.newArrayList(new StringToDateConverter(), new IntegerToIntegerConverter(), new IntegerToDateConverter(),
-						new IntegerToIntegerConverter());
-			}
-		};
-		service.init();
+		ConverterServiceImpl service = new ConverterServiceImpl();
+		service.init(CollectionUtil.newArrayList(new StringToDateConverter(), new IntegerToIntegerConverter(), new IntegerToDateConverter(),
+				new IntegerToIntegerConverter()));
 	}
 
 	@Test
 	public void testCanConvertVerdadero() throws Exception {
-		ConverterServiceImpl service = new ConverterServiceImpl() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public Collection<Converter<?, ?>> getConverters() {
-				return CollectionUtil.newArrayList(new StringToDateConverter(), new IntegerToIntegerConverter(), new IntegerToDateConverter());
-			}
-		};
-		service.init();
+		ConverterServiceImpl service = new ConverterServiceImpl();
+		service.init(CollectionUtil.newArrayList(new StringToDateConverter(), new IntegerToIntegerConverter(), new IntegerToDateConverter()));
 
 		Assert.assertTrue(service.canConvert(String.class, Date.class));
 		Assert.assertTrue(service.canConvert(Integer.class, Integer.class));
@@ -66,15 +44,8 @@ public class ConverterServiceImplTest {
 
 	@Test
 	public void testCanConvertFalso() throws Exception {
-		ConverterServiceImpl service = new ConverterServiceImpl() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public Collection<Converter<?, ?>> getConverters() {
-				return CollectionUtil.newArrayList(new StringToDateConverter(), new IntegerToIntegerConverter(), new IntegerToDateConverter());
-			}
-		};
-		service.init();
+		ConverterServiceImpl service = new ConverterServiceImpl();
+		service.init(CollectionUtil.newArrayList(new StringToDateConverter(), new IntegerToIntegerConverter(), new IntegerToDateConverter()));
 
 		Assert.assertFalse(service.canConvert(Date.class, String.class));
 		Assert.assertFalse(service.canConvert(Date.class, Integer.class));
@@ -83,19 +54,20 @@ public class ConverterServiceImplTest {
 
 	@Test
 	public void testConvert() throws Exception {
-		ConverterServiceImpl service = new ConverterServiceImpl() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public Collection<Converter<?, ?>> getConverters() {
-				return CollectionUtil.newArrayList(new StringToDateConverter(), new IntegerToIntegerConverter(), new StringToIntegerConverter());
-			}
-		};
-		service.init();
+		ConverterServiceImpl service = new ConverterServiceImpl();
+		service.init(CollectionUtil.newArrayList(new StringToDateConverter(), new IntegerToIntegerConverter(), new StringToIntegerConverter()));
 
 		Assert.assertEquals(new Integer(10), service.convert("10", Integer.class));
 		Assert.assertEquals(new Integer(10), service.convert(new Integer(10), Integer.class));
 		Assert.assertEquals(new SimpleDateFormat("dd/MM/yyyy").parse("10/10/2014"), service.convert("10/10/2014", Date.class));
+	}
+
+	@Test(expected = ServiceException.class)
+	public void testConvertFalla() throws Exception {
+		ConverterServiceImpl service = new ConverterServiceImpl();
+		service.init(CollectionUtil.newArrayList(new StringToDateConverter(), new IntegerToIntegerConverter(), new StringToIntegerConverter()));
+
+		service.convert(new Date(), Integer.class);
 	}
 
 	/**

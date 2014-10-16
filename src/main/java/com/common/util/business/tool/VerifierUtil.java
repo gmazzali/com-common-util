@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 import org.apache.log4j.Logger;
 
-import com.common.util.domain.exception.UncheckedException;
-
 /**
  * La clase encargada de verificar que los campos de entrada de una aplicación tenga los valores correctos y que no sean cualquier cosa.
  * 
@@ -15,7 +13,7 @@ import com.common.util.domain.exception.UncheckedException;
  */
 public class VerifierUtil implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(VerifierUtil.class);
+	private static final Logger LOGGER = Logger.getLogger(VerifierUtil.class);
 
 	/**
 	 * Se encarga de validar que los 2 elementos recibidos sean iguales. Permite recibir los 2 elementos nulos, lo que retorna que los elementos sean
@@ -57,21 +55,35 @@ public class VerifierUtil implements Serializable {
 
 	/**
 	 * Permite verificar si un objeto recibido es <code>null</code> o no. En caso de que el objeto recibido sea <code>null</code> se va a lanzar
-	 * {@link UncheckedException} para cortar validaciones.
+	 * {@link NullPointerException} para cortar validaciones.
 	 * 
 	 * @param object
 	 *            El objeto que vamos a verificar si es <code>null</code> o no.
 	 * @param defaultMessage
-	 *            El mensaje por omisión que vamos a incluir dentro de la {@link UncheckedException} en caso de que el objeto recibido sea
-	 *            <code>null</code>.
-	 * @param keyMessage
-	 *            La clave del mensaje que vamos a incluir dentro de la {@link UncheckedException} en caso de que el objeto recibido sea
+	 *            El mensaje por omisión que vamos a incluir dentro de la {@link NullPointerException} en caso de que el objeto recibido sea
 	 *            <code>null</code>.
 	 */
-	public static void checkNotNull(Object object, String defaultMessage, String keyMessage) {
+	public static void checkNotNull(Object object, String defaultMessage) {
 		if (object == null) {
-			log.warn("DEFAULT: " + defaultMessage + " KEY: " + keyMessage);
-			throw new UncheckedException(defaultMessage, keyMessage);
+			LOGGER.warn("object null");
+			throw new NullPointerException(defaultMessage);
+		}
+	}
+
+	/**
+	 * Permite verificar si el valor recibido es <code>true</code> o no. En caso de que el objeto recibido sea <code>false</code> se va a lanzar
+	 * {@link IllegalArgumentException} para cortar validaciones.
+	 * 
+	 * @param expression
+	 *            LA expresión booleana que vamos corroborar si es <code>true</code> o <code>false</code>.
+	 * @param defaultMessage
+	 *            El mensaje por omisión que vamos a incluir dentro de la {@link IllegalArgumentException} en caso de que la expresión recibida sea
+	 *            <code>false</code>.
+	 */
+	public static void checkArgument(boolean expression, String defaultMessage) {
+		if (!expression) {
+			LOGGER.warn("condition false");
+			throw new IllegalArgumentException(defaultMessage);
 		}
 	}
 }

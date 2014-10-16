@@ -3,6 +3,7 @@ package com.common.util.business.holder;
 import java.io.Serializable;
 import java.util.Locale;
 
+import org.apache.log4j.Logger;
 import org.springframework.context.MessageSource;
 import org.springframework.util.StringUtils;
 
@@ -17,6 +18,7 @@ import com.common.util.business.tool.StringUtil;
  */
 public class HolderMessage implements Serializable {
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOGGER = Logger.getLogger(HolderMessage.class);
 
 	/**
 	 * El conjunto de los mensaje que vamos a manejar dentro del sistema para los componentes.
@@ -57,8 +59,10 @@ public class HolderMessage implements Serializable {
 	 * @return El mensaje correspondiente a la clave recibida.
 	 */
 	public static String getMessage(String key, Object... parameter) {
-		if (HolderMessage.resources != null && key != null) {
-			return HolderMessage.resources.getMessage(key, parameter, key, HolderMessage.locale);
+		LOGGER.debug("KEY: " + key + " VALUES: {" + StringUtils.arrayToDelimitedString(parameter, ", ") + "}");
+
+		if (resources != null && key != null) {
+			return resources.getMessage(key, parameter, key, locale);
 		} else {
 			if (parameter == null || parameter.length == 0) {
 				return key;
@@ -82,11 +86,13 @@ public class HolderMessage implements Serializable {
 	 *         tenemos definido por omisión.
 	 */
 	public static String getMessage(String defaultMessage, String key, Object... parameter) {
-		if (HolderMessage.resources != null && key != null) {
-			return HolderMessage.resources.getMessage(key, parameter, defaultMessage, HolderMessage.locale);
+		LOGGER.debug("DEFAULT:" + defaultMessage + "KEY: " + key + " VALUES: {" + StringUtil.arrayToDelimitedString(parameter, ", ") + "}");
+
+		if (resources != null && key != null) {
+			return resources.getMessage(key, parameter, defaultMessage, locale);
 		} else {
 			if (parameter == null || parameter.length == 0) {
-				return key;
+				return defaultMessage;
 			} else {
 				return "DEFAULT:" + defaultMessage + "KEY: " + key + " VALUES: {" + StringUtil.arrayToDelimitedString(parameter, ", ") + "}";
 			}

@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 
 import com.common.util.business.tool.collection.ArrayUtil;
+import com.common.util.business.util.PatternUtilEnum;
 
 /**
  * La utilería para el manejo de los String.
@@ -16,7 +17,7 @@ import com.common.util.business.tool.collection.ArrayUtil;
  */
 public class StringUtil implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(StringUtil.class);
+	private static final Logger LOGGER = Logger.getLogger(StringUtil.class);
 
 	/**
 	 * Se encarga de hacer una llamada al método {@link Object#toString()} del modo Null-Safe.
@@ -380,7 +381,7 @@ public class StringUtil implements Serializable {
 	/**
 	 * Se encarga de validar que una cadena de caracteres recibida coincida con un patrón de validación.
 	 * 
-	 * @see PatternUtil
+	 * @see PatternUtilEnum
 	 * 
 	 * @param string
 	 *            La cadena que vamos a validar.
@@ -395,7 +396,7 @@ public class StringUtil implements Serializable {
 		try {
 			return Pattern.matches(pattern, string);
 		} catch (Exception ex) {
-			log.error("pattern failed", ex);
+			LOGGER.error("pattern failed", ex);
 			return false;
 		}
 	}

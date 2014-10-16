@@ -277,19 +277,6 @@
 		</property>
 	</bean>
 
-	<!-- ======================================================================================== -->
-	<!-- ===================== CARGAMOS LA CONFIGURACIÓN DE LOS CONVERSORES ===================== -->
-	<!-- ======================================================================================== -->
-
-	<bean id="conversionService" class="com.common.util.converter.impl.ConverterServiceImpl">
-		<property name="converters">
-			<list>
-				<!-- EL LISTADO DE LAS CLASES QUE IMPLEMENTAN LA INTERFAZ GENERICCONVERTER -->
-				<bean class="nombre.de.la.clase.que.es.una.implementación.de.la.interfaz.GenericCoverter" />
-			</list>
-		</property>
-	</bean>
-
 	<!-- ========================================================================================= -->
 	<!-- ================ CARGAMOS LOS ELEMENTOS QUE ANOTAMOS DENTRO DEL CONTEXTO ================ -->
 	<!-- ========================================================================================= -->

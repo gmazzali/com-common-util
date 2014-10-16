@@ -1,13 +1,10 @@
 package com.common.util.business.tool;
 
-import junit.framework.Assert;
-
 import org.apache.log4j.BasicConfigurator;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import com.common.util.business.tool.FormatUtil;
 
 /**
  * La clase de pruebas de la clase base que permite formatear elementos.
@@ -16,7 +13,7 @@ import com.common.util.business.tool.FormatUtil;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class FormatUtilUnitTest {
+public class FormatUtilTest {
 
 	public static final String GROUP_SEPARATOR = ".";
 
@@ -26,7 +23,7 @@ public class FormatUtilUnitTest {
 	public static void initClass() {
 		BasicConfigurator.configure();
 	}
-	
+
 	/**
 	 * Cuando se termina de ejecutar la prueba, dejamos un espacio en blanco.
 	 */
@@ -47,7 +44,6 @@ public class FormatUtilUnitTest {
 			FormatUtil.formatNumber(null, null, null, null, null, null, null, null);
 			Assert.fail();
 		} catch (Exception ex) {
-			Assert.assertTrue(true);
 		}
 
 		Number number = null;
@@ -287,13 +283,13 @@ public class FormatUtilUnitTest {
 		Assert.assertEquals(expectedOutput, output);
 
 		number = 12345;
-		expectedOutput = "1" + FormatUtilUnitTest.GROUP_SEPARATOR + "2" + FormatUtilUnitTest.GROUP_SEPARATOR + "3"
-				+ FormatUtilUnitTest.GROUP_SEPARATOR + "4" + FormatUtilUnitTest.GROUP_SEPARATOR + "5";
+		expectedOutput = "1" + FormatUtilTest.GROUP_SEPARATOR + "2" + FormatUtilTest.GROUP_SEPARATOR + "3"
+				+ FormatUtilTest.GROUP_SEPARATOR + "4" + FormatUtilTest.GROUP_SEPARATOR + "5";
 		output = FormatUtil.formatNumber(number, null, null, null, null, null, 1, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		number = 12345;
-		expectedOutput = "1" + FormatUtilUnitTest.GROUP_SEPARATOR + "23" + FormatUtilUnitTest.GROUP_SEPARATOR + "45";
+		expectedOutput = "1" + FormatUtilTest.GROUP_SEPARATOR + "23" + FormatUtilTest.GROUP_SEPARATOR + "45";
 		output = FormatUtil.formatNumber(number, null, null, null, null, null, 2, null);
 		Assert.assertEquals(expectedOutput, output);
 
@@ -380,13 +376,13 @@ public class FormatUtilUnitTest {
 		Assert.assertEquals(expectedOutput, output);
 
 		number = -12345;
-		expectedOutput = "-1" + FormatUtilUnitTest.GROUP_SEPARATOR + "2" + FormatUtilUnitTest.GROUP_SEPARATOR + "3"
-				+ FormatUtilUnitTest.GROUP_SEPARATOR + "4" + FormatUtilUnitTest.GROUP_SEPARATOR + "5";
+		expectedOutput = "-1" + FormatUtilTest.GROUP_SEPARATOR + "2" + FormatUtilTest.GROUP_SEPARATOR + "3"
+				+ FormatUtilTest.GROUP_SEPARATOR + "4" + FormatUtilTest.GROUP_SEPARATOR + "5";
 		output = FormatUtil.formatNumber(number, null, null, null, null, null, 1, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		number = -12345;
-		expectedOutput = "-1" + FormatUtilUnitTest.GROUP_SEPARATOR + "23" + FormatUtilUnitTest.GROUP_SEPARATOR + "45";
+		expectedOutput = "-1" + FormatUtilTest.GROUP_SEPARATOR + "23" + FormatUtilTest.GROUP_SEPARATOR + "45";
 		output = FormatUtil.formatNumber(number, null, null, null, null, null, 2, null);
 		Assert.assertEquals(expectedOutput, output);
 
@@ -453,12 +449,12 @@ public class FormatUtilUnitTest {
 		// CANTIDADES DE DIGITOS DECIMALES NULAS.
 
 		number = 12345.12345;
-		expectedOutput = "12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "12345";
+		expectedOutput = "12345" + FormatUtilTest.DECIMAL_SEPARATOR + "12345";
 		output = FormatUtil.formatNumber(number, null, null, null, null, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		number = -12345.12345;
-		expectedOutput = "-12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "12345";
+		expectedOutput = "-12345" + FormatUtilTest.DECIMAL_SEPARATOR + "12345";
 		output = FormatUtil.formatNumber(number, null, null, null, null, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
@@ -466,32 +462,32 @@ public class FormatUtilUnitTest {
 
 		// POSITIVOS
 		number = 12345.12345;
-		expectedOutput = "12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "12345";
+		expectedOutput = "12345" + FormatUtilTest.DECIMAL_SEPARATOR + "12345";
 		output = FormatUtil.formatNumber(number, null, null, -1, null, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		number = 12345.12345;
-		expectedOutput = "12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "12345";
+		expectedOutput = "12345" + FormatUtilTest.DECIMAL_SEPARATOR + "12345";
 		output = FormatUtil.formatNumber(number, null, null, 0, null, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		number = 12345.12345;
-		expectedOutput = "12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "12345";
+		expectedOutput = "12345" + FormatUtilTest.DECIMAL_SEPARATOR + "12345";
 		output = FormatUtil.formatNumber(number, null, null, 1, null, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		number = 12345.12345;
-		expectedOutput = "12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "12345";
+		expectedOutput = "12345" + FormatUtilTest.DECIMAL_SEPARATOR + "12345";
 		output = FormatUtil.formatNumber(number, null, null, 5, null, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		number = 12345.12345;
-		expectedOutput = "12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "123450";
+		expectedOutput = "12345" + FormatUtilTest.DECIMAL_SEPARATOR + "123450";
 		output = FormatUtil.formatNumber(number, null, null, 6, null, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		number = 12345.12345;
-		expectedOutput = "12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "1234500000";
+		expectedOutput = "12345" + FormatUtilTest.DECIMAL_SEPARATOR + "1234500000";
 		output = FormatUtil.formatNumber(number, null, null, 10, null, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
@@ -507,53 +503,53 @@ public class FormatUtilUnitTest {
 		Assert.assertEquals(expectedOutput, output);
 
 		number = 0.0;
-		expectedOutput = "0" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "0";
+		expectedOutput = "0" + FormatUtilTest.DECIMAL_SEPARATOR + "0";
 		output = FormatUtil.formatNumber(number, 1, null, 1, null, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		number = 0.0;
-		expectedOutput = "0" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "00000";
+		expectedOutput = "0" + FormatUtilTest.DECIMAL_SEPARATOR + "00000";
 		output = FormatUtil.formatNumber(number, 1, null, 5, null, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		number = 0.0;
-		expectedOutput = "0" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "000000";
+		expectedOutput = "0" + FormatUtilTest.DECIMAL_SEPARATOR + "000000";
 		output = FormatUtil.formatNumber(number, 1, null, 6, null, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		number = 0.0;
-		expectedOutput = "0" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "0000000000";
+		expectedOutput = "0" + FormatUtilTest.DECIMAL_SEPARATOR + "0000000000";
 		output = FormatUtil.formatNumber(number, 1, null, 10, null, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		// NEGATIVOS
 		number = -12345.12345;
-		expectedOutput = "-12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "12345";
+		expectedOutput = "-12345" + FormatUtilTest.DECIMAL_SEPARATOR + "12345";
 		output = FormatUtil.formatNumber(number, null, null, -1, null, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		number = -12345.12345;
-		expectedOutput = "-12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "12345";
+		expectedOutput = "-12345" + FormatUtilTest.DECIMAL_SEPARATOR + "12345";
 		output = FormatUtil.formatNumber(number, null, null, 0, null, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		number = -12345.12345;
-		expectedOutput = "-12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "12345";
+		expectedOutput = "-12345" + FormatUtilTest.DECIMAL_SEPARATOR + "12345";
 		output = FormatUtil.formatNumber(number, null, null, 1, null, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		number = -12345.12345;
-		expectedOutput = "-12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "12345";
+		expectedOutput = "-12345" + FormatUtilTest.DECIMAL_SEPARATOR + "12345";
 		output = FormatUtil.formatNumber(number, null, null, 5, null, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		number = -12345.12345;
-		expectedOutput = "-12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "123450";
+		expectedOutput = "-12345" + FormatUtilTest.DECIMAL_SEPARATOR + "123450";
 		output = FormatUtil.formatNumber(number, null, null, 6, null, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		number = -12345.12345;
-		expectedOutput = "-12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "1234500000";
+		expectedOutput = "-12345" + FormatUtilTest.DECIMAL_SEPARATOR + "1234500000";
 		output = FormatUtil.formatNumber(number, null, null, 10, null, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
@@ -561,63 +557,63 @@ public class FormatUtilUnitTest {
 
 		// POSITIVOS.
 		number = 12345.12345;
-		expectedOutput = "12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "12345";
+		expectedOutput = "12345" + FormatUtilTest.DECIMAL_SEPARATOR + "12345";
 		output = FormatUtil.formatNumber(number, null, null, null, -1, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		number = 12345.12345;
-		expectedOutput = "12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "12345";
+		expectedOutput = "12345" + FormatUtilTest.DECIMAL_SEPARATOR + "12345";
 		output = FormatUtil.formatNumber(number, null, null, null, 0, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		number = 12345.12345;
-		expectedOutput = "12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "1";
+		expectedOutput = "12345" + FormatUtilTest.DECIMAL_SEPARATOR + "1";
 		output = FormatUtil.formatNumber(number, null, null, null, 1, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		number = 12345.12345;
-		expectedOutput = "12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "12345";
+		expectedOutput = "12345" + FormatUtilTest.DECIMAL_SEPARATOR + "12345";
 		output = FormatUtil.formatNumber(number, null, null, null, 5, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		number = 12345.12345;
-		expectedOutput = "12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "12345";
+		expectedOutput = "12345" + FormatUtilTest.DECIMAL_SEPARATOR + "12345";
 		output = FormatUtil.formatNumber(number, null, null, null, 6, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		number = 12345.12345;
-		expectedOutput = "12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "12345";
+		expectedOutput = "12345" + FormatUtilTest.DECIMAL_SEPARATOR + "12345";
 		output = FormatUtil.formatNumber(number, null, null, null, 10, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		// NEGATIVOS.
 		number = -12345.12345;
-		expectedOutput = "-12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "12345";
+		expectedOutput = "-12345" + FormatUtilTest.DECIMAL_SEPARATOR + "12345";
 		output = FormatUtil.formatNumber(number, null, null, null, -1, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		number = -12345.12345;
-		expectedOutput = "-12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "12345";
+		expectedOutput = "-12345" + FormatUtilTest.DECIMAL_SEPARATOR + "12345";
 		output = FormatUtil.formatNumber(number, null, null, null, 0, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		number = -12345.12345;
-		expectedOutput = "-12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "1";
+		expectedOutput = "-12345" + FormatUtilTest.DECIMAL_SEPARATOR + "1";
 		output = FormatUtil.formatNumber(number, null, null, null, 1, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		number = -12345.12345;
-		expectedOutput = "-12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "12345";
+		expectedOutput = "-12345" + FormatUtilTest.DECIMAL_SEPARATOR + "12345";
 		output = FormatUtil.formatNumber(number, null, null, null, 5, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		number = -12345.12345;
-		expectedOutput = "-12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "12345";
+		expectedOutput = "-12345" + FormatUtilTest.DECIMAL_SEPARATOR + "12345";
 		output = FormatUtil.formatNumber(number, null, null, null, 6, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
 		number = -12345.12345;
-		expectedOutput = "-12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "12345";
+		expectedOutput = "-12345" + FormatUtilTest.DECIMAL_SEPARATOR + "12345";
 		output = FormatUtil.formatNumber(number, null, null, null, 10, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
@@ -625,7 +621,7 @@ public class FormatUtilUnitTest {
 
 		// POSITIVOS.
 		number = 12345.12345;
-		expectedOutput = "12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "12345";
+		expectedOutput = "12345" + FormatUtilTest.DECIMAL_SEPARATOR + "12345";
 		output = FormatUtil.formatNumber(number, null, null, null, null, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 
@@ -641,7 +637,7 @@ public class FormatUtilUnitTest {
 
 		// NEGATIVOS.
 		number = -12345.12345;
-		expectedOutput = "-12345" + FormatUtilUnitTest.DECIMAL_SEPARATOR + "12345";
+		expectedOutput = "-12345" + FormatUtilTest.DECIMAL_SEPARATOR + "12345";
 		output = FormatUtil.formatNumber(number, null, null, null, null, null, null, null);
 		Assert.assertEquals(expectedOutput, output);
 

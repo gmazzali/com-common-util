@@ -1,12 +1,10 @@
 package com.common.util.business.tool;
 
-import junit.framework.Assert;
 
 import org.apache.log4j.BasicConfigurator;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import com.common.util.business.tool.ConverterUtil;
 
 /**
  * La clase de pruebas de la clase que permite convertir un numero en una cadena de caracteres con su descripción.
@@ -15,7 +13,7 @@ import com.common.util.business.tool.ConverterUtil;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class ConverterUtilUnitTest {
+public class ConverterUtilTest {
 
 	@BeforeClass
 	public static void initClass() {

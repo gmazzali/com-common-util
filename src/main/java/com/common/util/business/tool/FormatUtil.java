@@ -69,11 +69,8 @@ public class FormatUtil {
 	 *             En caso de que alguno de los parámetros sea nulo.
 	 */
 	public static String formatDate(Date date, String pattern) {
-		// Verificamos que la fecha y el patrón no sea nulos.
-		VerifierUtil.checkNotNull(date, "The date cannot be null", "util.format.error.date.date.null");
-		VerifierUtil.checkNotNull(pattern, "The pattern cannot be null", "util.format.error.date.pattern.null");
-
-		// Retornamos la fecha formateada.
+		VerifierUtil.checkNotNull(date, "The date cannot be null");
+		VerifierUtil.checkNotNull(pattern, "The pattern cannot be null");
 		return new SimpleDateFormat(pattern).format(date);
 	}
 
@@ -201,8 +198,7 @@ public class FormatUtil {
 	 */
 	public static String formatNumber(Number number, Integer minimumIntegerSize, Integer maximumIntegerSize, Integer minimumDecimalSize,
 			Integer maximumDecimalSize, Character decimalSeparator, Integer groupSize, Character groupSeparator) {
-		// Verificamos que el número a formatear no sea nulo.
-		VerifierUtil.checkNotNull(number, "The number cannot be null", "util.format.error.number.number.null");
+		VerifierUtil.checkNotNull(number, "The number cannot be null");
 
 		DecimalFormat formatter = FormatUtil.getNumberFormat();
 		DecimalFormatSymbols symbols = formatter.getDecimalFormatSymbols();

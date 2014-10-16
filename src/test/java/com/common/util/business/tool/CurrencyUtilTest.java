@@ -1,13 +1,10 @@
 package com.common.util.business.tool;
 
-import junit.framework.Assert;
-
 import org.apache.log4j.BasicConfigurator;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import com.common.util.business.tool.CurrencyUtil;
 
 /**
  * La clase de pruebas de la clase base que permite manejar el dinero.
@@ -16,7 +13,7 @@ import com.common.util.business.tool.CurrencyUtil;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class CurrencyUtilTestUnit {
+public class CurrencyUtilTest {
 
 	@BeforeClass
 	public static void initClass() {
