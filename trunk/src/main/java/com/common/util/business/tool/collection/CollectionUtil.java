@@ -25,15 +25,38 @@ import com.common.util.domain.exception.UncheckedException;
  * 
  * @since 05/03/2014
  * @author Guillermo Mazzali
- * @version 1.0
+ * @version 1.1
  */
 public class CollectionUtil {
 
-	// TODO
-	public static <T> ArrayList<T> newArrayList(T... item) {
+	/**
+	 * Permite crear un objeto de {@link HashSet} que va a contener todos los elementos que se reciban como parámetros. En caso de no recibir ningún
+	 * parámetro, se va a retornar una lista vacia.
+	 * 
+	 * @param items
+	 *            El conjunto de los items que queremos agregar al conjunto {@link HashSet}. Puede estar vacía.
+	 * @return El conjunto {@link HashSet} que contiene todos los items que recibimos como parámetros.
+	 */
+	public static <T> HashSet<T> newHashSet(T... items) {
+		HashSet<T> set = new HashSet<T>();
+		if (items != null) {
+			Collections.addAll(set, items);
+		}
+		return set;
+	}
+
+	/**
+	 * Permite crear un objeto de {@link ArrayList} que va a contener todos los elementos que se reciban como parámetros. En caso de no recibir ningún
+	 * parámetro, se va a retornar una lista vacia.
+	 * 
+	 * @param items
+	 *            El conjunto de los items que queremos agregar a la lista {@link ArrayList}. Puede estar vacía.
+	 * @return La lista {@link ArrayList} que contiene todos los items que recibimos como parámetros.
+	 */
+	public static <T> ArrayList<T> newArrayList(T... items) {
 		ArrayList<T> list = new ArrayList<T>();
-		if (item != null) {
-			Collections.addAll(list, item);
+		if (items != null) {
+			Collections.addAll(list, items);
 		}
 		return list;
 	}
@@ -224,7 +247,6 @@ public class CollectionUtil {
 	 *             En caso de que alguno de los parámetros sea nulo.
 	 */
 	public static <I extends Serializable> boolean exist(Collection<I> items, Predicate<I> predicate) {
-		// Verificamos que la colección o el predicado no sean nulos.
 		VerifierUtil.checkNotNull(items, "The collection cannot be null");
 		VerifierUtil.checkNotNull(predicate, "The predicate cannot be null");
 

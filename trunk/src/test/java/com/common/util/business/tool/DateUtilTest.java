@@ -8,6 +8,8 @@ import org.apache.log4j.BasicConfigurator;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import com.common.util.business.tool.date.DateUtil;
 import com.common.util.business.util.DatePrecisionEnum;
@@ -19,6 +21,7 @@ import com.common.util.business.util.DatePrecisionEnum;
  * @author Guillermo Mazzali
  * @version 1.0
  */
+@RunWith(MockitoJUnitRunner.class)
 public class DateUtilTest {
 
 	/**

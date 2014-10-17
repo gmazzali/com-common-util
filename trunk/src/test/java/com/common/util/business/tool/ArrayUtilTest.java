@@ -5,6 +5,8 @@ import org.apache.log4j.BasicConfigurator;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import com.common.util.business.tool.collection.ArrayUtil;
 import com.common.util.business.tool.collection.CollectionUtil;
@@ -16,6 +18,7 @@ import com.common.util.business.tool.collection.CollectionUtil;
  * @author Guillermo Mazzali
  * @version 1.0
  */
+@RunWith(MockitoJUnitRunner.class)
 public class ArrayUtilTest {
 
 	@BeforeClass

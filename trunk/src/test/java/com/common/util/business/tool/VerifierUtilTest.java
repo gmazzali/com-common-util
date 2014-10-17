@@ -6,6 +6,8 @@ import org.apache.log4j.BasicConfigurator;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * La clase que permite probar los métodos de verificación base de la libreria.
@@ -14,6 +16,7 @@ import org.junit.Test;
  * @author Guillermo Mazzali
  * @version 1.0
  */
+@RunWith(MockitoJUnitRunner.class)
 public class VerifierUtilTest {
 
 	@BeforeClass

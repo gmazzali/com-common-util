@@ -5,6 +5,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * La clase de pruebas de la clase base que permite manejar el dinero.
@@ -13,6 +15,7 @@ import org.junit.Test;
  * @author Guillermo Mazzali
  * @version 1.0
  */
+@RunWith(MockitoJUnitRunner.class)
 public class CurrencyUtilTest {
 
 	@BeforeClass
