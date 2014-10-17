@@ -6,6 +6,8 @@ import org.apache.log4j.BasicConfigurator;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import com.common.util.business.util.PatternUtilEnum;
 
@@ -16,6 +18,7 @@ import com.common.util.business.util.PatternUtilEnum;
  * @author Guillermo Mazzali
  * @version 1.0
  */
+@RunWith(MockitoJUnitRunner.class)
 public class StringUtilTest {
 
 	@BeforeClass

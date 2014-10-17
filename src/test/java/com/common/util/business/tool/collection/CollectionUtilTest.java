@@ -1,4 +1,4 @@
-package com.common.util.business.tool;
+package com.common.util.business.tool.collection;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,6 +10,8 @@ import org.apache.log4j.BasicConfigurator;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import com.common.util.business.tool.collection.CollectionUtil;
 import com.common.util.business.tool.collection.Predicate;
@@ -23,13 +25,50 @@ import com.common.util.business.tool.collection.Transformer;
  * @author Guillermo Mazzali
  * @version 1.0
  */
+@RunWith(MockitoJUnitRunner.class)
 public class CollectionUtilTest {
 
 	@BeforeClass
 	public static void initClass() {
 		BasicConfigurator.configure();
 	}
+	
+	/**
+	 * La pruebas sobre el método <i><b>newHashSet</b></i> de {@link CollectionUtil}
+	 * 
+	 * @see CollectionUtil#newHashSet(Object...)
+	 */
+	@Test
+	public void testNewHashSet() throws Exception {
+		Assert.assertEquals(0, CollectionUtil.newHashSet().size());
+		Assert.assertEquals(1, CollectionUtil.newHashSet(1).size());
+		Assert.assertEquals(2, CollectionUtil.newHashSet(1, null).size());
+		Assert.assertEquals(2, CollectionUtil.newHashSet(1, 2).size());
+		Assert.assertEquals(2, CollectionUtil.newHashSet(1, 2, 2).size());
 
+		Assert.assertTrue(CollectionUtil.newHashSet(1, 2).contains(1));
+		Assert.assertTrue(CollectionUtil.newHashSet(1, 2).contains(2));
+		Assert.assertFalse(CollectionUtil.newHashSet(1, 2).contains(3));
+	}
+	
+	/**
+	 * La pruebas sobre el método <i><b>newArrayList</b></i> de {@link CollectionUtil}
+	 * 
+	 * @see CollectionUtil#newArrayList(Object...)
+	 */
+	@Test
+	public void testNewArrayList() throws Exception {
+		Assert.assertEquals(0, CollectionUtil.newArrayList().size());
+		Assert.assertEquals(1, CollectionUtil.newArrayList(1).size());
+		Assert.assertEquals(2, CollectionUtil.newArrayList(1, null).size());
+		Assert.assertEquals(2, CollectionUtil.newArrayList(1, 2).size());
+		Assert.assertEquals(3, CollectionUtil.newArrayList(1, 2, 2).size());
+
+		Assert.assertTrue(CollectionUtil.newArrayList(1, 2).contains(1));
+		Assert.assertTrue(CollectionUtil.newArrayList(1, 2).contains(2));
+		Assert.assertFalse(CollectionUtil.newArrayList(1, 2).contains(3));
+	}
+	
 	/**
 	 * La pruebas sobre los métodos <i><b>isEmpty</b></i> y <i><b>isNotEmpty</b></i> de {@link CollectionUtil}
 	 * 
