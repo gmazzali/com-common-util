@@ -90,6 +90,7 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * 
 	 * @see BaseDao#findAll(Orders)
 	 * 
+	 * @see #findAll()
 	 * @see #findById(Serializable)
 	 * @see #findByFilter(BaseFilter)
 	 * 
@@ -103,6 +104,21 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	public List<E> findAll(Orders orders) throws ServiceException;
 
 	/**
+	 * La función que nos permite recuperar todos las entidades del mismo tipo almacenados dentro de la base de datos.
+	 * 
+	 * @see BaseDao#findAll(Orders)
+	 * 
+	 * @see #findAll(Orders)
+	 * @see #findById(Serializable)
+	 * @see #findByFilter(BaseFilter)
+	 * 
+	 * @return El listado de los elementos almacenados.
+	 * @throws ServiceException
+	 *             En caso de un problema durante la recuperación de todos las entidades desde la base de datos.
+	 */
+	public List<E> findAll() throws ServiceException;
+
+	/**
 	 * La función que nos permite recuperar todos las entidades del mismo tipo almacenados dentro de la base de datos y que cumplen un filtro
 	 * {@link BaseFilter} recibido.
 	 * 
@@ -112,6 +128,7 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * @see BaseDao#findByFilter(BaseFilter, Orders)
 	 * 
 	 * @see #findAll()
+	 * @see #findAll(Orders)
 	 * @see #findById(Serializable)
 	 * 
 	 * @param filter
@@ -128,6 +145,7 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * @see BaseDao#findById(Serializable)
 	 * 
 	 * @see #findAll()
+	 * @see #findAll(Orders))
 	 * @see #findByFilter(BaseFilter)
 	 * 
 	 * @param id

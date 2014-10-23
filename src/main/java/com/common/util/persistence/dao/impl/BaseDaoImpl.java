@@ -157,6 +157,20 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 			throw new PersistenceException(e);
 		}
 	}
+	
+	@Override
+	public List<E> findAll() throws PersistenceException {
+		try {
+			Session session = this.getSession();
+			Criteria criteria = session.createCriteria(this.persistentClass);
+			List<E> listado = criteria.list();
+			this.closeSession(session);
+			return listado;
+		} catch (RuntimeException e) {
+			LOGGER.error("find all failed", e);
+			throw new PersistenceException(e);
+		}
+	}
 
 	@Override
 	public List<E> findByFilter(BaseFilter<E, PK> filter) {
