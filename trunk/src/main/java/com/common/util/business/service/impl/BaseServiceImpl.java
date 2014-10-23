@@ -64,6 +64,16 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 	}
 
 	@Override
+	public List<E> findAll() {
+		try {
+			return this.dao.findAll();
+		} catch (Exception e) {
+			log.error("find all failed", e);
+			throw new ServiceException(e);
+		}
+	}
+
+	@Override
 	public List<E> findAll(Orders orders) {
 		try {
 			return this.dao.findAll(orders);
