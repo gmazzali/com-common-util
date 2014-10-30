@@ -74,6 +74,8 @@ public class NumberUtilTest {
 		
 		Assert.assertTrue(NumberUtil.isDecimalNumber("-1.5"));
 		Assert.assertTrue(NumberUtil.isDecimalNumber("1.5"));
+		Assert.assertTrue(NumberUtil.isDecimalNumber("-1234.5678"));
+		Assert.assertTrue(NumberUtil.isDecimalNumber("1234.5678"));
 
 		Assert.assertTrue(NumberUtil.isDecimalNumber("-1"));
 		Assert.assertTrue(NumberUtil.isDecimalNumber("0"));

@@ -43,7 +43,7 @@ public enum PatternUtilEnum {
 	 * <b>número:</b> <i>(-)?[0-9]+.[0-9]+</i>
 	 * </pre>
 	 */
-	NUMBER_DECIMAL_PATTERN("[-]?\\d+(\\.\\d)?"),
+	NUMBER_DECIMAL_PATTERN("[-]?\\d+(\\.\\d+)?$"),
 
 	/**
 	 * La expresión regular del nombre de una persona física.
