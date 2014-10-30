@@ -80,7 +80,7 @@
 	<!-- ==================== CARGAMOS LA CONFIGURACIÓN PARA EL FORMATEADOR ==================== -->
 	<!-- ======================================================================================= -->
 
-	<bean id="formatterLocale" class="java.util.Locale" lazy-init="false" depends-on="properties">
+	<bean id="numberLocale" class="java.util.Locale" lazy-init="false" depends-on="properties">
 		<constructor-arg index="0" value="${formatter.locale.languaje}" />
 		<constructor-arg index="1" value="${formatter.locale.country}" />
 	</bean>
@@ -88,28 +88,18 @@
 	<!-- Si los métodos de seteo son estático -->
 
 	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean" lazy-init="false" depends-on="formatterLocale">
-    	<property name="staticMethod" value="com.common.util.tools.FormatUtil.setDateFormat"/>
+    	<property name="staticMethod" value="com.common.util.tools.NumberUtil.setLocale"/>
     	<property name="arguments">
         	<list>
-            	<ref bean="messageSource"/>
-        	</list>
-   		</property>
-	</bean>
-	
-	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean" lazy-init="false" depends-on="properties">
-    	<property name="staticMethod" value="com.common.util.tools.FormatUtil.setLocale"/>
-    	<property name="arguments">
-        	<list>
-        		<value>${formatter.pattern.date}</value>
+            	<ref bean="numberLocale"/>
         	</list>
    		</property>
 	</bean>
 
 	<!-- O si los métodos de seteo no son estático -->
 
-	<bean id="formatter" class="com.common.util.tools.FormatUtil" lazy-init="false" depends-on="properties, formatterLocale">
-		<property name="locale" ref="formatterLocale" />
-		<property name="dateFormat" ref="${formatter.pattern.date}" />
+	<bean id="formatter" class="com.common.util.tools.NumberUtil" lazy-init="false" depends-on="properties">
+		<property name="locale" ref="numberLocale" />
 	</bean>
 
 	<!-- ======================================================================================= -->
@@ -161,105 +151,6 @@
 		<property name="decimals" ref="${currency.decimals}" />
 		<property name="groupSeparator" ref="${currency.separator.group}" />
 		<property name="decimalSeparator" ref="${currency.separator.decimal}" />
-	</bean>
-
-	<!-- ======================================================================================== -->
-	<!-- =========== CARGAMOS LA CONFIGURACIÓN PARA EL CONVERSOR DE NUMEROS A STRINGS =========== -->
-	<!-- ======================================================================================== -->
-
-	<bean id="converterUtil" class="com.common.util.tools.ConverterUtil" lazy-init="false" depends-on="messageSource">
-	<property name=""></property>
-		<property name="tenConnector" value="${number.word.ten.connector}" />
-		<property name="unitsGroup">
-			<list>
-				<value>${number.word.unit.0}</value>
-				<value>${number.word.unit.1}</value>
-				<value>${number.word.unit.2}</value>
-				<value>${number.word.unit.3}</value>
-				<value>${number.word.unit.4}</value>
-				<value>${number.word.unit.5}</value>
-				<value>${number.word.unit.6}</value>
-				<value>${number.word.unit.7}</value>
-				<value>${number.word.unit.8}</value>
-				<value>${number.word.unit.9}</value>
-				<value>${number.word.unit.10}</value>
-				<value>${number.word.unit.11}</value>
-				<value>${number.word.unit.12}</value>
-				<value>${number.word.unit.13}</value>
-				<value>${number.word.unit.14}</value>
-				<value>${number.word.unit.15}</value>
-				<value>${number.word.unit.16}</value>
-				<value>${number.word.unit.17}</value>
-				<value>${number.word.unit.18}</value>
-				<value>${number.word.unit.19}</value>
-				<value>${number.word.unit.20}</value>
-				<value>${number.word.unit.21}</value>
-				<value>${number.word.unit.22}</value>
-				<value>${number.word.unit.23}</value>
-				<value>${number.word.unit.24}</value>
-				<value>${number.word.unit.25}</value>
-				<value>${number.word.unit.26}</value>
-				<value>${number.word.unit.27}</value>
-				<value>${number.word.unit.28}</value>
-				<value>${number.word.unit.29}</value>
-			</list>
-		</property>
-		<property name="tensGroup">
-			<list>
-				<value>${number.word.ten.0}</value>
-				<value>${number.word.ten.10}</value>
-				<value>${number.word.ten.20}</value>
-				<value>${number.word.ten.30}</value>
-				<value>${number.word.ten.40}</value>
-				<value>${number.word.ten.50}</value>
-				<value>${number.word.ten.60}</value>
-				<value>${number.word.ten.70}</value>
-				<value>${number.word.ten.80}</value>
-				<value>${number.word.ten.90}</value>
-			</list>
-		</property>
-		<property name="hundredsGroup">
-			<list>
-				<value>${number.word.hundred.100s}</value>
-				<value>${number.word.hundred.100}</value>
-				<value>${number.word.hundred.200}</value>
-				<value>${number.word.hundred.300}</value>
-				<value>${number.word.hundred.400}</value>
-				<value>${number.word.hundred.500}</value>
-				<value>${number.word.hundred.600}</value>
-				<value>${number.word.hundred.700}</value>
-				<value>${number.word.hundred.800}</value>
-				<value>${number.word.hundred.900}</value>
-			</list>
-		</property>
-		<property name="millonsGroup">
-			<list>
-				<list>
-					<value>${number.word.group.singular.1000}</value>
-					<value>${number.word.group.plural.1000}</value>
-				</list>
-				<list>
-					<value>${number.word.group.singular.1000000}</value>
-					<value>${number.word.group.plural.1000000}</value>
-				</list>
-				<list>
-					<value>${number.word.group.singular.1000000000000}</value>
-					<value>${number.word.group.plural.1000000000000}</value>
-				</list>
-				<list>
-					<value>${number.word.group.singular.1000000000000000000}</value>
-					<value>${number.word.group.plural.1000000000000000000}</value>
-				</list>
-				<list>
-					<value>${number.word.group.singular.1000000000000000000000000}</value>
-					<value>${number.word.group.plural.1000000000000000000000000}</value>
-				</list>
-				<list>
-					<value>${number.word.group.singular.1000000000000000000000000000000}</value>
-					<value>${number.word.group.plural.1000000000000000000000000000000}</value>
-				</list>
-			</list>
-		</property>
 	</bean>
 
 	<!-- ====================================================================================== -->
