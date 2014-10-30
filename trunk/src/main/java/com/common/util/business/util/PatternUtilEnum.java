@@ -34,7 +34,7 @@ public enum PatternUtilEnum {
 	 * <b>número:</b> <i>(-)?[0-9]+</i>
 	 * </pre>
 	 */
-	NUMBER_INTEGER_PATTERN("(-)?[0-9]+"),
+	NUMBER_INTEGER_PATTERN("[-]?[0-9]+"),
 
 	/**
 	 * La expresión regular de un numero decimal.
@@ -43,7 +43,7 @@ public enum PatternUtilEnum {
 	 * <b>número:</b> <i>(-)?[0-9]+.[0-9]+</i>
 	 * </pre>
 	 */
-	NUMBER_DECIMAL_PATTERN("(-)?[0-9]+\\.[0-9]+"),
+	NUMBER_DECIMAL_PATTERN("[-]?\\d+(\\.\\d)?"),
 
 	/**
 	 * La expresión regular del nombre de una persona física.

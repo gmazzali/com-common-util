@@ -1,4 +1,4 @@
-package com.common.util.business.tool;
+package com.common.util.business.tool.date;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

@@ -31,7 +31,8 @@ public class StringUtil implements Serializable {
 	}
 
 	/**
-	 * Se encarga de verificar que una cadena de caracteres este vacia. Retorna <i>true</i> en caso de que la cadena recibida sea <code>null</code>.
+	 * Se encarga de verificar que una cadena de caracteres este vacia. Retorna <code>true</code> en caso de que la cadena recibida sea
+	 * <code>null</code>.
 	 * 
 	 * <pre>
 	 * StringUtil.isEmpty(null)    = true
@@ -43,15 +44,37 @@ public class StringUtil implements Serializable {
 	 * 
 	 * @param string
 	 *            La cadena que vamos a verificar.
-	 * @return <i>true</i> en caso de que la cadena recibida sea <code>null</code> o este vacia completamente, en caso contrario retorna <i>false</i>.
+	 * @return <code>true</code> en caso de que la cadena recibida sea <code>null</code> o este vacia completamente, en caso contrario retorna
+	 *         <code>false</code>.
 	 */
 	public static boolean isEmpty(String string) {
 		return string != null ? string.isEmpty() : true;
 	}
 
 	/**
-	 * Se encarga de verificar que una cadena de caracteres este compuesta solo de espacios en blanco. Retorna <i>true</i> en caso de que la cadena
-	 * recibida sea nula.
+	 * Se encarga de verificar que una cadena de caracteres no este vacia. Retorna <code>false</code> en caso de que la cadena recibida sea
+	 * <code>null</code>.
+	 * 
+	 * <pre>
+	 * StringUtil.isNotEmpty(null)    = false
+	 * StringUtil.isNotEmpty("")      = false
+	 * StringUtil.isNotEmpty(" ")     = true
+	 * StringUtil.isNotEmpty("bob")   = true
+	 * StringUtil.isNotEmpty(" bob ") = true
+	 * </pre>
+	 * 
+	 * @param string
+	 *            La cadena que vamos a verificar.
+	 * @return <code>false</code> en caso de que la cadena recibida sea <code>null</code> o este vacia completamente, en caso contrario retorna
+	 *         <code>true</code>.
+	 */
+	public static boolean isNotEmpty(String string) {
+		return !StringUtil.isEmpty(string);
+	}
+
+	/**
+	 * Se encarga de verificar que una cadena de caracteres este compuesta solo de espacios en blanco. Retorna <code>true</code> en caso de que la
+	 * cadena recibida sea <code>null</code>.
 	 * 
 	 * <pre>
 	 * StringUtil.isBlank(null)     = true
@@ -63,11 +86,32 @@ public class StringUtil implements Serializable {
 	 * 
 	 * @param string
 	 *            La cadena que vamos a verificar.
-	 * @return <i>true</i> en caso de que la cadena recibida sea nula o este compuesta solo de espacios en blanco, en caso contrario retorna
-	 *         <i>false</i>.
+	 * @return <code>true</code> en caso de que la cadena recibida sea nula o este compuesta solo de espacios en blanco, en caso contrario retorna
+	 *         <code>false</code>.
 	 */
 	public static boolean isBlank(String string) {
 		return string != null ? string.trim().isEmpty() : true;
+	}
+
+	/**
+	 * Se encarga de verificar que una cadena de caracteres no este compuesta solo de espacios en blanco. Retorna <code>true</code> en caso de que la
+	 * cadena recibida sea <code>null</code>.
+	 * 
+	 * <pre>
+	 * StringUtil.isNotBlank(null)     = false
+	 * StringUtil.isNotBlank("")       = false
+	 * StringUtil.isNotBlank(" ")      = false
+	 * StringUtil.isNotBlank("bob")    = true
+	 * StringUtil.isNotBlank(" bob ")  = true
+	 * </pre>
+	 * 
+	 * @param string
+	 *            La cadena que vamos a verificar.
+	 * @return <code>false</code> en caso de que la cadena recibida sea nula o este compuesta solo de espacios en blanco, en caso contrario retorna
+	 *         <code>true</code>.
+	 */
+	public static boolean isNotBlank(String string) {
+		return !StringUtil.isBlank(string);
 	}
 
 	/**
@@ -387,7 +431,7 @@ public class StringUtil implements Serializable {
 	 *            La cadena que vamos a validar.
 	 * @param pattern
 	 *            El patrón con el que vamos a validar la cadena.
-	 * @return <i>true</i> en caso que la cadena recibida coincida con el patrón recibido, en caso contrario, retornamos <i>false</i>.
+	 * @return <code>true</code> en caso que la cadena recibida coincida con el patrón recibido, en caso contrario, retornamos <code>false</code>.
 	 */
 	public static boolean match(String string, String pattern) {
 		if (string == null) {
@@ -415,11 +459,11 @@ public class StringUtil implements Serializable {
 		if (ArrayUtil.isEmpty(objects)) {
 			return "";
 		}
-		
+
 		if (objects.length == 1) {
 			return StringUtil.toString(objects[0]);
 		}
-		
+
 		StringBuilder buffer = new StringBuilder();
 		for (int i = 0; i < objects.length; i++) {
 			if (i > 0) {

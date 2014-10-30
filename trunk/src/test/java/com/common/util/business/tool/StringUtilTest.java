@@ -34,17 +34,38 @@ public class StringUtilTest {
 	@Test
 	public void testIsEmpty() {
 		// Valor nulo.
-		Assert.assertEquals(true, StringUtil.isEmpty(null));
+		Assert.assertTrue(StringUtil.isEmpty(null));
 
 		// Cadenas vacias o con espacios.
-		Assert.assertEquals(true, StringUtil.isEmpty(""));
-		Assert.assertEquals(false, StringUtil.isEmpty(" "));
-		Assert.assertEquals(false, StringUtil.isEmpty("  "));
+		Assert.assertTrue(StringUtil.isEmpty(""));
+		Assert.assertFalse(StringUtil.isEmpty(" "));
+		Assert.assertFalse(StringUtil.isEmpty("  "));
 
 		// Cadenas con datos.
-		Assert.assertEquals(false, StringUtil.isEmpty("bob"));
-		Assert.assertEquals(false, StringUtil.isEmpty(" bob "));
-		Assert.assertEquals(false, StringUtil.isEmpty("  bob  "));
+		Assert.assertFalse(StringUtil.isEmpty("bob"));
+		Assert.assertFalse(StringUtil.isEmpty(" bob "));
+		Assert.assertFalse(StringUtil.isEmpty("  bob  "));
+	}
+
+	/**
+	 * La pruebas sobre el método <i><b>isNotEmpty</b></i> de {@link StringUtil}.
+	 * 
+	 * @see StringUtil#isNotEmpty(String)
+	 */
+	@Test
+	public void testIsNotEmpty() {
+		// Valor nulo.
+		Assert.assertFalse(StringUtil.isNotEmpty(null));
+
+		// Cadenas vacias o con espacios.
+		Assert.assertFalse(StringUtil.isNotEmpty(""));
+		Assert.assertTrue(StringUtil.isNotEmpty(" "));
+		Assert.assertTrue(StringUtil.isNotEmpty("  "));
+
+		// Cadenas con datos.
+		Assert.assertTrue(StringUtil.isNotEmpty("bob"));
+		Assert.assertTrue(StringUtil.isNotEmpty(" bob "));
+		Assert.assertTrue(StringUtil.isNotEmpty("  bob  "));
 	}
 
 	/**
@@ -55,17 +76,38 @@ public class StringUtilTest {
 	@Test
 	public void testIsBlank() {
 		// Valor nulo.
-		Assert.assertEquals(true, StringUtil.isBlank(null));
+		Assert.assertTrue(StringUtil.isBlank(null));
 
 		// Cadenas vacias o con espacios.
-		Assert.assertEquals(true, StringUtil.isBlank(""));
-		Assert.assertEquals(true, StringUtil.isBlank(" "));
-		Assert.assertEquals(true, StringUtil.isBlank("  "));
+		Assert.assertTrue(StringUtil.isBlank(""));
+		Assert.assertTrue(StringUtil.isBlank(" "));
+		Assert.assertTrue(StringUtil.isBlank("  "));
 
 		// Cadenas con datos.
-		Assert.assertEquals(false, StringUtil.isBlank("bob"));
-		Assert.assertEquals(false, StringUtil.isBlank(" bob "));
-		Assert.assertEquals(false, StringUtil.isBlank("  bob  "));
+		Assert.assertFalse(StringUtil.isBlank("bob"));
+		Assert.assertFalse(StringUtil.isBlank(" bob "));
+		Assert.assertFalse(StringUtil.isBlank("  bob  "));
+	}
+
+	/**
+	 * La pruebas sobre el método <i><b>isNotBlank</b></i> de {@link StringUtil}.
+	 * 
+	 * @see StringUtil#isNotBlank(String)
+	 */
+	@Test
+	public void testIsNotBlank() {
+		// Valor nulo.
+		Assert.assertFalse(StringUtil.isNotBlank(null));
+
+		// Cadenas vacias o con espacios.
+		Assert.assertFalse(StringUtil.isNotBlank(""));
+		Assert.assertFalse(StringUtil.isNotBlank(" "));
+		Assert.assertFalse(StringUtil.isNotBlank("  "));
+
+		// Cadenas con datos.
+		Assert.assertTrue(StringUtil.isNotBlank("bob"));
+		Assert.assertTrue(StringUtil.isNotBlank(" bob "));
+		Assert.assertTrue(StringUtil.isNotBlank("  bob  "));
 	}
 
 	/**
@@ -279,46 +321,46 @@ public class StringUtilTest {
 	@Test
 	public void testMatch() {
 		// Valor nulo.
-		Assert.assertEquals(true, StringUtil.match(null, null));
+		Assert.assertTrue(StringUtil.match(null, null));
 
 		// Cadenas vacias o con espacios.
-		Assert.assertEquals(true, StringUtil.match("", ""));
-		Assert.assertEquals(false, StringUtil.match(" ", ""));
-		Assert.assertEquals(false, StringUtil.match(" ", ""));
-		Assert.assertEquals(false, StringUtil.match("  ", ""));
+		Assert.assertTrue(StringUtil.match("", ""));
+		Assert.assertFalse(StringUtil.match(" ", ""));
+		Assert.assertFalse(StringUtil.match(" ", ""));
+		Assert.assertFalse(StringUtil.match("  ", ""));
 
 		// Cadenas con datos.
-		Assert.assertEquals(true, StringUtil.match("a", "[a-z]"));
-		Assert.assertEquals(false, StringUtil.match("  a  ", "[a-z]"));
-		Assert.assertEquals(true, StringUtil.match(" ", "[a-z\\s]"));
-		Assert.assertEquals(false, StringUtil.match("a", "[A-Z]"));
-		Assert.assertEquals(true, StringUtil.match("A", "[A-Z]"));
+		Assert.assertTrue(StringUtil.match("a", "[a-z]"));
+		Assert.assertFalse(StringUtil.match("  a  ", "[a-z]"));
+		Assert.assertTrue(StringUtil.match(" ", "[a-z\\s]"));
+		Assert.assertFalse(StringUtil.match("a", "[A-Z]"));
+		Assert.assertTrue(StringUtil.match("A", "[A-Z]"));
 
-		Assert.assertEquals(true, StringUtil.match("asd", "[a-z]*"));
-		Assert.assertEquals(false, StringUtil.match("  asd  ", "[a-z]*"));
-		Assert.assertEquals(true, StringUtil.match("  asd  ", "[a-z\\s]*"));
-		Assert.assertEquals(false, StringUtil.match("asd", "[A-Z]*"));
-		Assert.assertEquals(true, StringUtil.match("ASD", "[A-Z]*"));
+		Assert.assertTrue(StringUtil.match("asd", "[a-z]*"));
+		Assert.assertFalse(StringUtil.match("  asd  ", "[a-z]*"));
+		Assert.assertTrue(StringUtil.match("  asd  ", "[a-z\\s]*"));
+		Assert.assertFalse(StringUtil.match("asd", "[A-Z]*"));
+		Assert.assertTrue(StringUtil.match("ASD", "[A-Z]*"));
 
 		// Pruebas de los patrones que tenemos.
 		// CUIT.
-		Assert.assertEquals(false, StringUtil.match(null, PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertEquals(false, StringUtil.match("", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertEquals(false, StringUtil.match(" ", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertEquals(false, StringUtil.match("a", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertEquals(false, StringUtil.match("as", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertEquals(false, StringUtil.match("asd", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertEquals(false, StringUtil.match("1", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertEquals(false, StringUtil.match("2012345678", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertEquals(false, StringUtil.match("20123456789", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertEquals(false, StringUtil.match("20 1234567 8", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertEquals(false, StringUtil.match("20 12345678 9", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertEquals(false, StringUtil.match("20/1234567/8", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertEquals(false, StringUtil.match("20/12345678/9", PatternUtilEnum.CUIT_PATTERN.getPattern()));
+		Assert.assertFalse(StringUtil.match(null, PatternUtilEnum.CUIT_PATTERN.getPattern()));
+		Assert.assertFalse(StringUtil.match("", PatternUtilEnum.CUIT_PATTERN.getPattern()));
+		Assert.assertFalse(StringUtil.match(" ", PatternUtilEnum.CUIT_PATTERN.getPattern()));
+		Assert.assertFalse(StringUtil.match("a", PatternUtilEnum.CUIT_PATTERN.getPattern()));
+		Assert.assertFalse(StringUtil.match("as", PatternUtilEnum.CUIT_PATTERN.getPattern()));
+		Assert.assertFalse(StringUtil.match("asd", PatternUtilEnum.CUIT_PATTERN.getPattern()));
+		Assert.assertFalse(StringUtil.match("1", PatternUtilEnum.CUIT_PATTERN.getPattern()));
+		Assert.assertFalse(StringUtil.match("2012345678", PatternUtilEnum.CUIT_PATTERN.getPattern()));
+		Assert.assertFalse(StringUtil.match("20123456789", PatternUtilEnum.CUIT_PATTERN.getPattern()));
+		Assert.assertFalse(StringUtil.match("20 1234567 8", PatternUtilEnum.CUIT_PATTERN.getPattern()));
+		Assert.assertFalse(StringUtil.match("20 12345678 9", PatternUtilEnum.CUIT_PATTERN.getPattern()));
+		Assert.assertFalse(StringUtil.match("20/1234567/8", PatternUtilEnum.CUIT_PATTERN.getPattern()));
+		Assert.assertFalse(StringUtil.match("20/12345678/9", PatternUtilEnum.CUIT_PATTERN.getPattern()));
 
-		Assert.assertEquals(true, StringUtil.match("20-1234567-8", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertEquals(true, StringUtil.match("99-9999999-9", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertEquals(true, StringUtil.match("20-12345678-9", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertEquals(true, StringUtil.match("99-99999999-9", PatternUtilEnum.CUIT_PATTERN.getPattern()));
+		Assert.assertTrue(StringUtil.match("20-1234567-8", PatternUtilEnum.CUIT_PATTERN.getPattern()));
+		Assert.assertTrue(StringUtil.match("99-9999999-9", PatternUtilEnum.CUIT_PATTERN.getPattern()));
+		Assert.assertTrue(StringUtil.match("20-12345678-9", PatternUtilEnum.CUIT_PATTERN.getPattern()));
+		Assert.assertTrue(StringUtil.match("99-99999999-9", PatternUtilEnum.CUIT_PATTERN.getPattern()));
 	}
 }
