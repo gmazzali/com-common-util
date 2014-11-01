@@ -17,6 +17,7 @@ import com.common.util.domain.exception.ServiceException;
  * Clase de prueba para el servicio de conversión.
  */
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("unchecked")
 public class ConverterServiceImplTest {
 
 	@Test
