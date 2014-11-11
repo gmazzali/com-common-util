@@ -1,4 +1,4 @@
-package com.common.util.domain.model;
+package com.common.util.domain.model.entity;
 
 import java.io.Serializable;
 

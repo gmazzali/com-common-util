@@ -1,21 +1,22 @@
-package com.common.util.domain.model;
+package com.common.util.domain.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * La interfaz que extiende {@link Persistence} y que define las entidades auditables que van a almacenarse dentro de la base de datos.
+ * La interfaz que extiende {@link ActivePersistence} y que define las entidades auditables.
  * 
  * @see Persistence
+ * @see ActivePersistence
  * 
  * @since 02/07/2014
  * @author Guillermo Mazzali
  * @version 1.0
  * 
  * @param <PK>
- *            La clase que va a representar el identificador de las entidades auditables que van a implementar esta interfaz.
+ *            La clase que va a representar el identificador de las entidades auditables.
  */
-public interface AuditablePersistence<PK extends Serializable> extends Persistence<PK> {
+public interface AuditablePersistence<PK extends Serializable> extends ActivePersistence<PK> {
 
 	/**
 	 * Se encarga de definir si la entidad es una entidad para guardar o una entidad para actualizar.
@@ -69,20 +70,4 @@ public interface AuditablePersistence<PK extends Serializable> extends Persisten
 	 *            La fecha de baja de la entidad.
 	 */
 	public void setDeleteDate(Date deleteDate);
-
-	/***
-	 * Permite saber si la entidad se encuentra actualmente activa dentro del sistema o no.
-	 * 
-	 * @return <code>true</code> en caso de que la entidad no se haya borrado lógicamente dentro del sistema, en caso contrario, retorna
-	 *         <code>false</code>.
-	 */
-	public Boolean getActive();
-
-	/**
-	 * Permite definirle a una entidad si esta va a estar borrada lógicamente dentro del sistema o no.
-	 * 
-	 * @param active
-	 *            El valor booleano que nos permite definir si borramos lógicamente o no la entidad dada.
-	 */
-	public void setActive(Boolean active);
 }

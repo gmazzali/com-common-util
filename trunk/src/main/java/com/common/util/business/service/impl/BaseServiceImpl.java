@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.common.util.business.service.BaseService;
 import com.common.util.domain.exception.ServiceException;
-import com.common.util.domain.model.Persistence;
+import com.common.util.domain.model.entity.Persistence;
 import com.common.util.persistence.dao.BaseDao;
 import com.common.util.persistence.filter.BaseFilter;
 import com.common.util.persistence.filter.order.Orders;

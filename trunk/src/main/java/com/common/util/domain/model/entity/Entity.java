@@ -1,4 +1,4 @@
-package com.common.util.domain.model;
+package com.common.util.domain.model.entity;
 
 import java.io.Serializable;
 
@@ -19,9 +19,6 @@ public abstract class Entity<PK extends Serializable> implements Persistence<PK>
 
 	/**
 	 * La interfaz que contiene el nombre de los atributos de esta entidad.
-	 * 
-	 * @author Guillermo Mazzali
-	 * @version 1.0
 	 */
 	public interface Attributes {
 		static final String ID = "id";
@@ -32,9 +29,13 @@ public abstract class Entity<PK extends Serializable> implements Persistence<PK>
 	 */
 	protected PK id;
 
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
+	@Override
+	public String toString() {
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append(" ID: ").append(this.id);
+		return stringBuffer.toString();
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -43,11 +44,7 @@ public abstract class Entity<PK extends Serializable> implements Persistence<PK>
 		return result;
 	}
 
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
@@ -58,7 +55,7 @@ public abstract class Entity<PK extends Serializable> implements Persistence<PK>
 		if (this.getClass() != obj.getClass()) {
 			return false;
 		}
-		Entity<PK> other = (Entity<PK>) obj;
+		Entity<?> other = (Entity<?>) obj;
 		if (this.id == null) {
 			if (other.id != null) {
 				return false;
