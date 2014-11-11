@@ -15,9 +15,9 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import com.common.util.domain.exception.PersistenceException;
-import com.common.util.domain.model.Entity;
-import com.common.util.domain.model.Persistence;
 import com.common.util.domain.model.RangeType;
+import com.common.util.domain.model.entity.Entity;
+import com.common.util.domain.model.entity.Persistence;
 import com.common.util.persistence.dao.BaseDao;
 import com.common.util.persistence.filter.BaseFilter;
 import com.common.util.persistence.filter.order.Order;
@@ -30,7 +30,7 @@ import com.common.util.persistence.filter.order.Orders;
  * 
  * @since 05/02/2014
  * @author Guillermo Mazzali
- * @version 1.0
+ * @version 1.1
  * 
  * @param <E>
  *            La clase que corresponde a la entidad que vamos a persistir dentro de la base de datos.
@@ -66,8 +66,6 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 			LOGGER.error("The generic parameter class of the base dao cannot be empty", ex);
 			throw new PersistenceException("The generic parameter class of the base dao cannot be empty", "base.dao.error.parameter.empty");
 		}
-
-		// this.persistentClass = (Class<E>) ((ParameterizedType) super.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	}
 
 	/**
@@ -157,7 +155,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 			throw new PersistenceException(e);
 		}
 	}
-	
+
 	@Override
 	public List<E> findAll() throws PersistenceException {
 		try {
@@ -272,6 +270,12 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	 */
 	protected Session getSession() {
 		if (this.session == null) {
+			LOGGER.info("get current session");
+			this.session = this.sessionFactory.getCurrentSession();
+		}
+		if (this.session == null) {
+			LOGGER.warn("get current session = null");
+			LOGGER.info("open new session");
 			this.session = this.sessionFactory.openSession();
 		}
 		return this.session;

@@ -2,21 +2,21 @@ package com.common.util.persistence.filter;
 
 import java.io.Serializable;
 
-import com.common.util.domain.model.AuditablePersistence;
+import com.common.util.domain.model.entity.ActivePersistence;
 
 /**
- * Representa un filtro que extiende {@link BaseFilter} y que podemos utilizar para la busqueda de las entidades auditables en la base de datos.
+ * Representa un filtro que extiende {@link BaseFilter} y que podemos utilizar para la busqueda de las entidades activables.
  * 
  * @since 02/07/2014
  * @author Guillermo Mazzali
  * @version 1.0
  * 
  * @param <E>
- *            Las entidades auditables que vamos a manipular con este filtro.
+ *            Las entidades activables que vamos a manipular con este filtro.
  * @param <PK>
  *            La clave que corresponde con el ID de las entidades auditables de filtrado.
  */
-public class AuditableBaseFilter<E extends AuditablePersistence<PK>, PK extends Serializable> extends BaseFilter<E, PK> {
+public class ActiveBaseFilter<E extends ActivePersistence<PK>, PK extends Serializable> extends BaseFilter<E, PK> {
 	private static final long serialVersionUID = 1L;
 
 	/**

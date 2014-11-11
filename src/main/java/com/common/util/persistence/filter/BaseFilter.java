@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 import org.apache.log4j.Logger;
 
-import com.common.util.domain.model.Persistence;
+import com.common.util.domain.model.entity.Persistence;
 import com.common.util.persistence.filter.order.Order;
 import com.common.util.persistence.filter.order.Orders;
 
