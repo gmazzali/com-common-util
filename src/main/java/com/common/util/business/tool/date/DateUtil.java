@@ -1,16 +1,15 @@
 package com.common.util.business.tool.date;
 
 import java.io.Serializable;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
 
+import com.common.util.business.tool.StringUtil;
 import com.common.util.business.tool.VerifierUtil;
 import com.common.util.business.util.DatePrecisionEnum;
-import com.common.util.domain.exception.UncheckedException;
 
 /**
  * La clase que permite manipular las fechas dentro de un sistema.
@@ -19,11 +18,77 @@ import com.common.util.domain.exception.UncheckedException;
  * 
  * @since 05/02/2014
  * @author Guillermo Mazzali
- * @version 1.0
+ * @version 1.1
  */
 public class DateUtil implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(DateUtil.class);
+	private static final Logger LOGGER = Logger.getLogger(DateUtil.class);
+
+	/**
+	 * La constante para el formato de despliegue de una fecha. Por omisión tiene el valor:
+	 * 
+	 * <pre>
+	 * dateFormat = &quot;dd/MM/yyyy&quot;
+	 * </pre>
+	 */
+	protected static String dateFormat = "dd/MM/yyyy";
+
+	/**
+	 * Se encarga de cargar el formato de la fecha que vamos a utilizar. Por omisión, el formato de la fecha que vamos a utilizar es el cargado en
+	 * {@link DateUtil#dateFormat}.
+	 * 
+	 * @param dateFormat
+	 *            El formato de la fecha que vamos a utilizar para formatear.
+	 */
+	public void setDateFormat(String dateFormat) {
+		DateUtil.dateFormat = dateFormat;
+	}
+
+	/**
+	 * Se encarga de formatear una fecha recibida de acuerdo al patrón por omisión {@link DateUtil#dateFormat}. En caso de que la fecha recibida sean
+	 * <code>null</code>, se devuelve una cadena <code>null</code>.
+	 * 
+	 * @param date
+	 *            La fecha que vamos a formatear.
+	 * @return La fecha formateada o una cadena <code>null</code> si la fecha recibida es <code>null</code>.
+	 */
+	public static String formatDate(Date date) {
+		return date != null ? DateUtil.formatDate(date, DateUtil.dateFormat) : null;
+	}
+
+	/**
+	 * Se encarga de formatear una fecha recibida de acuerdo al patrón recibido. Verifica que alguno de los parámetros no sea nulo.
+	 * 
+	 * @param date
+	 *            La fecha que vamos a formatear.
+	 * @param pattern
+	 *            El patrón con el que vamos a formatear la fecha.
+	 * @return La fecha formateada de acuerdo al patrón recibido. En caso de que el patrón no sea válido, retorna una cadena <code>null</code>.
+	 * @throws NullPointerException
+	 *             En caso de que alguno de los parámetros sea nulo.
+	 */
+	public static String formatDate(Date date, String pattern) {
+		VerifierUtil.checkNotNull(date, "The date cannot be null");
+		VerifierUtil.checkNotNull(pattern, "The pattern cannot be null");
+		try {
+			return new SimpleDateFormat(pattern).format(date);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	/**
+	 * Crea una fecha de acuerdo a una cadena que contiene la misma y de acuerdo al patrón por omisión {@link DateUtil#dateFormat}. En caso de que la
+	 * cadena este vacía, se va a retornar una fecha <code>null</code>.
+	 * 
+	 * @param date
+	 *            La cadena que contiene la fecha que vamos a crear.
+	 * @return La fecha correctamente parseada de acuerdo al patrón {@link DateUtil#dateFormat}. En caso que sea imposible parsear la fecha, se
+	 *         retorna un valor <code>null</code>.
+	 */
+	public static Date createDate(String date) {
+		return StringUtil.isNotEmpty(date) ? DateUtil.createDate(date, DateUtil.dateFormat) : null;
+	}
 
 	/**
 	 * Crea una fecha de acuerdo a una cadena que contiene la misma y al patron de fecha que se recibe.
@@ -34,14 +99,16 @@ public class DateUtil implements Serializable {
 	 *            El patrón con el que va a leer la fecha que recibimos anteriormente.
 	 * @return La fecha correctamente parseada de acuerdo al patrón recibido. En caso que sea imposible parsear la fecha, se retorna un valor
 	 *         <code>null</code>.
+	 * @throws NullPointerException
+	 *             En caso de que alguno de los parámetros sea nulo.
 	 */
 	public static Date createDate(String date, String pattern) {
 		VerifierUtil.checkNotNull(date, "The date cannot be null");
 		VerifierUtil.checkNotNull(pattern, "The pattern cannot be null");
 		try {
 			return new SimpleDateFormat(pattern).parse(date);
-		} catch (ParseException e) {
-			throw null;
+		} catch (Exception e) {
+			return null;
 		}
 	}
 
@@ -49,9 +116,9 @@ public class DateUtil implements Serializable {
 	 * Compara las 2 fechas que recibe para determinar cual de las 2 fechas es menor a la otra de acuerdo a un nivel de precisión recibido.
 	 * 
 	 * <pre>
-	 * DateUtil.compare(null, null, null)                                                  = UncheckedException
-	 * DateUtil.compare("2014/01/01 00:00:00 001", null, null)                             = UncheckedException
-	 * DateUtil.compare(null, "2014/01/01 00:00:00 001", null)                             = UncheckedException
+	 * DateUtil.compare(null, null, null)                                                  = NullPointerException
+	 * DateUtil.compare("2014/01/01 00:00:00 001", null, null)                             = NullPointerException
+	 * DateUtil.compare(null, "2014/01/01 00:00:00 001", null)                             = NullPointerException
 	 * 
 	 * DateUtil.compare("2014/01/01 00:00:00 001", "2014/01/01 00:00:00 000", null)        = 1
 	 * DateUtil.compare("2014/01/01 00:00:00 000", "2014/01/01 00:00:00 001", null)        = -1
@@ -94,9 +161,9 @@ public class DateUtil implements Serializable {
 	 *            La precisión con la que va a compararse la fecha. Si es <code>null</code> se toma la precisión {@link DatePrecisionEnum#MILLISECOND}
 	 *            .
 	 * 
-	 * @return Un valor positivo si la fecha <i>date</i> es mayor a la fecha <i>otherDate</i>, un valor cero (0) si las 2 fechas son iguales o un
-	 *         valor negativo si la fecha <i>otherDate</i> es mayor a la fecha <i>date</i>.
-	 * @throws UncheckedException
+	 * @return Un valor positivo si la fecha <code>date</code> es mayor a la fecha <code>otherDate</code>, un valor cero (0) si las 2 fechas son
+	 *         iguales o un valor negativo si la fecha <code>otherDate</code> es mayor a la fecha <code>date</code>.
+	 * @throws NullPointerException
 	 *             En caso de que alguno de los parámetros recibidos sea inválidos o nulos.
 	 */
 	public static int compare(Date date, Date otherDate, DatePrecisionEnum datePrecisionEnum) {
@@ -104,7 +171,7 @@ public class DateUtil implements Serializable {
 		VerifierUtil.checkNotNull(otherDate, "The otherDate cannot be null");
 
 		if (datePrecisionEnum == null) {
-			log.info("The precision is set to MILLISECOND");
+			LOGGER.info("The precision is set to MILLISECOND");
 			datePrecisionEnum = DatePrecisionEnum.MILLISECOND;
 		}
 
@@ -120,42 +187,36 @@ public class DateUtil implements Serializable {
 		} else if (calendar1.get(Calendar.YEAR) != calendar2.get(Calendar.YEAR)) {
 			return calendar1.get(Calendar.YEAR) - calendar2.get(Calendar.YEAR);
 		}
-
 		// Si hasta los años son iguales y el nivel de precisión es de mes.
 		if (datePrecisionEnum.getLevel() <= DatePrecisionEnum.MONTH.getLevel()) {
 			return calendar1.get(Calendar.MONTH) - calendar2.get(Calendar.MONTH);
 		} else if (calendar1.get(Calendar.MONTH) != calendar2.get(Calendar.MONTH)) {
 			return calendar1.get(Calendar.MONTH) - calendar2.get(Calendar.MONTH);
 		}
-
 		// Si hasta los meses son iguales y el nivel de precisión es de día.
 		if (datePrecisionEnum.getLevel() <= DatePrecisionEnum.DAY.getLevel()) {
 			return calendar1.get(Calendar.DAY_OF_MONTH) - calendar2.get(Calendar.DAY_OF_MONTH);
 		} else if (calendar1.get(Calendar.DAY_OF_MONTH) != calendar2.get(Calendar.DAY_OF_MONTH)) {
 			return calendar1.get(Calendar.DAY_OF_MONTH) - calendar2.get(Calendar.DAY_OF_MONTH);
 		}
-
 		// Si hasta los días son iguales y el nivel de precisión es de hora.
 		if (datePrecisionEnum.getLevel() <= DatePrecisionEnum.HOUR.getLevel()) {
 			return calendar1.get(Calendar.HOUR) - calendar2.get(Calendar.HOUR);
 		} else if (calendar1.get(Calendar.HOUR) != calendar2.get(Calendar.HOUR)) {
 			return calendar1.get(Calendar.HOUR) - calendar2.get(Calendar.HOUR);
 		}
-
 		// Si hasta las horas son iguales y el nivel de precisión es de minuto.
 		if (datePrecisionEnum.getLevel() <= DatePrecisionEnum.MINUTE.getLevel()) {
 			return calendar1.get(Calendar.MINUTE) - calendar2.get(Calendar.MINUTE);
 		} else if (calendar1.get(Calendar.MINUTE) != calendar2.get(Calendar.MINUTE)) {
 			return calendar1.get(Calendar.MINUTE) - calendar2.get(Calendar.MINUTE);
 		}
-
 		// Si hasta los minutos son iguales y el nivel de precisión es de segundos.
 		if (datePrecisionEnum.getLevel() <= DatePrecisionEnum.SECOND.getLevel()) {
 			return calendar1.get(Calendar.SECOND) - calendar2.get(Calendar.SECOND);
 		} else if (calendar1.get(Calendar.SECOND) != calendar2.get(Calendar.SECOND)) {
 			return calendar1.get(Calendar.SECOND) - calendar2.get(Calendar.SECOND);
 		}
-
 		// Si hasta los segundos son iguales y el nivel de precisión es de milisegundos.
 		if (datePrecisionEnum.getLevel() <= DatePrecisionEnum.MILLISECOND.getLevel()) {
 			return calendar1.get(Calendar.MILLISECOND) - calendar2.get(Calendar.MILLISECOND);
@@ -165,7 +226,8 @@ public class DateUtil implements Serializable {
 	}
 
 	/**
-	 * Determina si la fecha <i>beforeDate</i> es menor a la fecha <i>date</i> de acuerdo al nivel de precisión recibida. Este método es null-safe.
+	 * Determina si la fecha <code>beforeDate</code> es menor a la fecha <code>date</code> de acuerdo al nivel de precisión recibida. Este método es
+	 * null-safe.
 	 * 
 	 * <pre>
 	 * DateUtil.before(null, null, null)                                                  = false
@@ -212,15 +274,14 @@ public class DateUtil implements Serializable {
 	 * @param datePrecisionEnum
 	 *            La precisión con la que van a compararse las fechas. Si es <code>null</code> se toma la precisión
 	 *            {@link DatePrecisionEnum#MILLISECOND}.
-	 * @return <i>true</i> en caso que la fecha <i>beforeDate</i> es anterior a la fecha <i>date</i>, en caso contrario, o en caso de que alguno de
-	 *         los parámetros recibidos sea <code>null</code>, retornamos <i>false</i>.
+	 * @return <code>true</code> en caso que la fecha <code>beforeDate</code> es anterior a la fecha <code>date</code>, en caso contrario, o en caso
+	 *         de que alguno de los parámetros recibidos sea <code>null</code>, retornamos <code>false</code>.
 	 */
 	public static boolean before(Date date, Date beforeDate, DatePrecisionEnum datePrecisionEnum) {
 		if (date == null || beforeDate == null) {
-			log.warn("Any date is null.");
+			LOGGER.warn("Any date is null");
 			return false;
 		}
-
 		try {
 			return DateUtil.compare(date, beforeDate, datePrecisionEnum) > 0;
 		} catch (Exception e) {
@@ -229,8 +290,8 @@ public class DateUtil implements Serializable {
 	}
 
 	/**
-	 * Determina si la fecha <i>beforeOrEqualDate</i> es menor o igual la fecha <i>date</i> de acuerdo al nivel de precisión recibida. Este método es
-	 * null-safe.
+	 * Determina si la fecha <code>beforeOrEqualDate</code> es menor o igual la fecha <code>date</code> de acuerdo al nivel de precisión recibida.
+	 * Este método es null-safe.
 	 * 
 	 * <pre>
 	 * DateUtil.beforeOrEqual(null, null, null)                                                  = false
@@ -277,15 +338,14 @@ public class DateUtil implements Serializable {
 	 * @param datePrecisionEnum
 	 *            La precisión con la que van a compararse las fechas. Si es <code>null</code> se toma la precisión
 	 *            {@link DatePrecisionEnum#MILLISECOND}.
-	 * @return <i>true</i> en caso que la fecha <i>beforeOrEqualDate</i> es anterior o igual a la fecha <i>date</i>, en caso contrario, o en caso de
-	 *         que alguno de los parámetros recibidos sea <code>null</code>, retornamos <i>false</i>.
+	 * @return <code>true</code> en caso que la fecha <code>beforeOrEqualDate</code> es anterior o igual a la fecha <code>date</code>, en caso
+	 *         contrario, o en caso de que alguno de los parámetros recibidos sea <code>null</code>, retornamos <code>false</code>.
 	 */
 	public static boolean beforeOrEqual(Date date, Date beforeOrEqualDate, DatePrecisionEnum datePrecisionEnum) {
 		if (date == null || beforeOrEqualDate == null) {
-			log.warn("Any date is null.");
+			LOGGER.warn("Any date is null");
 			return false;
 		}
-
 		try {
 			return DateUtil.compare(date, beforeOrEqualDate, datePrecisionEnum) >= 0;
 		} catch (Exception e) {
@@ -294,7 +354,8 @@ public class DateUtil implements Serializable {
 	}
 
 	/**
-	 * Determina si la fecha <i>equalDate</i> es igual la fecha <i>date</i> de acuerdo al nivel de precisión recibida. Este método es null-safe. *
+	 * Determina si la fecha <code>equalDate</code> es igual la fecha <code>date</code> de acuerdo al nivel de precisión recibida. Este método es
+	 * null-safe. *
 	 * 
 	 * <pre>
 	 * DateUtil.equal(null, null, null)                                                  = false
@@ -343,15 +404,14 @@ public class DateUtil implements Serializable {
 	 * @param datePrecisionEnum
 	 *            La precisión con la que van a compararse las fechas. Si es <code>null</code> se toma la precisión
 	 *            {@link DatePrecisionEnum#MILLISECOND}.
-	 * @return <i>true</i> en caso que la fecha <i>equalDate</i> es igual a la fecha <i>date</i>, en caso contrario, o en caso de que alguno de los
-	 *         parámetros recibidos sea <code>null</code>, retornamos <i>false</i>.
+	 * @return <code>true</code> en caso que la fecha <code>equalDate</code> es igual a la fecha <code>date</code>, en caso contrario, o en caso de
+	 *         que alguno de los parámetros recibidos sea <code>null</code>, retornamos <code>false</code>.
 	 */
 	public static boolean equal(Date date, Date equalDate, DatePrecisionEnum datePrecisionEnum) {
 		if (date == null || equalDate == null) {
-			log.warn("Any date is null.");
+			LOGGER.warn("Any date is null");
 			return false;
 		}
-
 		try {
 			return DateUtil.compare(date, equalDate, datePrecisionEnum) == 0;
 		} catch (Exception e) {
@@ -360,8 +420,8 @@ public class DateUtil implements Serializable {
 	}
 
 	/**
-	 * Determina si la fecha <i>afterOrEqualDate</i> es mayor a la fecha <i>date</i> de acuerdo al nivel de precisión recibida. Este método es
-	 * null-safe.
+	 * Determina si la fecha <code>afterOrEqualDate</code> es mayor a la fecha <code>date</code> de acuerdo al nivel de precisión recibida. Este
+	 * método es null-safe.
 	 * 
 	 * <pre>
 	 * DateUtil.afterOrEqual(null, null, null)                                                  = false
@@ -408,15 +468,14 @@ public class DateUtil implements Serializable {
 	 * @param datePrecisionEnum
 	 *            La precisión con la que van a compararse las fechas. Si es <code>null</code> se toma la precisión
 	 *            {@link DatePrecisionEnum#MILLISECOND}.
-	 * @return <i>true</i> en caso que la fecha <i>afterOrEqualDate</i> es posterior o igual a la fecha <i>date</i>, en caso contrario, o en caso de
-	 *         que alguno de los parámetros recibidos sea <code>null</code>, retornamos <i>false</i>.
+	 * @return <code>true</code> en caso que la fecha <code>afterOrEqualDate</code> es posterior o igual a la fecha <code>date</code>, en caso
+	 *         contrario, o en caso de que alguno de los parámetros recibidos sea <code>null</code>, retornamos <code>false</code>.
 	 */
 	public static boolean afterOrEqual(Date date, Date afterOrEqualDate, DatePrecisionEnum datePrecisionEnum) {
 		if (date == null || afterOrEqualDate == null) {
-			log.warn("Any date is null.");
+			LOGGER.warn("Any date is null");
 			return false;
 		}
-
 		try {
 			return DateUtil.compare(date, afterOrEqualDate, datePrecisionEnum) <= 0;
 		} catch (Exception e) {
@@ -425,7 +484,8 @@ public class DateUtil implements Serializable {
 	}
 
 	/**
-	 * Determina si la fecha <i>afterDate</i> es mayor a la fecha <i>date</i> de acuerdo al nivel de precisión recibida. Este método es null-safe.
+	 * Determina si la fecha <code>afterDate</code> es mayor a la fecha <code>date</code> de acuerdo al nivel de precisión recibida. Este método es
+	 * null-safe.
 	 * 
 	 * <pre>
 	 * DateUtil.after(null, null, null)                                                  = false
@@ -472,15 +532,14 @@ public class DateUtil implements Serializable {
 	 * @param datePrecisionEnum
 	 *            La precisión con la que van a compararse las fechas. Si es <code>null</code> se toma la precisión
 	 *            {@link DatePrecisionEnum#MILLISECOND}.
-	 * @return <i>true</i> en caso que la fecha <i>afterDate</i> es posterior a la fecha <i>date</i>, en caso contrario, o en caso de que alguno de
-	 *         los parámetros recibidos sea <code>null</code>, retornamos <i>false</i>.
+	 * @return <code>true</code> en caso que la fecha <code>afterDate</code> es posterior a la fecha <code>date</code>, en caso contrario, o en caso
+	 *         de que alguno de los parámetros recibidos sea <code>null</code>, retornamos <code>false</code>.
 	 */
 	public static boolean after(Date date, Date afterDate, DatePrecisionEnum datePrecisionEnum) {
 		if (date == null || afterDate == null) {
-			log.warn("Any date is null.");
+			LOGGER.warn("Any date is null");
 			return false;
 		}
-
 		try {
 			return DateUtil.compare(date, afterDate, datePrecisionEnum) < 0;
 		} catch (Exception e) {
@@ -489,10 +548,10 @@ public class DateUtil implements Serializable {
 	}
 
 	/**
-	 * Determina si la fecha <i>beforeDate</i> es menor a la fecha <i>date</i> y la fecha <i>afterDate</i> es mayor a la fecha <i>date</i> de acuerdo
-	 * al nivel de precisión recibida. En caso de recibir un valor <code>null</code> para alguna de las fechas <i>beforeDate</i> o <i>afterDate</i> se
-	 * toma como el intervalo abierto. En caso de recibir las fechas del intervalo invertidas, las colocamos de manera correcta para su verificación.
-	 * Este método es null-safe.
+	 * Determina si la fecha <code>beforeDate</code> es menor a la fecha <code>date</code> y la fecha <code>afterDate</code> es mayor a la fecha
+	 * <code>date</code> de acuerdo al nivel de precisión recibida. En caso de recibir un valor <code>null</code> para alguna de las fechas
+	 * <code>beforeDate</code> o <code>afterDate</code> se toma como el intervalo abierto. En caso de recibir las fechas del intervalo invertidas, las
+	 * colocamos de manera correcta para su verificación. Este método es null-safe.
 	 * 
 	 * @param date
 	 *            La fecha que vamos a comparar.
@@ -503,14 +562,14 @@ public class DateUtil implements Serializable {
 	 * @param datePrecisionEnum
 	 *            La precisión con la que van a compararse las fechas. Si es <code>null</code> se toma la precisión
 	 *            {@link DatePrecisionEnum#MILLISECOND}.
-	 * @return <i>true</i> en caso que la fecha <i>afterDate</i> es posterior a la fecha <i>date</i>, en caso contrario, retornamos <i>false</i>.
+	 * @return <code>true</code> en caso que la fecha <code>afterDate</code> es posterior a la fecha <code>date</code>, en caso contrario, retornamos
+	 *         <code>false</code>.
 	 */
 	public static boolean between(Date date, Date beforeDate, Date afterDate, DatePrecisionEnum datePrecisionEnum) {
 		if (date == null) {
-			log.warn("The date is null.");
+			LOGGER.warn("The date is null");
 			return false;
 		}
-
 		if (beforeDate == null) {
 			if (afterDate == null) {
 				return false;
@@ -521,8 +580,8 @@ public class DateUtil implements Serializable {
 			if (afterDate == null) {
 				return DateUtil.beforeOrEqual(date, beforeDate, datePrecisionEnum);
 			} else {
-				Date myBeforeDate = DateUtil.getLowerDate(beforeDate, afterDate, datePrecisionEnum);
-				Date myAfterDate = DateUtil.getHigherDate(beforeDate, afterDate, datePrecisionEnum);
+				Date myBeforeDate = DateUtil.getLower(beforeDate, afterDate, datePrecisionEnum);
+				Date myAfterDate = DateUtil.getHigher(beforeDate, afterDate, datePrecisionEnum);
 
 				return DateUtil.beforeOrEqual(date, myBeforeDate, datePrecisionEnum) && DateUtil.afterOrEqual(date, myAfterDate, datePrecisionEnum);
 			}
@@ -537,14 +596,14 @@ public class DateUtil implements Serializable {
 	 * @param datePrecisionEnum
 	 *            La precisión con la que va a recortarse la fecha. Si es <code>null</code> se va a retornar la misma fecha recibida.
 	 * @return La fecha truncada de acuerdo a la precisión.
-	 * @throws UncheckedException
+	 * @throws NullPointerException
 	 *             En caso de que alguno de los parámetros recibidos sea inválidos o nulos.
 	 */
 	public static Date truncate(Date date, DatePrecisionEnum datePrecisionEnum) {
 		VerifierUtil.checkNotNull(date, "The date cannot be null");
 
 		if (datePrecisionEnum == null) {
-			log.info("datePrecision = MILISECOND -> return the same date");
+			LOGGER.info("datePrecision = MILISECOND -> return the same date");
 			return date;
 		}
 
@@ -585,25 +644,20 @@ public class DateUtil implements Serializable {
 	 * @param date2
 	 *            La segunda fecha que vamos a comparar.
 	 * @return La fecha que sea la mayor de las 2 de acuerdo al nivel de precisión.
-	 * @throws UncheckedException
-	 *             En caso de que alguno de los parámetros recibidos sea inválidos o nulos.
 	 */
-	public static Date getHigherDate(Date date1, Date date2, DatePrecisionEnum datePrecisionEnum) {
+	public static Date getHigher(Date date1, Date date2, DatePrecisionEnum datePrecisionEnum) {
 		if (date1 == null) {
-			log.info("The first date is null.");
+			LOGGER.info("The first date is null");
 			return date2;
 		}
-
 		if (date2 == null) {
-			log.info("The second date is null.");
+			LOGGER.info("The second date is null");
 			return date1;
 		}
-
 		if (datePrecisionEnum == null) {
-			log.info("datePrecision = MILISECOND.");
+			LOGGER.info("datePrecision = MILISECOND");
 			datePrecisionEnum = DatePrecisionEnum.MILLISECOND;
 		}
-
 		if (DateUtil.beforeOrEqual(date1, date2, datePrecisionEnum)) {
 			return date1;
 		} else {
@@ -619,25 +673,20 @@ public class DateUtil implements Serializable {
 	 * @param date2
 	 *            La segunda fecha que vamos a comparar.
 	 * @return La fecha que sea la menor de las 2 de acuerdo al nivel de precisión.
-	 * @throws UncheckedException
-	 *             En caso de que alguno de los parámetros recibidos sea inválidos o nulos.
 	 */
-	public static Date getLowerDate(Date date1, Date date2, DatePrecisionEnum datePrecisionEnum) {
+	public static Date getLower(Date date1, Date date2, DatePrecisionEnum datePrecisionEnum) {
 		if (date1 == null) {
-			log.info("The first date is null.");
+			LOGGER.info("The first date is null");
 			return date2;
 		}
-
 		if (date2 == null) {
-			log.info("The second date is null.");
+			LOGGER.info("The second date is null");
 			return date1;
 		}
-
 		if (datePrecisionEnum == null) {
-			log.info("datePrecision = MILISECOND.");
+			LOGGER.info("datePrecision = MILISECOND");
 			datePrecisionEnum = DatePrecisionEnum.MILLISECOND;
 		}
-
 		if (DateUtil.afterOrEqual(date1, date2, datePrecisionEnum)) {
 			return date1;
 		} else {
@@ -650,8 +699,8 @@ public class DateUtil implements Serializable {
 	 * 
 	 * @param date
 	 *            La fecha que vamos a verificar si cae un fin de semana.
-	 * @return <i>true</i> en caso que la fecha recibida caiga un fin de semana, en caso contrario, retornamos <i>false</i>.
-	 * @throws UncheckedException
+	 * @return <code>true</code> en caso que la fecha recibida caiga un fin de semana, en caso contrario, retornamos <code>false</code>.
+	 * @throws NullPointerException
 	 *             En caso de que la fecha recibida sea nula.
 	 */
 	public static boolean isWeekend(Date date) {
@@ -668,7 +717,7 @@ public class DateUtil implements Serializable {
 	 * Permite obtener el primer día del mes anterior a la fecha recibida.
 	 * 
 	 * <pre>
-	 * DateUtil.getPreviousMonth(null)                  = UncheckedException
+	 * DateUtil.getPreviousMonth(null)                  = NullPointerException
 	 * DateUtil.getPreviousMonth("2014/01/10 00:00:00") = "2013/12/01 00:00:00"
 	 * DateUtil.getPreviousMonth("2013/12/10 00:00:00") = "2013/11/01 00:00:00"
 	 * DateUtil.getPreviousMonth("2014/02/01 00:00:00") = "2014/01/01 00:00:00"
@@ -680,13 +729,12 @@ public class DateUtil implements Serializable {
 	 * @param date
 	 *            La fecha que nos permite calcular el mes anterior a la misma.
 	 * @return La fecha correspondiente al primer dia del mes anterior a la fecha recibida.
-	 * @throws UncheckedException
+	 * @throws NullPointerException
 	 *             En caso de que la fecha recibida sea nula.
 	 */
 	public static Date getPreviousMonth(Date date) {
 		VerifierUtil.checkNotNull(date, "The date cannot be null");
 
-		// Hacemos los calculos.
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 
@@ -715,7 +763,7 @@ public class DateUtil implements Serializable {
 	 * Permite obtener el primer día del mes siguiente a la fecha recibida.
 	 * 
 	 * <pre>
-	 * DateUtil.getNextMonth(null)                  = UncheckedException
+	 * DateUtil.getNextMonth(null)                  = NullPointerException
 	 * DateUtil.getNextMonth("2014/02/01 00:00:00") = "2014/03/01 00:00:00"
 	 * DateUtil.getNextMonth("2014/02/10 00:00:00") = "2014/03/01 00:00:00"
 	 * DateUtil.getNextMonth("2014/02/28 00:00:00") = "2014/03/01 00:00:00"
@@ -726,13 +774,12 @@ public class DateUtil implements Serializable {
 	 * @param date
 	 *            La fecha que nos permite calcular el mes siguiente a la misma.
 	 * @return La fecha correspondiente al primer dia del mes siguiente a la fecha recibida.
-	 * @throws UncheckedException
+	 * @throws NullPointerException
 	 *             En caso de que la fecha recibida sea nula.
 	 */
 	public static Date getNextMonth(Date date) {
 		VerifierUtil.checkNotNull(date, "The date cannot be null");
 
-		// Hacemos los calculos.
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 
@@ -758,21 +805,19 @@ public class DateUtil implements Serializable {
 	}
 
 	/**
-	 * Permite calcular el primer dia del mes de una fecha recibida.
+	 * Permite obtener el primer dia del mes de una fecha recibida.
 	 * 
 	 * @param date
 	 *            La fecha recibida a la que vamos a calcular el primer dia del mes.
 	 * @return El primer dia del mes que corresponde a la fecha recibida y que ademas contiene la hora <b>00:00:00.000</b>.
-	 * @throws UncheckedException
+	 * @throws NullPointerException
 	 *             En caso de que la fecha recibida sea nula.
 	 */
 	public static Date getFirstDayOfMonth(Date date) {
 		VerifierUtil.checkNotNull(date, "The date cannot be null");
 
-		// Hacemos los calculos.
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
-
 		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
 		calendar.set(Calendar.HOUR_OF_DAY, calendar.getActualMinimum(Calendar.HOUR_OF_DAY));
 		calendar.set(Calendar.MINUTE, calendar.getActualMinimum(Calendar.MINUTE));
@@ -783,21 +828,19 @@ public class DateUtil implements Serializable {
 	}
 
 	/**
-	 * Permite calcular el último dia del mes de una fecha recibida.
+	 * Permite obtener el último dia del mes de una fecha recibida.
 	 * 
 	 * @param date
 	 *            La fecha recibida a la que vamos a calcular el último dia del mes.
 	 * @return El último dia del mes que corresponde a la fecha recibida y que ademas contiene la hora <b>23:59:59.999</b>.
-	 * @throws UncheckedException
+	 * @throws NullPointerException
 	 *             En caso de que la fecha recibida sea nula.
 	 */
 	public static Date getLastDayOfMonth(Date date) {
 		VerifierUtil.checkNotNull(date, "The date cannot be null");
 
-		// Hacemos los calculos.
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
-
 		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
 		calendar.set(Calendar.HOUR_OF_DAY, calendar.getActualMaximum(Calendar.HOUR_OF_DAY));
 		calendar.set(Calendar.MINUTE, calendar.getActualMaximum(Calendar.MINUTE));
