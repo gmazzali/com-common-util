@@ -1,9 +1,13 @@
 package com.common.util.business.tool;
 
+import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.common.util.domain.exception.ServiceException;
 
 /**
  * La clase que nos permite definir funciones de manipulación de clases de java.
@@ -12,7 +16,8 @@ import java.util.Map;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class ReflectUtil {
+public class ReflectUtil implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Permite recuperar los campos de una clase dada y de sus superclases.
@@ -23,13 +28,80 @@ public class ReflectUtil {
 	 */
 	public static Map<String, Field> getAllDeclaratedFields(Class<?> clazz) {
 		Map<String, Field> fields = new HashMap<String, Field>();
-		while (clazz != null && !clazz.getClass().equals(Object.class)) {
+		while (clazz != null && !clazz.equals(Object.class)) {
 			for (Field field : clazz.getDeclaredFields()) {
 				fields.put(field.getName(), field);
 			}
 			clazz = clazz.getSuperclass();
 		}
 		return fields;
+	}
+
+	/**
+	 * Permite recuperar el getter de una propiedad en una clase, o de sus superclases.
+	 * 
+	 * @param clazz
+	 *            La clase desde la que vamos a recuperar el getter.
+	 * @param property
+	 *            La propiedad sobre la que vamos a recuperar el getter.
+	 * @return El método getter que corresponde a la propiedad recibida.
+	 * @throws ServiceException
+	 *             En caso de que no se encuentre el getter.
+	 */
+	public static Method getGetter(Class<?> clazz, String property) {
+		String getterName = "get" + property.substring(0, 1).toUpperCase() + property.substring(1);
+		return ReflectUtil.getMethod(clazz, getterName);
+	}
+
+	/**
+	 * Permite recuperar el setter de una propiedad en una clase, o de sus superclases.
+	 * 
+	 * @param clazz
+	 *            La clase desde la que vamos a recuperar el setter.
+	 * @param property
+	 *            La propiedad sobre la que vamos a recuperar el setter.
+	 * @param classParameter
+	 *            El tipo de parámetro que recibimos en el setter.
+	 * @return El método setter que corresponde a la propiedad recibida.
+	 * @throws ServiceException
+	 *             En caso de que no se encuentre el setter.
+	 */
+	public static Method getSetter(Class<?> clazz, String property, Class<?> classParameter) {
+		String setterName = "set" + property.substring(0, 1).toUpperCase() + property.substring(1);
+		return ReflectUtil.getMethod(clazz, setterName, classParameter);
+	}
+
+	/**
+	 * Permite recuperar un método dado en una clase o en su super clase, seteando al mismo como accesible.
+	 * 
+	 * @param clazz
+	 *            La clase desde la que vamos a recuperar el método.
+	 * @param method
+	 *            El nombre del método que vamos a buscar.
+	 * @param classParameters
+	 *            Los parámetros del método que queremos recuperar.
+	 * @return El método de la clase que corresponde con el nombre recibido, en caso de que no se encuentre ninguno, lanzamos {@link ServiceException}
+	 * @throws ServiceException
+	 *             En caso de que no se encuentre el método requerido.
+	 */
+	public static Method getMethod(Class<?> clazz, String method, Class<?>... classParameters) {
+		Method getMethod = null;
+		if (clazz != null && !clazz.equals(Object.class)) {
+			try {
+				getMethod = clazz.getDeclaredMethod(method, classParameters);
+				getMethod.setAccessible(true);
+			} catch (Exception e) {
+				try {
+					getMethod = ReflectUtil.getMethod(clazz.getSuperclass(), method, classParameters);
+				} catch (ServiceException ex) {
+					throw new ServiceException(ex, "Cannot find the method " + method + " for class " + clazz.getName(), "");
+				}
+			}
+		}
+		if (getMethod == null) {
+			throw new ServiceException("Cannot find the method " + method + " for class " + clazz.getName(), "");
+		}
+		return getMethod;
 	}
 
 	/**
@@ -43,7 +115,7 @@ public class ReflectUtil {
 	 */
 	public static <T extends Annotation> Map<String, Field> getAnnotatedField(Class<?> clazz, Class<T> annotation) {
 		Map<String, Field> fields = new HashMap<String, Field>();
-		while (clazz != null && !clazz.getClass().equals(Object.class)) {
+		while (clazz != null && !clazz.equals(Object.class)) {
 			for (Field field : clazz.getDeclaredFields()) {
 				if (field.isAnnotationPresent(annotation)) {
 					fields.put(field.getName(), field);
