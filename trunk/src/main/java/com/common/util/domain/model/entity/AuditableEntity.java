@@ -3,7 +3,7 @@ package com.common.util.domain.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.common.util.business.tool.FormatUtil;
+import com.common.util.business.tool.date.DateUtil;
 
 /**
  * La clase que representa una entidad auditable en la base de datos.
@@ -53,8 +53,8 @@ public abstract class AuditableEntity<PK extends Serializable> extends ActiveEnt
 	@Override
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append(super.toString()).append(" [C: ").append(FormatUtil.formatDate(this.createDate)).append(" - M: ")
-				.append(FormatUtil.formatDate(this.modifyDate)).append(" - D: ").append(FormatUtil.formatDate(this.deleteDate)).append("]");
+		buffer.append(super.toString()).append(" [C: ").append(DateUtil.formatDate(this.createDate)).append(" - M: ")
+				.append(DateUtil.formatDate(this.modifyDate)).append(" - D: ").append(DateUtil.formatDate(this.deleteDate)).append("]");
 		return buffer.toString();
 	}
 

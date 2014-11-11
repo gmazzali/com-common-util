@@ -11,7 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.common.util.business.tool.date.DateUtil;
 import com.common.util.business.util.DatePrecisionEnum;
 
 /**
@@ -37,27 +36,69 @@ public class DateUtilTest {
 	/**
 	 * La pruebas sobre el método <i><b>createDate</b></i> de {@link DateUtil}
 	 * 
+	 * @see DateUtil#createDate(String)
 	 * @see DateUtil#createDate(String, String)
 	 */
 	@Test
 	public void testCreateDate() {
+		// DateUtil#createDate(String)
+		Assert.assertNull(DateUtil.createDate(null));
+		Assert.assertNull(DateUtil.createDate(""));
+		Assert.assertNull(DateUtil.createDate("ASD"));
+		Assert.assertNotNull(DateUtil.createDate("01/01/2014"));
+
+		// DateUtil#createDate(String, String)
 		try {
 			DateUtil.createDate(null, null);
 			Assert.fail();
 		} catch (Exception e) {
 		}
-
 		try {
 			DateUtil.createDate("2000/01/01 00:00:00 000", null);
 			Assert.fail();
 		} catch (Exception e) {
 		}
-
 		try {
 			DateUtil.createDate(null, "yyyy/MM/dd HH:mm:ss SSS");
 			Assert.fail();
 		} catch (Exception e) {
 		}
+		Assert.assertNull(DateUtil.createDate("ASD", "yyyy/MM/dd HH:mm:ss SSS"));
+		Assert.assertNull(DateUtil.createDate("2000/01/01 00:00:00 000", "ASD"));
+		Assert.assertNotNull(DateUtil.createDate("2014/01/01 00:00:00 000", "yyyy/MM/dd HH:mm:ss SSS"));
+	}
+
+	/**
+	 * La pruebas sobre el método <i><b>formatDate</b></i> de {@link DateUtil}
+	 * 
+	 * @see DateUtil#formatDate(Date)
+	 * @see DateUtil#formatDate(Date, String)
+	 */
+	@Test
+	public void testFormatDate() {
+		// DateUtil#formatDate(Date)
+		Assert.assertNull(DateUtil.formatDate(null));
+		Assert.assertNotNull(DateUtil.formatDate(new Date()));
+
+		// DateUtil#createDate(String, String)
+		try {
+			DateUtil.formatDate(null, null);
+			Assert.fail();
+		} catch (Exception e) {
+		}
+		try {
+			DateUtil.formatDate(new Date(), null);
+			Assert.fail();
+		} catch (Exception e) {
+		}
+		try {
+			DateUtil.formatDate(null, "yyyy/MM/dd HH:mm:ss SSS");
+			Assert.fail();
+		} catch (Exception e) {
+		}
+		Assert.assertNull(DateUtil.formatDate(new Date(), "ASD"));
+		Assert.assertNotNull(DateUtil.formatDate(new Date(), "yyyy/MM/dd HH:mm:ss SSS"));
+
 	}
 
 	/**
@@ -2014,10 +2055,10 @@ public class DateUtilTest {
 	/**
 	 * La pruebas sobre el método <i><b>getHigherDate</b></i> de {@link DateUtil}
 	 * 
-	 * @see DateUtil#getHigherDate(Date, Date, DatePrecisionEnum)
+	 * @see DateUtil#getHigher(Date, Date, DatePrecisionEnum)
 	 */
 	@Test
-	public void testGetHigherDate() {
+	public void testGetHigher() {
 		try {
 			Date highDate = null;
 			Date lowDate = null;
@@ -2026,83 +2067,83 @@ public class DateUtilTest {
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 
 			try {
-				Assert.assertEquals(null, DateUtil.getHigherDate(null, null, null));
+				Assert.assertEquals(null, DateUtil.getHigher(null, null, null));
 			} catch (Exception e) {
 				Assert.fail();
 			}
 
 			try {
-				Assert.assertEquals(null, DateUtil.getHigherDate(null, null, DatePrecisionEnum.YEAR));
+				Assert.assertEquals(null, DateUtil.getHigher(null, null, DatePrecisionEnum.YEAR));
 			} catch (Exception e) {
 				Assert.fail();
 			}
 
 			try {
-				Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, null, null));
+				Assert.assertEquals(highDate, DateUtil.getHigher(highDate, null, null));
 			} catch (Exception e) {
 				Assert.fail();
 			}
 
 			try {
-				Assert.assertEquals(lowDate, DateUtil.getHigherDate(null, lowDate, null));
+				Assert.assertEquals(lowDate, DateUtil.getHigher(null, lowDate, null));
 			} catch (Exception e) {
 				Assert.fail();
 			}
 
 			try {
-				Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, null));
+				Assert.assertEquals(highDate, DateUtil.getHigher(highDate, lowDate, null));
 			} catch (Exception e) {
 				Assert.fail();
 			}
 
 			highDate = DateUtilTest.FORMAT_DATE.parse("2002/01/01 00:00:00 000");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecisionEnum.YEAR));
+			Assert.assertEquals(highDate, DateUtil.getHigher(highDate, lowDate, DatePrecisionEnum.YEAR));
 			highDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecisionEnum.YEAR));
+			Assert.assertEquals(highDate, DateUtil.getHigher(highDate, lowDate, DatePrecisionEnum.YEAR));
 
 			highDate = DateUtilTest.FORMAT_DATE.parse("2001/02/01 00:00:00 000");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecisionEnum.MONTH));
+			Assert.assertEquals(highDate, DateUtil.getHigher(highDate, lowDate, DatePrecisionEnum.MONTH));
 			highDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecisionEnum.MONTH));
+			Assert.assertEquals(highDate, DateUtil.getHigher(highDate, lowDate, DatePrecisionEnum.MONTH));
 
 			highDate = DateUtilTest.FORMAT_DATE.parse("2001/01/02 00:00:00 000");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecisionEnum.DAY));
+			Assert.assertEquals(highDate, DateUtil.getHigher(highDate, lowDate, DatePrecisionEnum.DAY));
 			highDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecisionEnum.DAY));
+			Assert.assertEquals(highDate, DateUtil.getHigher(highDate, lowDate, DatePrecisionEnum.DAY));
 
 			highDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 01:00:00 000");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecisionEnum.HOUR));
+			Assert.assertEquals(highDate, DateUtil.getHigher(highDate, lowDate, DatePrecisionEnum.HOUR));
 			highDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecisionEnum.HOUR));
+			Assert.assertEquals(highDate, DateUtil.getHigher(highDate, lowDate, DatePrecisionEnum.HOUR));
 
 			highDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:01:00 000");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecisionEnum.MINUTE));
+			Assert.assertEquals(highDate, DateUtil.getHigher(highDate, lowDate, DatePrecisionEnum.MINUTE));
 			highDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecisionEnum.MINUTE));
+			Assert.assertEquals(highDate, DateUtil.getHigher(highDate, lowDate, DatePrecisionEnum.MINUTE));
 
 			highDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:01 000");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecisionEnum.SECOND));
+			Assert.assertEquals(highDate, DateUtil.getHigher(highDate, lowDate, DatePrecisionEnum.SECOND));
 			highDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecisionEnum.SECOND));
+			Assert.assertEquals(highDate, DateUtil.getHigher(highDate, lowDate, DatePrecisionEnum.SECOND));
 
 			highDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 001");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecisionEnum.MILLISECOND));
+			Assert.assertEquals(highDate, DateUtil.getHigher(highDate, lowDate, DatePrecisionEnum.MILLISECOND));
 			highDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(highDate, DateUtil.getHigherDate(highDate, lowDate, DatePrecisionEnum.MILLISECOND));
+			Assert.assertEquals(highDate, DateUtil.getHigher(highDate, lowDate, DatePrecisionEnum.MILLISECOND));
 
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -2112,10 +2153,10 @@ public class DateUtilTest {
 	/**
 	 * La pruebas sobre el método <i><b>getLowerDate</b></i> de {@link DateUtil}
 	 * 
-	 * @see DateUtil#getLowerDate(Date, Date, DatePrecisionEnum)
+	 * @see DateUtil#getLower(Date, Date, DatePrecisionEnum)
 	 */
 	@Test
-	public void testGetLowerDate() {
+	public void testGetLower() {
 		try {
 			Date highDate = null;
 			Date lowDate = null;
@@ -2124,83 +2165,83 @@ public class DateUtilTest {
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2000/01/01 00:00:00 000");
 
 			try {
-				Assert.assertEquals(null, DateUtil.getLowerDate(null, null, null));
+				Assert.assertEquals(null, DateUtil.getLower(null, null, null));
 			} catch (Exception e) {
 				Assert.fail();
 			}
 
 			try {
-				Assert.assertEquals(null, DateUtil.getLowerDate(null, null, DatePrecisionEnum.YEAR));
+				Assert.assertEquals(null, DateUtil.getLower(null, null, DatePrecisionEnum.YEAR));
 			} catch (Exception e) {
 				Assert.fail();
 			}
 
 			try {
-				Assert.assertEquals(highDate, DateUtil.getLowerDate(highDate, null, null));
+				Assert.assertEquals(highDate, DateUtil.getLower(highDate, null, null));
 			} catch (Exception e) {
 				Assert.fail();
 			}
 
 			try {
-				Assert.assertEquals(lowDate, DateUtil.getLowerDate(null, lowDate, null));
+				Assert.assertEquals(lowDate, DateUtil.getLower(null, lowDate, null));
 			} catch (Exception e) {
 				Assert.fail();
 			}
 
 			try {
-				Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, null));
+				Assert.assertEquals(lowDate, DateUtil.getLower(highDate, lowDate, null));
 			} catch (Exception e) {
 				Assert.fail();
 			}
 
 			highDate = DateUtilTest.FORMAT_DATE.parse("2002/01/01 00:00:00 000");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecisionEnum.YEAR));
+			Assert.assertEquals(lowDate, DateUtil.getLower(highDate, lowDate, DatePrecisionEnum.YEAR));
 			highDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecisionEnum.YEAR));
+			Assert.assertEquals(lowDate, DateUtil.getLower(highDate, lowDate, DatePrecisionEnum.YEAR));
 
 			highDate = DateUtilTest.FORMAT_DATE.parse("2001/02/01 00:00:00 000");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecisionEnum.MONTH));
+			Assert.assertEquals(lowDate, DateUtil.getLower(highDate, lowDate, DatePrecisionEnum.MONTH));
 			highDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecisionEnum.MONTH));
+			Assert.assertEquals(lowDate, DateUtil.getLower(highDate, lowDate, DatePrecisionEnum.MONTH));
 
 			highDate = DateUtilTest.FORMAT_DATE.parse("2001/01/02 00:00:00 000");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecisionEnum.DAY));
+			Assert.assertEquals(lowDate, DateUtil.getLower(highDate, lowDate, DatePrecisionEnum.DAY));
 			highDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecisionEnum.DAY));
+			Assert.assertEquals(lowDate, DateUtil.getLower(highDate, lowDate, DatePrecisionEnum.DAY));
 
 			highDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 01:00:00 000");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecisionEnum.HOUR));
+			Assert.assertEquals(lowDate, DateUtil.getLower(highDate, lowDate, DatePrecisionEnum.HOUR));
 			highDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecisionEnum.HOUR));
+			Assert.assertEquals(lowDate, DateUtil.getLower(highDate, lowDate, DatePrecisionEnum.HOUR));
 
 			highDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:01:00 000");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecisionEnum.MINUTE));
+			Assert.assertEquals(lowDate, DateUtil.getLower(highDate, lowDate, DatePrecisionEnum.MINUTE));
 			highDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecisionEnum.MINUTE));
+			Assert.assertEquals(lowDate, DateUtil.getLower(highDate, lowDate, DatePrecisionEnum.MINUTE));
 
 			highDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:01 000");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecisionEnum.SECOND));
+			Assert.assertEquals(lowDate, DateUtil.getLower(highDate, lowDate, DatePrecisionEnum.SECOND));
 			highDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecisionEnum.SECOND));
+			Assert.assertEquals(lowDate, DateUtil.getLower(highDate, lowDate, DatePrecisionEnum.SECOND));
 
 			highDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 001");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecisionEnum.MILLISECOND));
+			Assert.assertEquals(lowDate, DateUtil.getLower(highDate, lowDate, DatePrecisionEnum.MILLISECOND));
 			highDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
 			lowDate = DateUtilTest.FORMAT_DATE.parse("2001/01/01 00:00:00 000");
-			Assert.assertEquals(lowDate, DateUtil.getLowerDate(highDate, lowDate, DatePrecisionEnum.MILLISECOND));
+			Assert.assertEquals(lowDate, DateUtil.getLower(highDate, lowDate, DatePrecisionEnum.MILLISECOND));
 
 		} catch (ParseException e) {
 			e.printStackTrace();
