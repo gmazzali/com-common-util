@@ -64,28 +64,13 @@ public abstract class AuditableEntity<PK extends Serializable> extends ActiveEnt
 	}
 
 	@Override
-	public Date getCreateDate() {
-		return this.createDate;
-	}
-
-	@Override
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
 
 	@Override
-	public Date getModifyDate() {
-		return this.modifyDate;
-	}
-
-	@Override
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
-	}
-
-	@Override
-	public Date getDeleteDate() {
-		return this.deleteDate;
 	}
 
 	@Override
