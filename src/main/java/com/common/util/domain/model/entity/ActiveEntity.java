@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @see ActivePersistence
  * @see Entity
  * 
- * @since 11/112014
+ * @since 11/11/2014
  * @author Guillermo Mazzali
  * @version 1.0
  * 
@@ -35,11 +35,6 @@ public abstract class ActiveEntity<PK extends Serializable> extends Entity<PK> i
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append(super.toString()).append(" ACTIVE: ").append(this.active);
 		return stringBuffer.toString();
-	}
-
-	@Override
-	public Boolean getActive() {
-		return this.active;
 	}
 
 	@Override
