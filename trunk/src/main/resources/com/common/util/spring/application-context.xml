@@ -52,7 +52,7 @@
 	<!-- Si los métodos de seteo son estático -->
 
 	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean" lazy-init="false" depends-on="messageSource">
-    	<property name="staticMethod" value="com.common.util.holder.HolderMessage.setResources"/>
+    	<property name="staticMethod" value="com.common.util.business.holder.HolderMessage.setResources"/>
     	<property name="arguments">
         	<list>
             	<ref bean="messageSource"/>
@@ -61,7 +61,7 @@
 	</bean>
 	
 	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean" lazy-init="false" depends-on="messageLocale">
-    	<property name="staticMethod" value="com.common.util.holder.HolderMessage.setLocale"/>
+    	<property name="staticMethod" value="com.common.util.business.holder.HolderMessage.setLocale"/>
     	<property name="arguments">
         	<list>
             	<ref bean="messageLocale"/>
@@ -71,7 +71,7 @@
 
 	<!-- O si los métodos de seteo no son estático -->
 
-	<bean id="holderMessage" class="com.common.util.holder.HolderMessage" lazy-init="false" depends-on="messageSource, messageLocale">
+	<bean id="holderMessage" class="com.common.util.business.holder.HolderMessage" lazy-init="false" depends-on="messageSource, messageLocale">
 		<property name="resources" ref="messageSource" />
 		<property name="locale" ref="messageLocale" />
 	</bean>
@@ -225,11 +225,8 @@
 	</tx:advice>
 
 	<aop:config>
-		<aop:pointcut id="baseService" expression="execution(* com.commons.util.service.*Service.*(..))" />
-		<aop:pointcut id="servicePointCut" expression="execution(* ..service.*Service.*(..))" />
-
+		<aop:pointcut id="baseService" expression="execution(* com.common.util.business.service.*Service (..))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="baseService" />
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="servicePointCut" />
 	</aop:config>
 
 </beans>
