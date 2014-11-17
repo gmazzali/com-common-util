@@ -15,7 +15,6 @@
 	<!-- ========================================================================================== -->
 	<!-- ==================== CARGAMOS LOS ARCHIVOS DE PROPIEDADES DEL SISTEMA ==================== -->
 	<!-- ========================================================================================== -->
-
 	<bean id="properties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
@@ -29,7 +28,6 @@
 	<!-- ========================================================================================= -->
 	<!-- =============== CREAMOS LA LOCALIDAD DONDE VAMOS A EJECUTAR LA APLICACIÓN =============== -->
 	<!-- ========================================================================================= -->
-
 	<bean id="messageLocale" class="java.util.Locale" lazy-init="false" depends-on="properties">
 		<constructor-arg index="0" value="${message.locale.languaje}" />
 		<constructor-arg index="1" value="${message.locale.country}" />
@@ -38,7 +36,6 @@
 	<!-- =========================================================================================== -->
 	<!-- ================ CARGAMOS LOS MENSAJES QUE VAMOS A USAR DENTRO DEL SISTEMA ================ -->
 	<!-- =========================================================================================== -->
-
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="cacheSeconds" value="600" />
 		<property name="basenames">
@@ -50,7 +47,6 @@
 	</bean>
 
 	<!-- Si los métodos de seteo son estático -->
-
 	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean" lazy-init="false" depends-on="messageSource">
     	<property name="staticMethod" value="com.common.util.business.holder.HolderMessage.setResources"/>
     	<property name="arguments">
@@ -70,7 +66,6 @@
 	</bean>
 
 	<!-- O si los métodos de seteo no son estático -->
-
 	<bean id="holderMessage" class="com.common.util.business.holder.HolderMessage" lazy-init="false" depends-on="messageSource, messageLocale">
 		<property name="resources" ref="messageSource" />
 		<property name="locale" ref="messageLocale" />
@@ -79,14 +74,12 @@
 	<!-- ======================================================================================= -->
 	<!-- ==================== CARGAMOS LA CONFIGURACIÓN PARA EL FORMATEADOR ==================== -->
 	<!-- ======================================================================================= -->
-
 	<bean id="numberLocale" class="java.util.Locale" lazy-init="false" depends-on="properties">
 		<constructor-arg index="0" value="${formatter.locale.languaje}" />
 		<constructor-arg index="1" value="${formatter.locale.country}" />
 	</bean>
 	
 	<!-- Si los métodos de seteo son estático -->
-
 	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean" lazy-init="false" depends-on="formatterLocale">
     	<property name="staticMethod" value="com.common.util.tools.NumberUtil.setLocale"/>
     	<property name="arguments">
@@ -97,17 +90,14 @@
 	</bean>
 
 	<!-- O si los métodos de seteo no son estático -->
-
 	<bean id="formatter" class="com.common.util.tools.NumberUtil" lazy-init="false" depends-on="properties">
 		<property name="locale" ref="numberLocale" />
 	</bean>
 
 	<!-- ======================================================================================= -->
 	<!-- ================ CARGAMOS LA CONFIGURACIÓN PARA EL CONVERSOR DE MONEDA ================ -->
-	<!-- ======================================================================================= -->
-	
+	<!-- ======================================================================================= -->	
 	<!-- Si los métodos de seteo son estático -->
-
 	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean" lazy-init="false" depends-on="properties">
     	<property name="staticMethod" value="com.common.util.tools.CurrencyUtil.setCurrencySimbol"/>
     	<property name="arguments">
@@ -144,8 +134,7 @@
    		</property>
 	</bean>
 	
-	<!-- O si los métodos de seteo no son estático -->
-	
+	<!-- O si los métodos de seteo no son estático -->	
 	<bean id="currencyUtil" class="com.common.util.tools.CurrencyUtil" lazy-init="false" depends-on="properties">
 		<property name="currencySimbol" ref="${currency.simbol}" />
 		<property name="decimals" ref="${currency.decimals}" />
@@ -156,7 +145,6 @@
 	<!-- ====================================================================================== -->
 	<!-- =================== CARGAMOS LA CONFIGURACIÓN PARA EL LOG DE LOG4J =================== -->
 	<!-- ====================================================================================== -->
-
 	<bean name="log4j" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
 		<property name="targetClass" value="org.springframework.util.Log4jConfigurer" />
 		<property name="targetMethod" value="initLogging" />
@@ -171,14 +159,12 @@
 	<!-- ========================================================================================= -->
 	<!-- ================ CARGAMOS LOS ELEMENTOS QUE ANOTAMOS DENTRO DEL CONTEXTO ================ -->
 	<!-- ========================================================================================= -->
-
 	<context:annotation-config />
 	<context:component-scan base-package="com.*" />
 
 	<!-- ========================================================================================= -->
 	<!-- ==================== CARGAMOS LA CONFIGURACIÓN PARA LA BASE DE DATOS ==================== -->
 	<!-- ========================================================================================= -->
-
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" depends-on="properties">
 		<property name="driverClassName" value="${jdbc.driverClassName}" />
 		<property name="url" value="${jdbc.url}" />
@@ -205,7 +191,6 @@
 	<!-- ===================================================================================== -->
 	<!-- ============ CREAMOS EL PROXY PARA LAS TRANSACCIONES A NIVEL DE SERVICIO ============ -->
 	<!-- ===================================================================================== -->
-
 	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
@@ -228,5 +213,10 @@
 		<aop:pointcut id="baseService" expression="execution(* com.common.util.business.service.*Service (..))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="baseService" />
 	</aop:config>
+
+	<!-- ======================================================================== -->
+	<!-- ============ CREAMOS EL ESCUCHADOR DE LA CARGA DEL CONTEXTO ============ -->
+	<!-- ======================================================================== -->	
+	<bean id="loadListenerContext" class="com.common.util.business.holder.LoaderApplicationContext"/>
 
 </beans>
