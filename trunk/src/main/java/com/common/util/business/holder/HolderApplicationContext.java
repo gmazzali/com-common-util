@@ -29,7 +29,19 @@ public class HolderApplicationContext implements Serializable {
 	 *            El conjunto de ubicaciones de los archivos de configuración para Spring.
 	 */
 	public static ApplicationContext initApplicationContext(String[] locations) {
-		context = new ClassPathXmlApplicationContext(locations);
+		return HolderApplicationContext.initApplicationContext(locations, true);
+	}
+
+	/**
+	 * La función encargada de inicializar el contexto de la aplicación dado un conjunto de ubicaciones de los archivos de configuración para Spring.
+	 * 
+	 * @param locations
+	 *            El conjunto de ubicaciones de los archivos de configuración para Spring.
+	 * @param refresh
+	 *            permite definir si va a refrescarse el contexto o no.
+	 */
+	public static ApplicationContext initApplicationContext(String[] locations, boolean refresh) {
+		context = new ClassPathXmlApplicationContext(locations, true);
 		return context;
 	}
 

@@ -262,7 +262,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	/**
-	 * Función que permite crear o recuperar una {@link Session} a partir de la session factory.
+	 * Función que permite crear o recuperar una {@link Session} a partir de {@link SessionFactory}
 	 * 
 	 * @see #closeSession(Session)
 	 * 
