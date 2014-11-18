@@ -46,7 +46,6 @@ public class ConverterServiceImpl implements ConverterService {
 			try {
 				Class<?> sourceClass = (Class<?>) ((ParameterizedType) converter.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 				Class<?> targetClass = (Class<?>) ((ParameterizedType) converter.getClass().getGenericSuperclass()).getActualTypeArguments()[1];
-
 				Map<Class<?>, Converter<?, ?>> targetMap = this.converters.get(sourceClass);
 				if (targetMap == null) {
 					targetMap = new ConcurrentHashMap<Class<?>, Converter<?, ?>>();
