@@ -60,6 +60,6 @@ public class HolderApplicationContext implements Serializable {
 	 * @return El elemento que corresponde con el bean que recuperamos.
 	 */
 	public static <E> E getBean(Class<E> beanClass) {
-		return beanClass.cast(context.getBean(beanClass));
+		return context.getBean(beanClass);
 	}
 }
