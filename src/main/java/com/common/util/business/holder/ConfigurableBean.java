@@ -30,6 +30,8 @@ public class ConfigurableBean implements Serializable {
 	 * 
 	 * @param bean
 	 *            El bean que vamos a inicializar.
+	 * @param <T>
+	 *            El tipo de bean que vamos a enlazar.
 	 */
 	public static <T> void initializeBean(T bean) {
 		Map<String, Field> autowiredFields = ReflectUtil.getAnnotatedField(bean.getClass(), Autowired.class);

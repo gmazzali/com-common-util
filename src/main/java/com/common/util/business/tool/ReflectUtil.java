@@ -111,6 +111,8 @@ public class ReflectUtil implements Serializable {
 	 *            La clase que vamos a analizar.
 	 * @param annotation
 	 *            La anotación que vamos a analizar.
+	 * @param <T>
+	 *            El tipo de anotación que vamos a buscar.
 	 * @return El mapa de los campos que corresponden a la anotación recibida.
 	 */
 	public static <T extends Annotation> Map<String, Field> getAnnotatedField(Class<?> clazz, Class<T> annotation) {

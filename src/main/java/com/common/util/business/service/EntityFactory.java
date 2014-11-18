@@ -16,6 +16,8 @@ public interface EntityFactory extends Serializable {
 	 * 
 	 * @param clazz
 	 *            La clase de las entidades que vamos a crear una nueva entidad.
+	 * @param <E>
+	 *            El tipo de entidad que vamos a crear.
 	 * @return La nueva instancia de la clase creada.
 	 */
 	public <E extends Serializable> E newInstance(Class<E> clazz);

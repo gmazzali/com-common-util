@@ -35,8 +35,11 @@ public class CollectionUtil {
 	 * 
 	 * @param items
 	 *            El conjunto de los items que queremos agregar al conjunto {@link HashSet}. Puede estar vacía.
+	 * @param <T>
+	 *            Los tipos de elementos que vamos a cargar dentro del conjunto.
 	 * @return El conjunto {@link HashSet} que contiene todos los items que recibimos como parámetros.
 	 */
+	@SafeVarargs
 	public static <T> HashSet<T> newHashSet(T... items) {
 		HashSet<T> set = new HashSet<T>();
 		if (items != null) {
@@ -51,8 +54,11 @@ public class CollectionUtil {
 	 * 
 	 * @param items
 	 *            El conjunto de los items que queremos agregar a la lista {@link ArrayList}. Puede estar vacía.
+	 * @param <T>
+	 *            Los tipos de elementos que vamos a cargar dentro de la lista.
 	 * @return La lista {@link ArrayList} que contiene todos los items que recibimos como parámetros.
 	 */
+	@SafeVarargs
 	public static <T> ArrayList<T> newArrayList(T... items) {
 		ArrayList<T> list = new ArrayList<T>();
 		if (items != null) {
@@ -66,7 +72,7 @@ public class CollectionUtil {
 	 * 
 	 * @param items
 	 *            La colección que vamos a verificar, puede ser <code>null</code>.
-	 * @return <i>true</i> si la colección recibida es <code>null</code> o esta vacía, en caso contrario retorna <i>false</i>.
+	 * @return <code>true</code> si la colección recibida es <code>null</code> o esta vacía, en caso contrario retorna <code>false</code>.
 	 */
 	public static boolean isEmpty(Collection<? extends Object> items) {
 		return (items == null || items.isEmpty());
@@ -77,7 +83,7 @@ public class CollectionUtil {
 	 * 
 	 * @param items
 	 *            La colección que vamos a verificar, puede ser nula.
-	 * @return <i>true</i> si la colección recibida no es nula y no esta vacía, en caso contrario retorna <i>false</i>.
+	 * @return <code>true</code> si la colección recibida no es nula y no esta vacía, en caso contrario retorna <code>false</code>.
 	 */
 	public static boolean isNotEmpty(Collection<? extends Object> items) {
 		return !CollectionUtil.isEmpty(items);
@@ -90,7 +96,9 @@ public class CollectionUtil {
 	 *            La colección que vamos a verificar, puede ser nula.
 	 * @param item
 	 *            El item que vamos a verificar si existe dentro de la colección.
-	 * @return <i>true</i> si la colección recibida no es nula y contiene el elemento recibido, en caso contrario retorna <i>false</i>.
+	 * @param <I>
+	 *            Los tipos de items que tenemos dentro de la colección.
+	 * @return <code>true</code> si la colección recibida no es nula y contiene el elemento recibido, en caso contrario retorna <code>false</code>.
 	 */
 	public static <I extends Serializable> boolean isInclude(Collection<I> items, I item) {
 		return items != null ? items.contains(item) : false;
@@ -101,6 +109,8 @@ public class CollectionUtil {
 	 * 
 	 * @param items
 	 *            La colección que vamos a recorrer para obtener la cardinalidad de cada uno de los items que tenemos en esta.
+	 * @param <I>
+	 *            Los tipos de items que tenemos dentro de la colección.
 	 * @return El mapa que contiene cada elemento único de la colección con la cantidad de ocurrencias del mismo.
 	 * @throws UncheckedException
 	 *             En caso de que el parámetro sea nulo.
@@ -131,6 +141,8 @@ public class CollectionUtil {
 	 *            La colección que vamos a recorrer.
 	 * @param item
 	 *            El elemento que vamos a contar. Puede ser nulo.
+	 * @param <I>
+	 *            Los tipos de items que tenemos dentro de la colección.
 	 * @return El numero de ocurrencias que tenemos del elemento dentro de la colección.
 	 * @throws UncheckedException
 	 *             En caso de que alguno de los parámetros sea nulo.
@@ -159,6 +171,8 @@ public class CollectionUtil {
 	 *            La colección que vamos a utilizar para contar.
 	 * @param predicate
 	 *            El predicado que vamos a usar para contar los elementos.
+	 * @param <I>
+	 *            Los tipos de items que tenemos dentro de la colección.
 	 * @return La cantidad de veces que el predicado fue evaluado de manera verdadera dentro de la colección recibida.
 	 * @throws UncheckedException
 	 *             En caso de que alguno de los parámetros sea nulo.
@@ -188,8 +202,10 @@ public class CollectionUtil {
 	 *            La colección donde vamos a iterar para buscar un elemento.
 	 * @param predicate
 	 *            El predicado de busqueda.
+	 * @param <I>
+	 *            Los tipos de items que tenemos dentro de la colección.
 	 * @return La primer ocurrencia del elemento que pasa la validación del predicado. En caso de no encontrar ninguno, se retorna un valor
-	 *         <b>null</b>.
+	 *         <code>null</code>.
 	 * @throws UncheckedException
 	 *             En caso de que alguno de los parámetros sea nulo.
 	 */
@@ -217,6 +233,8 @@ public class CollectionUtil {
 	 *            La colección que vamos a filtrar.
 	 * @param predicate
 	 *            El predicado que vamos a usar para filtrado.
+	 * @param <I>
+	 *            Los tipos de items que tenemos dentro de la colección.
 	 * @throws UncheckedException
 	 *             En caso de que alguno de los parámetros sea nulo.
 	 */
@@ -242,7 +260,9 @@ public class CollectionUtil {
 	 *            La colección que vamos a recorrer para ver si existe un elemento dado.
 	 * @param predicate
 	 *            El predicado que vamos a usar para la busqueda.
-	 * @return <i>true</i> si existe un elemento que cumple la condición del predicado, en caso contrario retorna <i>false</i>.
+	 * @param <I>
+	 *            Los tipos de items que tenemos dentro de la colección.
+	 * @return <code>true</code> si existe un elemento que cumple la condición del predicado, en caso contrario retorna <code>false</code>.
 	 * @throws UncheckedException
 	 *             En caso de que alguno de los parámetros sea nulo.
 	 */
@@ -270,6 +290,8 @@ public class CollectionUtil {
 	 *            La colección sobre la que vamos a seleccionar los elementos.
 	 * @param predicate
 	 *            El predicado de selección de elementos.
+	 * @param <I>
+	 *            Los tipos de items que tenemos dentro de la colección.
 	 * @return Una nueva lista con los elementos de la lista original que pasaron la evaluación del predicado.
 	 * @throws UncheckedException
 	 *             En caso de que alguno de los parámetros sea nulo.
@@ -298,6 +320,8 @@ public class CollectionUtil {
 	 *            La colección que vamos a procesar.
 	 * @param process
 	 *            El proceso que va a ejecutarse a cada uno de los elementos de la lista.
+	 * @param <I>
+	 *            Los tipos de items que tenemos dentro de la colección.
 	 * @throws UncheckedException
 	 *             En caso de que alguno de los parámetros sea nulo.
 	 */
@@ -319,8 +343,12 @@ public class CollectionUtil {
 	 * 
 	 * @param items
 	 *            La colección que vamos a transformar.
-	 * @param transform
+	 * @param transformer
 	 *            El transformador de elementos que vamos a usar.
+	 * @param <I>
+	 *            Los tipos de items de origen.
+	 * @param <O>
+	 *            Los tipos de items de destino.
 	 * @throws UncheckedException
 	 *             En caso de que alguno de los parámetros sea nulo.
 	 */
@@ -346,6 +374,8 @@ public class CollectionUtil {
 	 *            La primer colección para unir.
 	 * @param secondCollection
 	 *            La segunda colección para unir.
+	 * @param <I>
+	 *            Los tipos de items que tenemos dentro de la colección.
 	 * @return Una nueva colección con la unión de las 2 listas.
 	 * @throws UncheckedException
 	 *             En caso de que alguno de los parámetros sea nulo.
@@ -383,6 +413,8 @@ public class CollectionUtil {
 	 *            La primer colección para intersectar.
 	 * @param secondCollection
 	 *            La segunda colección para intersectar.
+	 * @param <I>
+	 *            Los tipos de items que tenemos dentro de la colección.
 	 * @return Una nueva colección con la intersección de las 2 listas.
 	 * @throws UncheckedException
 	 *             En caso de que alguno de los parámetros sea nulo.
@@ -420,6 +452,8 @@ public class CollectionUtil {
 	 *            La primer colección.
 	 * @param secondCollection
 	 *            La segunda colección.
+	 * @param <I>
+	 *            Los tipos de items que tenemos dentro de la colección.
 	 * @return Una nueva colección que contiene los elementos de las 2 colecciones, menos los elementos que tienen en común.
 	 * @throws UncheckedException
 	 *             En caso de que alguno de los parámetros sea nulo.
@@ -459,6 +493,8 @@ public class CollectionUtil {
 	 *            La primer colección.
 	 * @param secondCollection
 	 *            La segunda colección.
+	 * @param <I>
+	 *            Los tipos de items que tenemos dentro de la colección.
 	 * @return Una nueva colección con los elementos de la primer colección menos los elementos de la segunda.
 	 * @throws UncheckedException
 	 *             En caso de que alguno de los parámetros sea nulo.
@@ -483,6 +519,8 @@ public class CollectionUtil {
 	 *            El elemento del que vamos a recuperar la frecuencia.
 	 * @param frequencyMap
 	 *            El mapa donde tenemos almacenado la frecuencia.
+	 * @param <I>
+	 *            Los tipos de items que tenemos dentro de la colección.
 	 * @return La frecuencia que corresponde con el elemento recibido.
 	 */
 	private static <I extends Serializable> int getFrequency(I item, Map<I, Integer> frequencyMap) {

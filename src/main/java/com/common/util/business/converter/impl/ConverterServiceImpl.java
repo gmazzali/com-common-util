@@ -32,6 +32,11 @@ public class ConverterServiceImpl implements ConverterService {
 
 	/**
 	 * Permite inicializar el servicio de conversión.
+	 * 
+	 * @param convertersSet
+	 *            El listado de los converters.
+	 * @param <C>
+	 *            Los tipos de converters.
 	 */
 	public <C extends Converter<?, ?>> void init(Collection<C> convertersSet) {
 		VerifierUtil.checkNotNull(convertersSet, "The set of converters cannot be null");
