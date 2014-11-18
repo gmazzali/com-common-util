@@ -23,7 +23,7 @@ import com.common.util.persistence.filter.order.Orders;
  * @param <PK>
  *            La clave que corresponde con el ID de las entidades de filtrado.
  */
-public class BaseFilter<E extends Persistence<PK>, PK extends Serializable> implements Serializable {	
+public class BaseFilter<E extends Persistence<PK>, PK extends Serializable> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(BaseFilter.class);
 
@@ -126,6 +126,7 @@ public class BaseFilter<E extends Persistence<PK>, PK extends Serializable> impl
 	 * @param excludeIds
 	 *            El listado de los ID que excluimos de la consulta.
 	 */
+	@SuppressWarnings("unchecked")
 	public void setExcludeIds(PK... excludeIds) {
 		this.excludeIds = excludeIds;
 	}
