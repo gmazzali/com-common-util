@@ -42,46 +42,76 @@ public class MonitorApplicationContext implements Serializable {
 		}
 	}
 
+	/**
+	 * Permite cargar la cantidad de beans que vamos a cargar dentro del contexto.
+	 * 
+	 * @param beanCount
+	 *            La cantidad de beans que vamos a cargar dentro del contexto.
+	 */
 	public void setBeanCount(Integer beanCount) {
 		synchronized (this.beanCount) {
 			this.beanCount = beanCount;
 		}
 	}
 
+	/**
+	 * Permite saber cuantos beans se cargaron hasta este momento.
+	 * 
+	 * @return El numero de beans que cargamos hasta este momento.
+	 */
 	public Integer getCurrentBeanCount() {
 		synchronized (this.currentBeanCount) {
 			return currentBeanCount;
 		}
 	}
 
-	public void setCurrentBeanCount(Integer currentBeanCount) {
-		synchronized (this.currentBeanCount) {
-			this.currentBeanCount = currentBeanCount;
-		}
-	}
-
+	/**
+	 * Permite incrementar en 1 la cantidad de beans cargados en el contexto.
+	 */
 	public void incrementBeanCount() {
 		synchronized (this.currentBeanCount) {
 			this.currentBeanCount++;
 		}
 	}
 
+	/**
+	 * El nombre del bean que actualmente se esta cargando dentro del contexto.
+	 * 
+	 * @return El nombre del bean que actualmente se esta cargado dentro del contexto.
+	 */
 	public String getCurrentBeanName() {
 		synchronized (this.currentBeanName) {
 			return currentBeanName;
 		}
 	}
 
+	/**
+	 * Permite cargar el nombre del bean que actualmente se esta cargando dentro del contexto.
+	 * 
+	 * @param currentBeanName
+	 *            El nombre del bean que actualmente se esta cargando dentro del contexto.
+	 */
 	public void setCurrentBeanName(String currentBeanName) {
 		synchronized (this.currentBeanName) {
 			this.currentBeanName = currentBeanName;
 		}
 	}
 
+	/**
+	 * Permite saber cuando el contexto se encuentra completamente cargado.
+	 * 
+	 * @return <code>true</code> cuando el contexto se encuentra completamente cargado, en caso contrario, retorna <code>false</code>.
+	 */
 	public boolean isContextComplete() {
 		return contextComplete;
 	}
 
+	/**
+	 * Permite cargar el estado de contexto.
+	 * 
+	 * @param contextComplete
+	 *            el valor booleano que nos indica si el contexto esta completo o no.
+	 */
 	public void setContextComplete(boolean contextComplete) {
 		this.contextComplete = contextComplete;
 	}

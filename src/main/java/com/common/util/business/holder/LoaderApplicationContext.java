@@ -44,7 +44,7 @@ public class LoaderApplicationContext implements Serializable, BeanPostProcessor
 	 *            El conjunto de ubicaciones de los archivos de configuración para Spring.
 	 */
 	public static void initApplicationContext(MonitorApplicationContext monitorApplicationContext, String[] locations) {
-		LoaderApplicationContext.initApplicationContext(monitorApplicationContext, locations, true);
+		LoaderApplicationContext.initApplicationContext(monitorApplicationContext, locations, false);
 	}
 
 	/**
