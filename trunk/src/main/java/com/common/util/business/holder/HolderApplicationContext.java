@@ -57,6 +57,8 @@ public class HolderApplicationContext implements Serializable {
 	 * 
 	 * @param beanClass
 	 *            La clase que define el tipo del bean que queremos recuperar desde el contexto.
+	 * @param <E>
+	 *            EL tipo de bean que vamos a buscar.
 	 * @return El elemento que corresponde con el bean que recuperamos.
 	 */
 	public static <E> E getBean(Class<E> beanClass) {

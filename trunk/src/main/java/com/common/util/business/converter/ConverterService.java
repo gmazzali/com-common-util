@@ -21,6 +21,10 @@ public interface ConverterService extends Serializable {
 	 *            La clase del objeto fuente.
 	 * @param targetClass
 	 *            La clase del objeto destino.
+	 * @param <S>
+	 *            La clase de de origen.
+	 * @param <T>
+	 *            La clase de destino.
 	 * @return TRUE en caso de que el convertidor actual pueda convertir de la clase fuente a la destino, en caso contrario retornamos FALSE.
 	 */
 	public <S, T> boolean canConvert(Class<S> sourceClass, Class<T> targetClass);
@@ -32,6 +36,10 @@ public interface ConverterService extends Serializable {
 	 *            El objeto que vamos a ocupar de fuente para la conversión.
 	 * @param targetClass
 	 *            La clase a la que vamos a convertir el objeto fuente.
+	 * @param <S>
+	 *            La clase de de origen.
+	 * @param <T>
+	 *            La clase de destino.
 	 * @return El objeto de la clase destino que contiene los datos del objeto de la clase fuente.
 	 */
 	public <S, T> T convert(S source, Class<T> targetClass);
@@ -43,6 +51,10 @@ public interface ConverterService extends Serializable {
 	 *            La colección de elementos que vamos a convertir.
 	 * @param returnClass
 	 *            La clase de los elementos a los que queremos convertir la colección.
+	 * @param <S>
+	 *            La clase de de origen.
+	 * @param <T>
+	 *            La clase de destino.
 	 * @return El listado con los elementos de la primer colección convertidos.
 	 */
 	public <S, T> List<T> convert(Collection<S> collection, Class<T> returnClass);

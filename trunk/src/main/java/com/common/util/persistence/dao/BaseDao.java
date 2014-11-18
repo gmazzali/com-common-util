@@ -193,7 +193,7 @@ public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializ
 	 * @see #save(Persistence)
 	 * @see #update(Persistence)
 	 * @see #saveOrUpdate(Persistence)
-	 * @see #delete(Serializable)
+	 * @see #delete(Persistence)
 	 * 
 	 * @param id
 	 *            El identificador {@link PK} de la entidad que queremos eliminar de la base de datos.

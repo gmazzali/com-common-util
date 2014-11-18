@@ -49,6 +49,7 @@ public class Orders implements Serializable {
 	 *            El atributo que vamos a ordenar.
 	 * @param order
 	 *            El orden en el que se va a recuperar. Este orden puede ser {@link Order#ASC} o {@link Order#DESC}.
+	 * @return Este elemento de ordenes.
 	 */
 	public Orders addOrder(String property, Order order) {
 		this.orders.put(property, order);

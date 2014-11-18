@@ -41,6 +41,8 @@ public class VerifierUtil implements Serializable {
 	 *            El primer elemento que vamos a comparar, puede ser nulo.
 	 * @param secondEntity
 	 *            El segundo elemento que vamos a comparar, puede ser nulo.
+	 * @param <S>
+	 *            Los tipos de elementos que vamos a comparar.
 	 * @return <i>true</i> en caso que la primer entidad sea igual a la segunda, en caso contrario, retornamos <i>false</i>.
 	 */
 	public static <S extends Serializable> boolean equals(S firstEntity, S secondEntity) {

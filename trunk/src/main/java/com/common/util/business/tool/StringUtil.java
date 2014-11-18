@@ -326,6 +326,8 @@ public class StringUtil implements Serializable {
 	 * 
 	 * @param string
 	 *            La cadena a la que le vamos a quitar los blancos al comienzo y al final. Puede ser nula.
+	 * @param removeCharacters
+	 *            Los caracteres que vmosa a quitarle a la cadena de texto.
 	 * @return La cadena con los espacios al principio y al final quitados, o <code>null</code> en caso de que la cadena recibida sea nula o vacía.
 	 */
 	public static String stripToNull(String string, Character... removeCharacters) {

@@ -317,7 +317,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	 * @see BaseFilter
 	 * 
 	 * @see #addPagination(Criteria, BaseFilter)
-	 * @see #addRangeRestriction(Criteria, RangeType, String)
+	 * @see #addRangeRestriction(DetachedCriteria, RangeType, String)
 	 * 
 	 * @param criteria
 	 *            La {@link Criteria} que vamos a cargar con las restricciones del filtro recibido.
@@ -370,7 +370,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	 * @see BaseFilter
 	 * 
 	 * @see #addFilterRestriction(Criteria, BaseFilter)
-	 * @see #addRangeRestriction(Criteria, RangeType, String)
+	 * @see #addRangeRestriction(DetachedCriteria, RangeType, String)
 	 * 
 	 * @param criteria
 	 *            La {@link Criteria} a la que le vamos a cargar la paginación de resultados.

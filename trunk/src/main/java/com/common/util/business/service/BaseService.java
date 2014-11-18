@@ -125,7 +125,7 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * @see BaseFilter
 	 * @see Orders
 	 * 
-	 * @see BaseDao#findByFilter(BaseFilter, Orders)
+	 * @see BaseDao#findByFilter(BaseFilter)
 	 * 
 	 * @see #findAll()
 	 * @see #findAll(Orders)
@@ -145,7 +145,7 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * @see BaseDao#findById(Serializable)
 	 * 
 	 * @see #findAll()
-	 * @see #findAll(Orders))
+	 * @see #findAll(Orders)
 	 * @see #findByFilter(BaseFilter)
 	 * 
 	 * @param id
