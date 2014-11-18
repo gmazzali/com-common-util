@@ -3,6 +3,8 @@ package com.common.util.business.tool.collection;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,11 +14,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import com.common.util.business.tool.collection.CollectionUtil;
-import com.common.util.business.tool.collection.Predicate;
-import com.common.util.business.tool.collection.Process;
-import com.common.util.business.tool.collection.Transformer;
 
 /**
  * La clase que permite probar los métodos para las colecciones.
@@ -32,7 +29,7 @@ public class CollectionUtilTest {
 	public static void initClass() {
 		BasicConfigurator.configure();
 	}
-	
+
 	/**
 	 * La pruebas sobre el método <i><b>newHashSet</b></i> de {@link CollectionUtil}
 	 * 
@@ -50,7 +47,7 @@ public class CollectionUtilTest {
 		Assert.assertTrue(CollectionUtil.newHashSet(1, 2).contains(2));
 		Assert.assertFalse(CollectionUtil.newHashSet(1, 2).contains(3));
 	}
-	
+
 	/**
 	 * La pruebas sobre el método <i><b>newArrayList</b></i> de {@link CollectionUtil}
 	 * 
@@ -68,7 +65,7 @@ public class CollectionUtilTest {
 		Assert.assertTrue(CollectionUtil.newArrayList(1, 2).contains(2));
 		Assert.assertFalse(CollectionUtil.newArrayList(1, 2).contains(3));
 	}
-	
+
 	/**
 	 * La pruebas sobre los métodos <i><b>isEmpty</b></i> y <i><b>isNotEmpty</b></i> de {@link CollectionUtil}
 	 * 
@@ -721,25 +718,34 @@ public class CollectionUtilTest {
 		aList.add("c");
 		aList.add("c");
 		aList.add("a");
+		Collections.sort(aList, new Ordered());
 
 		List<String> bList = new ArrayList<String>();
 		bList.add("b");
 		bList.add("b");
 		bList.add("b");
 		bList.add("a");
+		Collections.sort(bList, new Ordered());
 
-		List<String> output = new ArrayList<String>();
-		output.add(null);
-		output.add("b");
-		output.add("b");
-		output.add("b");
-		output.add("c");
-		output.add("c");
-		output.add("a");
+		List<String> cList = new ArrayList<String>();
+		cList.add(null);
+		cList.add("b");
+		cList.add("b");
+		cList.add("b");
+		cList.add("c");
+		cList.add("c");
+		cList.add("a");
+		Collections.sort(cList, new Ordered());
 
-		Assert.assertEquals(aList, CollectionUtil.<String> union(aList, new ArrayList<String>()));
-		Assert.assertEquals(bList, CollectionUtil.<String> union(new ArrayList<String>(), bList));
-		Assert.assertEquals(output, CollectionUtil.<String> union(aList, bList));
+		List<String> temp = (List<String>) CollectionUtil.<String> union(aList, new ArrayList<String>());
+		Collections.sort(temp, new Ordered());
+		Assert.assertArrayEquals(aList.toArray(), temp.toArray());
+		temp = (List<String>) CollectionUtil.<String> union(new ArrayList<String>(), bList);
+		Collections.sort(temp, new Ordered());
+		Assert.assertArrayEquals(bList.toArray(), temp.toArray());
+		temp = (List<String>) CollectionUtil.<String> union(aList, bList);
+		Collections.sort(temp, new Ordered());
+		Assert.assertArrayEquals(cList.toArray(), temp.toArray());
 	}
 
 	/**
@@ -777,20 +783,29 @@ public class CollectionUtilTest {
 		aList.add("c");
 		aList.add("c");
 		aList.add("a");
+		Collections.sort(aList, new Ordered());
 
 		List<String> bList = new ArrayList<String>();
 		bList.add("b");
 		bList.add("b");
 		bList.add("b");
 		bList.add("a");
+		Collections.sort(bList, new Ordered());
 
-		List<String> output = new ArrayList<String>();
-		output.add("b");
-		output.add("a");
+		List<String> cList = new ArrayList<String>();
+		cList.add("b");
+		cList.add("a");
+		Collections.sort(cList, new Ordered());
 
-		Assert.assertEquals(new ArrayList<String>(), CollectionUtil.<String> intersection(aList, new ArrayList<String>()));
-		Assert.assertEquals(new ArrayList<String>(), CollectionUtil.<String> intersection(new ArrayList<String>(), bList));
-		Assert.assertEquals(output, CollectionUtil.<String> intersection(aList, bList));
+		List<String> temp = (List<String>) CollectionUtil.<String> intersection(aList, new ArrayList<String>());
+		Collections.sort(temp, new Ordered());
+		Assert.assertArrayEquals(new ArrayList<String>().toArray(), temp.toArray());
+		temp = (List<String>) CollectionUtil.<String> intersection(new ArrayList<String>(), bList);
+		Collections.sort(temp, new Ordered());
+		Assert.assertArrayEquals(new ArrayList<String>().toArray(), temp.toArray());
+		temp = (List<String>) CollectionUtil.<String> intersection(aList, bList);
+		Collections.sort(temp, new Ordered());
+		Assert.assertArrayEquals(cList.toArray(), temp.toArray());
 	}
 
 	/**
@@ -828,23 +843,32 @@ public class CollectionUtilTest {
 		aList.add("c");
 		aList.add("c");
 		aList.add("a");
+		Collections.sort(aList, new Ordered());
 
 		List<String> bList = new ArrayList<String>();
 		bList.add("b");
 		bList.add("b");
 		bList.add("b");
 		bList.add("a");
+		Collections.sort(bList, new Ordered());
 
-		List<String> output = new ArrayList<String>();
-		output.add(null);
-		output.add("b");
-		output.add("b");
-		output.add("c");
-		output.add("c");
+		List<String> cList = new ArrayList<String>();
+		cList.add(null);
+		cList.add("b");
+		cList.add("b");
+		cList.add("c");
+		cList.add("c");
+		Collections.sort(cList, new Ordered());
 
-		Assert.assertEquals(aList, CollectionUtil.<String> disjunction(aList, new ArrayList<String>()));
-		Assert.assertEquals(bList, CollectionUtil.<String> disjunction(new ArrayList<String>(), bList));
-		Assert.assertEquals(output, CollectionUtil.<String> disjunction(aList, bList));
+		List<String> temp = (List<String>) CollectionUtil.<String> disjunction(aList, new ArrayList<String>());
+		Collections.sort(temp, new Ordered());
+		Assert.assertArrayEquals(aList.toArray(), temp.toArray());
+		temp = (List<String>) CollectionUtil.<String> disjunction(new ArrayList<String>(), bList);
+		Collections.sort(temp, new Ordered());
+		Assert.assertArrayEquals(bList.toArray(), temp.toArray());
+		temp = (List<String>) CollectionUtil.<String> disjunction(aList, bList);
+		Collections.sort(temp, new Ordered());
+		Assert.assertArrayEquals(cList.toArray(), temp.toArray());
 	}
 
 	/**
@@ -882,20 +906,46 @@ public class CollectionUtilTest {
 		aList.add("c");
 		aList.add("c");
 		aList.add("a");
+		Collections.sort(aList, new Ordered());
 
 		List<String> bList = new ArrayList<String>();
 		bList.add("b");
 		bList.add("b");
 		bList.add("b");
 		bList.add("a");
+		Collections.sort(bList, new Ordered());
 
-		List<String> output = new ArrayList<String>();
-		output.add(null);
-		output.add("c");
-		output.add("c");
+		List<String> cList = new ArrayList<String>();
+		cList.add(null);
+		cList.add("c");
+		cList.add("c");
+		Collections.sort(cList, new Ordered());
 
-		Assert.assertEquals(aList, CollectionUtil.<String> subtract(aList, new ArrayList<String>()));
-		Assert.assertEquals(new ArrayList<String>(), CollectionUtil.<String> subtract(new ArrayList<String>(), bList));
-		Assert.assertEquals(output, CollectionUtil.<String> subtract(aList, bList));
+		List<String> temp = (List<String>) CollectionUtil.<String> subtract(aList, new ArrayList<String>());
+		Collections.sort(temp, new Ordered());
+		Assert.assertArrayEquals(aList.toArray(), temp.toArray());
+		temp = (List<String>) CollectionUtil.<String> subtract(new ArrayList<String>(), bList);
+		Collections.sort(temp, new Ordered());
+		Assert.assertArrayEquals(new ArrayList<String>().toArray(), temp.toArray());
+		temp = (List<String>) CollectionUtil.<String> subtract(aList, bList);
+		Collections.sort(temp, new Ordered());
+		Assert.assertArrayEquals(cList.toArray(), temp.toArray());
+	}
+
+	static class Ordered implements Comparator<String> {
+
+		@Override
+		public int compare(String o1, String o2) {
+			if (o1 == null) {
+				if (o2 == null) {
+					return 0;
+				} else {
+					return -1;
+				}
+			} else if (o2 == null) {
+				return 1;
+			}
+			return o1.compareTo(o2);
+		}
 	}
 }
