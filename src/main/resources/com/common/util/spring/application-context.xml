@@ -45,27 +45,14 @@
 			</list>
 		</property>
 	</bean>
-
-	<!-- Si los métodos de seteo son estático -->
-	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean" lazy-init="false" depends-on="messageSource">
-    	<property name="staticMethod" value="com.common.util.business.holder.HolderMessage.setResources"/>
-    	<property name="arguments">
-        	<list>
-            	<ref bean="messageSource"/>
-        	</list>
-   		</property>
-	</bean>
 	
-	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean" lazy-init="false" depends-on="messageLocale">
-    	<property name="staticMethod" value="com.common.util.business.holder.HolderMessage.setLocale"/>
-    	<property name="arguments">
-        	<list>
-            	<ref bean="messageLocale"/>
-        	</list>
-   		</property>
+	<!-- Si usamos el servicio de mensajes -->
+	<bean id="messageService" class="com.common.util.business.service.impl.MessageServiceImpl" lazy-init="false" depends-on="messageSource, messageLocale">
+		<property name="resources" ref="messageSource" />
+		<property name="locale" ref="messageLocale" />
 	</bean>
 
-	<!-- O si los métodos de seteo no son estático -->
+	<!-- Si usamos el holder de los mensajes -->
 	<bean id="holderMessage" class="com.common.util.business.holder.HolderMessage" lazy-init="false" depends-on="messageSource, messageLocale">
 		<property name="resources" ref="messageSource" />
 		<property name="locale" ref="messageLocale" />
@@ -78,68 +65,10 @@
 		<constructor-arg index="0" value="${formatter.locale.languaje}" />
 		<constructor-arg index="1" value="${formatter.locale.country}" />
 	</bean>
-	
-	<!-- Si los métodos de seteo son estático -->
-	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean" lazy-init="false" depends-on="formatterLocale">
-    	<property name="staticMethod" value="com.common.util.tools.NumberUtil.setLocale"/>
-    	<property name="arguments">
-        	<list>
-            	<ref bean="numberLocale"/>
-        	</list>
-   		</property>
-	</bean>
 
 	<!-- O si los métodos de seteo no son estático -->
 	<bean id="formatter" class="com.common.util.tools.NumberUtil" lazy-init="false" depends-on="properties">
 		<property name="locale" ref="numberLocale" />
-	</bean>
-
-	<!-- ======================================================================================= -->
-	<!-- ================ CARGAMOS LA CONFIGURACIÓN PARA EL CONVERSOR DE MONEDA ================ -->
-	<!-- ======================================================================================= -->	
-	<!-- Si los métodos de seteo son estático -->
-	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean" lazy-init="false" depends-on="properties">
-    	<property name="staticMethod" value="com.common.util.tools.CurrencyUtil.setCurrencySimbol"/>
-    	<property name="arguments">
-        	<list>
-        		<value>${currency.simbol}</value>
-        	</list>
-   		</property>
-	</bean>
-	
-	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean" lazy-init="false" depends-on="properties">
-    	<property name="staticMethod" value="com.common.util.tools.CurrencyUtil.setDecimals"/>
-    	<property name="arguments">
-        	<list>
-        		<value>${currency.decimals}</value>
-        	</list>
-   		</property>
-	</bean>
-	
-	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean" lazy-init="false" depends-on="properties">
-    	<property name="staticMethod" value="com.common.util.tools.CurrencyUtil.setGroupSeparator"/>
-    	<property name="arguments">
-        	<list>
-        		<value>${currency.separator.group}</value>
-        	</list>
-   		</property>
-	</bean>
-	
-	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean" lazy-init="false" depends-on="properties">
-    	<property name="staticMethod" value="com.common.util.tools.CurrencyUtil.setDecimalSeparator"/>
-    	<property name="arguments">
-        	<list>
-        		<value>${currency.separator.decimal}</value>
-        	</list>
-   		</property>
-	</bean>
-	
-	<!-- O si los métodos de seteo no son estático -->	
-	<bean id="currencyUtil" class="com.common.util.tools.CurrencyUtil" lazy-init="false" depends-on="properties">
-		<property name="currencySimbol" ref="${currency.simbol}" />
-		<property name="decimals" ref="${currency.decimals}" />
-		<property name="groupSeparator" ref="${currency.separator.group}" />
-		<property name="decimalSeparator" ref="${currency.separator.decimal}" />
 	</bean>
 
 	<!-- ====================================================================================== -->
@@ -174,13 +103,12 @@
 
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" depends-on="dataSource">
 		<property name="dataSource" ref="dataSource" />
-		<property name="packagesToScan" value="com.proyecto.*" />
+		<property name="packagesToScan" value="com.*" />
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${jdbc.dialect}</prop>
 				<prop key="hibernate.show_sql">${jdbc.show_sql}</prop>
 				<prop key="hibernate.format_sql">${jdbc.format_sql}</prop>
-
 				<prop key="hibernate.connection.pool_size">${jdbc.pool_size}</prop>
 				<prop key="hibernate.bytecode.use_reflection_optimizer">${jdbc.use_reflection_optimizer}</prop>
 				<prop key="hibernate.hbm2ddl.auto">${jdbc.hbm_to_ddl}</prop>

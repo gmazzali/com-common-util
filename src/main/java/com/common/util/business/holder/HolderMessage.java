@@ -7,15 +7,19 @@ import org.apache.log4j.Logger;
 import org.springframework.context.MessageSource;
 import org.springframework.util.StringUtils;
 
+import com.common.util.business.service.MessageService;
 import com.common.util.business.tool.StringUtil;
 
 /**
  * La clase que va a contener las propiedades que van a tener los mensajes propios de las excepciones que van a desplegarse dentro de la aplicación.
  * 
+ * @deprecated Se recomienda el uso de {@link MessageService}
+ * 
  * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */
+@Deprecated
 public class HolderMessage implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = Logger.getLogger(HolderMessage.class);
@@ -60,7 +64,6 @@ public class HolderMessage implements Serializable {
 	 */
 	public static String getMessage(String key, Object... parameter) {
 		LOGGER.debug("KEY: " + key + " VALUES: {" + StringUtils.arrayToDelimitedString(parameter, ", ") + "}");
-
 		if (resources != null && key != null) {
 			return resources.getMessage(key, parameter, key, locale);
 		} else {
@@ -87,7 +90,6 @@ public class HolderMessage implements Serializable {
 	 */
 	public static String getMessage(String defaultMessage, String key, Object... parameter) {
 		LOGGER.debug("DEFAULT:" + defaultMessage + "KEY: " + key + " VALUES: {" + StringUtil.arrayToDelimitedString(parameter, ", ") + "}");
-
 		if (resources != null && key != null) {
 			return resources.getMessage(key, parameter, defaultMessage, locale);
 		} else {

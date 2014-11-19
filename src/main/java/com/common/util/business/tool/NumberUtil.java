@@ -6,7 +6,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
-import com.common.util.business.util.PatternUtilEnum;
+import com.common.util.business.util.Patterns;
 import com.common.util.domain.exception.UncheckedException;
 
 /**
@@ -42,7 +42,7 @@ public class NumberUtil {
 	 *         <code>false</code>.
 	 */
 	public static boolean isLongNumber(String number) {
-		return StringUtil.match(number, PatternUtilEnum.NUMBER_INTEGER_PATTERN.getPattern());
+		return StringUtil.match(number, Patterns.NUMBER_INTEGER_PATTERN.getPattern());
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class NumberUtil {
 	 *         <code>false</code>.
 	 */
 	public static boolean isDecimalNumber(String number) {
-		return StringUtil.match(number, PatternUtilEnum.NUMBER_DECIMAL_PATTERN.getPattern());
+		return StringUtil.match(number, Patterns.NUMBER_DECIMAL_PATTERN.getPattern());
 	}
 
 	/**
