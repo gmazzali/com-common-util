@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 
 import com.common.util.business.tool.collection.ArrayUtil;
-import com.common.util.business.util.PatternUtilEnum;
+import com.common.util.business.util.Patterns;
 
 /**
  * La utilería para el manejo de los String.
@@ -427,7 +427,7 @@ public class StringUtil implements Serializable {
 	/**
 	 * Se encarga de validar que una cadena de caracteres recibida coincida con un patrón de validación.
 	 * 
-	 * @see PatternUtilEnum
+	 * @see Patterns
 	 * 
 	 * @param string
 	 *            La cadena que vamos a validar.

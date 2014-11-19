@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.common.util.business.util.PatternUtilEnum;
+import com.common.util.business.util.Patterns;
 
 /**
  * La clase que permite probar los métodos de manejo de Strings base de la libreria.
@@ -316,7 +316,7 @@ public class StringUtilTest {
 	 * La pruebas sobre el método <i><b>match</b></i> de {@link StringUtil}.
 	 * 
 	 * @see StringUtil#match(String, String)
-	 * @see PatternUtilEnum
+	 * @see Patterns
 	 */
 	@Test
 	public void testMatch() {
@@ -344,23 +344,23 @@ public class StringUtilTest {
 
 		// Pruebas de los patrones que tenemos.
 		// CUIT.
-		Assert.assertFalse(StringUtil.match(null, PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertFalse(StringUtil.match("", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertFalse(StringUtil.match(" ", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertFalse(StringUtil.match("a", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertFalse(StringUtil.match("as", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertFalse(StringUtil.match("asd", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertFalse(StringUtil.match("1", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertFalse(StringUtil.match("2012345678", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertFalse(StringUtil.match("20123456789", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertFalse(StringUtil.match("20 1234567 8", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertFalse(StringUtil.match("20 12345678 9", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertFalse(StringUtil.match("20/1234567/8", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertFalse(StringUtil.match("20/12345678/9", PatternUtilEnum.CUIT_PATTERN.getPattern()));
+		Assert.assertFalse(StringUtil.match(null, Patterns.CUIT_PATTERN.getPattern()));
+		Assert.assertFalse(StringUtil.match("", Patterns.CUIT_PATTERN.getPattern()));
+		Assert.assertFalse(StringUtil.match(" ", Patterns.CUIT_PATTERN.getPattern()));
+		Assert.assertFalse(StringUtil.match("a", Patterns.CUIT_PATTERN.getPattern()));
+		Assert.assertFalse(StringUtil.match("as", Patterns.CUIT_PATTERN.getPattern()));
+		Assert.assertFalse(StringUtil.match("asd", Patterns.CUIT_PATTERN.getPattern()));
+		Assert.assertFalse(StringUtil.match("1", Patterns.CUIT_PATTERN.getPattern()));
+		Assert.assertFalse(StringUtil.match("2012345678", Patterns.CUIT_PATTERN.getPattern()));
+		Assert.assertFalse(StringUtil.match("20123456789", Patterns.CUIT_PATTERN.getPattern()));
+		Assert.assertFalse(StringUtil.match("20 1234567 8", Patterns.CUIT_PATTERN.getPattern()));
+		Assert.assertFalse(StringUtil.match("20 12345678 9", Patterns.CUIT_PATTERN.getPattern()));
+		Assert.assertFalse(StringUtil.match("20/1234567/8", Patterns.CUIT_PATTERN.getPattern()));
+		Assert.assertFalse(StringUtil.match("20/12345678/9", Patterns.CUIT_PATTERN.getPattern()));
 
-		Assert.assertTrue(StringUtil.match("20-1234567-8", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertTrue(StringUtil.match("99-9999999-9", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertTrue(StringUtil.match("20-12345678-9", PatternUtilEnum.CUIT_PATTERN.getPattern()));
-		Assert.assertTrue(StringUtil.match("99-99999999-9", PatternUtilEnum.CUIT_PATTERN.getPattern()));
+		Assert.assertTrue(StringUtil.match("20-1234567-8", Patterns.CUIT_PATTERN.getPattern()));
+		Assert.assertTrue(StringUtil.match("99-9999999-9", Patterns.CUIT_PATTERN.getPattern()));
+		Assert.assertTrue(StringUtil.match("20-12345678-9", Patterns.CUIT_PATTERN.getPattern()));
+		Assert.assertTrue(StringUtil.match("99-99999999-9", Patterns.CUIT_PATTERN.getPattern()));
 	}
 }
