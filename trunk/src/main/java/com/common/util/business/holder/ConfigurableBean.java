@@ -14,7 +14,7 @@ import com.common.util.business.tool.ReflectUtil;
 /**
  * Clase que permite agregar a un objeto las dependencias a partir de las que disponemos dentro del contexto de Spring.
  * 
- * @see HolderApplicationContext
+ * @see ApplicationContextHolder
  * 
  * @since 15/10/2014
  * @author Guillermo Mazzali
@@ -39,7 +39,7 @@ public class ConfigurableBean implements Serializable {
 			Object parameter = null;
 			try {
 				LOGGER.debug("Inyectando en el bean " + bean.getClass().getName() + " la propiedad " + autowiredField.getName() + " por tipo");
-				parameter = HolderApplicationContext.getBean(autowiredField.getType());
+				parameter = ApplicationContextHolder.getBean(autowiredField.getType());
 				if (parameter != null) {
 					autowiredField.setAccessible(true);
 					autowiredField.set(bean, parameter);
@@ -51,7 +51,7 @@ public class ConfigurableBean implements Serializable {
 					// Si el objeto recuperado es nulo, lo intentamos buscar por nombre.
 					if (autowiredField.getAnnotation(Qualifier.class) != null) {
 						Qualifier qualifierField = autowiredField.getAnnotation(Qualifier.class);
-						parameter = HolderApplicationContext.getBean(qualifierField.value());
+						parameter = ApplicationContextHolder.getBean(qualifierField.value());
 						if (parameter != null) {
 							autowiredField.setAccessible(true);
 							autowiredField.set(bean, parameter);
