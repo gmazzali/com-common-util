@@ -8,13 +8,13 @@ import org.springframework.context.ApplicationContext;
  * La clase encargada de mantener el contexto de la aplicación al alcance de toda la aplicación.
  * 
  * @see ConfigurableBean
- * @see LoaderApplicationContext
+ * @see ApplicationContextLoader
  * 
  * @since 05/02/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class HolderApplicationContext implements Serializable {
+public class ApplicationContextHolder implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -29,7 +29,7 @@ public class HolderApplicationContext implements Serializable {
 	 *            El contexto de la aplicación.
 	 */
 	protected static void setContext(ApplicationContext context) {
-		HolderApplicationContext.context = context;
+		ApplicationContextHolder.context = context;
 	}
 
 	/**

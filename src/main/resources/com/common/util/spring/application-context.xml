@@ -145,6 +145,6 @@
 	<!-- ======================================================================== -->
 	<!-- ============ CREAMOS EL ESCUCHADOR DE LA CARGA DEL CONTEXTO ============ -->
 	<!-- ======================================================================== -->	
-	<bean id="loadListenerContext" class="com.common.util.business.holder.LoaderApplicationContext"/>
+	<bean id="loadListenerContext" class="com.common.util.business.holder.ApplicationContextLoader"/>
 
 </beans>

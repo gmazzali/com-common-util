@@ -5,13 +5,13 @@ import java.io.Serializable;
 /**
  * Permite monitorear el progreso de carga del contexto de la aplicación actualmente.
  * 
- * @see LoaderApplicationContext
+ * @see ApplicationContextLoader
  * 
  * @since 17/11/2014
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class MonitorApplicationContext implements Serializable {
+public class ApplicationContextMonitor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
