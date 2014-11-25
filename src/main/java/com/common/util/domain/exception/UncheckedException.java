@@ -1,6 +1,6 @@
 package com.common.util.domain.exception;
 
-import com.common.util.business.holder.HolderMessage;
+import com.common.util.business.tool.StringUtil;
 import com.common.util.domain.exception.error.ErrorDetail;
 import com.common.util.domain.exception.error.Errors;
 
@@ -119,7 +119,8 @@ public class UncheckedException extends RuntimeException {
 		StringBuffer stringBuffer = new StringBuffer();
 
 		for (ErrorDetail errorDetail : this.errors.getErrorDetails()) {
-			stringBuffer.append(HolderMessage.getMessage(errorDetail.getDefaultMessage(), errorDetail.getKeyMessage(), errorDetail.getParameters()));
+			stringBuffer.append("DEFAULT:" + errorDetail.getDefaultMessage() + "KEY: " + errorDetail.getKeyMessage() + " VALUES: {"
+					+ StringUtil.arrayToDelimitedString(errorDetail.getParameters(), ", ") + "}");
 			stringBuffer.append(this.getMessageSeparator());
 		}
 
