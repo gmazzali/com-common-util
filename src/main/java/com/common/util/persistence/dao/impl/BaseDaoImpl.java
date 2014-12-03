@@ -270,11 +270,14 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	 */
 	protected Session getSession() {
 		if (this.session == null) {
-			LOGGER.info("get current session");
-			this.session = this.sessionFactory.getCurrentSession();
+			try {
+				LOGGER.info("get current session");
+				this.session = this.sessionFactory.getCurrentSession();
+			} catch (RuntimeException e) {
+				LOGGER.error("find get current session", e);
+			}
 		}
 		if (this.session == null) {
-			LOGGER.warn("get current session = null");
 			LOGGER.info("open new session");
 			this.session = this.sessionFactory.openSession();
 		}
