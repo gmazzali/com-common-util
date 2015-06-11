@@ -1,12 +1,13 @@
 package com.common.util.business.tool;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
-import com.common.util.business.util.Patterns;
+import com.common.util.business.util.PatternsEnum;
 import com.common.util.domain.exception.UncheckedException;
 
 /**
@@ -16,7 +17,9 @@ import com.common.util.domain.exception.UncheckedException;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class NumberUtil {
+public class NumberUtil implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * La localidad que vamos a tomar como base para los formatos.
@@ -42,7 +45,7 @@ public class NumberUtil {
 	 *         <code>false</code>.
 	 */
 	public static boolean isLongNumber(String number) {
-		return StringUtil.match(number, Patterns.NUMBER_INTEGER_PATTERN.getPattern());
+		return StringUtil.match(number, PatternsEnum.NUMBER_INTEGER_PATTERN.getPattern());
 	}
 
 	/**
@@ -54,7 +57,7 @@ public class NumberUtil {
 	 *         <code>false</code>.
 	 */
 	public static boolean isDecimalNumber(String number) {
-		return StringUtil.match(number, Patterns.NUMBER_DECIMAL_PATTERN.getPattern());
+		return StringUtil.match(number, PatternsEnum.NUMBER_DECIMAL_PATTERN.getPattern());
 	}
 
 	/**

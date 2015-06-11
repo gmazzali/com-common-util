@@ -11,6 +11,7 @@ import com.common.util.domain.exception.error.Errors;
  * @version 1.0
  */
 public class ServiceException extends UncheckedException {
+
 	private static final long serialVersionUID = 1L;
 
 	/**

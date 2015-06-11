@@ -17,7 +17,9 @@ import com.common.util.business.tool.StringUtil;
  * @version 1.0
  */
 public class MessageServiceImpl implements MessageService {
+
 	private static final long serialVersionUID = 1L;
+
 	private static final Logger LOGGER = Logger.getLogger(MessageServiceImpl.class);
 
 	/**

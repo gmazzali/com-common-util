@@ -1,5 +1,7 @@
 package com.common.util.business.tool;
 
+import java.io.Serializable;
+
 /**
  * La clase que nos permite manipular las importes de dinero dentro de un sistema.
  * 
@@ -7,7 +9,9 @@ package com.common.util.business.tool;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class CurrencyUtil {
+public class CurrencyUtil implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * El simbolo que vamos a ocupar para referenciar las monedas de uso comercial. Por omisión tiene el valor:

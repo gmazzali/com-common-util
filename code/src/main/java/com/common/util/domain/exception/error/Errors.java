@@ -19,6 +19,7 @@ import com.common.util.domain.exception.UncheckedException;
  * @version 1.0
  */
 public class Errors implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	/**

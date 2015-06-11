@@ -11,6 +11,7 @@ import com.common.util.domain.exception.error.Errors;
  * @version 1.0
  */
 public class ViewException extends UncheckedException {
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -21,8 +22,8 @@ public class ViewException extends UncheckedException {
 	}
 
 	/**
-	 * El constructor de una instancia de {@link ViewException} que recibe como parámetro un elemento {@link Throwable} para mantener el problema
-	 * que produjo el lanzamiento de esta {@link ViewException}.
+	 * El constructor de una instancia de {@link ViewException} que recibe como parámetro un elemento {@link Throwable} para mantener el problema que
+	 * produjo el lanzamiento de esta {@link ViewException}.
 	 * 
 	 * @param cause
 	 *            La causa de un problema que vamos a contener dentro de esta excepción.
@@ -42,8 +43,8 @@ public class ViewException extends UncheckedException {
 	}
 
 	/**
-	 * El constructor de una instancia de {@link ViewException} que recibe como parámetro el {@link Throwable} para mantener el problema que
-	 * produjo el lanzamiento de esta {@link ViewException} y un un mensaje de {@link ErrorDetail} que vamos a crear en el momento.
+	 * El constructor de una instancia de {@link ViewException} que recibe como parámetro el {@link Throwable} para mantener el problema que produjo
+	 * el lanzamiento de esta {@link ViewException} y un un mensaje de {@link ErrorDetail} que vamos a crear en el momento.
 	 * 
 	 * @param cause
 	 *            La causa de un problema que vamos a contener dentro de esta excepción.

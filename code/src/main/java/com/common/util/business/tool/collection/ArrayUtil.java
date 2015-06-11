@@ -1,5 +1,7 @@
 package com.common.util.business.tool.collection;
 
+import java.io.Serializable;
+
 /**
  * Contiene las funciones básicas de manejo de arreglos dentro de un sistema.
  * 
@@ -9,7 +11,9 @@ package com.common.util.business.tool.collection;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public class ArrayUtil {
+public class ArrayUtil implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Función Null-safe que verifica si un arreglo es vacío.

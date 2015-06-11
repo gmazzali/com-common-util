@@ -6,17 +6,17 @@ import com.common.util.business.tool.VerifierUtil;
  * Contiene los patrones de cadenas de texto (Expresiones Regulares) de los casos más comunes.
  * 
  * <ul>
- * <li>{@link Patterns#NUMBER_INTEGER_PATTERN}</li>
- * <li>{@link Patterns#NUMBER_DECIMAL_PATTERN}</li>
- * <li>{@link Patterns#NAME_PATTERN}</li>
- * <li>{@link Patterns#LASTNAME_PATTERN}</li>
- * <li>{@link Patterns#DNI_PATTERN}</li>
- * <li>{@link Patterns#CUIT_PATTERN}</li>
- * <li>{@link Patterns#PHISIC_ADDRESS_PATTERN}</li>
- * <li>{@link Patterns#TELEPHONE_PATTERN}</li>
- * <li>{@link Patterns#EMAIL_PATTERN}</li>
- * <li>{@link Patterns#PORT_NUMBER_PATTERN}</li>
- * <li>{@link Patterns#IPV4_PATTERN}</li>
+ * <li>{@link PatternsEnum#NUMBER_INTEGER_PATTERN}</li>
+ * <li>{@link PatternsEnum#NUMBER_DECIMAL_PATTERN}</li>
+ * <li>{@link PatternsEnum#NAME_PATTERN}</li>
+ * <li>{@link PatternsEnum#LASTNAME_PATTERN}</li>
+ * <li>{@link PatternsEnum#DNI_PATTERN}</li>
+ * <li>{@link PatternsEnum#CUIT_PATTERN}</li>
+ * <li>{@link PatternsEnum#PHISIC_ADDRESS_PATTERN}</li>
+ * <li>{@link PatternsEnum#TELEPHONE_PATTERN}</li>
+ * <li>{@link PatternsEnum#EMAIL_PATTERN}</li>
+ * <li>{@link PatternsEnum#PORT_NUMBER_PATTERN}</li>
+ * <li>{@link PatternsEnum#IPV4_PATTERN}</li>
  * </ul>
  * 
  * @see VerifierUtil
@@ -25,7 +25,7 @@ import com.common.util.business.tool.VerifierUtil;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-public enum Patterns {
+public enum PatternsEnum {
 
 	/**
 	 * La expresión regular de un numero entero.
@@ -137,7 +137,7 @@ public enum Patterns {
 	 * @param pattern
 	 *            El patrón.
 	 */
-	private Patterns(String pattern) {
+	private PatternsEnum(String pattern) {
 		this.pattern = pattern;
 	}
 

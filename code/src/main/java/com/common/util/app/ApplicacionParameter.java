@@ -2,7 +2,7 @@ package com.common.util.app;
 
 import java.io.Serializable;
 
-import com.common.util.business.holder.ApplicationContextMonitor;
+import com.common.util.holder.ApplicationContextMonitor;
 
 /**
  * La clase que permite recuperar los parámetros de configuración de la aplicación.

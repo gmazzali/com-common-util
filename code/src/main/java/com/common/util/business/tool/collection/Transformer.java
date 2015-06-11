@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @param <O>
  *            La clase a a la que vamos a convertir el item recibido.
  */
-public interface Transformer<I extends Serializable, O extends Serializable> {
+public interface Transformer<I extends Serializable, O extends Serializable> extends Serializable {
 
 	/**
 	 * Permite convertir un elemento en otro distinto.

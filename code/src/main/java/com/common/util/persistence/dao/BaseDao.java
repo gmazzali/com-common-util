@@ -56,9 +56,9 @@ public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializ
 	/**
 	 * La función que utilizamos para recuperar una entidad dado su identificador.
 	 * 
-	 * @see #findAll()
-	 * @see #findAll(Orders)
-	 * @see #findByFilter(BaseFilter)
+	 * @see #getAll()
+	 * @see #getAll(Orders)
+	 * @see #getByFilter(BaseFilter)
 	 * 
 	 * @param id
 	 *            El identificador de la entidad que vamos a recuperar desde la base de datos.
@@ -66,16 +66,16 @@ public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializ
 	 * @throws PersistenceException
 	 *             En caso de un problema durante la recuperación de la entidad desde la base de datos.
 	 */
-	public E findById(PK id) throws PersistenceException;
+	public E getById(PK id) throws PersistenceException;
 
 	/**
 	 * La función que nos permite recuperar todos las entidades del mismo tipo almacenados dentro de la base de datos.
 	 * 
 	 * @see Orders
 	 * 
-	 * @see #findAll()
-	 * @see #findById(Serializable)
-	 * @see #findByFilter(BaseFilter)
+	 * @see #getAll()
+	 * @see #getById(Serializable)
+	 * @see #getByFilter(BaseFilter)
 	 * 
 	 * @param orders
 	 *            Los ordenes en los que queremos recuperar las entidades. Si el mismo es mulo, se recuperan si un orden en particular.
@@ -83,22 +83,22 @@ public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializ
 	 * @throws PersistenceException
 	 *             En caso de un problema durante la recuperación de todos las entidades desde la base de datos.
 	 */
-	public List<E> findAll(Orders orders) throws PersistenceException;
+	public List<E> getAll(Orders orders) throws PersistenceException;
 
 	/**
 	 * La función que nos permite recuperar todos las entidades del mismo tipo almacenados dentro de la base de datos.
 	 * 
 	 * @see Orders
 	 * 
-	 * @see #findAll(Orders)
-	 * @see #findById(Serializable)
-	 * @see #findByFilter(BaseFilter)
+	 * @see #getAll(Orders)
+	 * @see #getById(Serializable)
+	 * @see #getByFilter(BaseFilter)
 	 * 
 	 * @return El listado de entidades almacenadas.
 	 * @throws PersistenceException
 	 *             En caso de un problema durante la recuperación de todos las entidades desde la base de datos.
 	 */
-	public List<E> findAll() throws PersistenceException;
+	public List<E> getAll() throws PersistenceException;
 
 	/**
 	 * La función que utilizamos para recuperar una entidad dado un filtro del tipo {@link BaseFilter} para la consulta.
@@ -106,9 +106,9 @@ public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializ
 	 * @see BaseFilter
 	 * @see Orders
 	 * 
-	 * @see #findAll()
-	 * @see #findAll(Orders)
-	 * @see #findById(Serializable)
+	 * @see #getAll()
+	 * @see #getAll(Orders)
+	 * @see #getById(Serializable)
 	 * 
 	 * @param filter
 	 *            El filtro del tipo {@link BaseFilter} que vamos a ocupar para recuperar un listado de entidades de acuerdo a un criterio.
@@ -116,7 +116,7 @@ public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializ
 	 * @throws PersistenceException
 	 *             En caso de un problema durante la recuperación de las entidades desde la base de datos.
 	 */
-	public List<E> findByFilter(BaseFilter<E, PK> filter) throws PersistenceException;
+	public List<E> getByFilter(BaseFilter<E, PK> filter) throws PersistenceException;
 
 	/**
 	 * La función para guardar una nueva entidad dentro de la base de datos.

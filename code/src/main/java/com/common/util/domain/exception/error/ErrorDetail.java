@@ -15,6 +15,7 @@ import com.common.util.business.tool.StringUtil;
  * @version 1.0
  */
 public class ErrorDetail implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	/**

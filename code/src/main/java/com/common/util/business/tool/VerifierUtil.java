@@ -12,7 +12,9 @@ import org.apache.log4j.Logger;
  * @version 1.0
  */
 public class VerifierUtil implements Serializable {
+
 	private static final long serialVersionUID = 1L;
+
 	private static final Logger LOGGER = Logger.getLogger(VerifierUtil.class);
 
 	/**

@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @param <I>
  *            La clase de los elementos que vamos a evaluar.
  */
-public interface Predicate<I extends Serializable> {
+public interface Predicate<I extends Serializable> extends Serializable {
 
 	/**
 	 * Permite evaluar un elemento de una lista para ver si cumple con una condición de selección.

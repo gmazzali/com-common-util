@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @param <I>
  *            La clase de los elementos que vamos a procesar.
  */
-public interface Process<I extends Serializable> {
+public interface Process<I extends Serializable> extends Serializable {
 
 	/**
 	 * Permite procesar un elemento de una lista.

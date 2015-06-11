@@ -42,28 +42,28 @@ public abstract class ActiveBaseDaoImpl<E extends ActivePersistence<PK>, PK exte
 	}
 	
 	@Override
-	public List<E> findAll() throws PersistenceException {
+	public List<E> getAll() throws PersistenceException {
 		ActiveBaseFilter<E, PK> filter = new ActiveBaseFilter<E, PK>();
 		filter.setActive(Boolean.TRUE);
-		return super.findByFilter(filter);
+		return super.getByFilter(filter);
 	}
 
 	@Override
-	public List<E> findAll(Orders orders) {
+	public List<E> getAll(Orders orders) {
 		ActiveBaseFilter<E, PK> filter = new ActiveBaseFilter<E, PK>();
 		filter.setActive(Boolean.TRUE);
 		filter.setOrders(orders);
-		return super.findByFilter(filter);
+		return super.getByFilter(filter);
 	}
 
 	@Override
-	public E findById(PK id) {
-		return super.findById(id);
+	public E getById(PK id) {
+		return super.getById(id);
 	}
 
 	@Override
-	public List<E> findByFilter(BaseFilter<E, PK> filter) {
-		return super.findByFilter((ActiveBaseFilter<E, PK>) filter);
+	public List<E> getByFilter(BaseFilter<E, PK> filter) {
+		return super.getByFilter((ActiveBaseFilter<E, PK>) filter);
 	}
 
 	@Override
@@ -92,7 +92,7 @@ public abstract class ActiveBaseDaoImpl<E extends ActivePersistence<PK>, PK exte
 
 	@Override
 	public void deleteById(PK id) {
-		E entity = this.findById(id);
+		E entity = this.getById(id);
 		if (entity != null) {
 			this.delete(entity);
 		}

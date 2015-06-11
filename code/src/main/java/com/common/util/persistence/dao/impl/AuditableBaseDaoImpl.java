@@ -55,23 +55,23 @@ public abstract class AuditableBaseDaoImpl<E extends AuditablePersistence<PK>, P
 	}
 
 	@Override
-	public List<E> findAll() {
-		return super.findAll();
+	public List<E> getAll() {
+		return super.getAll();
 	}
 
 	@Override
-	public List<E> findAll(Orders orders) {
-		return super.findAll(orders);
+	public List<E> getAll(Orders orders) {
+		return super.getAll(orders);
 	}
 
 	@Override
-	public E findById(PK id) {
-		return super.findById(id);
+	public E getById(PK id) {
+		return super.getById(id);
 	}
 
 	@Override
-	public List<E> findByFilter(BaseFilter<E, PK> filter) {
-		return super.findByFilter(filter);
+	public List<E> getByFilter(BaseFilter<E, PK> filter) {
+		return super.getByFilter(filter);
 	}
 
 	@Override
@@ -100,7 +100,7 @@ public abstract class AuditableBaseDaoImpl<E extends AuditablePersistence<PK>, P
 
 	@Override
 	public void deleteById(PK id) {
-		E entity = this.findById(id);
+		E entity = this.getById(id);
 		if (entity != null) {
 			this.delete(entity);
 		}

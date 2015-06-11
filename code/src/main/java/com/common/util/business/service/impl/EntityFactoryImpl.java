@@ -14,7 +14,9 @@ import com.common.util.business.service.EntityFactory;
  * @version 1.0
  */
 public class EntityFactoryImpl implements EntityFactory {
+
 	private static final long serialVersionUID = 1L;
+
 	private static final Logger LOGGER = Logger.getLogger(EntityFactoryImpl.class);
 
 	@Override

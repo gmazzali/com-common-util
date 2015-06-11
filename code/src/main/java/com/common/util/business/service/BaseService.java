@@ -88,11 +88,11 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * 
 	 * @see Orders
 	 * 
-	 * @see BaseDao#findAll(Orders)
+	 * @see BaseDao#getAll(Orders)
 	 * 
-	 * @see #findAll()
-	 * @see #findById(Serializable)
-	 * @see #findByFilter(BaseFilter)
+	 * @see #getAll()
+	 * @see #getById(Serializable)
+	 * @see #getByFilter(BaseFilter)
 	 * 
 	 * @param orders
 	 *            Los ordenes dentro de {@link Orders} en los que queremos recuperar las entidades. Si el mismo es mulo, se recuperan si un orden en
@@ -101,22 +101,22 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * @throws ServiceException
 	 *             En caso de un problema durante la recuperación de todos las entidades desde la base de datos.
 	 */
-	public List<E> findAll(Orders orders) throws ServiceException;
+	public List<E> getAll(Orders orders) throws ServiceException;
 
 	/**
 	 * La función que nos permite recuperar todos las entidades del mismo tipo almacenados dentro de la base de datos.
 	 * 
-	 * @see BaseDao#findAll(Orders)
+	 * @see BaseDao#getAll(Orders)
 	 * 
-	 * @see #findAll(Orders)
-	 * @see #findById(Serializable)
-	 * @see #findByFilter(BaseFilter)
+	 * @see #getAll(Orders)
+	 * @see #getById(Serializable)
+	 * @see #getByFilter(BaseFilter)
 	 * 
 	 * @return El listado de los elementos almacenados.
 	 * @throws ServiceException
 	 *             En caso de un problema durante la recuperación de todos las entidades desde la base de datos.
 	 */
-	public List<E> findAll() throws ServiceException;
+	public List<E> getAll() throws ServiceException;
 
 	/**
 	 * La función que nos permite recuperar todos las entidades del mismo tipo almacenados dentro de la base de datos y que cumplen un filtro
@@ -125,11 +125,11 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * @see BaseFilter
 	 * @see Orders
 	 * 
-	 * @see BaseDao#findByFilter(BaseFilter)
+	 * @see BaseDao#getByFilter(BaseFilter)
 	 * 
-	 * @see #findAll()
-	 * @see #findAll(Orders)
-	 * @see #findById(Serializable)
+	 * @see #getAll()
+	 * @see #getAll(Orders)
+	 * @see #getById(Serializable)
 	 * 
 	 * @param filter
 	 *            El filtro {@link BaseFilter} para realizar la consulta de registro dentro de la base de datos.
@@ -137,16 +137,16 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * @throws ServiceException
 	 *             En caso de un problema durante la recuperación de todos las entidades desde la base de datos.
 	 */
-	public List<E> findByFilter(BaseFilter<E, PK> filter) throws ServiceException;
+	public List<E> getByFilter(BaseFilter<E, PK> filter) throws ServiceException;
 
 	/**
 	 * La función que utilizamos para recuperar una entidad dado su identificador.
 	 * 
-	 * @see BaseDao#findById(Serializable)
+	 * @see BaseDao#getById(Serializable)
 	 * 
-	 * @see #findAll()
-	 * @see #findAll(Orders)
-	 * @see #findByFilter(BaseFilter)
+	 * @see #getAll()
+	 * @see #getAll(Orders)
+	 * @see #getByFilter(BaseFilter)
 	 * 
 	 * @param id
 	 *            El identificador {@link PK} de la entidad que vamos a recuperar desde la base de datos.
@@ -154,7 +154,7 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * @throws ServiceException
 	 *             En caso de un problema durante la recuperación de la entidad desde la base de datos.
 	 */
-	public E findById(PK id) throws ServiceException;
+	public E getById(PK id) throws ServiceException;
 
 	/**
 	 * La función para guardar la entidad dentro de la base de datos.
@@ -170,10 +170,11 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * 
 	 * @param entity
 	 *            La entidad {@link E} que vamos a almacenar.
+	 * @return El identificador de la entidad almacenada.
 	 * @throws ServiceException
 	 *             En caso de un problema durante el guardado de la entidad dentro de la base de datos.
 	 */
-	public void save(E entity) throws ServiceException;
+	public PK save(E entity) throws ServiceException;
 
 	/**
 	 * La función para insertar una nueva entidad o actualizar una que ya se encuentre dentro de la base de datos.

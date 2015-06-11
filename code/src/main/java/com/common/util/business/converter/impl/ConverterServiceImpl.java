@@ -22,7 +22,9 @@ import com.common.util.domain.exception.ServiceException;
  * @version 1.0
  */
 public class ConverterServiceImpl implements ConverterService {
+
 	private static final long serialVersionUID = 1L;
+
 	private static final Logger log = Logger.getLogger(ConverterServiceImpl.class);
 
 	/**

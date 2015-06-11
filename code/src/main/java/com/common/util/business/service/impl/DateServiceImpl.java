@@ -12,6 +12,7 @@ import com.common.util.business.service.DateService;
  * @version 1.0
  */
 public class DateServiceImpl implements DateService {
+
 	private static final long serialVersionUID = 1L;
 
 	@Override

@@ -19,6 +19,7 @@ import com.common.util.business.tool.date.DateUtil;
  *            La clase que va a corresponder a la clave primaria de la entidad que vamos a representar.
  */
 public abstract class AuditableEntity<PK extends Serializable> extends ActiveEntity<PK> implements AuditablePersistence<PK> {
+
 	private static final long serialVersionUID = 1L;
 
 	/**

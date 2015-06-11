@@ -27,7 +27,9 @@ import com.common.util.domain.exception.UncheckedException;
  * @author Guillermo Mazzali
  * @version 1.1
  */
-public class CollectionUtil {
+public class CollectionUtil implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Permite crear un objeto de {@link HashSet} que va a contener todos los elementos que se reciban como parámetros. En caso de no recibir ningún

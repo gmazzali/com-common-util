@@ -124,7 +124,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	@Override
-	public E findById(PK id) {
+	public E getById(PK id) {
 		try {
 			Session session = this.getSession();
 			E entity = (E) session.get(this.persistentClass, id);
@@ -137,7 +137,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	@Override
-	public List<E> findAll(Orders orders) {
+	public List<E> getAll(Orders orders) {
 		try {
 			Session session = this.getSession();
 			Criteria criteria = session.createCriteria(this.persistentClass);
@@ -157,7 +157,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	@Override
-	public List<E> findAll() throws PersistenceException {
+	public List<E> getAll() throws PersistenceException {
 		try {
 			Session session = this.getSession();
 			Criteria criteria = session.createCriteria(this.persistentClass);
@@ -171,7 +171,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	@Override
-	public List<E> findByFilter(BaseFilter<E, PK> filter) {
+	public List<E> getByFilter(BaseFilter<E, PK> filter) {
 		try {
 			List<E> entities = null;
 

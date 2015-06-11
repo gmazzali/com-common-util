@@ -7,6 +7,8 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import com.common.util.domain.exception.ServiceException;
 
 /**
@@ -17,7 +19,10 @@ import com.common.util.domain.exception.ServiceException;
  * @version 1.0
  */
 public class ReflectUtil implements Serializable {
+
 	private static final long serialVersionUID = 1L;
+
+	private static final Logger LOGGER = Logger.getLogger(ReflectUtil.class);
 
 	/**
 	 * Permite recuperar los campos de una clase dada y de sus superclases.
@@ -29,6 +34,7 @@ public class ReflectUtil implements Serializable {
 	public static Map<String, Field> getAllDeclaratedFields(Class<?> clazz) {
 		Map<String, Field> fields = new HashMap<String, Field>();
 		while (clazz != null && !clazz.equals(Object.class)) {
+			LOGGER.debug("Getting the properties for class: " + clazz.getSimpleName());
 			for (Field field : clazz.getDeclaredFields()) {
 				fields.put(field.getName(), field);
 			}
@@ -50,6 +56,7 @@ public class ReflectUtil implements Serializable {
 	 */
 	public static Method getGetter(Class<?> clazz, String property) {
 		String getterName = "get" + property.substring(0, 1).toUpperCase() + property.substring(1);
+		LOGGER.debug("Getting the getter: " + getterName + " from the class: " + clazz.getSimpleName());
 		return ReflectUtil.getMethod(clazz, getterName);
 	}
 
@@ -68,6 +75,7 @@ public class ReflectUtil implements Serializable {
 	 */
 	public static Method getSetter(Class<?> clazz, String property, Class<?> classParameter) {
 		String setterName = "set" + property.substring(0, 1).toUpperCase() + property.substring(1);
+		LOGGER.debug("Getting the setter: " + setterName + " from the class: " + clazz.getSimpleName());
 		return ReflectUtil.getMethod(clazz, setterName, classParameter);
 	}
 
@@ -94,11 +102,13 @@ public class ReflectUtil implements Serializable {
 				try {
 					getMethod = ReflectUtil.getMethod(clazz.getSuperclass(), method, classParameters);
 				} catch (ServiceException ex) {
-					throw new ServiceException(ex, "Cannot find the method " + method + " for class " + clazz.getName(), "");
+					LOGGER.warn("Problem getting the method " + method + " for class " + clazz.getName(), ex);
+					throw new ServiceException(ex, "Problem getting the method " + method + " for class " + clazz.getName(), "");
 				}
 			}
 		}
 		if (getMethod == null) {
+			LOGGER.warn("Cannot find the method " + method + " for class " + clazz.getName());
 			throw new ServiceException("Cannot find the method " + method + " for class " + clazz.getName(), "");
 		}
 		return getMethod;
@@ -118,6 +128,7 @@ public class ReflectUtil implements Serializable {
 	public static <T extends Annotation> Map<String, Field> getAnnotatedField(Class<?> clazz, Class<T> annotation) {
 		Map<String, Field> fields = new HashMap<String, Field>();
 		while (clazz != null && !clazz.equals(Object.class)) {
+			LOGGER.debug("Getting the annotated properties for class: " + clazz.getSimpleName());
 			for (Field field : clazz.getDeclaredFields()) {
 				if (field.isAnnotationPresent(annotation)) {
 					fields.put(field.getName(), field);

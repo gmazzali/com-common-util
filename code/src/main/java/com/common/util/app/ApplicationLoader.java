@@ -2,7 +2,7 @@ package com.common.util.app;
 
 import java.io.Serializable;
 
-import com.common.util.business.holder.ApplicationContextLoader;
+import com.common.util.holder.ApplicationContextLoader;
 
 /**
  * La clase que nos permite arrancar el aplicativo.

@@ -13,6 +13,7 @@ import java.io.Serializable;
  *            La clase que va a contener este rango.
  */
 public class RangeType<T> implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -23,7 +24,7 @@ public class RangeType<T> implements Serializable {
 	 * El valor máximo del intervalo.
 	 */
 	private T to;
-	
+
 	/**
 	 * El constructor de un rango.
 	 */

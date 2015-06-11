@@ -1,4 +1,4 @@
-package com.common.util.business.holder;
+package com.common.util.holder;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;

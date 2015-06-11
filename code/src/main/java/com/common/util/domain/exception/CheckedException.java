@@ -16,6 +16,7 @@ import com.common.util.domain.exception.error.Errors;
  * @version 1.0
  */
 public class CheckedException extends Exception {
+
 	private static final long serialVersionUID = 1L;
 
 	/**

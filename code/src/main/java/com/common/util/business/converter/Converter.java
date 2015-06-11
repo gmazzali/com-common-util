@@ -15,6 +15,7 @@ import java.io.Serializable;
  *            La clase hacia la que vamos a convertir.
  */
 public abstract class Converter<S, T> implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	/**

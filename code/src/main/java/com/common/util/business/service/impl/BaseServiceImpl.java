@@ -30,7 +30,9 @@ import com.common.util.persistence.filter.order.Orders;
  *            La clase que corresponde al identificador de la entidad {@link E}.
  */
 public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Serializable> implements BaseService<E, PK> {
+
 	private static final long serialVersionUID = 1L;
+
 	private static final Logger log = Logger.getLogger(BaseServiceImpl.class);
 
 	/**
@@ -64,9 +66,9 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 	}
 
 	@Override
-	public List<E> findAll() {
+	public List<E> getAll() {
 		try {
-			return this.dao.findAll();
+			return this.dao.getAll();
 		} catch (Exception e) {
 			log.error("find all failed", e);
 			throw new ServiceException(e);
@@ -74,9 +76,9 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 	}
 
 	@Override
-	public List<E> findAll(Orders orders) {
+	public List<E> getAll(Orders orders) {
 		try {
-			return this.dao.findAll(orders);
+			return this.dao.getAll(orders);
 		} catch (Exception e) {
 			log.error("find all failed", e);
 			throw new ServiceException(e);
@@ -84,9 +86,9 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 	}
 
 	@Override
-	public List<E> findByFilter(BaseFilter<E, PK> filter) {
+	public List<E> getByFilter(BaseFilter<E, PK> filter) {
 		try {
-			return this.dao.findByFilter(filter);
+			return this.dao.getByFilter(filter);
 		} catch (Exception e) {
 			log.error("find by filter failed", e);
 			throw new ServiceException(e);
@@ -94,9 +96,9 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 	}
 
 	@Override
-	public E findById(PK id) {
+	public E getById(PK id) {
 		try {
-			return this.dao.findById(id);
+			return this.dao.getById(id);
 		} catch (Exception e) {
 			log.error("find by id failed", e);
 			throw new ServiceException(e);
@@ -104,10 +106,10 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 	}
 
 	@Override
-	public void save(E entity) {
+	public PK save(E entity) {
 		try {
 			this.validate(entity);
-			this.dao.save(entity);
+			return this.dao.save(entity);
 		} catch (Exception e) {
 			log.error("save failed", e);
 			throw new ServiceException(e);

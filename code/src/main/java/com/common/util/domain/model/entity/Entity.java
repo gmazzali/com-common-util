@@ -15,6 +15,7 @@ import java.io.Serializable;
  *            La clase que va a corresponder a la clave primaria de la entidad que vamos a representar.
  */
 public abstract class Entity<PK extends Serializable> implements Persistence<PK> {
+
 	private static final long serialVersionUID = 1L;
 
 	/**
