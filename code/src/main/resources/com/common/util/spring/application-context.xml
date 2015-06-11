@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:lang="http://www.springframework.org/schema/lang" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.1.xsd
+                http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+       			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+                http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+                http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<!-- ========================================================================================== -->
+	<!-- ==================== CARGAMOS LOS ARCHIVOS DE PROPIEDADES DEL SISTEMA ==================== -->
+	<!-- ========================================================================================== -->
+	<bean id="properties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<!-- EL LISTADO DE LAS UBICACIONES DE LOS ARCHIVOS DE CONFIGURACIÓN -->
+				<value>file:///${proyecto.configuration.dir}/jdbc.properties</value>
+				<value>file:///${proyecto.configuration.dir}/configuration.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- ========================================================================================= -->
+	<!-- =============== CREAMOS LA LOCALIDAD DONDE VAMOS A EJECUTAR LA APLICACIÓN =============== -->
+	<!-- ========================================================================================= -->
+	<bean id="messageLocale" class="java.util.Locale" lazy-init="false" depends-on="properties">
+		<constructor-arg index="0" value="${message.locale.languaje}" />
+		<constructor-arg index="1" value="${message.locale.country}" />
+	</bean>
+
+	<!-- =========================================================================================== -->
+	<!-- ================ CARGAMOS LOS MENSAJES QUE VAMOS A USAR DENTRO DEL SISTEMA ================ -->
+	<!-- =========================================================================================== -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="cacheSeconds" value="600" />
+		<property name="basenames">
+			<list>
+				<!-- LA UBICACIÓN DONDE TENEMOS LOS ARCHIVOS DE LOS MENSAJES -->
+				<value>file:///${proyecto.configuration.dir}/messages/messages</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Si usamos el servicio de mensajes -->
+	<bean id="messageService" class="com.common.util.business.service.impl.MessageServiceImpl" lazy-init="false" depends-on="messageSource, messageLocale">
+		<property name="resources" ref="messageSource" />
+		<property name="locale" ref="messageLocale" />
+	</bean>
+
+	<!-- Si usamos el holder de los mensajes -->
+	<bean id="holderMessage" class="com.common.util.business.holder.HolderMessage" lazy-init="false" depends-on="messageSource, messageLocale">
+		<property name="resources" ref="messageSource" />
+		<property name="locale" ref="messageLocale" />
+	</bean>
+
+	<!-- ======================================================================================= -->
+	<!-- ==================== CARGAMOS LA CONFIGURACIÓN PARA EL FORMATEADOR ==================== -->
+	<!-- ======================================================================================= -->
+	<bean id="numberLocale" class="java.util.Locale" lazy-init="false" depends-on="properties">
+		<constructor-arg index="0" value="${formatter.locale.languaje}" />
+		<constructor-arg index="1" value="${formatter.locale.country}" />
+	</bean>
+
+	<!-- O si los métodos de seteo no son estático -->
+	<bean id="formatter" class="com.common.util.tools.NumberUtil" lazy-init="false" depends-on="properties">
+		<property name="locale" ref="numberLocale" />
+	</bean>
+
+	<!-- ====================================================================================== -->
+	<!-- =================== CARGAMOS LA CONFIGURACIÓN PARA EL LOG DE LOG4J =================== -->
+	<!-- ====================================================================================== -->
+	<bean name="log4j" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetClass" value="org.springframework.util.Log4jConfigurer" />
+		<property name="targetMethod" value="initLogging" />
+		<property name="arguments">
+			<list>
+				<!-- LA UBICACIÓN DE DONDE TENEMOS EL ARCHIVO DE CONFIGURACIÓN PARA EL LOG DE LOG4J -->
+				<value>file:///${proyecto.configuration.dir}/log4j.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- ========================================================================================= -->
+	<!-- ================ CARGAMOS LOS ELEMENTOS QUE ANOTAMOS DENTRO DEL CONTEXTO ================ -->
+	<!-- ========================================================================================= -->
+	<context:annotation-config />
+	<context:component-scan base-package="com.*" />
+
+	<!-- ========================================================================================= -->
+	<!-- ==================== CARGAMOS LA CONFIGURACIÓN PARA LA BASE DE DATOS ==================== -->
+	<!-- ========================================================================================= -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" depends-on="properties">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" depends-on="dataSource">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="com.*" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${jdbc.dialect}</prop>
+				<prop key="hibernate.show_sql">${jdbc.show_sql}</prop>
+				<prop key="hibernate.format_sql">${jdbc.format_sql}</prop>
+				<prop key="hibernate.connection.pool_size">${jdbc.pool_size}</prop>
+				<prop key="hibernate.bytecode.use_reflection_optimizer">${jdbc.use_reflection_optimizer}</prop>
+				<prop key="hibernate.hbm2ddl.auto">${jdbc.hbm_to_ddl}</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- ===================================================================================== -->
+	<!-- ============ CREAMOS EL PROXY PARA LAS TRANSACCIONES A NIVEL DE SERVICIO ============ -->
+	<!-- ===================================================================================== -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<aop:aspectj-autoproxy />
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="save*" propagation="REQUIRED" read-only="false" />
+			<tx:method name="update*" propagation="REQUIRED" read-only="false" />
+			<tx:method name="remove*" propagation="REQUIRED" read-only="false" />
+			<tx:method name="delete*" propagation="REQUIRED" read-only="false" />
+			<tx:method name="execute*" propagation="REQUIRED" read-only="false" />
+			<tx:method name="*" propagation="REQUIRED" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<aop:pointcut id="baseService" expression="execution(* com.common.util.business.service.*Service (..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="baseService" />
+	</aop:config>
+
+	<!-- ======================================================================== -->
+	<!-- ============ CREAMOS EL ESCUCHADOR DE LA CARGA DEL CONTEXTO ============ -->
+	<!-- ======================================================================== -->	
+	<bean id="loadListenerContext" class="com.common.util.business.holder.ApplicationContextLoader"/>
+
+</beans>
