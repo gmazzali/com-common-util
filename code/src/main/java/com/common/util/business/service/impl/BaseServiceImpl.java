@@ -33,7 +33,7 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger log = Logger.getLogger(BaseServiceImpl.class);
+	private static final Logger LOGGER = Logger.getLogger(BaseServiceImpl.class);
 
 	/**
 	 * El DAO que permite manejar los elementos dentro de la base de datos.
@@ -50,7 +50,7 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 		try {
 			return this.dao.count();
 		} catch (Exception e) {
-			log.error("count failed", e);
+			LOGGER.error("count failed", e);
 			throw new ServiceException(e);
 		}
 	}
@@ -60,7 +60,7 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 		try {
 			return this.dao.countByFilter(filter);
 		} catch (Exception e) {
-			log.error("count by filter failed", e);
+			LOGGER.error("count by filter failed", e);
 			throw new ServiceException(e);
 		}
 	}
@@ -70,7 +70,7 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 		try {
 			return this.dao.getAll();
 		} catch (Exception e) {
-			log.error("find all failed", e);
+			LOGGER.error("find all failed", e);
 			throw new ServiceException(e);
 		}
 	}
@@ -80,7 +80,7 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 		try {
 			return this.dao.getAll(orders);
 		} catch (Exception e) {
-			log.error("find all failed", e);
+			LOGGER.error("find all failed", e);
 			throw new ServiceException(e);
 		}
 	}
@@ -90,7 +90,7 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 		try {
 			return this.dao.getByFilter(filter);
 		} catch (Exception e) {
-			log.error("find by filter failed", e);
+			LOGGER.error("find by filter failed", e);
 			throw new ServiceException(e);
 		}
 	}
@@ -100,7 +100,7 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 		try {
 			return this.dao.getById(id);
 		} catch (Exception e) {
-			log.error("find by id failed", e);
+			LOGGER.error("find by id failed", e);
 			throw new ServiceException(e);
 		}
 	}
@@ -111,7 +111,7 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 			this.validate(entity);
 			return this.dao.save(entity);
 		} catch (Exception e) {
-			log.error("save failed", e);
+			LOGGER.error("save failed", e);
 			throw new ServiceException(e);
 		}
 	}
@@ -122,7 +122,7 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 			this.validate(entity);
 			this.dao.saveOrUpdate(entity);
 		} catch (Exception e) {
-			log.error("save or update failed", e);
+			LOGGER.error("save or update failed", e);
 			throw new ServiceException(e);
 		}
 	}
@@ -133,7 +133,7 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 			this.validate(entity);
 			this.dao.update(entity);
 		} catch (Exception e) {
-			log.error("update failed", e);
+			LOGGER.error("update failed", e);
 			throw new ServiceException(e);
 		}
 	}
@@ -143,7 +143,7 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 		try {
 			this.dao.delete(entity);
 		} catch (Exception e) {
-			log.error("delete failed", e);
+			LOGGER.error("delete failed", e);
 			throw new ServiceException(e);
 		}
 	}
@@ -153,7 +153,7 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 		try {
 			this.dao.deleteById(id);
 		} catch (Exception e) {
-			log.error("delete by id failed", e);
+			LOGGER.error("delete by id failed", e);
 			throw new ServiceException(e);
 		}
 	}

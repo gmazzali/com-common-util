@@ -22,7 +22,9 @@ import com.common.util.business.tool.ReflectUtil;
  */
 @Component
 public class ConfigurableBean implements Serializable {
+
 	private static final long serialVersionUID = 1L;
+
 	private static final Logger LOGGER = Logger.getLogger(ConfigurableBean.class);
 
 	/**

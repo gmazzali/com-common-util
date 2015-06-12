@@ -1,6 +1,6 @@
 package com.common.util.business.util;
 
-import com.common.util.business.tool.date.DateUtil;
+import com.common.util.business.tool.DateUtil;
 
 /**
  * La enumeración que vamos a ocupar para definir la precisión con la que se va a manipular las fechas.

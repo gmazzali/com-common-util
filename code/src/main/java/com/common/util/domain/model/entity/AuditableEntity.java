@@ -3,7 +3,7 @@ package com.common.util.domain.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.common.util.business.tool.date.DateUtil;
+import com.common.util.business.tool.DateUtil;
 
 /**
  * La clase que representa una entidad auditable en la base de datos.

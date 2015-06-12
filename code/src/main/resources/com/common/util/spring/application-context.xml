@@ -53,7 +53,7 @@
 	</bean>
 
 	<!-- Si usamos el holder de los mensajes -->
-	<bean id="holderMessage" class="com.common.util.business.holder.HolderMessage" lazy-init="false" depends-on="messageSource, messageLocale">
+	<bean id="holderMessage" class="com.common.util.holder.HolderMessage" lazy-init="false" depends-on="messageSource, messageLocale">
 		<property name="resources" ref="messageSource" />
 		<property name="locale" ref="messageLocale" />
 	</bean>
@@ -145,6 +145,6 @@
 	<!-- ======================================================================== -->
 	<!-- ============ CREAMOS EL ESCUCHADOR DE LA CARGA DEL CONTEXTO ============ -->
 	<!-- ======================================================================== -->	
-	<bean id="loadListenerContext" class="com.common.util.business.holder.ApplicationContextLoader"/>
+	<bean id="loadListenerContext" class="com.common.util.holder.ApplicationContextLoader"/>
 
 </beans>

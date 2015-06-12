@@ -18,6 +18,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @version 1.0
  */
 public class ApplicationContextLoader implements Serializable, BeanPostProcessor, BeanFactoryPostProcessor {
+
 	private static final long serialVersionUID = 1L;
 
 	/**

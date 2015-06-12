@@ -15,6 +15,7 @@ import org.springframework.context.ApplicationContext;
  * @version 1.0
  */
 public class ApplicationContextHolder implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	/**
