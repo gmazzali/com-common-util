@@ -1,67 +1,85 @@
 package com.common.util.persistence.filter.order;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
- * La clase que permite definir el orden de los elementos que vamos a recuperar desde la base de datos.
+ * La clase que define un orden de una propiedad.
  * 
- * @see Order
+ * <ul>
+ * <li>{@link Order#ASC}</li>
+ * <li>{@link Order#DESC}</li>
+ * </ul>
  * 
- * @since 05/02/2014
+ * @since 12/06/2015
  * @author Guillermo Mazzali
  * @version 1.0
  */
 public class Orders implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * El mapa de los atributos y sus ordenes.
-	 */
-	Map<String, Order> orders;
+	private final Order order;
+
+	private final String property;
 
 	/**
-	 * El constructor por omisión de un listado de ordenes.
+	 * Permite construir un orden ascendente para la propiedad recibida.
+	 * 
+	 * @param property
+	 *            La propiedad a la que vamos a crearle el orden.
+	 * @return El orden creado.
 	 */
-	public Orders() {
+	public Orders asc(String property) {
+		return new Orders(Order.ASC, property);
+	}
+
+	/**
+	 * Permite construir un orden descendente para la propiedad recibida.
+	 * 
+	 * @param property
+	 *            La propiedad a la que vamos a crearle el orden.
+	 * @return El orden creado.
+	 */
+	public Orders desc(String property) {
+		return new Orders(Order.DESC, property);
+	}
+
+	/**
+	 * El constructor de un orden.
+	 * 
+	 * @param order
+	 *            El orden.
+	 * @param property
+	 *            El nombre de la propiedad.
+	 */
+	private Orders(Order order, String property) {
 		super();
-		this.orders = new HashMap<String, Order>();
+		this.order = order;
+		this.property = property;
+	}
+
+	@Override
+	public String toString() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(this.order).append(":").append(this.property);
+		return buffer.toString();
 	}
 
 	/**
-	 * El constructor de un listado de ordenes que recibe un atributo y el orden del mismo.
+	 * Permite recuperar el orden.
 	 * 
-	 * @param property
-	 *            El atributo que vamos a ordenar.
-	 * @param order
-	 *            El orden del atributo. Puede ser {@link Order#ASC} o {@link Order#DESC}.
+	 * @return El orden.
 	 */
-	public Orders(String property, Order order) {
-		this();
-		this.orders.put(property, order);
+	public Order getOrder() {
+		return order;
 	}
 
 	/**
-	 * Función encargada de agregar una nueva restricción de orden a las que ya tenemos.
+	 * Permite recuperar la propiedad del orden.
 	 * 
-	 * @param property
-	 *            El atributo que vamos a ordenar.
-	 * @param order
-	 *            El orden en el que se va a recuperar. Este orden puede ser {@link Order#ASC} o {@link Order#DESC}.
-	 * @return Este elemento de ordenes.
+	 * @return La propiedad del orden.
 	 */
-	public Orders addOrder(String property, Order order) {
-		this.orders.put(property, order);
-		return this;
-	}
-
-	/**
-	 * Función encargada de retornar el listado de los atributos y los ordenes el los que queremos recuperarlos.
-	 * 
-	 * @return El listado de los atributos y sus ordenes.
-	 */
-	public Map<String, Order> getOrders() {
-		return this.orders;
+	public String getProperty() {
+		return property;
 	}
 }

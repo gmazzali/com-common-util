@@ -3,7 +3,6 @@ package com.common.util.persistence.dao.impl;
 import java.io.Serializable;
 import java.util.List;
 
-import com.common.util.domain.exception.PersistenceException;
 import com.common.util.domain.model.entity.ActiveEntity;
 import com.common.util.domain.model.entity.ActivePersistence;
 import com.common.util.persistence.filter.ActiveBaseFilter;
@@ -38,18 +37,11 @@ public abstract class ActiveBaseDaoImpl<E extends ActivePersistence<PK>, PK exte
 
 	@Override
 	public Long countByFilter(BaseFilter<E, PK> filter) {
-		return super.countByFilter((ActiveBaseFilter<E, PK>) filter);
-	}
-	
-	@Override
-	public List<E> getAll() throws PersistenceException {
-		ActiveBaseFilter<E, PK> filter = new ActiveBaseFilter<E, PK>();
-		filter.setActive(Boolean.TRUE);
-		return super.getByFilter(filter);
+		return super.countByFilter(filter);
 	}
 
 	@Override
-	public List<E> getAll(Orders orders) {
+	public List<E> getAll(Orders... orders) {
 		ActiveBaseFilter<E, PK> filter = new ActiveBaseFilter<E, PK>();
 		filter.setActive(Boolean.TRUE);
 		filter.setOrders(orders);
@@ -63,7 +55,7 @@ public abstract class ActiveBaseDaoImpl<E extends ActivePersistence<PK>, PK exte
 
 	@Override
 	public List<E> getByFilter(BaseFilter<E, PK> filter) {
-		return super.getByFilter((ActiveBaseFilter<E, PK>) filter);
+		return super.getByFilter(filter);
 	}
 
 	@Override

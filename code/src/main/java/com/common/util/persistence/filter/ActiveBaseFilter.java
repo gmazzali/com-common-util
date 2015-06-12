@@ -17,6 +17,7 @@ import com.common.util.domain.model.entity.ActivePersistence;
  *            La clave que corresponde con el ID de las entidades auditables de filtrado.
  */
 public class ActiveBaseFilter<E extends ActivePersistence<PK>, PK extends Serializable> extends BaseFilter<E, PK> {
+
 	private static final long serialVersionUID = 1L;
 
 	/**

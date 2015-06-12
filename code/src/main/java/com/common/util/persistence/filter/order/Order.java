@@ -13,6 +13,7 @@ package com.common.util.persistence.filter.order;
  * @version 1.0
  */
 public enum Order {
+
 	/**
 	 * Determina un orden ascendente del atributo.
 	 */

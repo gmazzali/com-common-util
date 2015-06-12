@@ -55,12 +55,7 @@ public abstract class AuditableBaseDaoImpl<E extends AuditablePersistence<PK>, P
 	}
 
 	@Override
-	public List<E> getAll() {
-		return super.getAll();
-	}
-
-	@Override
-	public List<E> getAll(Orders orders) {
+	public List<E> getAll(Orders... orders) {
 		return super.getAll(orders);
 	}
 

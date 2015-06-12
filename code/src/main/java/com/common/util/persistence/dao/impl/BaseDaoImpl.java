@@ -3,7 +3,6 @@ package com.common.util.persistence.dao.impl;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
-import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
@@ -14,6 +13,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
+import com.common.util.business.tool.collection.ArrayUtil;
 import com.common.util.domain.exception.PersistenceException;
 import com.common.util.domain.model.RangeType;
 import com.common.util.domain.model.entity.Entity;
@@ -108,9 +108,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 			if (filter != null) {
 				Session session = this.getSession();
 				Criteria criteria = this.session.createCriteria(persistentClass);
-
 				this.addFilterRestriction(criteria, filter);
-
 				value = (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
 				this.closeSession(session);
 			} else {
@@ -137,30 +135,13 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	@Override
-	public List<E> getAll(Orders orders) {
+	public List<E> getAll(Orders... orders) {
 		try {
 			Session session = this.getSession();
 			Criteria criteria = session.createCriteria(this.persistentClass);
-
-			// Cargamos los ordenes.
-			if (orders != null && !orders.getOrders().isEmpty()) {
+			if (ArrayUtil.isNotEmpty(orders)) {
 				this.addOrders(criteria, orders);
 			}
-
-			List<E> listado = criteria.list();
-			this.closeSession(session);
-			return listado;
-		} catch (RuntimeException e) {
-			LOGGER.error("find all failed", e);
-			throw new PersistenceException(e);
-		}
-	}
-
-	@Override
-	public List<E> getAll() throws PersistenceException {
-		try {
-			Session session = this.getSession();
-			Criteria criteria = session.createCriteria(this.persistentClass);
 			List<E> listado = criteria.list();
 			this.closeSession(session);
 			return listado;
@@ -176,22 +157,17 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 			List<E> entities = null;
 
 			if (filter != null) {
-				Orders orders = filter.getOrders();
+				Orders[] orders = filter.getOrders();
 				Session session = this.getSession();
 				Criteria criteria = this.session.createCriteria(persistentClass);
-
 				this.addFilterRestriction(criteria, filter);
-
-				if (orders != null && !orders.getOrders().isEmpty()) {
+				if (ArrayUtil.isNotEmpty(orders)) {
 					this.addOrders(criteria, orders);
 				}
-
 				this.addPagination(criteria, filter);
-
 				entities = criteria.list();
 				this.closeSession(session);
 			}
-
 			return entities;
 		} catch (RuntimeException e) {
 			LOGGER.error("find by filter failed", e);
@@ -274,12 +250,10 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 				LOGGER.info("get current session");
 				this.session = this.sessionFactory.getCurrentSession();
 			} catch (RuntimeException e) {
-				LOGGER.error("find get current session", e);
+				LOGGER.error("fail get current session", e);
+				LOGGER.info("open new session");
+				this.session = this.sessionFactory.openSession();
 			}
-		}
-		if (this.session == null) {
-			LOGGER.info("open new session");
-			this.session = this.sessionFactory.openSession();
 		}
 		return this.session;
 	}
@@ -303,12 +277,12 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	 * @param orders
 	 *            Los {@link Order} de las propiedades de las entidades que queremos ordenar.
 	 */
-	protected void addOrders(Criteria criteria, Orders orders) {
-		for (Entry<String, Order> entry : orders.getOrders().entrySet()) {
-			if (Order.ASC.equals(entry.getValue())) {
-				criteria.addOrder(org.hibernate.criterion.Order.asc(entry.getKey()));
+	protected void addOrders(Criteria criteria, Orders... orders) {
+		for (Orders entry : orders) {
+			if (Order.ASC.equals(entry.getOrder())) {
+				criteria.addOrder(org.hibernate.criterion.Order.asc(entry.getProperty()));
 			} else {
-				criteria.addOrder(org.hibernate.criterion.Order.desc(entry.getKey()));
+				criteria.addOrder(org.hibernate.criterion.Order.desc(entry.getProperty()));
 			}
 		}
 	}

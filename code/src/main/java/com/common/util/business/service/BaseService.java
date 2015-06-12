@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.common.util.domain.exception.ServiceException;
+import com.common.util.domain.exception.ValidationException;
 import com.common.util.domain.model.entity.Entity;
 import com.common.util.domain.model.entity.Persistence;
 import com.common.util.persistence.dao.BaseDao;
@@ -47,10 +48,10 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * 
 	 * @param entity
 	 *            La entidad que va a corroborarse su validez.
-	 * @throws ServiceException
+	 * @throws ValidationException
 	 *             En caso de que el contenido de la entidad no sea válido dentro del sistema.
 	 */
-	public void validate(E entity) throws ServiceException;
+	public void validate(E entity) throws ValidationException;
 
 	/**
 	 * Se encarga de contar la cantidad de registros que tenemos dentro de la base de datos que corresponden a esta entidad.
@@ -95,28 +96,13 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * @see #getByFilter(BaseFilter)
 	 * 
 	 * @param orders
-	 *            Los ordenes dentro de {@link Orders} en los que queremos recuperar las entidades. Si el mismo es mulo, se recuperan si un orden en
+	 *            Los ordenes dados por {@link Orders} en los que queremos recuperar las entidades. Si el mismo es mulo, se recuperan si un orden en
 	 *            particular.
 	 * @return El listado de los elementos almacenados.
 	 * @throws ServiceException
 	 *             En caso de un problema durante la recuperación de todos las entidades desde la base de datos.
 	 */
-	public List<E> getAll(Orders orders) throws ServiceException;
-
-	/**
-	 * La función que nos permite recuperar todos las entidades del mismo tipo almacenados dentro de la base de datos.
-	 * 
-	 * @see BaseDao#getAll(Orders)
-	 * 
-	 * @see #getAll(Orders)
-	 * @see #getById(Serializable)
-	 * @see #getByFilter(BaseFilter)
-	 * 
-	 * @return El listado de los elementos almacenados.
-	 * @throws ServiceException
-	 *             En caso de un problema durante la recuperación de todos las entidades desde la base de datos.
-	 */
-	public List<E> getAll() throws ServiceException;
+	public List<E> getAll(Orders... orders) throws ServiceException;
 
 	/**
 	 * La función que nos permite recuperar todos las entidades del mismo tipo almacenados dentro de la base de datos y que cumplen un filtro
@@ -171,10 +157,12 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * @param entity
 	 *            La entidad {@link E} que vamos a almacenar.
 	 * @return El identificador de la entidad almacenada.
+	 * @throws ValidationException
+	 *             En caso de un problema de validación antes del guardado.
 	 * @throws ServiceException
 	 *             En caso de un problema durante el guardado de la entidad dentro de la base de datos.
 	 */
-	public PK save(E entity) throws ServiceException;
+	public PK save(E entity) throws ValidationException, ServiceException;
 
 	/**
 	 * La función para insertar una nueva entidad o actualizar una que ya se encuentre dentro de la base de datos.
@@ -190,10 +178,12 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * 
 	 * @param entity
 	 *            La entidad {@link E} que vamos a insertar o actualizar.
+	 * @throws ValidationException
+	 *             En caso de un problema de validación antes del guardado.
 	 * @throws ServiceException
 	 *             En caso de un problema durante la inserción o actualización de la entidad dentro de la base de datos.
 	 */
-	public void saveOrUpdate(E entity) throws ServiceException;
+	public void saveOrUpdate(E entity) throws ValidationException, ServiceException;
 
 	/**
 	 * La función para actualizar la entidad dentro de la base de datos.
@@ -209,10 +199,12 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * 
 	 * @param entity
 	 *            La entidad {@link E} que vamos a actualizar.
+	 * @throws ValidationException
+	 *             En caso de un problema de validación antes del guardado.
 	 * @throws ServiceException
 	 *             En caso de un problema durante la actualización de la entidad dentro de la base de datos.
 	 */
-	public void update(E entity) throws ServiceException;
+	public void update(E entity) throws ValidationException, ServiceException;
 
 	/**
 	 * La función para eliminar la entidad dentro de la base de datos.

@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.common.util.business.service.BaseService;
 import com.common.util.domain.exception.ServiceException;
+import com.common.util.domain.exception.ValidationException;
 import com.common.util.domain.model.entity.Persistence;
 import com.common.util.persistence.dao.BaseDao;
 import com.common.util.persistence.filter.BaseFilter;
@@ -46,7 +47,7 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 	}
 
 	@Override
-	public Long count() {
+	public Long count() throws ServiceException {
 		try {
 			return this.dao.count();
 		} catch (Exception e) {
@@ -56,7 +57,7 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 	}
 
 	@Override
-	public Long countByFilter(BaseFilter<E, PK> filter) {
+	public Long countByFilter(BaseFilter<E, PK> filter) throws ServiceException {
 		try {
 			return this.dao.countByFilter(filter);
 		} catch (Exception e) {
@@ -66,17 +67,7 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 	}
 
 	@Override
-	public List<E> getAll() {
-		try {
-			return this.dao.getAll();
-		} catch (Exception e) {
-			LOGGER.error("find all failed", e);
-			throw new ServiceException(e);
-		}
-	}
-
-	@Override
-	public List<E> getAll(Orders orders) {
+	public List<E> getAll(Orders... orders) throws ServiceException {
 		try {
 			return this.dao.getAll(orders);
 		} catch (Exception e) {
@@ -86,7 +77,7 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 	}
 
 	@Override
-	public List<E> getByFilter(BaseFilter<E, PK> filter) {
+	public List<E> getByFilter(BaseFilter<E, PK> filter) throws ServiceException {
 		try {
 			return this.dao.getByFilter(filter);
 		} catch (Exception e) {
@@ -96,7 +87,7 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 	}
 
 	@Override
-	public E getById(PK id) {
+	public E getById(PK id) throws ServiceException {
 		try {
 			return this.dao.getById(id);
 		} catch (Exception e) {
@@ -106,7 +97,7 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 	}
 
 	@Override
-	public PK save(E entity) {
+	public PK save(E entity) throws ValidationException, ServiceException {
 		try {
 			this.validate(entity);
 			return this.dao.save(entity);
@@ -117,7 +108,7 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 	}
 
 	@Override
-	public void saveOrUpdate(E entity) {
+	public void saveOrUpdate(E entity) throws ValidationException, ServiceException {
 		try {
 			this.validate(entity);
 			this.dao.saveOrUpdate(entity);
@@ -128,7 +119,7 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 	}
 
 	@Override
-	public void update(E entity) {
+	public void update(E entity) throws ValidationException, ServiceException {
 		try {
 			this.validate(entity);
 			this.dao.update(entity);
@@ -139,7 +130,7 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 	}
 
 	@Override
-	public void delete(E entity) {
+	public void delete(E entity) throws ServiceException {
 		try {
 			this.dao.delete(entity);
 		} catch (Exception e) {
@@ -149,7 +140,7 @@ public abstract class BaseServiceImpl<E extends Persistence<PK>, PK extends Seri
 	}
 
 	@Override
-	public void deleteById(PK id) {
+	public void deleteById(PK id) throws ServiceException {
 		try {
 			this.dao.deleteById(id);
 		} catch (Exception e) {

@@ -8,7 +8,6 @@ import java.io.Serializable;
 import org.apache.log4j.Logger;
 
 import com.common.util.domain.model.entity.Persistence;
-import com.common.util.persistence.filter.order.Order;
 import com.common.util.persistence.filter.order.Orders;
 
 /**
@@ -24,13 +23,15 @@ import com.common.util.persistence.filter.order.Orders;
  *            La clave que corresponde con el ID de las entidades de filtrado.
  */
 public class BaseFilter<E extends Persistence<PK>, PK extends Serializable> implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(BaseFilter.class);
+
+	private static final Logger LOGGER = Logger.getLogger(BaseFilter.class);
 
 	/**
 	 * El orden en el que se quiere recuperar la consulta.
 	 */
-	private Orders orders;
+	private Orders[] orders;
 	/**
 	 * El listado de ID que vamos a excluir de la consulta.
 	 */
@@ -49,7 +50,6 @@ public class BaseFilter<E extends Persistence<PK>, PK extends Serializable> impl
 	 */
 	public BaseFilter() {
 		super();
-		this.orders = new Orders();
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class BaseFilter<E extends Persistence<PK>, PK extends Serializable> impl
 			}
 			buffer.append(" }");
 		} catch (Exception e) {
-			log.error("fail to converte filter to string", e);
+			LOGGER.error("fail to converte filter to string", e);
 			buffer.append("Error: ").append(e.getMessage());
 		}
 		return buffer.toString();
@@ -75,7 +75,7 @@ public class BaseFilter<E extends Persistence<PK>, PK extends Serializable> impl
 	 * 
 	 * @return El listado de los ordenes en los que queremos realizar el filtrado.
 	 */
-	public Orders getOrders() {
+	public Orders[] getOrders() {
 		return orders;
 	}
 
@@ -85,30 +85,8 @@ public class BaseFilter<E extends Persistence<PK>, PK extends Serializable> impl
 	 * @param orders
 	 *            El listado de los ordenes en los que queremos realizar el filtrado.
 	 */
-	public void setOrders(Orders orders) {
+	public void setOrders(Orders... orders) {
 		this.orders = orders;
-	}
-
-	/**
-	 * Permite agregar un nuevo orden al filtrado de la consulta.
-	 * 
-	 * @param property
-	 *            La propiedad sobre la que va a ordenarse la consulta.
-	 * @param order
-	 *            El tipo de orden que vamos a utilizar.
-	 */
-	public void addOrder(String property, Order order) {
-		this.orders.addOrder(property, order);
-	}
-
-	/**
-	 * Permite agregar un nuevo orden {@link Order#ASC} al filtrado de la consulta.
-	 * 
-	 * @param property
-	 *            La propiedad sobre la que va a ordenarse de manera ascendente la consulta.
-	 */
-	public void addOrder(String property) {
-		this.addOrder(property, Order.ASC);
 	}
 
 	/**

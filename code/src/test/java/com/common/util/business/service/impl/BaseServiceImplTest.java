@@ -18,7 +18,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.common.util.domain.model.EntityTest;
 import com.common.util.persistence.dao.impl.DaoTest;
 import com.common.util.persistence.filter.FilterTest;
-import com.common.util.persistence.filter.order.Orders;
 import com.google.common.collect.Lists;
 
 /**
@@ -76,21 +75,6 @@ public class BaseServiceImplTest {
 		assertEquals(entidades, retorno);
 
 		verify(this.dao, times(1)).getAll();
-	}
-
-	@Test
-	public void testGetAllOrders() throws Exception {
-		Orders orders = mock(Orders.class);
-
-		List<EntityTest> entidades = Lists.newArrayList();
-
-		when(this.dao.getAll(orders)).thenReturn(entidades);
-
-		List<EntityTest> retorno = this.serviceTest.getAll(orders);
-		assertNotNull(retorno);
-		assertEquals(entidades, retorno);
-
-		verify(this.dao, times(1)).getAll(orders);
 	}
 
 	@Test

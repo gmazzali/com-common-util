@@ -1,6 +1,6 @@
 package com.common.util.business.service.impl;
 
-import com.common.util.domain.exception.ServiceException;
+import com.common.util.domain.exception.ValidationException;
 import com.common.util.domain.model.EntityTest;
 
 /**
@@ -15,6 +15,6 @@ public class ServiceTest extends BaseServiceImpl<EntityTest, Long> {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public void validate(EntityTest entity) throws ServiceException {
+	public void validate(EntityTest entity) throws ValidationException {
 	}
 }

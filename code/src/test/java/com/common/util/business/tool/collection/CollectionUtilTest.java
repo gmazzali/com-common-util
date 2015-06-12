@@ -232,6 +232,9 @@ public class CollectionUtilTest {
 
 		try {
 			CollectionUtil.<String> count(null, new Predicate<String>() {
+
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public boolean evaluate(String item) {
 					return false;
@@ -251,6 +254,8 @@ public class CollectionUtilTest {
 
 		Assert.assertEquals(1, CollectionUtil.<String> count(items, new Predicate<String>() {
 
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean evaluate(String item) {
 				return item == null;
@@ -258,6 +263,8 @@ public class CollectionUtilTest {
 		}));
 
 		Assert.assertEquals(2, CollectionUtil.<String> count(items, new Predicate<String>() {
+
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public boolean evaluate(String item) {
@@ -267,6 +274,8 @@ public class CollectionUtilTest {
 
 		Assert.assertEquals(3, CollectionUtil.<String> count(items, new Predicate<String>() {
 
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean evaluate(String item) {
 				return "b".equals(item);
@@ -274,6 +283,8 @@ public class CollectionUtilTest {
 		}));
 
 		Assert.assertEquals(0, CollectionUtil.<String> count(items, new Predicate<String>() {
+
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public boolean evaluate(String item) {
@@ -305,6 +316,8 @@ public class CollectionUtilTest {
 		try {
 			CollectionUtil.<String> exist(null, new Predicate<String>() {
 
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public boolean evaluate(String item) {
 					return false;
@@ -324,6 +337,8 @@ public class CollectionUtilTest {
 
 		Assert.assertEquals(true, CollectionUtil.<String> exist(items, new Predicate<String>() {
 
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean evaluate(String item) {
 				return item == null;
@@ -331,6 +346,8 @@ public class CollectionUtilTest {
 		}));
 
 		Assert.assertEquals(true, CollectionUtil.<String> exist(items, new Predicate<String>() {
+
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public boolean evaluate(String item) {
@@ -340,6 +357,8 @@ public class CollectionUtilTest {
 
 		Assert.assertEquals(true, CollectionUtil.<String> exist(items, new Predicate<String>() {
 
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean evaluate(String item) {
 				return "b".equals(item);
@@ -348,6 +367,8 @@ public class CollectionUtilTest {
 
 		Assert.assertEquals(false, CollectionUtil.<String> exist(items, new Predicate<String>() {
 
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean evaluate(String item) {
 				return "c".equals(item);
@@ -355,6 +376,8 @@ public class CollectionUtilTest {
 		}));
 
 		Assert.assertEquals(false, CollectionUtil.<String> exist(items, new Predicate<String>() {
+
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public boolean evaluate(String item) {
@@ -386,6 +409,8 @@ public class CollectionUtilTest {
 		try {
 			CollectionUtil.<String> filter(null, new Predicate<String>() {
 
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public boolean evaluate(String item) {
 					return false;
@@ -412,6 +437,8 @@ public class CollectionUtilTest {
 
 		CollectionUtil.<String> filter(items, new Predicate<String>() {
 
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean evaluate(String item) {
 				return item == null || "a".equals(item);
@@ -425,6 +452,8 @@ public class CollectionUtilTest {
 		items.addAll(bList);
 
 		CollectionUtil.<String> filter(items, new Predicate<String>() {
+
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public boolean evaluate(String item) {
@@ -458,6 +487,8 @@ public class CollectionUtilTest {
 		try {
 			CollectionUtil.<String> find(null, new Predicate<String>() {
 
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public boolean evaluate(String item) {
 					return false;
@@ -477,6 +508,8 @@ public class CollectionUtilTest {
 
 		Assert.assertEquals(null, CollectionUtil.<String> find(items, new Predicate<String>() {
 
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean evaluate(String item) {
 				return item == null;
@@ -484,6 +517,8 @@ public class CollectionUtilTest {
 		}));
 
 		Assert.assertEquals("a", CollectionUtil.<String> find(items, new Predicate<String>() {
+
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public boolean evaluate(String item) {
@@ -493,6 +528,8 @@ public class CollectionUtilTest {
 
 		Assert.assertEquals("b", CollectionUtil.<String> find(items, new Predicate<String>() {
 
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean evaluate(String item) {
 				return "b".equals(item);
@@ -500,6 +537,8 @@ public class CollectionUtilTest {
 		}));
 
 		Assert.assertEquals(null, CollectionUtil.<String> find(items, new Predicate<String>() {
+
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public boolean evaluate(String item) {
@@ -531,6 +570,8 @@ public class CollectionUtilTest {
 		try {
 			CollectionUtil.<String> select(null, new Predicate<String>() {
 
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public boolean evaluate(String item) {
 					return false;
@@ -557,6 +598,8 @@ public class CollectionUtilTest {
 
 		Assert.assertEquals(aList, CollectionUtil.<String> select(items, new Predicate<String>() {
 
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean evaluate(String item) {
 				return item == null || "a".equals(item);
@@ -564,6 +607,8 @@ public class CollectionUtilTest {
 		}));
 
 		Assert.assertEquals(bList, CollectionUtil.<String> select(items, new Predicate<String>() {
+
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public boolean evaluate(String item) {
@@ -595,6 +640,8 @@ public class CollectionUtilTest {
 		try {
 			CollectionUtil.<StringBuffer> processAll(null, new Process<StringBuffer>() {
 
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void process(StringBuffer item) {
 				}
@@ -604,6 +651,8 @@ public class CollectionUtilTest {
 		}
 
 		Process<StringBuffer> process = new Process<StringBuffer>() {
+
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void process(StringBuffer item) {
@@ -651,6 +700,8 @@ public class CollectionUtilTest {
 		try {
 			CollectionUtil.<String, Integer> transform(null, new Transformer<String, Integer>() {
 
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public Integer transform(String item) {
 					return null;
@@ -661,6 +712,8 @@ public class CollectionUtilTest {
 		}
 
 		Transformer<String, Integer> transformer = new Transformer<String, Integer>() {
+
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public Integer transform(String item) {
