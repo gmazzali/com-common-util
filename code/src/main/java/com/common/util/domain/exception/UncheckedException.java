@@ -1,8 +1,8 @@
 package com.common.util.domain.exception;
 
 import com.common.util.business.tool.StringUtil;
-import com.common.util.domain.exception.error.ErrorDetail;
-import com.common.util.domain.exception.error.Errors;
+import com.common.util.domain.model.error.ErrorDetail;
+import com.common.util.domain.model.error.Errors;
 
 /**
  * Las excepciones no chequeadas que vamos a manejar dentro del sistema.
