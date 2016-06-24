@@ -1,6 +1,8 @@
-package com.common.util.domain.model.entity;
+package com.common.util.domain.model.entity.impl;
 
 import java.io.Serializable;
+
+import com.common.util.domain.model.entity.ActivePersistence;
 
 /**
  * La clase que representa una entidad activable dentro de la base de datos para el borrado lógico de la misma.

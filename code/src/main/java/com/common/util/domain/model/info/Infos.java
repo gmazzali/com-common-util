@@ -1,11 +1,14 @@
 package com.common.util.domain.model.info;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
+
+import org.apache.commons.collections4.CollectionUtils;
 
 import com.common.util.domain.exception.CheckedException;
 import com.common.util.domain.exception.UncheckedException;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 /**
  * El conjunto de los detalles de las notificaciones no erroneas.
@@ -16,7 +19,7 @@ import com.common.util.domain.exception.UncheckedException;
  * 
  * @since 26/08/2015
  * @author Guillermo Mazzali
- * @version 1.0
+ * @version 1.1
  */
 public class Infos implements Serializable {
 
@@ -25,14 +28,7 @@ public class Infos implements Serializable {
 	/**
 	 * El listado de los detalles de las notificaciones.
 	 */
-	protected final Set<InfoDetail> infoDetails;
-
-	/**
-	 * El constructor por omisión de un conjunto de notificaciones.
-	 */
-	public Infos() {
-		this.infoDetails = new HashSet<InfoDetail>();
-	}
+	protected final List<InfoDetail> infoDetails = Lists.newArrayList();
 
 	/**
 	 * Permite retornar el listado de las notificaciones que tenemos dentro de este contenedor.
@@ -64,6 +60,18 @@ public class Infos implements Serializable {
 	}
 
 	/**
+	 * Se encarga de agregar un nuevo detalle dentro de este conjunto.
+	 * 
+	 * @param keyMessage
+	 *            La clave del mensaje del detalle de la notificación.
+	 * @param parameters
+	 *            El listado de los parámetros que vamos a utilizar para detallar la notificación.
+	 */
+	public void addInfo(String keyMessage, Object... parameters) {
+		this.infoDetails.add(new InfoDetail(keyMessage, keyMessage, parameters));
+	}
+
+	/**
 	 * Permite juntar a un conjunto de notificaciones dentro de este.
 	 * 
 	 * @param infos
@@ -81,15 +89,33 @@ public class Infos implements Serializable {
 	 * @return <i>true</i> en caso de que exista al menos una notificación dentro de este elemento, en caso contrario retorna <i>false</i>.
 	 */
 	public Boolean hasInfoDetails() {
-		return this.infoDetails.size() > 0;
+		return CollectionUtils.isNotEmpty(this.infoDetails);
 	}
 
 	/**
-	 * Se encarga de retornar el listado de detalles de notificaciones.
+	 * Retorna el listado de detalles de notificaciones.
 	 * 
 	 * @return El listado de los detalles de las notificaciones.
 	 */
-	public Set<InfoDetail> getInfoDetails() {
+	public List<InfoDetail> getInfoDetails() {
 		return this.infoDetails;
+	}
+
+	/**
+	 * Retorna el primer detalle de información dentro de este contenedor.
+	 * 
+	 * @return El primer detalle de información dentro de este contenedor, en caso de que este vacío retorna <i>null</i>.
+	 */
+	public InfoDetail getFirstInfoDetail() {
+		return Iterables.getFirst(this.infoDetails, null);
+	}
+
+	/**
+	 * Retorna el último detalle de información dentro de este contenedor.
+	 * 
+	 * @return El último detalle de información dentro de este contenedor, en caso de que este vacío retorna <i>null</i>.
+	 */
+	public InfoDetail getLastInfoDetail() {
+		return Iterables.getLast(this.infoDetails, null);
 	}
 }

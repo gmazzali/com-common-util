@@ -15,6 +15,13 @@ import java.io.Serializable;
 public interface Persistence<PK extends Serializable> extends Serializable {
 
 	/**
+	 * Se encarga de definir si la entidad es una entidad para guardar o una entidad para actualizar.
+	 * 
+	 * @return <code>true</code> en caso de que la entidad no se encuentre guardada dentro de la base de datos, en caso contrario, retorna <code>false</code>.
+	 */
+	public Boolean isNew();
+
+	/**
 	 * La función encargada de cargar el objeto identificador a este elemento.
 	 * 
 	 * @param id

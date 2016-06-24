@@ -2,6 +2,9 @@ package com.common.util.business.service;
 
 import java.io.Serializable;
 
+import com.common.util.domain.model.error.ErrorDetail;
+import com.common.util.domain.model.info.InfoDetail;
+
 /**
  * La interfaz que nos va a permitir manejar los mensajes dentro del sistema.
  * 
@@ -23,8 +26,8 @@ public interface MessageService extends Serializable {
 	public String getMessage(String key, Object... parameter);
 
 	/**
-	 * Sen encarga de leer los mensajes del sistema y retornar el mensaje dado su clave y su conjunto de parámetros. En caso de no encontrar el
-	 * mensaje dado, se retorna el mensaje que tenemos por omisión.
+	 * Sen encarga de leer los mensajes del sistema y retornar el mensaje dado su clave y su conjunto de parámetros. En caso de no encontrar el mensaje dado, se retorna el mensaje
+	 * que tenemos por omisión.
 	 * 
 	 * @param defaultMessage
 	 *            El mensaje que vamos a manejar por omisión en caso de que no se encuentra la clave recibida. Puede ser <code>null</code>.
@@ -32,8 +35,29 @@ public interface MessageService extends Serializable {
 	 *            La clave para buscar el mensaje dentro de los recursos. Puede ser <code>null</code>.
 	 * @param parameter
 	 *            Los parámetros necesarios para completar el mensaje en caso de que se requiera.
-	 * @return El mensaje correspondiente a la clave recibida. En caso de no encontrar ninguna entrada para la clave, se retorna el mensaje que
-	 *         tenemos definido por omisión.
+	 * @return El mensaje correspondiente a la clave recibida. En caso de no encontrar ninguna entrada para la clave, se retorna el mensaje que tenemos definido por omisión.
 	 */
 	public String getMessage(String defaultMessage, String key, Object... parameter);
+
+	/**
+	 * Sen encarga de leer los mensajes del sistema y retornar el mensaje dado un detalle de error. En caso de no encontrar el mensaje dado, se retorna el mensaje que tenemos por
+	 * omisión.
+	 * 
+	 * @param errorDetail
+	 *            El detalle del error que vamos a procesar para recuperar el mensaje.
+	 * @return El mensaje correspondiente al detalle de error recibido. En caso de no encontrar ninguna entrada para este detalle de error, se retorna el mensaje que tenemos
+	 *         definido por omisión.
+	 */
+	public String getMessage(ErrorDetail errorDetail);
+
+	/**
+	 * Sen encarga de leer los mensajes del sistema y retornar el mensaje dado un detalle de información. En caso de no encontrar el mensaje dado, se retorna el mensaje que tenemos
+	 * por omisión.
+	 * 
+	 * @param infoDetail
+	 *            El detalle del información que vamos a procesar para recuperar el mensaje.
+	 * @return El mensaje correspondiente al detalle de información recibido. En caso de no encontrar ninguna entrada para este detalle de información, se retorna el mensaje que
+	 *         tenemos definido por omisión.
+	 */
+	public String getMessage(InfoDetail infoDetail);
 }

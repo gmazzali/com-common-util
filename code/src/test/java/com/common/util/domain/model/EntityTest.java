@@ -1,6 +1,6 @@
 package com.common.util.domain.model;
 
-import com.common.util.domain.model.entity.Entity;
+import com.common.util.domain.model.entity.impl.Entity;
 
 /**
  * La extension para probar la clase {@link Entity}

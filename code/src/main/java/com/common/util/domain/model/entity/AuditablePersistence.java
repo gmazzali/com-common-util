@@ -19,14 +19,6 @@ import java.util.Date;
 public interface AuditablePersistence<PK extends Serializable> extends ActivePersistence<PK> {
 
 	/**
-	 * Se encarga de definir si la entidad es una entidad para guardar o una entidad para actualizar.
-	 * 
-	 * @return <code>true</code> en caso de que la entidad no se encuentre guardada dentro de la base de datos, en caso contrario, retorna
-	 *         <code>false</code>.
-	 */
-	public Boolean isNew();
-
-	/**
 	 * Permite retornar la fecha de creación de la entidad.
 	 * 
 	 * @return La fecha de creación de la entidad.

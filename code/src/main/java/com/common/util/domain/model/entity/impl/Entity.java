@@ -1,6 +1,8 @@
-package com.common.util.domain.model.entity;
+package com.common.util.domain.model.entity.impl;
 
 import java.io.Serializable;
+
+import com.common.util.domain.model.entity.Persistence;
 
 /**
  * La clase que representa una entidad que va a almacenarse en la base de datos y que tiene un objeto que lo identifica.
@@ -29,6 +31,11 @@ public abstract class Entity<PK extends Serializable> implements Persistence<PK>
 	 * El identificador de la entidad.
 	 */
 	protected PK id;
+
+	@Override
+	public Boolean isNew() {
+		return this.id == null;
+	}
 
 	@Override
 	public String toString() {

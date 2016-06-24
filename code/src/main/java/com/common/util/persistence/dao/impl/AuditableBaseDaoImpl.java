@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.common.util.business.service.DateService;
-import com.common.util.domain.model.entity.AuditableEntity;
 import com.common.util.domain.model.entity.AuditablePersistence;
+import com.common.util.domain.model.entity.impl.AuditableEntity;
 import com.common.util.persistence.filter.BaseFilter;
 import com.common.util.persistence.filter.order.Orders;
 

@@ -1,9 +1,10 @@
-package com.common.util.domain.model.entity;
+package com.common.util.domain.model.entity.impl;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.common.util.business.tool.DateUtil;
+import com.common.util.domain.model.entity.AuditablePersistence;
 
 /**
  * La clase que representa una entidad auditable en la base de datos.
@@ -54,14 +55,15 @@ public abstract class AuditableEntity<PK extends Serializable> extends ActiveEnt
 	@Override
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append(super.toString()).append(" [C: ").append(DateUtil.formatDate(this.createDate)).append(" - M: ")
-				.append(DateUtil.formatDate(this.modifyDate)).append(" - D: ").append(DateUtil.formatDate(this.deleteDate)).append("]");
+		buffer.append(super.toString());
+		buffer.append(" [C: ");
+		buffer.append(this.createDate != null ? new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(this.createDate) : "");
+		buffer.append(" - M: ");
+		buffer.append(this.modifyDate != null ? new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(this.modifyDate) : "");
+		buffer.append(" - D: ");
+		buffer.append(this.deleteDate != null ? new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(this.deleteDate) : "");
+		buffer.append("]");
 		return buffer.toString();
-	}
-
-	@Override
-	public Boolean isNew() {
-		return this.id == null;
 	}
 
 	@Override

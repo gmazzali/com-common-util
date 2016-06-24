@@ -1,12 +1,15 @@
 package com.common.util.domain.model.error;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
+
+import org.apache.commons.collections4.CollectionUtils;
 
 import com.common.util.domain.exception.CheckedException;
 import com.common.util.domain.exception.UncheckedException;
 import com.common.util.domain.model.info.Infos;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 /**
  * El conjunto de los detalles de los errores para manejarlos dentro del sistema.
@@ -18,7 +21,7 @@ import com.common.util.domain.model.info.Infos;
  * 
  * @since 05/02/2014
  * @author Guillermo Mazzali
- * @version 1.0
+ * @version 1.1
  */
 public class Errors implements Serializable {
 
@@ -27,14 +30,7 @@ public class Errors implements Serializable {
 	/**
 	 * El listado de los detalles de los errores.
 	 */
-	protected final Set<ErrorDetail> errorDetails;
-
-	/**
-	 * El constructor por omisión de un conjunto de errores.
-	 */
-	public Errors() {
-		this.errorDetails = new HashSet<ErrorDetail>();
-	}
+	protected final List<ErrorDetail> errorDetails = Lists.newArrayList();
 
 	/**
 	 * Permite retornar el listado de los errores que tenemos dentro de este contenedor.
@@ -66,6 +62,18 @@ public class Errors implements Serializable {
 	}
 
 	/**
+	 * Se encarga de agregar un nuevo detalle dentro de este conjunto.
+	 * 
+	 * @param keyMessage
+	 *            La clave del mensaje del detalle del error que tambien se va a utilizar como mensaje por omisión.
+	 * @param parameters
+	 *            El listado de los parámetros que vamos a utilizar para detallar el error.
+	 */
+	public void addError(String keyMessage, Object... parameters) {
+		this.errorDetails.add(new ErrorDetail(keyMessage, keyMessage, parameters));
+	}
+
+	/**
 	 * Permite juntar a un conjunto de errores dentro de este.
 	 * 
 	 * @param errors
@@ -82,16 +90,34 @@ public class Errors implements Serializable {
 	 * 
 	 * @return <i>true</i> en caso de que exista al menos un error dentro de este elemento, en caso contrario retorna <i>false</i>.
 	 */
-	public Boolean hasErrorsDetails() {
-		return this.errorDetails.size() > 0;
+	public Boolean hasErrors() {
+		return CollectionUtils.isNotEmpty(this.errorDetails);
 	}
 
 	/**
-	 * Se encarga de retornar el listado de detalles de errores.
+	 * Retorna el listado de detalles de errores.
 	 * 
 	 * @return El listado de los detalles de los errores.
 	 */
-	public Set<ErrorDetail> getErrorDetails() {
+	public List<ErrorDetail> getErrorDetails() {
 		return this.errorDetails;
+	}
+
+	/**
+	 * Retorna el primer detalle de error dentro de este contenedor.
+	 * 
+	 * @return El primer detalle de error dentro de este contenedor, en caso de que este vacío retorna <i>null</i>.
+	 */
+	public ErrorDetail getFirstErrorDetail() {
+		return Iterables.getFirst(this.errorDetails, null);
+	}
+
+	/**
+	 * Retorna el último detalle de error dentro de este contenedor.
+	 * 
+	 * @return El último detalle de error dentro de este contenedor, en caso de que este vacío retorna <i>null</i>.
+	 */
+	public ErrorDetail getLastErrorDetail() {
+		return Iterables.getLast(this.errorDetails, null);
 	}
 }

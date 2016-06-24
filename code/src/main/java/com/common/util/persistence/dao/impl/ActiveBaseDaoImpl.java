@@ -3,8 +3,8 @@ package com.common.util.persistence.dao.impl;
 import java.io.Serializable;
 import java.util.List;
 
-import com.common.util.domain.model.entity.ActiveEntity;
 import com.common.util.domain.model.entity.ActivePersistence;
+import com.common.util.domain.model.entity.impl.ActiveEntity;
 import com.common.util.persistence.filter.ActiveBaseFilter;
 import com.common.util.persistence.filter.BaseFilter;
 import com.common.util.persistence.filter.order.Orders;

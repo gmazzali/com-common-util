@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.common.util.domain.exception.PersistenceException;
-import com.common.util.domain.model.entity.Entity;
 import com.common.util.domain.model.entity.Persistence;
+import com.common.util.domain.model.entity.impl.Entity;
 import com.common.util.persistence.filter.BaseFilter;
 import com.common.util.persistence.filter.order.Orders;
 

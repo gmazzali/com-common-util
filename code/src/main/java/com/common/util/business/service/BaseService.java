@@ -5,8 +5,8 @@ import java.util.List;
 
 import com.common.util.domain.exception.ServiceException;
 import com.common.util.domain.exception.ValidationException;
-import com.common.util.domain.model.entity.Entity;
 import com.common.util.domain.model.entity.Persistence;
+import com.common.util.domain.model.entity.impl.Entity;
 import com.common.util.persistence.dao.BaseDao;
 import com.common.util.persistence.filter.BaseFilter;
 import com.common.util.persistence.filter.order.Orders;

@@ -1,5 +1,7 @@
 package com.common.util.business.service.impl;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Locale;
 
 import org.apache.log4j.Logger;
@@ -8,6 +10,8 @@ import org.springframework.util.StringUtils;
 
 import com.common.util.business.service.MessageService;
 import com.common.util.business.tool.StringUtil;
+import com.common.util.domain.model.error.ErrorDetail;
+import com.common.util.domain.model.info.InfoDetail;
 
 /**
  * La clase que implementa la interfaz que nos va a permitir manejar los mensajes dentro del sistema.
@@ -69,5 +73,19 @@ public class MessageServiceImpl implements MessageService {
 		} else {
 			return defaultMessage;
 		}
+	}
+
+	@Override
+	public String getMessage(ErrorDetail errorDetail) {
+		checkNotNull(errorDetail);
+		LOGGER.debug("ERROR DETAIL:" + errorDetail.toString());
+		return this.resources.getMessage(errorDetail.getKeyMessage(), errorDetail.getParameters(), errorDetail.getDefaultMessage(), this.locale);
+	}
+
+	@Override
+	public String getMessage(InfoDetail infoDetail) {
+		checkNotNull(infoDetail);
+		LOGGER.debug("INFO DETAIL:" + infoDetail.toString());
+		return this.resources.getMessage(infoDetail.getKeyMessage(), infoDetail.getParameters(), infoDetail.getDefaultMessage(), this.locale);
 	}
 }
