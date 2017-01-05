@@ -1,18 +1,17 @@
 package com.common.util.domain.exception;
 
-import com.common.util.business.tool.StringUtil;
-import com.common.util.domain.model.error.ErrorDetail;
-import com.common.util.domain.model.error.Errors;
+import org.springframework.validation.Errors;
+
+import com.common.util.domain.model.log.Log;
 
 /**
  * Las excepciones no chequeadas que vamos a manejar dentro del sistema.
  * 
  * @see CheckedException
- * @see ErrorDetail
- * @see Errors
+ * @see Log
  * 
  * @since 05/02/2014
- * @author Guillermo Mazzali
+ * @author Guillermo S. Mazzali
  * @version 1.0
  */
 public class UncheckedException extends RuntimeException {
@@ -20,16 +19,16 @@ public class UncheckedException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * El listado de los errores.
+	 * The LOGs of this exception.
 	 */
-	protected Errors errors;
+	protected Log log;
 
 	/**
-	 * El constructor de una instancia de {@link UncheckedException} que no recibe parámetros.
+	 * The default constructor.
 	 */
 	public UncheckedException() {
 		super();
-		this.errors = new Errors();
+		this.log = new Log();
 	}
 
 	/**
@@ -41,7 +40,7 @@ public class UncheckedException extends RuntimeException {
 	 */
 	public UncheckedException(Throwable cause) {
 		super(cause);
-		this.errors = new Errors();
+		this.log = new Log();
 	}
 
 	/**
@@ -50,9 +49,9 @@ public class UncheckedException extends RuntimeException {
 	 * @param errors
 	 *            El conjunto de errores que vamos a contener dentro de esta excepción.
 	 */
-	public UncheckedException(Errors errors) {
+	public UncheckedException(Log log) {
 		super();
-		this.errors = errors;
+		this.log = log;
 	}
 
 	/**
@@ -70,8 +69,8 @@ public class UncheckedException extends RuntimeException {
 	 */
 	public UncheckedException(Throwable cause, String defaultMessage, String keyMessage, Object... parameters) {
 		super(defaultMessage, cause);
-		this.errors = new Errors();
-		this.errors.addError(defaultMessage, keyMessage, parameters);
+		this.log = new Log();
+		this.log.addError(defaultMessage, keyMessage, parameters);
 	}
 
 	/**
@@ -87,8 +86,8 @@ public class UncheckedException extends RuntimeException {
 	 */
 	public UncheckedException(String defaultMessage, String keyMessage, Object... parameters) {
 		super(defaultMessage);
-		this.errors = new Errors();
-		this.errors.addError(defaultMessage, keyMessage, parameters);
+		this.log = new Log();
+		this.log.addError(defaultMessage, keyMessage, parameters);
 	}
 
 	/**
@@ -98,7 +97,7 @@ public class UncheckedException extends RuntimeException {
 	 */
 	@Override
 	public String toString() {
-		return this.errors.toString();
+		return this.log.toString();
 	}
 
 	/**
@@ -106,34 +105,7 @@ public class UncheckedException extends RuntimeException {
 	 * 
 	 * @return El conjunto de errores que tenemos dentro de esta excepción.
 	 */
-	public Errors getErrors() {
-		return this.errors;
-	}
-
-	/**
-	 * Función encargada de retornar los mensajes de errores que tenemos en este elemento.
-	 * 
-	 * @return El mensaje de los errores que tenemos dentro de esta excepción.
-	 */
-	@Override
-	public String getMessage() {
-		StringBuffer stringBuffer = new StringBuffer();
-
-		for (ErrorDetail errorDetail : this.errors.getErrorDetails()) {
-			stringBuffer.append("DEFAULT:" + errorDetail.getDefaultMessage() + "KEY: " + errorDetail.getKeyMessage() + " VALUES: {"
-					+ StringUtil.arrayToDelimitedString(errorDetail.getParameters(), ", ") + "}");
-			stringBuffer.append(this.getMessageSeparator());
-		}
-
-		return stringBuffer.toString();
-	}
-
-	/**
-	 * La función encargada de retornar el separador para convertir el listado de errores en una oración completa.
-	 * 
-	 * @return La cadena que vamos a utilizar para separar los mensajes dentro de la oración completa.
-	 */
-	protected String getMessageSeparator() {
-		return "\n";
+	public Log getLog() {
+		return log;
 	}
 }

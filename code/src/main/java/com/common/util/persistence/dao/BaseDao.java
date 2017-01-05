@@ -7,104 +7,123 @@ import com.common.util.domain.exception.PersistenceException;
 import com.common.util.domain.model.entity.Persistence;
 import com.common.util.domain.model.entity.impl.Entity;
 import com.common.util.persistence.filter.BaseFilter;
-import com.common.util.persistence.filter.order.Orders;
+import com.common.util.persistence.filter.Order;
 
 /**
- * La interfaz que define todos los métodos comunes a todos los DAOs que vamos a generar dentro de un sistema.
+ * The interface that define all the commons behavior of the DAOs.
  * 
  * @see Entity
  * @see Persistence
  * @see Serializable
  * 
  * @since 05/02/2014
- * @author Guillermo Mazzali
+ * @author Guillermo S. Mazzali
  * @version 1.0
  * 
  * @param <E>
- *            La clase que corresponde a la entidad que vamos a manipular dentro de este servicio.
+ *            The entity of this DAO.
  * @param <PK>
- *            La clase que corresponde al identificador de la entidad {@link E}.
+ *            The primary key of the entity of this DAO.
  */
 public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializable> extends Serializable {
 
 	/**
-	 * La función encargada de contar la cantidad de entidades.
+	 * Allow count all the rows in the table of the entity.
 	 * 
-	 * @see #countByFilter(BaseFilter)
+	 * @see #count(BaseFilter)
 	 * 
-	 * @return El numero de registros.
+	 * @return The amount of rows of entities.
 	 * @throws PersistenceException
-	 *             En caso de un problema durante la consulta de la cantidad de entidades.
+	 *             When something go wrong in the query.
 	 */
 	public Long count() throws PersistenceException;
 
 	/**
-	 * La función encargada de contar la cantidad de entidades que corresponden a un filtro del tipo {@link BaseFilter} que se recibe.
+	 * Allow count all the rows in the table of the entity with a filter.
 	 * 
 	 * @see BaseFilter
 	 * 
 	 * @see #count()
 	 * 
 	 * @param filter
-	 *            El filtro del tipo {@link BaseFilter} con el que vamos a realizar la consulta de la cantidad de entidades que vamos a recuperar.
-	 * @return El numero de registros que va a corresponder a la consulta con el filtro.
+	 *            The {@link BaseFilter} used to count the rows of the entities.
+	 * @return The amount of rows of entities.
 	 * @throws PersistenceException
-	 *             En caso de un problema durante la consulta de la cantidad de entidades.
+	 *             When something go wrong in the query.
 	 */
-	public Long countByFilter(BaseFilter<E, PK> filter) throws PersistenceException;
+	public Long count(BaseFilter<E, PK> filter) throws PersistenceException;
 
 	/**
-	 * La función que utilizamos para recuperar una entidad dado su identificador.
+	 * Allow retrieve an entity related with the identifier received.
 	 * 
+	 * @see #findById(Serializable)
 	 * @see #getAll()
 	 * @see #getAll(Orders)
-	 * @see #getByFilter(BaseFilter)
+	 * @see #filter(BaseFilter)
 	 * 
 	 * @param id
-	 *            El identificador de la entidad que vamos a recuperar desde la base de datos.
-	 * @return La entidad que corresponde al identificador recibido. En caso de no encontrar nada, retorna <i>NULL</i>.
+	 *            The identifier for the entity wanted.
+	 * @return The entity related with the identifier, if don't retrieve any entity this method return <i>NULL</i>.
 	 * @throws PersistenceException
-	 *             En caso de un problema durante la recuperación de la entidad desde la base de datos.
+	 *             When something go wrong in the query.
 	 */
 	public E getById(PK id) throws PersistenceException;
 
 	/**
-	 * La función que nos permite recuperar todos las entidades del mismo tipo almacenados dentro de la base de datos.
+	 * Allow retrieve an entity related with the identifier received.
 	 * 
-	 * @see Orders
-	 * 
-	 * @see #getAll()
 	 * @see #getById(Serializable)
-	 * @see #getByFilter(BaseFilter)
-	 * 
-	 * @param orders
-	 *            Los ordenes en los que queremos recuperar las entidades. Si el mismo es mulo, se recuperan si un orden en particular.
-	 * @return El listado de entidades almacenadas.
-	 * @throws PersistenceException
-	 *             En caso de un problema durante la recuperación de todos las entidades desde la base de datos.
-	 */
-	public List<E> getAll(Orders... orders) throws PersistenceException;
-
-	/**
-	 * La función que utilizamos para recuperar una entidad dado un filtro del tipo {@link BaseFilter} para la consulta.
-	 * 
-	 * @see BaseFilter
-	 * @see Orders
-	 * 
 	 * @see #getAll()
 	 * @see #getAll(Orders)
-	 * @see #getById(Serializable)
+	 * @see #filter(BaseFilter)
 	 * 
-	 * @param filter
-	 *            El filtro del tipo {@link BaseFilter} que vamos a ocupar para recuperar un listado de entidades de acuerdo a un criterio.
-	 * @return El listado de las entidades almacenadas que cumplen con la consulta recibida.
+	 * @param id
+	 *            The identifier of the entity wanted.
+	 * @return The entity related with the identifier, if don't retrieve any entity this method throw an {@link PersistenceException}.
 	 * @throws PersistenceException
-	 *             En caso de un problema durante la recuperación de las entidades desde la base de datos.
+	 *             When something go wrong in the query.
 	 */
-	public List<E> getByFilter(BaseFilter<E, PK> filter) throws PersistenceException;
+	public E findById(PK id) throws PersistenceException;
 
 	/**
-	 * La función para guardar una nueva entidad dentro de la base de datos.
+	 * Allow retrieve all the entities of the database ordered for the parameters received.
+	 * 
+	 * @see Order
+	 * 
+	 * @see #getAll()
+	 * @see #findById(Serializable)
+	 * @see #getById(Serializable)
+	 * @see #filter(BaseFilter)
+	 * 
+	 * @param orders
+	 *            The order in what we want to return the entities
+	 * @return The list of all entities sorted for the order received.
+	 * @throws PersistenceException
+	 *             When something go wrong in the query.
+	 */
+	public List<E> getAll(Order... orders) throws PersistenceException;
+
+	/**
+	 * Allow retrieve the entities of the database filtered for the {@link BaseFilter} received.
+	 * 
+	 * @see BaseFilter
+	 * @see Order
+	 * 
+	 * @see #getAll()
+	 * @see #getAll(Order)
+	 * @see #getById(Serializable)
+	 * @see #findById(Serializable)
+	 * 
+	 * @param filter
+	 *            The {@link BaseFilter} received for the query.
+	 * @return The list of all entities filtered for the filter received.
+	 * @throws PersistenceException
+	 *             When something go wrong in the query.
+	 */
+	public List<E> filter(BaseFilter<E, PK> filter) throws PersistenceException;
+
+	/**
+	 * Save a new entity in the database.
 	 * 
 	 * @see Entity
 	 * 
@@ -114,15 +133,15 @@ public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializ
 	 * @see #deleteById(Serializable)
 	 * 
 	 * @param entity
-	 *            La entidad {@link E} que vamos a almacenar.
-	 * @return El identificador {@link PK} del elemento que acabamos de guardar dentro de la base de datos.
+	 *            The entity of {@link E} that want to save in the database.
+	 * @return The identifier {@link PK} of the entity recently saved.
 	 * @throws PersistenceException
-	 *             En caso de un problema durante el guardado de la entidad dentro de la base de datos.
+	 *             When something go wrong in the query.
 	 */
 	public PK save(E entity) throws PersistenceException;
 
 	/**
-	 * La función para actualizar una entidad dentro de la base de datos.
+	 * Update an entity in the database.
 	 * 
 	 * @see Entity
 	 * 
@@ -132,14 +151,14 @@ public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializ
 	 * @see #deleteById(Serializable)
 	 * 
 	 * @param entity
-	 *            La entidad {@link E} que vamos a actualizar.
+	 *            The entity of {@link E} that want to update.
 	 * @throws PersistenceException
-	 *             En caso de un problema durante la actualización de la entidad dentro de la base de datos.
+	 *             When something go wrong in the query.
 	 */
 	public void update(E entity) throws PersistenceException;
 
 	/**
-	 * La función para insertar una nueva entidad o actualizar una que ya se encuentre dentro de la base de datos.
+	 * Save or Update an entity in the database.
 	 * 
 	 * @see Entity
 	 * 
@@ -149,14 +168,14 @@ public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializ
 	 * @see #deleteById(Serializable)
 	 * 
 	 * @param entity
-	 *            La entidad {@link E} que vamos a insertar o actualizar.
+	 *            The entity of {@link E} that want to save or update.
 	 * @throws PersistenceException
-	 *             En caso de un problema durante la inserción o actualización de la entidad dentro de la base de datos.
+	 *             When something go wrong in the query.
 	 */
 	public void saveOrUpdate(E entity) throws PersistenceException;
 
 	/**
-	 * La función para eliminar una entidad dentro de la base de datos.
+	 * Delete an entity in the database.
 	 * 
 	 * @see Entity
 	 * 
@@ -166,14 +185,14 @@ public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializ
 	 * @see #deleteById(Serializable)
 	 * 
 	 * @param entity
-	 *            La entidad {@link E} que vamos a eliminar.
+	 *            The entity of {@link E} that want to delete.
 	 * @throws PersistenceException
-	 *             En caso de un problema durante la eliminación de la entidad dentro de la base de datos.
+	 *             When something go wrong in the query.
 	 */
 	public void delete(E entity) throws PersistenceException;
 
 	/**
-	 * La función que nos permite eliminar una entidad de la base de datos solo dando su identificador.
+	 * Delete an entity in the database give its identifier.
 	 * 
 	 * @see #save(Persistence)
 	 * @see #update(Persistence)
@@ -181,9 +200,9 @@ public abstract interface BaseDao<E extends Persistence<PK>, PK extends Serializ
 	 * @see #delete(Persistence)
 	 * 
 	 * @param id
-	 *            El identificador {@link PK} de la entidad que queremos eliminar de la base de datos.
+	 *            The identifier {@link PK} of the entity that want to delete.
 	 * @throws PersistenceException
-	 *             En caso de un problema durante la eliminación de la entidad dentro de la base de datos.
+	 *             When something go wrong in the query.
 	 */
 	public void deleteById(PK id) throws PersistenceException;
 }

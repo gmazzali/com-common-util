@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jee="http://www.springframework.org/schema/jee"
-	xmlns:lang="http://www.springframework.org/schema/lang" xmlns:util="http://www.springframework.org/schema/util"
-	xmlns:context="http://www.springframework.org/schema/context"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.1.xsd
                 http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
        			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
@@ -45,7 +43,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<!-- Si usamos el servicio de mensajes -->
 	<bean id="messageService" class="com.common.util.business.service.impl.MessageServiceImpl" lazy-init="false" depends-on="messageSource, messageLocale">
 		<property name="resources" ref="messageSource" />
@@ -79,10 +77,16 @@
 		<property name="targetMethod" value="initLogging" />
 		<property name="arguments">
 			<list>
-				<!-- LA UBICACIÓN DE DONDE TENEMOS EL ARCHIVO DE CONFIGURACIÓN PARA EL LOG DE LOG4J -->
 				<value>file:///${proyecto.configuration.dir}/log4j.properties</value>
 			</list>
 		</property>
+	</bean>
+
+	<!-- =============================================================================== -->
+	<!-- =================== CARGAMOS LA CONFIGURACIÓN DE LAS FECHAS =================== -->
+	<!-- =============================================================================== -->
+	<bean name="dateService" class="com.common.util.business.service.impl.DateServiceImpl">
+		<property name="dateFormat" value="${date.format}" />
 	</bean>
 
 	<!-- ========================================================================================= -->
@@ -144,7 +148,7 @@
 
 	<!-- ======================================================================== -->
 	<!-- ============ CREAMOS EL ESCUCHADOR DE LA CARGA DEL CONTEXTO ============ -->
-	<!-- ======================================================================== -->	
-	<bean id="loadListenerContext" class="com.common.util.holder.ApplicationContextLoader"/>
+	<!-- ======================================================================== -->
+	<bean id="loadListenerContext" class="com.common.util.holder.ApplicationContextLoader" />
 
 </beans>

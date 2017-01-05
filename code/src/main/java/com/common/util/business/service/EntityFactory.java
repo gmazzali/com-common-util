@@ -3,7 +3,7 @@ package com.common.util.business.service;
 import java.io.Serializable;
 
 /**
- * Define la interfaz donde se van a poder crear nuevas entidades.
+ * Define the interface of the factory of entities.
  * 
  * @since 11/11/2014
  * @author Guillermo Mazzali
@@ -12,13 +12,15 @@ import java.io.Serializable;
 public interface EntityFactory extends Serializable {
 
 	/**
-	 * Permite crear una nueva instancia de la clase recibida.
+	 * Allow create a new instance of the class received.
 	 * 
 	 * @param clazz
-	 *            La clase de las entidades que vamos a crear una nueva entidad.
+	 *            The class received to create a new instance.
+	 * @param parameters
+	 *            The parameters for the constructors.
 	 * @param <E>
-	 *            El tipo de entidad que vamos a crear.
-	 * @return La nueva instancia de la clase creada.
+	 *            The type of the class received.
+	 * @return The new instance of the class received.
 	 */
-	public <E extends Serializable> E newInstance(Class<E> clazz);
+	public <E extends Serializable> E newInstance(Class<E> clazz, Object... parameters);
 }

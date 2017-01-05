@@ -10,14 +10,14 @@ import org.springframework.util.StringUtils;
 
 import com.common.util.business.service.MessageService;
 import com.common.util.business.tool.StringUtil;
-import com.common.util.domain.model.error.ErrorDetail;
-import com.common.util.domain.model.info.InfoDetail;
+import com.common.util.domain.model.dto.LogEntryDto;
+import com.common.util.domain.model.log.LogEntry;
 
 /**
- * La clase que implementa la interfaz que nos va a permitir manejar los mensajes dentro del sistema.
+ * The services for the messages.
  * 
  * @since 19/11/2014
- * @author Guillermo Mazzali
+ * @author Guillermo S. Mazzali
  * @version 1.0
  */
 public class MessageServiceImpl implements MessageService {
@@ -27,33 +27,13 @@ public class MessageServiceImpl implements MessageService {
 	private static final Logger LOGGER = Logger.getLogger(MessageServiceImpl.class);
 
 	/**
-	 * El conjunto de los mensaje que vamos a manejar dentro del sistema para los componentes.
+	 * The messages sources.
 	 */
 	private MessageSource resources;
 	/**
-	 * La ubicación para la que vamos a manejar los mensajes.
+	 * The current locale.
 	 */
 	private Locale locale;
-
-	/**
-	 * La función encargada de cargar el recurso desde donde vamos a leer los mensajes.
-	 * 
-	 * @param resources
-	 *            Los recursos desde donde vamos a tomar los mensajes del sistema.
-	 */
-	public void setResources(MessageSource resources) {
-		this.resources = resources;
-	}
-
-	/**
-	 * La función encargada de cargar la localidad sobre la que vamos a leer los mensajes del sistema.
-	 * 
-	 * @param locale
-	 *            La localidad sobre la que vamos a leer los mensajes.
-	 */
-	public void setLocale(Locale locale) {
-		this.locale = locale;
-	}
 
 	@Override
 	public String getMessage(String key, Object... parameter) {
@@ -76,16 +56,46 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public String getMessage(ErrorDetail errorDetail) {
-		checkNotNull(errorDetail);
-		LOGGER.debug("ERROR DETAIL:" + errorDetail.toString());
-		return this.resources.getMessage(errorDetail.getKeyMessage(), errorDetail.getParameters(), errorDetail.getDefaultMessage(), this.locale);
+	public String getMessage(Locale locale, String defaultMessage, String key, Object... parameter) {
+		LOGGER.debug("DEFAULT:" + defaultMessage + "KEY: " + key + " VALUES: {" + StringUtil.arrayToDelimitedString(parameter, ", ") + "}");
+		if (key != null) {
+			return this.resources.getMessage(key, parameter, defaultMessage, locale);
+		} else {
+			return defaultMessage;
+		}
 	}
 
 	@Override
-	public String getMessage(InfoDetail infoDetail) {
-		checkNotNull(infoDetail);
-		LOGGER.debug("INFO DETAIL:" + infoDetail.toString());
-		return this.resources.getMessage(infoDetail.getKeyMessage(), infoDetail.getParameters(), infoDetail.getDefaultMessage(), this.locale);
+	public String getMessage(LogEntryDto logEntryDto) {
+		checkNotNull(logEntryDto);
+		LOGGER.debug("ERROR DETAIL:" + logEntryDto.toString());
+		return this.resources.getMessage(logEntryDto.getKeyMessage(), logEntryDto.getParameters(), logEntryDto.getMessage(), this.locale);
+	}
+
+	@Override
+	public String getMessage(LogEntry logEntry) {
+		checkNotNull(logEntry);
+		LOGGER.debug("INFO DETAIL:" + logEntry.toString());
+		return this.resources.getMessage(logEntry.getKeyMessage(), logEntry.getParameters(), logEntry.getMessage(), this.locale);
+	}
+
+	/**
+	 * Set the messages sources.
+	 * 
+	 * @param resources
+	 *            The new messages sources.
+	 */
+	public void setResources(MessageSource resources) {
+		this.resources = resources;
+	}
+
+	/**
+	 * Set the current locale.
+	 * 
+	 * @param locale
+	 *            The current locale.
+	 */
+	public void setLocale(Locale locale) {
+		this.locale = locale;
 	}
 }

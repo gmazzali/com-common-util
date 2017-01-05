@@ -1,147 +1,300 @@
 package com.common.util.persistence.filter;
 
-import java.beans.BeanInfo;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.tuple.Pair;
 
 import com.common.util.domain.model.entity.Persistence;
-import com.common.util.persistence.filter.order.Orders;
+import com.common.util.domain.model.util.RangeType;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 /**
- * Representa un filtro para la busqueda de registros en la base de datos.
+ * Represent the base filter for the search of records in the database.
  * 
- * @since 17/03/2014
- * @author Guillermo Mazzali
+ * @since 16/11/2016
+ * @author Guillermo S. Mazzali
  * @version 1.0
  * 
  * @param <E>
- *            Las entidades que vamos a manipular con este filtro.
+ *            The entity of this filter.
  * @param <PK>
- *            La clave que corresponde con el ID de las entidades de filtrado.
+ *            The primary key of the entity of this filter.
  */
 public class BaseFilter<E extends Persistence<PK>, PK extends Serializable> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger LOGGER = Logger.getLogger(BaseFilter.class);
+	/**
+	 * The comparators for the filter.
+	 */
+	public static enum Comparator {
+		LESS, LESS_OR_EQUAL, EQUAL, NOT_EQUAL, GREATER_OR_EQUAL, GREATER, IN, BETWEEN, NULL, NOT_NULL;
+	}
 
 	/**
-	 * El orden en el que se quiere recuperar la consulta.
+	 * The list of restrictions.
 	 */
-	private Orders[] orders;
+	private Map<String, List<Pair<Comparator, Object>>> restrictions = Maps.newHashMap();
 	/**
-	 * El listado de ID que vamos a excluir de la consulta.
+	 * The list of orders.
 	 */
-	private PK[] excludeIds;
+	private List<Order> orders = Lists.newArrayList();
 	/**
-	 * El primer resultado que queremos.
+	 * The list of the excludes IDs.
+	 */
+	private List<PK> excludeIds = Lists.newArrayList();
+	/**
+	 * The position of the first element of the query.
 	 */
 	private Integer firstResult;
 	/**
-	 * La máxima cantidad de registros que vamos a recueperar.
+	 * The max size of the result.
 	 */
 	private Integer maxResult;
 
 	/**
-	 * El constructor por omisión.
+	 * Add a restriction "less" to this filter.
+	 * 
+	 * @param property
+	 *            The property to this filter.
+	 * @param value
+	 *            The value to compare the property.
 	 */
-	public BaseFilter() {
-		super();
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder buffer = new StringBuilder(getClass().getName());
-		try {
-			buffer.append(" {");
-			BeanInfo info = Introspector.getBeanInfo(getClass(), Object.class);
-			for (PropertyDescriptor pd : info.getPropertyDescriptors()) {
-				String value = String.valueOf((pd.getReadMethod() != null ? pd.getReadMethod().invoke(this) : "?"));
-				buffer.append(" [").append(pd.getName().toUpperCase()).append("=").append(value).append("]");
-			}
-			buffer.append(" }");
-		} catch (Exception e) {
-			LOGGER.error("fail to converte filter to string", e);
-			buffer.append("Error: ").append(e.getMessage());
-		}
-		return buffer.toString();
+	public void less(String property, Object value) {
+		this.addRestriction(property, Comparator.LESS, value);
 	}
 
 	/**
-	 * Retorna el listado de los ordenes en los que queremos realizar el filtrado.
+	 * Add a restriction "less or equal" to this filter.
 	 * 
-	 * @return El listado de los ordenes en los que queremos realizar el filtrado.
+	 * @param property
+	 *            The property to this filter.
+	 * @param value
+	 *            The value to compare the property.
 	 */
-	public Orders[] getOrders() {
+	public void lessOrEquals(String property, Object value) {
+		this.addRestriction(property, Comparator.LESS_OR_EQUAL, value);
+	}
+
+	/**
+	 * Add a restriction "equals" to this filter.
+	 * 
+	 * @param property
+	 *            The property to this filter.
+	 * @param value
+	 *            The value to compare the property.
+	 */
+	public void equals(String property, Object value) {
+		this.addRestriction(property, Comparator.EQUAL, value);
+	}
+
+	/**
+	 * Add a restriction "not equals" to this filter.
+	 * 
+	 * @param property
+	 *            The property to this filter.
+	 * @param value
+	 *            The value to compare the property.
+	 */
+	public void notEquals(String property, Object value) {
+		this.addRestriction(property, Comparator.NOT_EQUAL, value);
+	}
+
+	/**
+	 * Add a restriction "great or equal" to this filter.
+	 * 
+	 * @param property
+	 *            The property to this filter.
+	 * @param value
+	 *            The value to compare the property.
+	 */
+	public void greatOrEquals(String property, Object value) {
+		this.addRestriction(property, Comparator.GREATER_OR_EQUAL, value);
+	}
+
+	/**
+	 * Add a restriction "great" to this filter.
+	 * 
+	 * @param property
+	 *            The property to this filter.
+	 * @param value
+	 *            The value to compare the property.
+	 */
+	public void great(String property, Object value) {
+		this.addRestriction(property, Comparator.GREATER, value);
+	}
+
+	/**
+	 * Add a restriction "in" to this filter.
+	 * 
+	 * @param property
+	 *            The property to this filter.
+	 * @param value
+	 *            The list to compare the property.
+	 */
+	public void in(String property, Collection<?> value) {
+		this.addRestriction(property, Comparator.IN, value);
+	}
+
+	/**
+	 * Add a restriction "between" to this filter.
+	 * 
+	 * @param property
+	 *            The property to this filter.
+	 * @param value
+	 *            The range to compare the property.
+	 */
+	public void between(String property, RangeType<?> value) {
+		this.addRestriction(property, Comparator.BETWEEN, value);
+	}
+
+	/**
+	 * Add a restriction "between" to this filter.
+	 * 
+	 * @param from
+	 *            The value from.
+	 * @param to
+	 *            The value to.
+	 * @param value
+	 *            The range to compare the property.
+	 */
+	public void between(String property, Object from, Object to) {
+		this.addRestriction(property, Comparator.BETWEEN, new RangeType<Object>(from, to));
+	}
+
+	/**
+	 * Add a restriction "is null" to this filter.
+	 * 
+	 * @param property
+	 *            The property to this filter.
+	 */
+	public void isNull(String property) {
+		this.addRestriction(property, Comparator.NULL, null);
+	}
+
+	/**
+	 * Add a restriction "is not null" to this filter.
+	 * 
+	 * @param property
+	 *            The property to this filter.
+	 */
+	public void isNotNull(String property) {
+		this.addRestriction(property, Comparator.NOT_NULL, null);
+	}
+
+	/**
+	 * Add a restriction to this filter.
+	 * 
+	 * @param property
+	 *            The property to filter.
+	 * @param comparator
+	 *            The comparator of this property.
+	 * @param value
+	 *            The value to compare.
+	 */
+	private void addRestriction(String property, Comparator comparator, Object value) {
+		List<Pair<Comparator, Object>> restrictionForProperty = this.restrictions.get(property);
+		if (restrictionForProperty == null) {
+			restrictionForProperty = Lists.newArrayList();
+			this.restrictions.put(property, restrictionForProperty);
+		}
+		restrictionForProperty.add(Pair.of(comparator, value));
+	}
+
+	/**
+	 * Retrieve the set of restrictions of this filter.
+	 * 
+	 * @return The set of restrictions.
+	 */
+	public Map<String, List<Pair<Comparator, Object>>> getRestrictions() {
+		return restrictions;
+	}
+
+	/**
+	 * Retrieve the list of orders.
+	 * 
+	 * @return The list of orders.
+	 */
+	public List<Order> getOrders() {
 		return orders;
 	}
 
 	/**
-	 * Carga el listado de los ordenes en los que queremos realizar el filtrado.
+	 * Allow add some orders to the filter.
 	 * 
-	 * @param orders
-	 *            El listado de los ordenes en los que queremos realizar el filtrado.
+	 * @param order
+	 *            The new orders for the filter.
 	 */
-	public void setOrders(Orders... orders) {
-		this.orders = orders;
+	public void addOrder(Order... newOrders) {
+		if (ArrayUtils.isNotEmpty(newOrders)) {
+			for (Order order : newOrders) {
+				this.orders.add(order);
+			}
+		}
 	}
 
 	/**
-	 * Retorna el listado de los ID que excluimos de la consulta.
+	 * Retrieve the excludes IDs.
 	 * 
-	 * @return El listado de los ID que excluimos de la consulta.
+	 * @return The excludes IDs.
 	 */
-	public PK[] getExcludeIds() {
+	public List<PK> getExcludeIds() {
 		return excludeIds;
 	}
 
 	/**
-	 * Carga el listado de los ID que excluimos de la consulta.
+	 * Allow add some IDs to exclude to the filter.
 	 * 
-	 * @param excludeIds
-	 *            El listado de los ID que excluimos de la consulta.
+	 * @param order
+	 *            The IDs to exclude to the filter.
 	 */
 	@SuppressWarnings("unchecked")
-	public void setExcludeIds(PK... excludeIds) {
-		this.excludeIds = excludeIds;
+	public void addExcludeIds(PK... excludeIds) {
+		if (ArrayUtils.isNotEmpty(excludeIds)) {
+			for (PK pk : excludeIds) {
+				this.excludeIds.add(pk);
+			}
+		}
 	}
 
 	/**
-	 * Retorna el primer registro que queremos recuperar de la consulta.
+	 * Retrieve the position of the first element of the query.
 	 * 
-	 * @return El primer registro que queremos recuperar.
+	 * @return The position of the first element of the query.
 	 */
 	public Integer getFirstResult() {
 		return firstResult;
 	}
 
 	/**
-	 * Carga el primer registro que queremos recuperar de la consulta.
+	 * Set the position of the first element of the query.
 	 * 
 	 * @param firstResult
-	 *            El primer registro que queremos recuperar.
+	 *            The position of the first element of the query.
 	 */
 	public void setFirstResult(Integer firstResult) {
 		this.firstResult = firstResult;
 	}
 
 	/**
-	 * Retorna la cantidad máxima de registros que queremos recuperar de la consulta.
+	 * Retrieve the max size of the result.
 	 * 
-	 * @return La cantidad máxima de registros que queremos recuperar de la consulta.
+	 * @return The max size of the result.
 	 */
 	public Integer getMaxResult() {
 		return maxResult;
 	}
 
 	/**
-	 * Carga la cantidad máxima de registros que queremos recuperar de la consulta.
+	 * Set the position of the max size of the result.
 	 * 
 	 * @param maxResult
-	 *            La cantidad máxima de registros que queremos recuperar de la consulta.
+	 *            The max size of the result.
 	 */
 	public void setMaxResult(Integer maxResult) {
 		this.maxResult = maxResult;

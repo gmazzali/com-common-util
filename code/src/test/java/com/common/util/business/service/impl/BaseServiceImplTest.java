@@ -55,13 +55,13 @@ public class BaseServiceImplTest {
 
 		FilterTest filterTest = mock(FilterTest.class);
 
-		when(this.dao.countByFilter(filterTest)).thenReturn(cantidad);
+		when(this.dao.count(filterTest)).thenReturn(cantidad);
 
-		Long retorno = this.serviceTest.countByFilter(filterTest);
+		Long retorno = this.serviceTest.count(filterTest);
 		assertNotNull(retorno);
 		assertEquals(cantidad, retorno);
 
-		verify(this.dao, times(1)).countByFilter(filterTest);
+		verify(this.dao, times(1)).count(filterTest);
 	}
 
 	@Test
@@ -78,19 +78,19 @@ public class BaseServiceImplTest {
 	}
 
 	@Test
-	public void testGetByFilter() throws Exception {
-		FilterTest filterTest = mock(FilterTest.class);
-
-		List<EntityTest> entidades = Lists.newArrayList();
-
-		when(this.dao.getByFilter(filterTest)).thenReturn(entidades);
-
-		List<EntityTest> retorno = this.serviceTest.getByFilter(filterTest);
-		assertNotNull(retorno);
-		assertEquals(entidades, retorno);
-
-		verify(this.dao, times(1)).getByFilter(filterTest);
-	}
+		public void testFilter() throws Exception {
+			FilterTest filterTest = mock(FilterTest.class);
+	
+			List<EntityTest> entidades = Lists.newArrayList();
+	
+			when(this.dao.filter(filterTest)).thenReturn(entidades);
+	
+			List<EntityTest> retorno = this.serviceTest.filter(filterTest);
+			assertNotNull(retorno);
+			assertEquals(entidades, retorno);
+	
+			verify(this.dao, times(1)).filter(filterTest);
+		}
 
 	@Test
 	public void testGetById() throws Exception {

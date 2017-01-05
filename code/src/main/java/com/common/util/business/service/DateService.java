@@ -8,18 +8,18 @@ import com.common.util.business.tool.VerifierUtil;
 import com.common.util.business.util.DatePrecisionEnum;
 
 /**
- * Define la interfaz donde se van a poder obtener la fecha actual.
+ * Define the interface to manipulates the dates.
  * 
  * @since 11/11/2014
- * @author Guillermo Mazzali
+ * @author Guillermo S. Mazzali
  * @version 1.0
  */
 public interface DateService extends Serializable {
 
 	/**
-	 * Permite recuperar la fecha actual del sistema.
+	 * Return the current date.
 	 * 
-	 * @return La fecha actual del sistema.
+	 * @return The current date.
 	 */
 	public Date getCurrentDate();
 

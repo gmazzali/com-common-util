@@ -9,10 +9,10 @@ import com.common.util.domain.model.entity.Persistence;
 import com.common.util.domain.model.entity.impl.Entity;
 import com.common.util.persistence.dao.BaseDao;
 import com.common.util.persistence.filter.BaseFilter;
-import com.common.util.persistence.filter.order.Orders;
+import com.common.util.persistence.filter.Order;
 
 /**
- * La interfaz que permite establecer un servicio para un elemento genérico junto al DAO correspondiente a este.
+ * The interface that define all the commons behavior of the Services.
  * 
  * @see BaseFilter
  * @see Entity
@@ -23,174 +23,145 @@ import com.common.util.persistence.filter.order.Orders;
  * @see BaseDao
  * 
  * @since 05/02/2014
- * @author Guillermo Mazzali
+ * @author Guillermo S. Mazzali
  * @version 1.0
  * 
  * @param <E>
- *            La clase que corresponde a la entidad que vamos a manipular dentro de este servicio.
+ *            The entity of this filter.
  * @param <PK>
- *            La clase que corresponde al identificador de la entidad {@link E}.
+ *            The primary key of the entity of this Service.
  */
 public interface BaseService<E extends Persistence<PK>, PK extends Serializable> extends Serializable {
 
 	/**
-	 * LPermite cargar el {@link BaseDao} al servicio del elemento al que vamos a prestar los servicios de este elemento.
-	 * 
-	 * @see BaseDao
-	 * 
-	 * @param dao
-	 *            El {@link BaseDao} que nos va a permitir acceder a la base de datos.
-	 */
-	public void setDao(BaseDao<E, PK> dao);
-
-	/**
-	 * Permite validar el contenido de la entidad antes de almacenarlo en la base de datos o de ocuparlo en el sistema.
+	 * Allow validated an entity.
 	 * 
 	 * @param entity
-	 *            La entidad que va a corroborarse su validez.
+	 *            The entity who will be validated.
 	 * @throws ValidationException
-	 *             En caso de que el contenido de la entidad no sea válido dentro del sistema.
+	 *             When something is invalid in the entity.
 	 */
 	public void validate(E entity) throws ValidationException;
 
 	/**
-	 * Se encarga de contar la cantidad de registros que tenemos dentro de la base de datos que corresponden a esta entidad.
+	 * Allow count all the rows in the table of the entity.
 	 * 
-	 * @see BaseDao#count()
+	 * @see #count(BaseFilter)
 	 * 
-	 * @see #countByFilter(BaseFilter)
-	 * 
-	 * @return El número de registros que tenemos almacenados dentro de la base de datos.
+	 * @return The amount of rows of entities.
 	 * @throws ServiceException
-	 *             En caso de que ocurra un error a la hora de contar las entidades dentro de la base de datos.
+	 *             When something go wrong.
 	 */
 	public Long count() throws ServiceException;
 
 	/**
-	 * Se encarga de contar la cantidad de registros que tenemos dentro de la base de datos que corresponden a esta entidad y que cumplen con la
-	 * condición dada en el filtro {@link BaseFilter} recibido.
+	 * Allow count all the rows in the table of the entity with a filter.
 	 * 
 	 * @see BaseFilter
-	 * 
-	 * @see BaseDao#countByFilter(BaseFilter)
 	 * 
 	 * @see #count()
 	 * 
 	 * @param filter
-	 *            El filtro {@link BaseFilter} para realizar la cuenta de registro dentro de la base de datos.
-	 * @return El número de registros que tenemos almacenados dentro de la base de datos y que corresponden con el filtro recibido.
+	 *            The {@link BaseFilter} used to count the rows of the entities.
+	 * @return The amount of rows of entities.
 	 * @throws ServiceException
-	 *             En caso de que ocurra un error a la hora de contar filas dentro de la base de datos.
+	 *             When something go wrong.
 	 */
-	public Long countByFilter(BaseFilter<E, PK> filter) throws ServiceException;
+	public Long count(BaseFilter<E, PK> filter) throws ServiceException;
 
 	/**
-	 * La función que nos permite recuperar todos las entidades del mismo tipo almacenados dentro de la base de datos.
+	 * Allow retrieve an entity related with the identifier received.
 	 * 
-	 * @see Orders
-	 * 
-	 * @see BaseDao#getAll(Orders)
-	 * 
-	 * @see #getAll()
-	 * @see #getById(Serializable)
-	 * @see #getByFilter(BaseFilter)
-	 * 
-	 * @param orders
-	 *            Los ordenes dados por {@link Orders} en los que queremos recuperar las entidades. Si el mismo es mulo, se recuperan si un orden en
-	 *            particular.
-	 * @return El listado de los elementos almacenados.
-	 * @throws ServiceException
-	 *             En caso de un problema durante la recuperación de todos las entidades desde la base de datos.
-	 */
-	public List<E> getAll(Orders... orders) throws ServiceException;
-
-	/**
-	 * La función que nos permite recuperar todos las entidades del mismo tipo almacenados dentro de la base de datos y que cumplen un filtro
-	 * {@link BaseFilter} recibido.
-	 * 
-	 * @see BaseFilter
-	 * @see Orders
-	 * 
-	 * @see BaseDao#getByFilter(BaseFilter)
-	 * 
+	 * @see #findById(Serializable)
 	 * @see #getAll()
 	 * @see #getAll(Orders)
-	 * @see #getById(Serializable)
-	 * 
-	 * @param filter
-	 *            El filtro {@link BaseFilter} para realizar la consulta de registro dentro de la base de datos.
-	 * @return El listado de las entidades almacenados.
-	 * @throws ServiceException
-	 *             En caso de un problema durante la recuperación de todos las entidades desde la base de datos.
-	 */
-	public List<E> getByFilter(BaseFilter<E, PK> filter) throws ServiceException;
-
-	/**
-	 * La función que utilizamos para recuperar una entidad dado su identificador.
-	 * 
-	 * @see BaseDao#getById(Serializable)
-	 * 
-	 * @see #getAll()
-	 * @see #getAll(Orders)
-	 * @see #getByFilter(BaseFilter)
+	 * @see #filter(BaseFilter)
 	 * 
 	 * @param id
-	 *            El identificador {@link PK} de la entidad que vamos a recuperar desde la base de datos.
-	 * @return La entidad {@link E} que corresponde al identificador recibido. En caso de no encontrar nada, retorna un <code>null</code>.
+	 *            The identifier for the entity wanted.
+	 * @return The entity related with the identifier, if don't retrieve any entity this method return <i>NULL</i>.
 	 * @throws ServiceException
-	 *             En caso de un problema durante la recuperación de la entidad desde la base de datos.
+	 *             When something go wrong.
 	 */
 	public E getById(PK id) throws ServiceException;
 
 	/**
-	 * La función para guardar la entidad dentro de la base de datos.
+	 * Allow retrieve an entity related with the identifier received.
+	 * 
+	 * @see #getById(Serializable)
+	 * @see #getAll()
+	 * @see #getAll(Orders)
+	 * @see #filter(BaseFilter)
+	 * 
+	 * @param id
+	 *            The identifier of the entity wanted.
+	 * @return The entity related with the identifier, if don't retrieve any entity this method throw an {@link ServiceException}.
+	 * @throws ServiceException
+	 *             When something go wrong.
+	 */
+	public E findById(PK id) throws ServiceException;
+
+	/**
+	 * Allow retrieve all the entities of the database ordered for the parameters received.
+	 * 
+	 * @see Order
+	 * 
+	 * @see #getAll()
+	 * @see #findById(Serializable)
+	 * @see #getById(Serializable)
+	 * @see #filter(BaseFilter)
+	 * 
+	 * @param orders
+	 *            The order in what we want to return the entities
+	 * @return The list of all entities sorted for the order received.
+	 * @throws ServiceException
+	 *             When something go wrong.
+	 */
+	public List<E> getAll(Order... orders) throws ServiceException;
+
+	/**
+	 * Allow retrieve the entities of the database filtered for the {@link BaseFilter} received.
+	 * 
+	 * @see BaseFilter
+	 * @see Order
+	 * 
+	 * @see #getAll()
+	 * @see #getAll(Order)
+	 * @see #getById(Serializable)
+	 * @see #findById(Serializable)
+	 * 
+	 * @param filter
+	 *            The {@link BaseFilter} received for the query.
+	 * @return The list of all entities filtered for the filter received.
+	 * @throws ServiceException
+	 *             When something go wrong.
+	 */
+	public List<E> filter(BaseFilter<E, PK> filter) throws ServiceException;
+
+	/**
+	 * Save a new entity in the database.
 	 * 
 	 * @see Entity
 	 * 
-	 * @see BaseDao#save(Persistence)
-	 * 
-	 * @see #update(Persistence)
 	 * @see #saveOrUpdate(Persistence)
+	 * @see #update(Persistence)
 	 * @see #delete(Persistence)
 	 * @see #deleteById(Serializable)
 	 * 
 	 * @param entity
-	 *            La entidad {@link E} que vamos a almacenar.
-	 * @return El identificador de la entidad almacenada.
+	 *            The entity of {@link E} that want to save in the database.
+	 * @return The identifier {@link PK} of the entity recently saved.
 	 * @throws ValidationException
-	 *             En caso de un problema de validación antes del guardado.
+	 *             When something is invalid in the entity.
 	 * @throws ServiceException
-	 *             En caso de un problema durante el guardado de la entidad dentro de la base de datos.
+	 *             When something go wrong.
 	 */
 	public PK save(E entity) throws ValidationException, ServiceException;
 
 	/**
-	 * La función para insertar una nueva entidad o actualizar una que ya se encuentre dentro de la base de datos.
+	 * Update an entity in the database.
 	 * 
 	 * @see Entity
-	 * 
-	 * @see BaseDao#saveOrUpdate(Persistence)
-	 * 
-	 * @see #save(Persistence)
-	 * @see #update(Persistence)
-	 * @see #delete(Persistence)
-	 * @see #deleteById(Serializable)
-	 * 
-	 * @param entity
-	 *            La entidad {@link E} que vamos a insertar o actualizar.
-	 * @throws ValidationException
-	 *             En caso de un problema de validación antes del guardado.
-	 * @throws ServiceException
-	 *             En caso de un problema durante la inserción o actualización de la entidad dentro de la base de datos.
-	 */
-	public void saveOrUpdate(E entity) throws ValidationException, ServiceException;
-
-	/**
-	 * La función para actualizar la entidad dentro de la base de datos.
-	 * 
-	 * @see Entity
-	 * 
-	 * @see BaseDao#update(Persistence)
 	 * 
 	 * @see #save(Persistence)
 	 * @see #saveOrUpdate(Persistence)
@@ -198,20 +169,37 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * @see #deleteById(Serializable)
 	 * 
 	 * @param entity
-	 *            La entidad {@link E} que vamos a actualizar.
+	 *            The entity of {@link E} that want to update.
 	 * @throws ValidationException
-	 *             En caso de un problema de validación antes del guardado.
+	 *             When something is invalid in the entity.
 	 * @throws ServiceException
-	 *             En caso de un problema durante la actualización de la entidad dentro de la base de datos.
+	 *             When something go wrong.
 	 */
 	public void update(E entity) throws ValidationException, ServiceException;
 
 	/**
-	 * La función para eliminar la entidad dentro de la base de datos.
+	 * Save or Update an entity in the database.
 	 * 
 	 * @see Entity
 	 * 
-	 * @see BaseDao#delete(Persistence)
+	 * @see #save(Persistence)
+	 * @see #update(Persistence)
+	 * @see #delete(Persistence)
+	 * @see #deleteById(Serializable)
+	 * 
+	 * @param entity
+	 *            The entity of {@link E} that want to save or update.
+	 * @throws ValidationException
+	 *             When something is invalid in the entity.
+	 * @throws ServiceException
+	 *             When something go wrong.
+	 */
+	public void saveOrUpdate(E entity) throws ValidationException, ServiceException;
+
+	/**
+	 * Delete an entity in the database.
+	 * 
+	 * @see Entity
 	 * 
 	 * @see #save(Persistence)
 	 * @see #update(Persistence)
@@ -219,16 +207,14 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * @see #deleteById(Serializable)
 	 * 
 	 * @param entity
-	 *            La entidad {@link E} que vamos a eliminar.
+	 *            The entity of {@link E} that want to delete.
 	 * @throws ServiceException
-	 *             En caso de un problema durante la eliminación de la entidad dentro de la base de datos.
+	 *             When something go wrong.
 	 */
 	public void delete(E entity) throws ServiceException;
 
 	/**
-	 * La función para eliminar la entidad dentro de la base de datos de acuerdo a su identificador.
-	 * 
-	 * @see BaseDao#deleteById(Serializable)
+	 * Delete an entity in the database give its identifier.
 	 * 
 	 * @see #save(Persistence)
 	 * @see #update(Persistence)
@@ -236,9 +222,9 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * @see #delete(Persistence)
 	 * 
 	 * @param id
-	 *            El identificador {@link PK} de la entidad que queremos eliminar de la base de datos.
+	 *            The identifier {@link PK} of the entity that want to delete.
 	 * @throws ServiceException
-	 *             En caso de un problema durante la eliminación de la entidad dentro de la base de datos.
+	 *             When something go wrong.
 	 */
 	public void deleteById(PK id) throws ServiceException;
 }

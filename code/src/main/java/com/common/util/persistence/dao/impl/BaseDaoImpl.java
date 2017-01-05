@@ -2,11 +2,14 @@ package com.common.util.persistence.dao.impl;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
@@ -15,49 +18,52 @@ import org.hibernate.criterion.Restrictions;
 
 import com.common.util.business.tool.collection.ArrayUtil;
 import com.common.util.domain.exception.PersistenceException;
-import com.common.util.domain.model.RangeType;
 import com.common.util.domain.model.entity.Persistence;
 import com.common.util.domain.model.entity.impl.Entity;
+import com.common.util.domain.model.util.RangeType;
 import com.common.util.persistence.dao.BaseDao;
 import com.common.util.persistence.filter.BaseFilter;
-import com.common.util.persistence.filter.order.Order;
-import com.common.util.persistence.filter.order.Orders;
+import com.common.util.persistence.filter.BaseFilter.Comparator;
+import com.common.util.persistence.filter.Order;
+import com.google.common.collect.Lists;
 
 /**
- * La clase que implementa la interfaz {@link BaseDao} para acceder a una base de datos desde el framework Hibernate.
+ * The implementation of the interface that define all the commons behavior of the DAOs.
  * 
- * @see BaseDao
+ * @see Entity
+ * @see Persistence
+ * @see Serializable
  * 
  * @since 05/02/2014
- * @author Guillermo Mazzali
- * @version 1.1
+ * @author Guillermo S. Mazzali
+ * @version 1.0
  * 
  * @param <E>
- *            La clase que corresponde a la entidad que vamos a persistir dentro de la base de datos.
+ *            The entity of this DAO.
  * @param <PK>
- *            La clase que corresponde al identificador de la entidad {@link E}.
+ *            The primary key of the entity of this DAO.
  */
-@SuppressWarnings("unchecked")
 public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializable> implements BaseDao<E, PK> {
+
 	private static final long serialVersionUID = 1L;
+
 	private static final Logger LOGGER = Logger.getLogger(BaseDaoImpl.class);
 
 	/**
-	 * La clase que persistimos dentro de la base de datos.
+	 * The persistent class.
 	 */
 	private final Class<?> persistentClass;
 	/**
-	 * La {@link SessionFactory} que vamos a utilizar para acceder a la base de datos.
+	 * The {@link SessionFactory} used to communicated with the database.
 	 */
 	private SessionFactory sessionFactory;
 	/**
-	 * La {@link Session} que vamos a ocupar dentro de este DAO.
+	 * The {@link Session} used in this DAO.
 	 */
 	private Session session;
 
 	/**
-	 * El constructor de un elemento que nos permite manejar todos los DAOs que van a utilizar {@link Hibernate} como framework de acceso a la base de
-	 * datos.
+	 * The default constructor.
 	 */
 	public BaseDaoImpl() {
 		try {
@@ -69,26 +75,17 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	/**
-	 * Función encargada de cargar la {@link SessionFactory} del dao genérico.
+	 * Allow set the {@link SessionFactory} for this DAO.
 	 * 
 	 * @param sessionFactory
-	 *            La {@link SessionFactory} conectada a la base de datos.
+	 *            The {@link SessionFactory} already connect to the database.
 	 */
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
 
-	/**
-	 * Permite retornar la clase a la que estamos haciendo persistencia.
-	 * 
-	 * @return La clase que estamos manipualndo dentro de este Dao.
-	 */
-	public Class<?> getPersistentClass() {
-		return this.persistentClass;
-	}
-
 	@Override
-	public Long count() {
+	public Long count() throws PersistenceException {
 		try {
 			Session session = this.getSession();
 			Criteria criteria = session.createCriteria(this.persistentClass);
@@ -102,13 +99,14 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	@Override
-	public Long countByFilter(BaseFilter<E, PK> filter) {
+	public Long count(BaseFilter<E, PK> filter) throws PersistenceException {
 		try {
 			Long value = null;
 			if (filter != null) {
 				Session session = this.getSession();
-				Criteria criteria = this.session.createCriteria(persistentClass);
-				this.addFilterRestriction(criteria, filter);
+				DetachedCriteria detachedCriteria = DetachedCriteria.forClass(this.persistentClass);
+				this.addFilterRestriction(detachedCriteria, filter);
+				Criteria criteria = detachedCriteria.getExecutableCriteria(this.getSession());
 				value = (Long) criteria.setProjection(Projections.rowCount()).uniqueResult();
 				this.closeSession(session);
 			} else {
@@ -122,10 +120,25 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	@Override
-	public E getById(PK id) {
+	@SuppressWarnings("unchecked")
+	public E getById(PK id) throws PersistenceException {
 		try {
 			Session session = this.getSession();
 			E entity = (E) session.get(this.persistentClass, id);
+			this.closeSession(session);
+			return entity;
+		} catch (RuntimeException e) {
+			LOGGER.error("get by id failed", e);
+			throw new PersistenceException(e);
+		}
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public E findById(PK id) throws PersistenceException {
+		try {
+			Session session = this.getSession();
+			E entity = (E) session.load(this.persistentClass, id);
 			this.closeSession(session);
 			return entity;
 		} catch (RuntimeException e) {
@@ -135,13 +148,15 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	@Override
-	public List<E> getAll(Orders... orders) {
+	@SuppressWarnings("unchecked")
+	public List<E> getAll(Order... orders) throws PersistenceException {
 		try {
 			Session session = this.getSession();
-			Criteria criteria = session.createCriteria(this.persistentClass);
+			DetachedCriteria detachedCriteria = DetachedCriteria.forClass(this.persistentClass);
 			if (ArrayUtil.isNotEmpty(orders)) {
-				this.addOrders(criteria, orders);
+				this.addOrders(detachedCriteria, Lists.newArrayList(orders));
 			}
+			Criteria criteria = detachedCriteria.getExecutableCriteria(this.getSession());
 			List<E> listado = criteria.list();
 			this.closeSession(session);
 			return listado;
@@ -152,18 +167,19 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	@Override
-	public List<E> getByFilter(BaseFilter<E, PK> filter) {
+	@SuppressWarnings("unchecked")
+	public List<E> filter(BaseFilter<E, PK> filter) throws PersistenceException {
 		try {
 			List<E> entities = null;
-
 			if (filter != null) {
-				Orders[] orders = filter.getOrders();
+				List<Order> orders = filter.getOrders();
 				Session session = this.getSession();
-				Criteria criteria = this.session.createCriteria(persistentClass);
-				this.addFilterRestriction(criteria, filter);
-				if (ArrayUtil.isNotEmpty(orders)) {
-					this.addOrders(criteria, orders);
+				DetachedCriteria detachedCriteria = DetachedCriteria.forClass(this.persistentClass);
+				this.addFilterRestriction(detachedCriteria, filter);
+				if (CollectionUtils.isNotEmpty(orders)) {
+					this.addOrders(detachedCriteria, orders);
 				}
+				Criteria criteria = detachedCriteria.getExecutableCriteria(this.getSession());
 				this.addPagination(criteria, filter);
 				entities = criteria.list();
 				this.closeSession(session);
@@ -176,7 +192,8 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	@Override
-	public PK save(E entity) {
+	@SuppressWarnings("unchecked")
+	public PK save(E entity) throws PersistenceException {
 		try {
 			Session session = this.getSession();
 			PK pk = (PK) session.save(entity);
@@ -189,7 +206,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	@Override
-	public void update(E entity) {
+	public void update(E entity) throws PersistenceException {
 		try {
 			Session session = this.getSession();
 			session.update(entity);
@@ -201,7 +218,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	@Override
-	public void saveOrUpdate(E entity) {
+	public void saveOrUpdate(E entity) throws PersistenceException {
 		try {
 			Session session = this.getSession();
 			session.saveOrUpdate(entity);
@@ -213,7 +230,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	@Override
-	public void delete(E entity) {
+	public void delete(E entity) throws PersistenceException {
 		try {
 			Session session = this.getSession();
 			session.delete(entity);
@@ -225,7 +242,8 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	@Override
-	public void deleteById(PK id) {
+	@SuppressWarnings("unchecked")
+	public void deleteById(PK id) throws PersistenceException {
 		try {
 			Session session = this.getSession();
 			E entity = (E) session.load(this.persistentClass, id);
@@ -238,11 +256,11 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	/**
-	 * Función que permite crear o recuperar una {@link Session} a partir de {@link SessionFactory}
+	 * Allow create or return the {@link Session} from the {@link SessionFactory}
 	 * 
 	 * @see #closeSession(Session)
 	 * 
-	 * @return La {@link Session} que vamos a ocupar para acceder a la base de datos.
+	 * @return The {@link Session} to used inside this DAO.
 	 */
 	protected Session getSession() {
 		if (this.session == null) {
@@ -259,27 +277,27 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	/**
-	 * Función que permite cerrar la {@link Session} actual para liberar recursos.
+	 * Allow close the current {@link Session}.
 	 * 
 	 * @see #getSession()
 	 * 
 	 * @param session
-	 *            La {@link Session} abierta que queremos cerrar dentro del sistema.
+	 *            The current {@link Session} opened to be closed.
 	 */
 	protected void closeSession(Session session) {
 	}
 
 	/**
-	 * Se encarga de cargar los ordenes en las que queremos recuperar las entidades.
+	 * Add the {@link Order} to the {@link Criteria}.
 	 * 
 	 * @param criteria
-	 *            La {@link Criteria} a la que le vamos a cargar los ordenes que recibimos.
+	 *            The {@link Criteria} where we put the orders.
 	 * @param orders
-	 *            Los {@link Order} de las propiedades de las entidades que queremos ordenar.
+	 *            The {@link Order} to put into the query.
 	 */
-	protected void addOrders(Criteria criteria, Orders... orders) {
-		for (Orders entry : orders) {
-			if (Order.ASC.equals(entry.getOrder())) {
+	protected void addOrders(DetachedCriteria criteria, List<Order> orders) {
+		for (Order entry : orders) {
+			if (Order.OrderType.ASC.equals(entry.getOrderType())) {
 				criteria.addOrder(org.hibernate.criterion.Order.asc(entry.getProperty()));
 			} else {
 				criteria.addOrder(org.hibernate.criterion.Order.desc(entry.getProperty()));
@@ -300,18 +318,66 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	 *            La {@link Criteria} que vamos a cargar con las restricciones del filtro recibido.
 	 * @param filter
 	 *            El filtro que vamos a utilizar para crear el {@link Criteria}.
-	 * @return El {@link Criteria} que corresponde al filtro de búsqueda.
 	 */
-	protected Criteria addFilterRestriction(Criteria criteria, BaseFilter<E, PK> filter) {
-		if (filter.getExcludeIds() != null && filter.getExcludeIds().length > 0) {
+	protected void addFilterRestriction(DetachedCriteria criteria, BaseFilter<E, PK> filter) {
+		if (CollectionUtils.isNotEmpty(filter.getExcludeIds())) {
 			criteria.add(Restrictions.not(Restrictions.in(Entity.Attributes.ID, filter.getExcludeIds())));
 		}
 
-		return criteria;
+		Set<String> properties = filter.getRestrictions().keySet();
+		for (String property : properties) {
+			List<Pair<Comparator, Object>> restrictions = filter.getRestrictions().get(property);
+			for (Pair<Comparator, Object> restriction : restrictions) {
+				switch (restriction.getLeft()) {
+				case LESS:
+					criteria.add(Restrictions.lt(property, restriction.getRight()));
+					break;
+
+				case LESS_OR_EQUAL:
+					criteria.add(Restrictions.le(property, restriction.getRight()));
+					break;
+
+				case EQUAL:
+					criteria.add(Restrictions.eq(property, restriction.getRight()));
+					break;
+
+				case NOT_EQUAL:
+					criteria.add(Restrictions.ne(property, restriction.getRight()));
+					break;
+
+				case GREATER_OR_EQUAL:
+					criteria.add(Restrictions.ge(property, restriction.getRight()));
+					break;
+
+				case GREATER:
+					criteria.add(Restrictions.gt(property, restriction.getRight()));
+					break;
+
+				case IN:
+					Collection<?> list = (Collection<?>) restriction.getRight();
+					criteria.add(Restrictions.in(property, list));
+
+				case BETWEEN:
+					RangeType<?> range = (RangeType<?>) restriction.getRight();
+					this.addRangeRestriction(criteria, range, property);
+					break;
+
+				case NOT_NULL:
+					criteria.add(Restrictions.isNotNull(property));
+					break;
+
+				case NULL:
+					criteria.add(Restrictions.isNull(property));
+					break;
+				}
+			}
+		}
 	}
 
 	/**
-	 * Permite crear una condición para los tipos de valores que vamos a manejar con rangos del tipo {@link RangeType}.
+	 * Allow add a type of restrictions "BETWEEN" with a parameter of {@link RangeType}. If the parameter is complete (the field "from" and "to" are
+	 * complete) the query will be complete with a "BETWEEN" restrictions, in others case, the query will be complete with a ">=" or "<="
+	 * restrictions.
 	 * 
 	 * @see RangeType
 	 * 
@@ -319,11 +385,11 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	 * @see #addPagination(Criteria, BaseFilter)
 	 * 
 	 * @param criteria
-	 *            La {@link DetachedCriteria} que vamos a cargar con la restricción.
+	 *            The {@link DetachedCriteria} where we put the restriction.
 	 * @param range
-	 *            El {@link RangeType} de valores que vamos a utilizar para la condición.
+	 *            The {@link RangeType} where we get the range.
 	 * @param field
-	 *            El campo sobre el que se va a realizar la condición.
+	 *            The field of the entity for the query.
 	 */
 	protected void addRangeRestriction(DetachedCriteria criteria, RangeType<?> range, String field) {
 		if (range != null) {
@@ -341,7 +407,7 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	}
 
 	/**
-	 * Permite otorgarle paginación a las consultas sobre la base de datos para no sobrecargar las mismas.
+	 * Allow add a restrictions of paginations to the query.
 	 * 
 	 * @see Criteria
 	 * @see BaseFilter
@@ -350,9 +416,9 @@ public abstract class BaseDaoImpl<E extends Persistence<PK>, PK extends Serializ
 	 * @see #addRangeRestriction(DetachedCriteria, RangeType, String)
 	 * 
 	 * @param criteria
-	 *            La {@link Criteria} a la que le vamos a cargar la paginación de resultados.
+	 *            The {@link Criteria} where we put the restriction.
 	 * @param filter
-	 *            El {@link BaseFilter} que vamos a usar para la paginación.
+	 *            The {@link BaseFilter} filter where we get the restrictions.
 	 */
 	protected void addPagination(Criteria criteria, BaseFilter<E, PK> filter) {
 		if (filter.getFirstResult() != null) {

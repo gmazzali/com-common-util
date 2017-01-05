@@ -6,17 +6,17 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.common.util.business.service.DateService;
-import com.common.util.business.tool.StringUtil;
 import com.common.util.business.util.DatePrecisionEnum;
 
 /**
- * Define la clase donde se van a poder obtener la fecha actual.
+ * The class to manipulate the dates.
  * 
  * @since 11/11/2014
- * @author Guillermo Mazzali
+ * @author Guillermo S. Mazzali
  * @version 1.0
  */
 public class DateServiceImpl implements DateService {
@@ -25,7 +25,7 @@ public class DateServiceImpl implements DateService {
 
 	private static final Logger LOGGER = Logger.getLogger(DateServiceImpl.class);
 
-	private String defaultDateFormat = "dd/MM/yyyy";
+	private String dateFormat = "dd/MM/yyyy";
 
 	@Override
 	public Date getCurrentDate() {
@@ -34,7 +34,7 @@ public class DateServiceImpl implements DateService {
 
 	@Override
 	public Date createDate(String date) {
-		return StringUtil.isNotEmpty(date) ? this.createDate(date, this.defaultDateFormat) : null;
+		return StringUtils.isNotBlank(date) ? this.createDate(date, this.dateFormat) : null;
 	}
 
 	@Override
@@ -44,13 +44,14 @@ public class DateServiceImpl implements DateService {
 		try {
 			return new SimpleDateFormat(pattern).parse(date);
 		} catch (Exception e) {
+			LOGGER.warn("Fail to create a date (date: " + date + ", format: " + pattern + ")", e);
 			return null;
 		}
 	}
 
 	@Override
 	public String formatDate(Date date) {
-		return date != null ? this.formatDate(date, this.defaultDateFormat) : null;
+		return date != null ? this.formatDate(date, this.dateFormat) : null;
 	}
 
 	@Override
@@ -60,6 +61,7 @@ public class DateServiceImpl implements DateService {
 		try {
 			return new SimpleDateFormat(pattern).format(date);
 		} catch (Exception e) {
+			LOGGER.warn("Fail to format a date (date: " + date + ", format: " + pattern + ")", e);
 			return null;
 		}
 	}
@@ -70,7 +72,7 @@ public class DateServiceImpl implements DateService {
 		checkNotNull(otherDate, "The otherDate cannot be null");
 
 		if (datePrecisionEnum == null) {
-			LOGGER.info("The precision is set to MILLISECOND");
+			LOGGER.debug("The precision is set to MILLISECOND");
 			datePrecisionEnum = DatePrecisionEnum.MILLISECOND;
 		}
 
@@ -207,7 +209,6 @@ public class DateServiceImpl implements DateService {
 			} else {
 				Date myBeforeDate = this.getLower(beforeDate, afterDate, datePrecisionEnum);
 				Date myAfterDate = this.getHigher(beforeDate, afterDate, datePrecisionEnum);
-
 				return this.beforeOrEqual(date, myBeforeDate, datePrecisionEnum) && this.afterOrEqual(date, myAfterDate, datePrecisionEnum);
 			}
 		}
@@ -293,7 +294,7 @@ public class DateServiceImpl implements DateService {
 		}
 	}
 
-	public void setDefaultDateFormat(String defaultDateFormat) {
-		this.defaultDateFormat = defaultDateFormat;
+	public void setDateFormat(String dateFormat) {
+		this.dateFormat = dateFormat;
 	}
 }
