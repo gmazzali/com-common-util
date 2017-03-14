@@ -2,7 +2,7 @@ package com.common.util.app;
 
 import java.io.Serializable;
 
-import com.common.util.holder.ApplicationContextLoader;
+import com.common.util.app.context.ApplicationContextLoader;
 
 /**
  * La clase que nos permite arrancar el aplicativo.
@@ -12,6 +12,7 @@ import com.common.util.holder.ApplicationContextLoader;
  * @version 1.0
  */
 public class ApplicationLoader implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	/**

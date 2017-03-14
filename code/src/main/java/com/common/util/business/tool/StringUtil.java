@@ -3,9 +3,8 @@ package com.common.util.business.tool;
 import java.io.Serializable;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
-
 import com.common.util.business.tool.collection.ArrayUtil;
+import com.common.util.business.util.ApplicationLogger;
 import com.common.util.business.util.PatternsEnum;
 
 /**
@@ -18,8 +17,6 @@ import com.common.util.business.util.PatternsEnum;
 public class StringUtil implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-	private static final Logger LOGGER = Logger.getLogger(StringUtil.class);
 
 	/**
 	 * Se encarga de hacer una llamada al método {@link Object#toString()} del modo Null-Safe.
@@ -444,7 +441,7 @@ public class StringUtil implements Serializable {
 		try {
 			return Pattern.matches(pattern, string);
 		} catch (Exception ex) {
-			LOGGER.error("pattern failed", ex);
+			ApplicationLogger.error("pattern failed", ex);
 			return false;
 		}
 	}

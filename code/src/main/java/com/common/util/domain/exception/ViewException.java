@@ -1,12 +1,11 @@
 package com.common.util.domain.exception;
 
-import com.common.util.domain.model.error.ErrorDetail;
-import com.common.util.domain.model.error.Errors;
+import com.common.util.domain.model.log.Log;
 
 /**
- * Las excepciones no chequeadas que vamos a manejar dentro de los servicios.
+ * The unchecked exceptions inside the view layer.
  * 
- * @since 11/11/2014
+ * @since 14/03/2017
  * @author Guillermo Mazzali
  * @version 1.0
  */
@@ -15,60 +14,57 @@ public class ViewException extends UncheckedException {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * El constructor de una instancia de {@link ViewException} que no recibe parámetros.
+	 * The default constructor.
 	 */
 	public ViewException() {
 		super();
 	}
 
 	/**
-	 * El constructor de una instancia de {@link ViewException} que recibe como parámetro un elemento {@link Throwable} para mantener el problema que
-	 * produjo el lanzamiento de esta {@link ViewException}.
+	 * The constructor of an {@link ViewException}.
 	 * 
 	 * @param cause
-	 *            La causa de un problema que vamos a contener dentro de esta excepción.
+	 *            The cause of the problem inside this exception.
 	 */
 	public ViewException(Throwable cause) {
 		super(cause);
 	}
 
 	/**
-	 * El constructor de una instancia de {@link ViewException} que recibe como parámetro el conjunto de {@link Errors} que vamos a contener.
+	 * The constructor of an {@link ViewException}.
 	 * 
-	 * @param errors
-	 *            El conjunto de errores que vamos a contener dentro de esta excepción.
+	 * @param log
+	 *            The log inside this exception.
 	 */
-	public ViewException(Errors errors) {
-		super(errors);
+	public ViewException(Log log) {
+		super(log);
 	}
 
 	/**
-	 * El constructor de una instancia de {@link ViewException} que recibe como parámetro el {@link Throwable} para mantener el problema que produjo
-	 * el lanzamiento de esta {@link ViewException} y un un mensaje de {@link ErrorDetail} que vamos a crear en el momento.
+	 * The constructor of an {@link ViewException}.
 	 * 
 	 * @param cause
-	 *            La causa de un problema que vamos a contener dentro de esta excepción.
+	 *            The cause of the problem inside this exception.
 	 * @param defaultMessage
-	 *            El mensaje por omisión del detalle del error.
+	 *            The default message for the log entry.
 	 * @param keyMessage
-	 *            La clave del mensaje del detalle del error.
+	 *            The message key for retrieve the final message.
 	 * @param parameters
-	 *            Los parámetros que requerimos para el detalle del error.
+	 *            The parameters for retrieve the final message.
 	 */
 	public ViewException(Throwable cause, String defaultMessage, String keyMessage, Object... parameters) {
 		super(cause, defaultMessage, keyMessage, parameters);
 	}
 
 	/**
-	 * El constructor de una instancia de {@link ViewException} que recibe como parámetro un mensaje de {@link ErrorDetail} que vamos a crear en el
-	 * momento.
+	 * The constructor of an {@link ViewException}.
 	 * 
 	 * @param defaultMessage
-	 *            El mensaje por omisión del detalle del error.
+	 *            The default message for the log entry.
 	 * @param keyMessage
-	 *            La clave del mensaje del detalle del error.
+	 *            The message key for retrieve the final message.
 	 * @param parameters
-	 *            Los parámetros que requerimos para el detalle del error.
+	 *            The parameters for retrieve the final message.
 	 */
 	public ViewException(String defaultMessage, String keyMessage, Object... parameters) {
 		super(defaultMessage, keyMessage, parameters);

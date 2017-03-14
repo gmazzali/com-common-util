@@ -17,8 +17,8 @@ import org.springframework.stereotype.Component;
  * @author Guillermo Mazzali
  * @version 1.0
  */
-@Component
 @Documented
+@Component
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)

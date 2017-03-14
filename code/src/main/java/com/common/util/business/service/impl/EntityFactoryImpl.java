@@ -3,9 +3,9 @@ package com.common.util.business.service.impl;
 import java.io.Serializable;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.log4j.Logger;
 
 import com.common.util.business.service.EntityFactory;
+import com.common.util.business.util.ApplicationLogger;
 
 /**
  * Define the implementation of the interface of the factory of entities.
@@ -17,8 +17,6 @@ import com.common.util.business.service.EntityFactory;
 public class EntityFactoryImpl implements EntityFactory {
 
 	private static final long serialVersionUID = 1L;
-
-	private static final Logger LOGGER = Logger.getLogger(EntityFactoryImpl.class);
 
 	@Override
 	public <E extends Serializable> E newInstance(Class<E> clazz, Object... parameters) {
@@ -33,7 +31,7 @@ public class EntityFactoryImpl implements EntityFactory {
 				return clazz.newInstance();
 			}
 		} catch (Exception e) {
-			LOGGER.warn("Cannot create the instance for class: " + clazz + " with parameters [" + parameters + "]", e);
+			ApplicationLogger.warn(this, "Cannot create the instance for class: " + clazz + " with parameters [" + parameters + "]", e);
 		}
 		return null;
 	}

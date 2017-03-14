@@ -7,13 +7,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.log4j.Logger;
-
 import com.common.util.business.converter.Converter;
 import com.common.util.business.converter.ConverterService;
 import com.common.util.business.tool.VerifierUtil;
 import com.common.util.business.tool.collection.CollectionUtil;
-import com.common.util.domain.exception.ServiceException;
+import com.common.util.business.util.ApplicationLogger;
+import com.common.util.domain.exception.BusinessException;
 
 /**
  * La clase que nos permite manipular los conversores que nos ofrece SPRING para convertir entidades entre ellas.
@@ -25,8 +24,6 @@ import com.common.util.domain.exception.ServiceException;
 public class ConverterServiceImpl implements ConverterService {
 
 	private static final long serialVersionUID = 1L;
-
-	private static final Logger LOGGER = Logger.getLogger(ConverterServiceImpl.class);
 
 	/**
 	 * El mapa que contiene los conversores de acuerdo a la clase origen y la destino.
@@ -58,13 +55,14 @@ public class ConverterServiceImpl implements ConverterService {
 				if (converterMap == null) {
 					targetMap.put(targetClass, converter);
 				} else {
-					LOGGER.warn("Duplicated converter to \"" + sourceClass.getSimpleName() + "\" to \"" + targetClass.getSimpleName() + "\"");
-					throw new ServiceException("Duplicated converter to \"" + sourceClass.getSimpleName() + "\" to \"" + targetClass.getSimpleName()
+					ApplicationLogger.warn(this,
+							"Duplicated converter to \"" + sourceClass.getSimpleName() + "\" to \"" + targetClass.getSimpleName() + "\"");
+					throw new BusinessException("Duplicated converter to \"" + sourceClass.getSimpleName() + "\" to \"" + targetClass.getSimpleName()
 							+ "\"", "base.converter.error.duplicated", sourceClass.getSimpleName(), targetClass.getSimpleName());
 				}
 			} catch (Exception ex) {
-				LOGGER.error("The generics parameters class of the converter service cannot be empty", ex);
-				throw new ServiceException("The generics parameters class of the converter service cannot be empty",
+				ApplicationLogger.error(this, "The generics parameters class of the converter service cannot be empty", ex);
+				throw new BusinessException("The generics parameters class of the converter service cannot be empty",
 						"base.converter.error.parameter.empty");
 			}
 		}
@@ -91,8 +89,8 @@ public class ConverterServiceImpl implements ConverterService {
 		if (this.canConvert(source.getClass(), targetClass)) {
 			return ((Converter<S, T>) this.converters.get(source.getClass()).get(targetClass)).convert(source);
 		} else {
-			LOGGER.error("Doesn't exist converter between \"" + source.getClass().getSimpleName() + "\" to \"" + targetClass.getSimpleName() + "\"");
-			throw new ServiceException("Doesn't exist converter between \"" + source.getClass().getSimpleName() + "\" to \""
+			ApplicationLogger.error(this, "Doesn't exist converter between \"" + source.getClass().getSimpleName() + "\" to \"" + targetClass.getSimpleName() + "\"");
+			throw new BusinessException("Doesn't exist converter between \"" + source.getClass().getSimpleName() + "\" to \""
 					+ targetClass.getSimpleName() + "\"", "base.converter.error.not.exist", source.getClass().getSimpleName(),
 					targetClass.getSimpleName());
 		}

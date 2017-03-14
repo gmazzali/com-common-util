@@ -4,12 +4,12 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Locale;
 
-import org.apache.log4j.Logger;
 import org.springframework.context.MessageSource;
 import org.springframework.util.StringUtils;
 
 import com.common.util.business.service.MessageService;
 import com.common.util.business.tool.StringUtil;
+import com.common.util.business.util.ApplicationLogger;
 import com.common.util.domain.model.dto.LogEntryDto;
 import com.common.util.domain.model.log.LogEntry;
 
@@ -24,8 +24,6 @@ public class MessageServiceImpl implements MessageService {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger LOGGER = Logger.getLogger(MessageServiceImpl.class);
-
 	/**
 	 * The messages sources.
 	 */
@@ -37,7 +35,7 @@ public class MessageServiceImpl implements MessageService {
 
 	@Override
 	public String getMessage(String key, Object... parameter) {
-		LOGGER.debug("KEY: " + key + " VALUES: {" + StringUtils.arrayToDelimitedString(parameter, ", ") + "}");
+		ApplicationLogger.debug(this, "KEY: " + key + " VALUES: {" + StringUtils.arrayToDelimitedString(parameter, ", ") + "}");
 		if (key != null) {
 			return this.resources.getMessage(key, parameter, key, this.locale);
 		} else {
@@ -47,7 +45,8 @@ public class MessageServiceImpl implements MessageService {
 
 	@Override
 	public String getMessage(String defaultMessage, String key, Object... parameter) {
-		LOGGER.debug("DEFAULT:" + defaultMessage + "KEY: " + key + " VALUES: {" + StringUtil.arrayToDelimitedString(parameter, ", ") + "}");
+		ApplicationLogger.debug(this, "DEFAULT:" + defaultMessage + "KEY: " + key + " VALUES: {" + StringUtil.arrayToDelimitedString(parameter, ", ")
+				+ "}");
 		if (key != null) {
 			return this.resources.getMessage(key, parameter, defaultMessage, this.locale);
 		} else {
@@ -57,7 +56,8 @@ public class MessageServiceImpl implements MessageService {
 
 	@Override
 	public String getMessage(Locale locale, String defaultMessage, String key, Object... parameter) {
-		LOGGER.debug("DEFAULT:" + defaultMessage + "KEY: " + key + " VALUES: {" + StringUtil.arrayToDelimitedString(parameter, ", ") + "}");
+		ApplicationLogger.debug(this, "DEFAULT:" + defaultMessage + "KEY: " + key + " VALUES: {" + StringUtil.arrayToDelimitedString(parameter, ", ")
+				+ "}");
 		if (key != null) {
 			return this.resources.getMessage(key, parameter, defaultMessage, locale);
 		} else {
@@ -68,14 +68,14 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public String getMessage(LogEntryDto logEntryDto) {
 		checkNotNull(logEntryDto);
-		LOGGER.debug("ERROR DETAIL:" + logEntryDto.toString());
+		ApplicationLogger.debug(this, "ERROR DETAIL:" + logEntryDto.toString());
 		return this.resources.getMessage(logEntryDto.getKeyMessage(), logEntryDto.getParameters(), logEntryDto.getMessage(), this.locale);
 	}
 
 	@Override
 	public String getMessage(LogEntry logEntry) {
 		checkNotNull(logEntry);
-		LOGGER.debug("INFO DETAIL:" + logEntry.toString());
+		ApplicationLogger.debug(this, "INFO DETAIL:" + logEntry.toString());
 		return this.resources.getMessage(logEntry.getKeyMessage(), logEntry.getParameters(), logEntry.getMessage(), this.locale);
 	}
 

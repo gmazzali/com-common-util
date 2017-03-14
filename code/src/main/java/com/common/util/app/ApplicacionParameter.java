@@ -2,7 +2,7 @@ package com.common.util.app;
 
 import java.io.Serializable;
 
-import com.common.util.holder.ApplicationContextMonitor;
+import com.common.util.app.context.ApplicationContextMonitor;
 
 /**
  * La clase que permite recuperar los parámetros de configuración de la aplicación.
@@ -12,6 +12,7 @@ import com.common.util.holder.ApplicationContextMonitor;
  * @version 1.0
  */
 public abstract class ApplicacionParameter implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	/**

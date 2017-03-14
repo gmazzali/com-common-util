@@ -1,18 +1,15 @@
 package com.common.util.domain.exception;
 
-import com.common.util.business.tool.StringUtil;
-import com.common.util.domain.model.error.ErrorDetail;
-import com.common.util.domain.model.error.Errors;
+import com.common.util.domain.model.log.Log;
 
 /**
- * Las excepciones chequeadas que nos permite realizar un seguimiento de los lanzamiento de la misma para un mejor control en tiempo de desarrollo.
+ * The checked exceptions.
  * 
- * @see Errors
- * @see ErrorDetail
  * @see UncheckedException
+ * @see Log
  * 
- * @since 05/02/2014
- * @author Guillermo Mazzali
+ * @since 14/03/2017
+ * @author Guillermo S. Mazzali
  * @version 1.0
  */
 public class CheckedException extends Exception {
@@ -20,120 +17,90 @@ public class CheckedException extends Exception {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * El listado de los errores.
+	 * The LOGs of this exception.
 	 */
-	protected Errors errors;
+	protected Log log;
 
 	/**
-	 * El constructor de una instancia de {@link CheckedException} que no recibe parámetros.
+	 * The default constructor.
 	 */
 	public CheckedException() {
 		super();
-		this.errors = new Errors();
+		this.log = new Log();
 	}
 
 	/**
-	 * El constructor de una instancia de {@link CheckedException} que recibe como parámetro un elemento {@link Throwable} para mantener el problema
-	 * que produjo el lanzamiento de esta {@link CheckedException}.
+	 * The constructor of an {@link CheckedException}.
 	 * 
 	 * @param cause
-	 *            La causa de un problema que vamos a contener dentro de esta excepción.
+	 *            The cause of the problem inside this exception.
 	 */
 	public CheckedException(Throwable cause) {
 		super(cause);
-		this.errors = new Errors();
+		this.log = new Log();
 	}
 
 	/**
-	 * El constructor de una instancia de {@link CheckedException} que recibe como parámetro el conjunto de {@link Errors} que vamos a contener.
+	 * The constructor of an {@link CheckedException}.
 	 * 
-	 * @param errors
-	 *            El conjunto de errores que vamos a contener dentro de esta excepción.
+	 * @param log
+	 *            The log inside this exception.
 	 */
-	public CheckedException(Errors errors) {
+	public CheckedException(Log log) {
 		super();
-		this.errors = errors;
+		this.log = log;
 	}
 
 	/**
-	 * El constructor de una instancia de {@link CheckedException} que recibe como parámetro el {@link Throwable} para mantener el problema que
-	 * produjo el lanzamiento de esta {@link CheckedException} y un un mensaje de {@link ErrorDetail} que vamos a crear en el momento.
+	 * The constructor of an {@link CheckedException}.
 	 * 
 	 * @param cause
-	 *            La causa de un problema que vamos a contener dentro de esta excepción.
+	 *            The cause of the problem inside this exception.
 	 * @param defaultMessage
-	 *            El mensaje por omisión del detalle del error.
+	 *            The default message for the log entry.
 	 * @param keyMessage
-	 *            La clave del mensaje del detalle del error.
+	 *            The message key for retrieve the final message.
 	 * @param parameters
-	 *            Los parámetros que requerimos para el detalle del error.
+	 *            The parameters for retrieve the final message.
 	 */
 	public CheckedException(Throwable cause, String defaultMessage, String keyMessage, Object... parameters) {
 		super(defaultMessage, cause);
-		this.errors = new Errors();
-		this.errors.addError(defaultMessage, keyMessage, parameters);
+		this.log = new Log();
+		this.log.addError(defaultMessage, keyMessage, parameters);
 	}
 
 	/**
-	 * El constructor de una instancia de {@link CheckedException} que recibe como parámetro un mensaje de {@link ErrorDetail} que vamos a crear en el
-	 * momento.
+	 * The constructor of an {@link CheckedException}.
 	 * 
 	 * @param defaultMessage
-	 *            El mensaje por omisión del detalle del error.
+	 *            The default message for the log entry.
 	 * @param keyMessage
-	 *            La clave del mensaje del detalle del error.
+	 *            The message key for retrieve the final message.
 	 * @param parameters
-	 *            Los parámetros que requerimos para el detalle del error.
+	 *            The parameters for retrieve the final message.
 	 */
 	public CheckedException(String defaultMessage, String keyMessage, Object... parameters) {
 		super(defaultMessage);
-		this.errors = new Errors();
-		this.errors.addError(defaultMessage, keyMessage, parameters);
+		this.log = new Log();
+		this.log.addError(defaultMessage, keyMessage, parameters);
 	}
 
 	/**
-	 * Retorna los errores que tenemos dentro de esta escepción.
+	 * Retrieve the logs of this exception like a string.
 	 * 
-	 * @return El listado de los errores de esta excepción.
+	 * @return The log of this exception like a string..
 	 */
 	@Override
 	public String toString() {
-		return this.errors.toString();
+		return this.log.toString();
 	}
 
 	/**
-	 * La función encargada de retornar los errores que tenemos dentro de esta excepción.
+	 * Retrieve the logs of this exception.
 	 * 
-	 * @return El conjunto de errores que tenemos dentro de esta excepción.
+	 * @return The log of this exception.
 	 */
-	public Errors getErrors() {
-		return this.errors;
-	}
-
-	/**
-	 * Función encargada de retornar los mensajes de errores que tenemos en este elemento.
-	 * 
-	 * @return El mensaje de los errores que tenemos dentro de esta excepción.
-	 */
-	@Override
-	public String getMessage() {
-		StringBuffer stringBuffer = new StringBuffer();
-
-		for (ErrorDetail errorDetail : this.errors.getErrorDetails()) {
-			stringBuffer.append("DEFAULT:" + errorDetail.getDefaultMessage() + "KEY: " + errorDetail.getKeyMessage() + " VALUES: {"
-					+ StringUtil.arrayToDelimitedString(errorDetail.getParameters(), ", ") + "}");
-			stringBuffer.append(this.getMessageSeparator());
-		}
-
-		return stringBuffer.toString();
-	}
-
-	/**
-	 * La función encargada de retornar el separador para convertir el listado de errores en una oración completa.
-	 * 
-	 * @return La cadena que vamos a utilizar para separar los mensajes dentro de la oración completa.
-	 */
-	protected String getMessageSeparator() {
-		return "\n";
+	public Log getLog() {
+		return log;
 	}
 }

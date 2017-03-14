@@ -3,7 +3,7 @@ package com.common.util.business.service;
 import java.io.Serializable;
 import java.util.List;
 
-import com.common.util.domain.exception.ServiceException;
+import com.common.util.domain.exception.BusinessException;
 import com.common.util.domain.exception.ValidationException;
 import com.common.util.domain.model.entity.Persistence;
 import com.common.util.domain.model.entity.impl.Entity;
@@ -49,10 +49,10 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * @see #count(BaseFilter)
 	 * 
 	 * @return The amount of rows of entities.
-	 * @throws ServiceException
+	 * @throws BusinessException
 	 *             When something go wrong.
 	 */
-	public Long count() throws ServiceException;
+	public Long count() throws BusinessException;
 
 	/**
 	 * Allow count all the rows in the table of the entity with a filter.
@@ -64,10 +64,10 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * @param filter
 	 *            The {@link BaseFilter} used to count the rows of the entities.
 	 * @return The amount of rows of entities.
-	 * @throws ServiceException
+	 * @throws BusinessException
 	 *             When something go wrong.
 	 */
-	public Long count(BaseFilter<E, PK> filter) throws ServiceException;
+	public Long count(BaseFilter<E, PK> filter) throws BusinessException;
 
 	/**
 	 * Allow retrieve an entity related with the identifier received.
@@ -80,10 +80,10 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * @param id
 	 *            The identifier for the entity wanted.
 	 * @return The entity related with the identifier, if don't retrieve any entity this method return <i>NULL</i>.
-	 * @throws ServiceException
+	 * @throws BusinessException
 	 *             When something go wrong.
 	 */
-	public E getById(PK id) throws ServiceException;
+	public E getById(PK id) throws BusinessException;
 
 	/**
 	 * Allow retrieve an entity related with the identifier received.
@@ -95,11 +95,11 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * 
 	 * @param id
 	 *            The identifier of the entity wanted.
-	 * @return The entity related with the identifier, if don't retrieve any entity this method throw an {@link ServiceException}.
-	 * @throws ServiceException
+	 * @return The entity related with the identifier, if don't retrieve any entity this method throw an {@link BusinessException}.
+	 * @throws BusinessException
 	 *             When something go wrong.
 	 */
-	public E findById(PK id) throws ServiceException;
+	public E findById(PK id) throws BusinessException;
 
 	/**
 	 * Allow retrieve all the entities of the database ordered for the parameters received.
@@ -114,10 +114,10 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * @param orders
 	 *            The order in what we want to return the entities
 	 * @return The list of all entities sorted for the order received.
-	 * @throws ServiceException
+	 * @throws BusinessException
 	 *             When something go wrong.
 	 */
-	public List<E> getAll(Order... orders) throws ServiceException;
+	public List<E> getAll(Order... orders) throws BusinessException;
 
 	/**
 	 * Allow retrieve the entities of the database filtered for the {@link BaseFilter} received.
@@ -133,10 +133,10 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * @param filter
 	 *            The {@link BaseFilter} received for the query.
 	 * @return The list of all entities filtered for the filter received.
-	 * @throws ServiceException
+	 * @throws BusinessException
 	 *             When something go wrong.
 	 */
-	public List<E> filter(BaseFilter<E, PK> filter) throws ServiceException;
+	public List<E> filter(BaseFilter<E, PK> filter) throws BusinessException;
 
 	/**
 	 * Save a new entity in the database.
@@ -153,10 +153,10 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * @return The identifier {@link PK} of the entity recently saved.
 	 * @throws ValidationException
 	 *             When something is invalid in the entity.
-	 * @throws ServiceException
+	 * @throws BusinessException
 	 *             When something go wrong.
 	 */
-	public PK save(E entity) throws ValidationException, ServiceException;
+	public PK save(E entity) throws ValidationException, BusinessException;
 
 	/**
 	 * Update an entity in the database.
@@ -172,10 +172,10 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 *            The entity of {@link E} that want to update.
 	 * @throws ValidationException
 	 *             When something is invalid in the entity.
-	 * @throws ServiceException
+	 * @throws BusinessException
 	 *             When something go wrong.
 	 */
-	public void update(E entity) throws ValidationException, ServiceException;
+	public void update(E entity) throws ValidationException, BusinessException;
 
 	/**
 	 * Save or Update an entity in the database.
@@ -191,10 +191,10 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 *            The entity of {@link E} that want to save or update.
 	 * @throws ValidationException
 	 *             When something is invalid in the entity.
-	 * @throws ServiceException
+	 * @throws BusinessException
 	 *             When something go wrong.
 	 */
-	public void saveOrUpdate(E entity) throws ValidationException, ServiceException;
+	public void saveOrUpdate(E entity) throws ValidationException, BusinessException;
 
 	/**
 	 * Delete an entity in the database.
@@ -208,10 +208,10 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * 
 	 * @param entity
 	 *            The entity of {@link E} that want to delete.
-	 * @throws ServiceException
+	 * @throws BusinessException
 	 *             When something go wrong.
 	 */
-	public void delete(E entity) throws ServiceException;
+	public void delete(E entity) throws BusinessException;
 
 	/**
 	 * Delete an entity in the database give its identifier.
@@ -223,8 +223,8 @@ public interface BaseService<E extends Persistence<PK>, PK extends Serializable>
 	 * 
 	 * @param id
 	 *            The identifier {@link PK} of the entity that want to delete.
-	 * @throws ServiceException
+	 * @throws BusinessException
 	 *             When something go wrong.
 	 */
-	public void deleteById(PK id) throws ServiceException;
+	public void deleteById(PK id) throws BusinessException;
 }

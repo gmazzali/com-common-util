@@ -1,12 +1,11 @@
 package com.common.util.domain.exception;
 
-import com.common.util.domain.model.error.ErrorDetail;
-import com.common.util.domain.model.error.Errors;
+import com.common.util.domain.model.log.Log;
 
 /**
- * Las excepciones no chequeadas que vamos a manejar dentro de la capa de acceso a datos.
+ * The unchecked exceptions inside the persistence layer.
  * 
- * @since 16/10/2014
+ * @since 14/03/2017
  * @author Guillermo Mazzali
  * @version 1.0
  */
@@ -15,60 +14,58 @@ public class PersistenceException extends UncheckedException {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * El constructor de una instancia de {@link PersistenceException} que no recibe parámetros.
+	 * The default constructor.
 	 */
 	public PersistenceException() {
 		super();
 	}
 
 	/**
-	 * El constructor de una instancia de {@link PersistenceException} que recibe como parámetro un elemento {@link Throwable} para mantener el
-	 * problema que produjo el lanzamiento de esta {@link PersistenceException}.
+	 * The constructor of an {@link PersistenceException}.
 	 * 
 	 * @param cause
-	 *            La causa de un problema que vamos a contener dentro de esta excepción.
+	 *            The cause of the problem inside this exception.
 	 */
 	public PersistenceException(Throwable cause) {
 		super(cause);
 	}
 
+
 	/**
-	 * El constructor de una instancia de {@link PersistenceException} que recibe como parámetro el conjunto de {@link Errors} que vamos a contener.
+	 * The constructor of an {@link PersistenceException}.
 	 * 
-	 * @param errors
-	 *            El conjunto de errores que vamos a contener dentro de esta excepción.
+	 * @param log
+	 *            The log inside this exception.
 	 */
-	public PersistenceException(Errors errors) {
-		super(errors);
+	public PersistenceException(Log log) {
+		super(log);
 	}
 
 	/**
-	 * El constructor de una instancia de {@link PersistenceException} que recibe como parámetro el {@link Throwable} para mantener el problema que
-	 * produjo el lanzamiento de esta {@link PersistenceException} y un un mensaje de {@link ErrorDetail} que vamos a crear en el momento.
+	 * The constructor of an {@link PersistenceException}.
 	 * 
 	 * @param cause
-	 *            La causa de un problema que vamos a contener dentro de esta excepción.
+	 *            The cause of the problem inside this exception.
 	 * @param defaultMessage
-	 *            El mensaje por omisión del detalle del error.
+	 *            The default message for the log entry.
 	 * @param keyMessage
-	 *            La clave del mensaje del detalle del error.
+	 *            The message key for retrieve the final message.
 	 * @param parameters
-	 *            Los parámetros que requerimos para el detalle del error.
+	 *            The parameters for retrieve the final message.
 	 */
 	public PersistenceException(Throwable cause, String defaultMessage, String keyMessage, Object... parameters) {
 		super(cause, defaultMessage, keyMessage, parameters);
 	}
 
 	/**
-	 * El constructor de una instancia de {@link PersistenceException} que recibe como parámetro un mensaje de {@link ErrorDetail} que vamos a crear
-	 * en el momento.
+	 * The constructor of an {@link PersistenceException}.
 	 * 
 	 * @param defaultMessage
-	 *            El mensaje por omisión del detalle del error.
+	 *            The default message for the log entry.
 	 * @param keyMessage
-	 *            La clave del mensaje del detalle del error.
+	 *            The message key for retrieve the final message.
 	 * @param parameters
-	 *            Los parámetros que requerimos para el detalle del error.
+	 *            The parameters for retrieve the final message.
 	 */
 	public PersistenceException(String defaultMessage, String keyMessage, Object... parameters) {
 		super(defaultMessage, keyMessage, parameters);

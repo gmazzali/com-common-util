@@ -2,7 +2,7 @@ package com.common.util.business.tool;
 
 import java.io.Serializable;
 
-import org.apache.log4j.Logger;
+import com.common.util.business.util.ApplicationLogger;
 
 /**
  * La clase encargada de verificar que los campos de entrada de una aplicación tenga los valores correctos y que no sean cualquier cosa.
@@ -14,8 +14,6 @@ import org.apache.log4j.Logger;
 public class VerifierUtil implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-	private static final Logger LOGGER = Logger.getLogger(VerifierUtil.class);
 
 	/**
 	 * Se encarga de validar que los 2 elementos recibidos sean iguales. Permite recibir los 2 elementos nulos, lo que retorna que los elementos sean
@@ -69,7 +67,7 @@ public class VerifierUtil implements Serializable {
 	 */
 	public static void checkNotNull(Object object, String defaultMessage) {
 		if (object == null) {
-			LOGGER.warn("object null");
+			ApplicationLogger.warn("object null");
 			throw new NullPointerException(defaultMessage);
 		}
 	}
@@ -86,7 +84,7 @@ public class VerifierUtil implements Serializable {
 	 */
 	public static void checkArgument(boolean expression, String defaultMessage) {
 		if (!expression) {
-			LOGGER.warn("condition false");
+			ApplicationLogger.warn("condition false");
 			throw new IllegalArgumentException(defaultMessage);
 		}
 	}

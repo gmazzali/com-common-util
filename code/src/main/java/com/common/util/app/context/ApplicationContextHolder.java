@@ -1,8 +1,10 @@
-package com.common.util.holder;
+package com.common.util.app.context;
 
 import java.io.Serializable;
 
 import org.springframework.context.ApplicationContext;
+
+import com.common.util.business.util.ConfigurableBean;
 
 /**
  * La clase encargada de mantener el contexto de la aplicación al alcance de toda la aplicación.

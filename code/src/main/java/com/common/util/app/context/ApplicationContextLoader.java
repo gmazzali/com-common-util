@@ -1,4 +1,4 @@
-package com.common.util.holder;
+package com.common.util.app.context;
 
 import java.io.Serializable;
 

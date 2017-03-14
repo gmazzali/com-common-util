@@ -1,16 +1,14 @@
 package com.common.util.domain.exception;
 
-import org.springframework.validation.Errors;
-
 import com.common.util.domain.model.log.Log;
 
 /**
- * Las excepciones no chequeadas que vamos a manejar dentro del sistema.
+ * The unchecked exceptions.
  * 
  * @see CheckedException
  * @see Log
  * 
- * @since 05/02/2014
+ * @since 14/03/2017
  * @author Guillermo S. Mazzali
  * @version 1.0
  */
@@ -32,11 +30,10 @@ public class UncheckedException extends RuntimeException {
 	}
 
 	/**
-	 * El constructor de una instancia de {@link UncheckedException} que recibe como parámetro un elemento {@link Throwable} para mantener el problema
-	 * que produjo el lanzamiento de esta {@link UncheckedException}.
+	 * The constructor of an {@link UncheckedException}.
 	 * 
 	 * @param cause
-	 *            La causa de un problema que vamos a contener dentro de esta excepción.
+	 *            The cause of the problem inside this exception.
 	 */
 	public UncheckedException(Throwable cause) {
 		super(cause);
@@ -44,10 +41,10 @@ public class UncheckedException extends RuntimeException {
 	}
 
 	/**
-	 * El constructor de una instancia de {@link UncheckedException} que recibe como parámetro el conjunto de {@link Errors} que vamos a contener.
+	 * The constructor of an {@link UncheckedException}.
 	 * 
-	 * @param errors
-	 *            El conjunto de errores que vamos a contener dentro de esta excepción.
+	 * @param log
+	 *            The log inside this exception.
 	 */
 	public UncheckedException(Log log) {
 		super();
@@ -55,17 +52,16 @@ public class UncheckedException extends RuntimeException {
 	}
 
 	/**
-	 * El constructor de una instancia de {@link UncheckedException} que recibe como parámetro el {@link Throwable} para mantener el problema que
-	 * produjo el lanzamiento de esta {@link UncheckedException} y un un mensaje de {@link ErrorDetail} que vamos a crear en el momento.
+	 * The constructor of an {@link UncheckedException}.
 	 * 
 	 * @param cause
-	 *            La causa de un problema que vamos a contener dentro de esta excepción.
+	 *            The cause of the problem inside this exception.
 	 * @param defaultMessage
-	 *            El mensaje por omisión del detalle del error.
+	 *            The default message for the log entry.
 	 * @param keyMessage
-	 *            La clave del mensaje del detalle del error.
+	 *            The message key for retrieve the final message.
 	 * @param parameters
-	 *            Los parámetros que requerimos para el detalle del error.
+	 *            The parameters for retrieve the final message.
 	 */
 	public UncheckedException(Throwable cause, String defaultMessage, String keyMessage, Object... parameters) {
 		super(defaultMessage, cause);
@@ -74,15 +70,14 @@ public class UncheckedException extends RuntimeException {
 	}
 
 	/**
-	 * El constructor de una instancia de {@link UncheckedException} que recibe como parámetro un mensaje de {@link ErrorDetail} que vamos a crear en
-	 * el momento.
+	 * The constructor of an {@link UncheckedException}.
 	 * 
 	 * @param defaultMessage
-	 *            El mensaje por omisión del detalle del error.
+	 *            The default message for the log entry.
 	 * @param keyMessage
-	 *            La clave del mensaje del detalle del error.
+	 *            The message key for retrieve the final message.
 	 * @param parameters
-	 *            Los parámetros que requerimos para el detalle del error.
+	 *            The parameters for retrieve the final message.
 	 */
 	public UncheckedException(String defaultMessage, String keyMessage, Object... parameters) {
 		super(defaultMessage);
@@ -91,9 +86,9 @@ public class UncheckedException extends RuntimeException {
 	}
 
 	/**
-	 * Retorna los errores que tenemos dentro de esta escepción.
+	 * Retrieve the logs of this exception like a string.
 	 * 
-	 * @return El listado de los errores de esta excepción.
+	 * @return The log of this exception like a string..
 	 */
 	@Override
 	public String toString() {
@@ -101,9 +96,9 @@ public class UncheckedException extends RuntimeException {
 	}
 
 	/**
-	 * La función encargada de retornar los errores que tenemos dentro de esta excepción.
+	 * Retrieve the logs of this exception.
 	 * 
-	 * @return El conjunto de errores que tenemos dentro de esta excepción.
+	 * @return The log of this exception.
 	 */
 	public Log getLog() {
 		return log;

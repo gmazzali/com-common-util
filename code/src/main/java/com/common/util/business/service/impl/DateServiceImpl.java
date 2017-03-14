@@ -7,9 +7,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 
 import com.common.util.business.service.DateService;
+import com.common.util.business.util.ApplicationLogger;
 import com.common.util.business.util.DatePrecisionEnum;
 
 /**
@@ -22,8 +22,6 @@ import com.common.util.business.util.DatePrecisionEnum;
 public class DateServiceImpl implements DateService {
 
 	private static final long serialVersionUID = 1L;
-
-	private static final Logger LOGGER = Logger.getLogger(DateServiceImpl.class);
 
 	private String dateFormat = "dd/MM/yyyy";
 
@@ -44,7 +42,7 @@ public class DateServiceImpl implements DateService {
 		try {
 			return new SimpleDateFormat(pattern).parse(date);
 		} catch (Exception e) {
-			LOGGER.warn("Fail to create a date (date: " + date + ", format: " + pattern + ")", e);
+			ApplicationLogger.warn(this, "Fail to create a date (date: " + date + ", format: " + pattern + ")", e);
 			return null;
 		}
 	}
@@ -61,7 +59,7 @@ public class DateServiceImpl implements DateService {
 		try {
 			return new SimpleDateFormat(pattern).format(date);
 		} catch (Exception e) {
-			LOGGER.warn("Fail to format a date (date: " + date + ", format: " + pattern + ")", e);
+			ApplicationLogger.warn(this, "Fail to format a date (date: " + date + ", format: " + pattern + ")", e);
 			return null;
 		}
 	}
@@ -72,7 +70,7 @@ public class DateServiceImpl implements DateService {
 		checkNotNull(otherDate, "The otherDate cannot be null");
 
 		if (datePrecisionEnum == null) {
-			LOGGER.debug("The precision is set to MILLISECOND");
+			ApplicationLogger.debug(this, "The precision is set to MILLISECOND");
 			datePrecisionEnum = DatePrecisionEnum.MILLISECOND;
 		}
 
@@ -129,7 +127,7 @@ public class DateServiceImpl implements DateService {
 	@Override
 	public boolean before(Date date, Date beforeDate, DatePrecisionEnum datePrecisionEnum) {
 		if (date == null || beforeDate == null) {
-			LOGGER.warn("Any date is null");
+			ApplicationLogger.warn(this, "Any date is null");
 			return false;
 		}
 		try {
@@ -142,7 +140,7 @@ public class DateServiceImpl implements DateService {
 	@Override
 	public boolean beforeOrEqual(Date date, Date beforeOrEqualDate, DatePrecisionEnum datePrecisionEnum) {
 		if (date == null || beforeOrEqualDate == null) {
-			LOGGER.warn("Any date is null");
+			ApplicationLogger.warn(this, "Any date is null");
 			return false;
 		}
 		try {
@@ -155,7 +153,7 @@ public class DateServiceImpl implements DateService {
 	@Override
 	public boolean equal(Date date, Date equalDate, DatePrecisionEnum datePrecisionEnum) {
 		if (date == null || equalDate == null) {
-			LOGGER.warn("Any date is null");
+			ApplicationLogger.warn(this, "Any date is null");
 			return false;
 		}
 		try {
@@ -168,7 +166,7 @@ public class DateServiceImpl implements DateService {
 	@Override
 	public boolean afterOrEqual(Date date, Date afterOrEqualDate, DatePrecisionEnum datePrecisionEnum) {
 		if (date == null || afterOrEqualDate == null) {
-			LOGGER.warn("Any date is null");
+			ApplicationLogger.warn(this, "Any date is null");
 			return false;
 		}
 		try {
@@ -181,7 +179,7 @@ public class DateServiceImpl implements DateService {
 	@Override
 	public boolean after(Date date, Date afterDate, DatePrecisionEnum datePrecisionEnum) {
 		if (date == null || afterDate == null) {
-			LOGGER.warn("Any date is null");
+			ApplicationLogger.warn(this, "Any date is null");
 			return false;
 		}
 		try {
@@ -194,7 +192,7 @@ public class DateServiceImpl implements DateService {
 	@Override
 	public boolean between(Date date, Date beforeDate, Date afterDate, DatePrecisionEnum datePrecisionEnum) {
 		if (date == null) {
-			LOGGER.warn("The date is null");
+			ApplicationLogger.warn(this, "The date is null");
 			return false;
 		}
 		if (beforeDate == null) {
@@ -219,7 +217,7 @@ public class DateServiceImpl implements DateService {
 		checkNotNull(date, "The date cannot be null");
 
 		if (datePrecisionEnum == null) {
-			LOGGER.info("datePrecision = MILISECOND -> return the same date");
+			ApplicationLogger.debug(this, "datePrecision = MILISECOND -> return the same date");
 			return date;
 		}
 
@@ -255,15 +253,15 @@ public class DateServiceImpl implements DateService {
 	@Override
 	public Date getHigher(Date date1, Date date2, DatePrecisionEnum datePrecisionEnum) {
 		if (date1 == null) {
-			LOGGER.info("The first date is null");
+			ApplicationLogger.debug(this, "The first date is null");
 			return date2;
 		}
 		if (date2 == null) {
-			LOGGER.info("The second date is null");
+			ApplicationLogger.debug(this, "The second date is null");
 			return date1;
 		}
 		if (datePrecisionEnum == null) {
-			LOGGER.info("datePrecision = MILISECOND");
+			ApplicationLogger.debug(this, "datePrecision = MILISECOND");
 			datePrecisionEnum = DatePrecisionEnum.MILLISECOND;
 		}
 		if (this.beforeOrEqual(date1, date2, datePrecisionEnum)) {
@@ -276,15 +274,15 @@ public class DateServiceImpl implements DateService {
 	@Override
 	public Date getLower(Date date1, Date date2, DatePrecisionEnum datePrecisionEnum) {
 		if (date1 == null) {
-			LOGGER.info("The first date is null");
+			ApplicationLogger.debug(this, "The first date is null");
 			return date2;
 		}
 		if (date2 == null) {
-			LOGGER.info("The second date is null");
+			ApplicationLogger.debug(this, "The second date is null");
 			return date1;
 		}
 		if (datePrecisionEnum == null) {
-			LOGGER.info("datePrecision = MILISECOND");
+			ApplicationLogger.debug(this, "datePrecision = MILISECOND");
 			datePrecisionEnum = DatePrecisionEnum.MILLISECOND;
 		}
 		if (this.afterOrEqual(date1, date2, datePrecisionEnum)) {

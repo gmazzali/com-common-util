@@ -11,7 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.common.util.business.converter.Converter;
 import com.common.util.business.tool.collection.CollectionUtil;
-import com.common.util.domain.exception.ServiceException;
+import com.common.util.domain.exception.BusinessException;
 
 /**
  * Clase de prueba para el servicio de conversión.
@@ -25,7 +25,7 @@ public class ConverterServiceImplTest {
 		service.init(CollectionUtil.newArrayList(new StringToDateConverter(), new IntegerToIntegerConverter(), new IntegerToDateConverter()));
 	}
 
-	@Test(expected = ServiceException.class)
+	@Test(expected = BusinessException.class)
 	public void testInitConDuplicado() throws Exception {
 		ConverterServiceImpl service = new ConverterServiceImpl();
 		service.init(CollectionUtil.newArrayList(new StringToDateConverter(), new IntegerToIntegerConverter(), new IntegerToDateConverter(),
@@ -62,7 +62,7 @@ public class ConverterServiceImplTest {
 		Assert.assertEquals(new SimpleDateFormat("dd/MM/yyyy").parse("10/10/2014"), service.convert("10/10/2014", Date.class));
 	}
 
-	@Test(expected = ServiceException.class)
+	@Test(expected = BusinessException.class)
 	public void testConvertFalla() throws Exception {
 		ConverterServiceImpl service = new ConverterServiceImpl();
 		service.init(CollectionUtil.newArrayList(new StringToDateConverter(), new IntegerToIntegerConverter(), new StringToIntegerConverter()));
